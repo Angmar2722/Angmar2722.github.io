@@ -12,7 +12,7 @@ Below are the writeups for the 3 challenges that I managed to solve :
 
 # Jeopardy (Python Jail Escape Challenge)
 
-![UMass 2021 Writeup] (/assets/img/ctfImages/umass2021/img1-ConvertImage.png)
+![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img1-ConvertImage.png)
 
 
 
