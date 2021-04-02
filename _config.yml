@@ -16,7 +16,7 @@ author: Angmar
 navbar-links:
   Home: "https://Angmar2722.github.io/"
   CTF Writeups:
-    -SMU Whitehacks 2021: "wh2021"
+    - SMU Whitehacks 2021: "wh2021"
   #Projects:
 
 # --- Logo --- #
