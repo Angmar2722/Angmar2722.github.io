@@ -1,3 +1,5 @@
+{::comment}
+
 ---
 layout: post
 title: Sample blog post
@@ -76,3 +78,6 @@ You can add notification, warning and error boxes like this:
 
 {: .box-error}
 **Error:** This is an error box.
+
+{:/comment}
+
