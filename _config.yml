@@ -17,6 +17,7 @@ navbar-links:
   Home: "https://Angmar2722.github.io/"
   CTF Writeups:
     - SMU Whitehacks 2021: "wh2021"
+    - UMass 2021: "umass2021"
   #Projects:
 
 # --- Logo --- #
