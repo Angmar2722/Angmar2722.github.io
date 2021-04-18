@@ -15,13 +15,13 @@ author: Angmar
 
 navbar-links:
   Home: "https://Angmar2722.github.io/"
+  Exploit Practice:
+    - CryptoHack: "cryptoHack"
+      - Loggin In: "cryptoHack0"
   CTF Writeups:
     - Angstrom (April) 2021: "actf2021"
     - UMass (March) 2021: "umass2021"
     - SMU Whitehacks (March) 2021: "wh2021"
-  Exploit Practice:
-    - CryptoHack: "cryptoHack"
-      - Loggin In: "cryptoHack0"
   #Projects:
 
 # --- Logo --- #
