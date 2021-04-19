@@ -8,7 +8,7 @@ When creating an account with this platform, apart from the usual settings of pr
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img1.png)
 
-So I made my first python script for solving a crypto challenge. I know that this script is **very** inefficient as I could have just used (x-n) mod 26 to decrypt the text. Oh well....
+So I wrote my first Python script for solving a crypto challenge (the Caesar Cipher). I know that this script is **very** inefficient as I could have just used (x-n) mod 26 to decrypt the text. Oh well....
 
 ``` python
 
