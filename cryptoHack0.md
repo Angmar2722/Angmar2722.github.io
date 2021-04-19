@@ -17,7 +17,7 @@ So I made my first python script for solving a crypto challenge. I know that thi
 str1 = input("Enter the Ceasar ciphertext that you want to decrypt : ")
 #str1 = "QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD"
 #Key Shift : 23
-#Decrupted Text : THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+#Decrypted Text : THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
 arr1 = list(str1)
 
 sortedArray = list(str1)
