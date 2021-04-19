@@ -1,14 +1,14 @@
 ---
 layout: page
-title: General - Encoding
+title: General 
 ---
 <hr/>
 
-The geneal section consists of 18 challenges. This page has my writeups for the encoding section (5 challenges) of the general section. 
+The geneal section consists of 18 challenges. The challenges are subdivided into 4 different stages : Encoding, XOR, Mathematics and Data Formats. Below are the writeups for the ones I managed to complete :
 
 <br/>
 
-# ASCII 
+# ASCII (Encoding)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img8.png)
 
@@ -20,7 +20,7 @@ As shown in the image above, all you had to do was convert the numbers to their 
 
 <br/>
 
-# Hex 
+# Hex (Encoding)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img10.png)
 
@@ -32,7 +32,7 @@ As shown in the image above, all you had to do was convert the hex string to ASC
 
 <br/>
 
-# Base64 
+# Base64 (Encoding)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img12.png)
 
@@ -46,7 +46,7 @@ Note that before submitting, the challenge stated that the flag format was `cryp
 
 <br/>
 
-# Bytes and Big Integers 
+# Bytes and Big Integers (Encoding)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img16.png)
 
