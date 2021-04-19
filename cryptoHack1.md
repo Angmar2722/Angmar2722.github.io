@@ -4,11 +4,27 @@ title: Introduction
 ---
 <hr/>
 
-The introduction consisted of 3 challenges. The first challenge involved submitting the flag `crypto{y0ur_f1rst_fl4g}`. The second challenge involved running a python scipt and obtaining the flag. This is shown in the image below (the image shows the first two challenges) :
+The introduction consists of 3 challenges. 
+
+<br/>
+
+# Finding Flags 
+
+As shown in the image below, all you had to do was input the flag `crypto{y0ur_f1rst_fl4g}` into the submit box. So it seems that the flag format for all the cryptoHack challenges is `crypto{flag}`.
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img4.png)
 
-The source code for the second challenge :
+**Flag :** crypto{y0ur_f1rst_fl4g}
+
+<br/>
+
+# Great Snakes 
+
+As shown in the image below, all you had to do was run the Great Snakes python program and then you would obtain the flag.
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img5.png)
+
+The source code of the program : 
 
 ```python
 
@@ -27,7 +43,15 @@ print("".join(chr(o ^ 0x32) for o in ords))
 
 ```
 
-The flag obtained after running the program :
+The flag is obtained after running the program :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img5.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img6.png)
+
+**Flag :** crypto{z3n_0f_pyth0n}
+
+<br/>
+
+# Network Attacks 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img7.png)
 
