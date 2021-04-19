@@ -55,3 +55,51 @@ The flag is obtained after running the program :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img7.png)
 
+All I had to do was connect to the server and send a JSON object with the key `buy` and value `flag` in order to obtain the flag. To do that, I just slightly modified the `telnetlib_example.py` python script that they provided by changing the `request` JSON object to have a key of `buy` and value of `flag`. The modified code :
+
+```python
+#!/usr/bin/env python3
+
+import telnetlib
+import json
+
+HOST = "socket.cryptohack.org"
+PORT = 11112
+
+tn = telnetlib.Telnet(HOST, PORT)
+
+
+def readline():
+    return tn.read_until(b"\n")
+
+def json_recv():
+    line = readline()
+    return json.loads(line.decode())
+
+def json_send(hsh):
+    request = json.dumps(hsh).encode()
+    tn.write(request)
+
+
+print(readline())
+print(readline())
+print(readline())
+print(readline())
+
+
+request = {
+    "buy": "flag"
+}
+json_send(request)
+
+response = json_recv()
+
+print(response)
+```
+And as shown below after running the script, the flag is outputted :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img14.png)
+
+**Flag :** crypto{sh0pp1ng_f0r_fl4g5}
+
+
