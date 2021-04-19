@@ -16,7 +16,7 @@ author: Angmar
 navbar-links:
   Home: "https://Angmar2722.github.io/"
   Exploit Practice:
-    CryptoHack: 
+    - CryptoHack: "cryptoHack"
       - Logging In: "cryptoHack0"
   CTF Writeups:
     - Angstrom (April) 2021: "actf2021"
