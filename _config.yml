@@ -21,7 +21,7 @@ navbar-links:
     - What Is CryptoHack?: "cryptoHack"
     - Logging In: "cryptoHack0"
     - Introduction: "cryptoHack1"
-    - General - Encoding: "cryptoHack2"
+    - General: "cryptoHack2"
   CTF Writeups:
     - Angstrom (April) 2021: "actf2021"
     - UMass (March) 2021: "umass2021"
