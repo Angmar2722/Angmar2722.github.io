@@ -4,9 +4,11 @@ title: Logging In
 ---
 <hr/>
 
-When creating an account with this platform, apart from the usual settings of providing an email as well as a password for the account, they had a crypto challenge just for creating an account with the website.
+When creating an account with this platform, apart from the usual settings of providing an email as well as a password for the account, they had a crypto challenge just for creating an account with the website. The challenge involved 'solving this Roman emperor's cipher' which is a reference to the <a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank">Caesar Cipher</a>
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img1.png)
+
+So I made my first python script for solving a crypto challenge. I know that this script is *very** inefficient as I could have just used (x-n) mod 26 to decrypt the text. Oh well....
 
 ``` python
 
@@ -62,6 +64,8 @@ for i in range( 26 ):
     print("The right shift is ", i, " and the decrypted text is : ", text)        
 
 ```
+
+As shown in the image below, the decrypted text is `FEVER EXCHANGE ENTRY RENT` and to decrypt the encrypted text, it involved a right shift of 3.
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img2.png)
 
