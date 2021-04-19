@@ -53,7 +53,7 @@ The flag is obtained after running the program :
 
 # Network Attacks 
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img7.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img15.png)
 
 All I had to do was connect to the server and send a JSON object with the key `buy` and value `flag` in order to obtain the flag. To do that, I just slightly modified the `telnetlib_example.py` python script that they provided by changing the `request` JSON object to have a key of `buy` and value of `flag`. The modified code :
 
