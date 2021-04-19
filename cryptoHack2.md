@@ -46,5 +46,14 @@ Note that before submitting, the challenge stated that the flag format was `cryp
 
 <br/>
 
+# Bytes and Big Integers 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img16.png)
+
+As shown in the image above, I had to convert the integer `11515195063862318899931685488813747395775516287289682636499965282714637259206269` into hex (base 16) by using the command `hex(11515195063862318899931685488813747395775516287289682636499965282714637259206269)`. When I did that, I noticed that I was getting `0x63727970746f7b336e633064316e365f346c6c5f3768335f7734795f6430776e7dL` and at the end of that hex string was the character `L` which is not part of the hexadecimal system (as it ranges from 0 to F). Hence I converted that hex string without the `L` into ASCII by using the command `"63727970746f7b336e633064316e365f346c6c5f3768335f7734795f6430776e7d".decode("hex")` and with that I got the flag as shown below :
+ 
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img17.png)
+
+**Flag :** crypto{3nc0d1n6_4ll_7h3_w4y_d0wn}
 
 
