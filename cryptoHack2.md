@@ -285,5 +285,63 @@ After running my script as shown in the image below, I got my flag :
 
 **Flag :** crypto{3nc0d3_d3c0d3_3nc0d3}
 
+<br/>
+
+# XOR Starter (XOR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img20.png)
+
+As shown in the image above, I am supposed to XOR each character from the string `"label"` with the integer `13`. In the script that I used to solve this, I used two ways to get the answer. The first way involved converting each character of the string "label" to ASCII and then XORing that integer with the integer 13.
+
+The second and much longer way that I used to solve this, I converted both the string and integer to binary and then XORed the binary string of each character in `"label"` with the binary of 13. Then I converted that XORed binary back to ASCII and then outputted the value.
+
+Of note, I found a helpful answer in Stack Overflow that showed how to convert an integer to binary and specify the number of digits as shown in the image below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img21.png)
+
+Source code for my script is shown below (the first way to get the answer ends at line 12 and the second way starts with the prompt to the user to input a string):
+
+```python
+
+#!/usr/bin/env python3
+
+string = "label"
+int_ = 13
+arr1 = list(string)
+
+for i in range( len(arr1) ):
+    arr1[i] = ord(arr1[i])^int_
+
+#print(arr1)
+
+print( ''.join(chr(i) for i in arr1) )
+
+str1 = input("Enter the string that you want to convert to binary : ")
+arr = list(str1)
+
+int1 = int(input("Enter the integer that you want to convert to binary : "))
+intb = '{0:b}'.format(int1)
+
+for i in range ( len(arr) ):
+    arr[i] = ord(arr[i])
+    arr[i] = '{0:b}'.format(arr[i])
+
+def xor(x, y):
+    return '{0:b}'.format(int(x, 2) ^ int(y, 2))
+
+for i in range (  len(arr) ):
+    arr[i] = xor(arr[i], intb)
+    n = int(arr[i], 2)
+    arr[i] = n.to_bytes((n.bit_length() + 7) // 8, 'big').decode()
+
+print("The decoded string is ", "".join(arr))
+
+```
+
+As shown in the image below, I get the answer both ways :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img22.png)
+
+**Flag :** crypto{aloha}
 
 
