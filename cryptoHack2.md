@@ -165,7 +165,7 @@ json_recv()
 
 ```
 
-I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. So after a lot of Googling, this is the script that I wrote in order to get the flag :
+I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. I also copied and slightly modified the inefficient Caesar Cipher decryptor that I wrote for the <a href="https://angmar2722.github.io/cryptoHack0/" target="_blank">Logging In</a> section of CryptoHack. So after a lot of Googling, this is the script that I wrote in order to get the flag :
 
 ```python
 
