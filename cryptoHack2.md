@@ -437,6 +437,7 @@ for xor_key in range(256):
 ```
 
 As shown in the image below, after running the script I get the flag (the 16 means that the special byte was `0x10` and this was explicitly stated in the flag) :
+
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img26.png)
 
 **Flag :** crypto{0x10_15_my_f4v0ur173_by7e}
