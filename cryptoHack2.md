@@ -411,3 +411,33 @@ And after running my script, I got the flag as shown below :
 
 **Flag :** crypto{x0r_i5_ass0c1at1v3}
 
+<br/>
+
+# Favourite byte (XOR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img25.png)
+
+As shown in the image above, I am supposed to find a certain single byte which when XORed with each byte in the ciphertext would yield the flag. To do this, I wrote a script that loops through the numbers 0 to 255 (because a byte can represent values in this range and each value is my byte guess) and then XORed that byte guess with each byte from the ciphertext (after converting the hexadecimal to a byte string using `binascii.unhexlify`). I then used the `chr()` to convert the int to ASCII and then used `''.join` to join the array of decoded characters to form a string. After that, I would output the decoded text if it was printable and if the first 7 characters matched `crypto{` as that is the flag format. 
+
+Source code for my script :
+
+```python
+
+#!/usr/bin/env python3
+import codecs
+import itertools
+import binascii
+
+encoded = binascii.unhexlify('73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d')
+for xor_key in range(256):
+    decoded = ''.join(chr(b ^ xor_key) for b in encoded)
+    if (decoded.isprintable() and decoded[0] == "c" and decoded[1] == "r" and decoded[2] == "y" and decoded[3] == "p" and decoded[4] == "t" and decoded[5] == "o" and decoded[6] == "{"):
+        print(xor_key, decoded)
+        
+```
+
+As shown in the image below, after running the script I get the flag (the 16 means that the special byte was `0x10` and this was explicitly stated in the flag) :
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img26.png)
+
+**Flag :** crypto{0x10_15_my_f4v0ur173_by7e}
+
