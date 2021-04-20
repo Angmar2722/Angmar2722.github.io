@@ -166,7 +166,7 @@ json_recv()
 ```
 <br/>
 
-So after a lot of Googling, this is the script that I wrote in order to get the flag :
+I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. So after a lot of Googling, this is the script that I wrote in order to get the flag :
 
 ```python
 
