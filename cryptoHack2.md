@@ -62,7 +62,7 @@ As shown in the image above, I had to convert the integer `115151950638623188999
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img18.png)
 
-As shown in the image above, I had to write my first <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools</a> script in order to solve the challenge. As stated in its Github page - Pwntools is a CTF framework and exploit development library. Written in Python, it is designed for rapid prototyping and development, and intended to make exploit writing as simple as possible. I would receive data from the server in an encoded format (for example a string in base 64) and I had to convert that to a string (ASCII or UTF-8) in order to pass a level. There were 100 such levels and 5 different encoding formats - base64, hex, rot13 (a special type of Caesar Cipher which has a right shift of 13), int and utf-8.
+As shown in the image above, I had to write my first <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools</a> script in order to solve the challenge. As stated in its Github page - Pwntools is a CTF framework and exploit development library. Written in Python, it is designed for rapid prototyping and development, and intended to make exploit writing as simple as possible. I would receive data from the server in an encoded format (for example a string in base 64) and I had to convert that to a string (ASCII or UTF-8) in order to pass a level. There were 100 such levels and 5 different encoding formats - base64, hex, rot13 (a <a href="https://en.wikipedia.org/wiki/ROT13" target="_blank">special type of Caesar Cipher</a> which has a right shift of 13), int and utf-8.
 
 Source code for what was running on the server (file `13337.py` as shown in the challenge image above) :
 
@@ -165,7 +165,7 @@ json_recv()
 
 ```
 
-I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. I also copied and slightly modified the inefficient Caesar Cipher decryptor that I wrote for the <a href="https://angmar2722.github.io/cryptoHack0/" target="_blank">Logging In</a> section of CryptoHack. So after a lot of Googling, this is the script that I wrote in order to get the flag :
+I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. I also copied and slightly modified the inefficient Caesar Cipher decryptor that I wrote for the <a href="https://angmar2722.github.io/cryptoHack0/" target="_blank">Logging In</a> section of CryptoHack in order to solve the ROT13 cipher. So after a lot of Googling, this is the script that I wrote in order to get the flag :
 
 ```python
 
