@@ -299,7 +299,7 @@ Of note, I found a helpful answer in Stack Overflow that showed how to convert a
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img21.png)
 
-Source code for my script is shown below (the first way to get the answer ends at line 12 and the second way starts with the prompt to the user to input a string):
+Source code for my script is shown below (the first way to get the answer ends before the prompt to the user to input a string and the second way starts with the prompt):
 
 ```python
 
