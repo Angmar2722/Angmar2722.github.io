@@ -1,6 +1,6 @@
 ---
 layout: page
-title: General : Encoding / XOR
+title: General - Encoding / XOR
 ---
 <hr/>
 
@@ -164,7 +164,6 @@ json_send(to_send)
 json_recv()
 
 ```
-<br/>
 
 I found this <a href="https://github.com/Gallopsled/pwntools-tutorial/blob/master/tubes.md" target="_blank">Pwntools tutorial</a> to be very useful. So after a lot of Googling, this is the script that I wrote in order to get the flag :
 
