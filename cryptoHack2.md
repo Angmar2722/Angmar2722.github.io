@@ -344,4 +344,70 @@ As shown in the image below, I get the answer both ways :
 
 **Flag :** crypto{aloha}
 
+<br/>
+
+# XOR Properties (XOR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img23.png)
+
+As shown in the image above, I am supposed to apply the associative property of XOR operations in order to get each key. For example, given that I know key 1 and the value of (key2 XOR key1), I can find key2 by performing the operation (key2 XOR key1) XOR key1. In my script I did the opposite but because XOR properties are commutative, that really isn't an issue. This same concept was applied for finding the other keys and eventually the value of the flag in hex. After that I converted the hex to ASCII and then got the flag.
+
+The source code for the script that I wrote to solve this challenge is shown below :
+
+```python
+
+#!/usr/bin/env python3
+import codecs
+
+KEY1 = "a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313"
+KEY2xorKEY1 = "37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e"
+KEY2xorKEY3 = "c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1"
+FLAGxorKEY1xorKEY2xorKEY3 = "04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf"
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def keyGetter(k1, k2):
+
+    k1 = hexToInt(k1)
+    k2 = hexToInt(k2)
+
+    k1b = '{0:b}'.format(k1)
+    k2b = '{0:b}'.format(k2)
+
+    def xor(x, y):
+        return '{0:b}'.format(int(x, 2) ^ int(y, 2))
+
+    temp = xor(k1b, k2b)
+
+    x = hex(int(temp, 2))
+    #print("The key in hex is : ", x)
+    return x
+
+KEY2 = keyGetter(KEY1, KEY2xorKEY1)
+KEY3 = keyGetter(KEY2xorKEY3, KEY2)
+KEY1_XOR_KEY3_XOR_KEY2 = keyGetter(KEY1, KEY2xorKEY3)
+FLAG_HEX = keyGetter(KEY1_XOR_KEY3_XOR_KEY2, FLAGxorKEY1xorKEY2xorKEY3)
+
+#print(FLAG_HEX)
+
+def hexToString(hexText):
+    hexText = hexText.upper()
+    temp = list(hexText)
+    temp.remove('0')
+    temp.remove('X')
+    hexText = "".join(temp)
+    decodedHex = bytes.fromhex(hexText).decode('utf-8')
+    return decodedHex
+
+flag = hexToString(FLAG_HEX)
+print("The flag is : ", flag)
+
+```
+
+And after running my script, I got the flag as shown below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img24.png)
+
+**Flag :** crypto{x0r_i5_ass0c1at1v3}
 
