@@ -293,7 +293,7 @@ After running my script as shown in the image below, I got my flag :
 
 As shown in the image above, I am supposed to XOR each character from the string `"label"` with the integer `13`. In the script that I used to solve this, I used two ways to get the answer. The first way involved converting each character of the string "label" to ASCII and then XORing that integer with the integer 13.
 
-The second and much longer way that I used to solve this, I converted both the string and integer to binary and then XORed the binary string of each character in `"label"` with the binary of 13. Then I converted that XORed binary back to ASCII and then outputted the value.
+For the second and much longer way that I used to solve this, I converted both the string and integer to binary and then XORed the binary string of each character in `"label"` with the binary of 13. Then I converted that XORed binary back to ASCII and then outputted the value.
 
 Of note, I found a helpful answer in Stack Overflow that showed how to convert an integer to binary and specify the number of digits as shown in the image below :
 
