@@ -442,3 +442,16 @@ As shown in the image below, after running the script I get the flag (the 16 mea
 
 **Flag :** crypto{0x10_15_my_f4v0ur173_by7e}
 
+<br/>
+
+# Lemur XOR (XOR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img30.png)
+
+As shown in the image above, I am supposed to XOR the images `lemur.png` and `flag.png` in order to get an image which will have the flag. I found a <a href="https://stackoverflow.com/questions/54398627/xor-ing-and-summing-two-black-and-white-images" target="_blank">Stack Overflow answer</a> which showed exactly how to achieve this. So I imported <a href="https://imagemagick.org/script/download.php" target="_blank">imagemagick</a> and then used the command `magick lemur.png flag.png -evaluate-sequence xor result.png` in order to XOR the two images and place the result in the image `result.png` which is showed below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img29.png)
+
+As shown above, the flag is now visible!
+
+**Flag :** crypto{X0Rly_n0t!}
