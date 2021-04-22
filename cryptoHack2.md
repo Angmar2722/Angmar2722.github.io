@@ -444,7 +444,7 @@ As shown in the image below, after running the script I get the flag (the 16 mea
 
 <br/>
 
-# You either know. XOR you don't (XOR)
+# You either know, XOR you don't (XOR)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img31.png)
 
