@@ -527,7 +527,7 @@ for xor_key in range( 7888433320024565113, 7888433320024565114 ):
 
 And after running my very **inefficient** script, I got the flag :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img31.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img32.png)
 
 **Flag :** crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}
 
@@ -535,7 +535,7 @@ And after running my very **inefficient** script, I got the flag :
 
 # Lemur XOR (XOR)
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img32.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img30.png)
 
 As shown in the image above, I am supposed to XOR the images `lemur.png` and `flag.png` in order to get an image which will have the flag. I found a <a href="https://stackoverflow.com/questions/54398627/xor-ing-and-summing-two-black-and-white-images" target="_blank">Stack Overflow answer</a> which showed exactly how to achieve this. So I imported <a href="https://imagemagick.org/script/download.php" target="_blank">imagemagick</a> and then used the command `magick lemur.png flag.png -evaluate-sequence xor result.png` in order to XOR the two images and place the result in the image `result.png` which is showed below :
 
