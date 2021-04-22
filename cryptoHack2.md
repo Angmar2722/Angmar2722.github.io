@@ -444,6 +444,95 @@ As shown in the image below, after running the script I get the flag (the 16 mea
 
 <br/>
 
+# You either know. XOR you don't (XOR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img31.png)
+
+As shown in the image above, I am supposed to decrypt the hex string `0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104` in order to get the flag. There is a hint which tells us to remember the flag format : `crypto{flag-text-goes-here}`. I spent a lot of time trying to create a program that would brute force this hex string but failed to do so. The size of the key in bytes is also unknown....
+
+Assuming that the decoded text would start off with the 7 characters `crypto{`, I XORed the first 7 bytes of the cipher text (`0e, 0b, 21, 3f, 26, 04, 1e` with `crypto{` respectively) because each byte of the ciphertext XOR each byte of the decoded text (flag format) would yield the key). After doing this, I got `6d 79 58 4f 52 6b 65` respectively which when converted to ASCII gives me `myXORke`. Also assuming that the last byte of the ciphertext would be `}` (the closing brace of the flag which is part of the format), I XORed that brace with the last byte of the ciphertext (04) and this gave me 79 in hex which is "y" in ASCII. So the key was probably 8 bytes as the last byte of the key was probably 79 which means that the key in ASCII was `myXORkey` or `6d79584f526b6579` in hex which is 7888433320024565113 in decimal (int).
+
+Ok so now that we probably know the key, I could use my script which I was writing for brute forcing the key and just modify it to loop only once and pass in 7888433320024565113 (the key in decimal) as the key. Source code for the script :
+
+```python
+
+#!/usr/bin/env python3
+import codecs
+import itertools
+import binascii
+import textwrap
+from itertools import permutations
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def hexToString(hexText):
+    hexText = hexText.upper()
+    temp = list(hexText)
+    hexText = "".join(temp)
+    decodedHex = bytes.fromhex(hexText).decode('utf-8')
+    return decodedHex
+
+def xor(x, y):
+    return '{:x}'.format( int('{0:b}'.format(x ^ y), 2) )
+
+def keyGetter(cipherText, keyGuess, byteKey):
+
+    tempCipherByteList = textwrap.wrap(str(cipherText), 2)
+    keyGuessInHexList = textwrap.wrap(str('{:x}'.format(keyGuess)), 2)
+   
+    for i in range( len(tempCipherByteList) ):
+        tempCipherByteList[i] = hexToInt(tempCipherByteList[i])
+
+    keyGuess = int(keyGuess)
+    decodedArray = list("0" * len(tempCipherByteList))
+
+    tracker = 0
+
+    for i in range ( len(tempCipherByteList) ):
+        if (tracker == len(keyGuessInHexList) ):
+            tracker = 0
+        #print('{:x}'.format(tempCipherByteList[i]), keyGuessInHexList[tracker])
+        decodedArray[i] = str( xor(tempCipherByteList[i], hexToInt(keyGuessInHexList[tracker])) )
+        tracker = tracker + 1
+
+    return "".join(decodedArray)
+
+cipherText = '0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104'
+
+inputCipher = input("Enter the ciphertext that you want to decrypt : ")
+byteKeyInput = int(input("Enter the size of the key in bytes that you want to brute force : "))
+flagFormat = input("Enter the first part of the flag format (Example - `crypto{` ) : ")
+
+flagFormatHex = flagFormat.encode("utf-8").hex()
+flagFormatHexList = textwrap.wrap(str(flagFormatHex), 2)
+
+#for xor_key in range( 2**(8*byteKeyInput) ):
+for xor_key in range( 7888433320024565113, 7888433320024565114 ):
+
+    flagHex = keyGetter(inputCipher, xor_key, byteKeyInput)
+    flagHexList = textwrap.wrap(str(flagHex), 2)
+
+    for i in range (len(flagHexList)):
+        if (flagHexList[i] == flagFormatHexList[0]) and (i < ( len(flagHexList) - len(flagFormatHexList) ) ):
+            c = 0
+            while (flagHexList[i + c] == flagFormatHexList[c]) and (c < len(flagFormatHexList)):
+                x = 1
+                if (c == len(flagFormatHexList)-1):
+                    print(hexToString(flagHex))
+                    break
+                c = c + 1
+
+```
+
+And after running my very **inefficient** and useless :( script, I got the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img31.png)
+
+**Flag :** crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}
+
+<br/>
+
 # Lemur XOR (XOR)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img30.png)
