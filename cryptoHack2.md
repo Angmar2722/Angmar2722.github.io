@@ -525,7 +525,7 @@ for xor_key in range( 7888433320024565113, 7888433320024565114 ):
 
 ```
 
-And after running my very **inefficient** and useless :( script, I got the flag :
+And after running my very **inefficient** script, I got the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img31.png)
 
