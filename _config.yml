@@ -22,6 +22,7 @@ navbar-links:
     - Logging In: "cryptoHack0"
     - Introduction: "cryptoHack1"
     - General - Encoding / XOR: "cryptoHack2"
+    - General - Mathematics / Data Formats: "cryptoHack3"
   CTF Writeups:
     - Angstrom (April) 2021: "actf2021"
     - UMass (March) 2021: "umass2021"
