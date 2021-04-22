@@ -37,3 +37,6 @@ print(getGCD(66528, 52920))
 After running the script, I got the GCD (and this was the flag) :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img28.png)
+
+**Flag :** 1512
+
