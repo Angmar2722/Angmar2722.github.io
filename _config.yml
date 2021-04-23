@@ -15,6 +15,10 @@ author: Angmar
 
 navbar-links:
   Home: "https://Angmar2722.github.io/"
+  Tools:
+    - Introduction: "toolsIntro"
+  Past CTF Challenges:
+    - Introduction: "pastCTFintro"
   Exploit Education:
     - What is Exploit Education?: "exploitEd"
   CryptoHack:
