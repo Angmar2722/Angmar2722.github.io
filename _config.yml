@@ -15,7 +15,7 @@ author: Angmar
 
 navbar-links:
   #Home: "https://Angmar2722.github.io/"
-  Tools:
+  Tools I Built:
     - Introduction: "toolsIntro"
   Past CTF Challenges:
     - Introduction: "pastCTFintro"
