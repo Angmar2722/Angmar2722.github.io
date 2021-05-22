@@ -79,3 +79,15 @@ And as shown below, after running the program, I got u and v :
 
 **Flag :** crypto{10245,-8404}
 
+<br/>
+
+# Modular Arithmetic 1 (Mathematics)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img35.png)
+
+As shown in the image above, I had to calculate a and b and the flag is the smaller of the two integers (a and b). If a is congruent to b mod m, then b = a % m (as explained in the image above). So doing that for the two integers I got 5 and 4 respectively. So the flag was 4 (the smaller integer). Shown below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img36.png)
+
+**Flag :** 4
+
