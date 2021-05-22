@@ -123,7 +123,7 @@ Image of the contents of the PEM file :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img41.png)
 
-This <a href="https://www.cryptologie.net/article/260/asn1-vs-der-vs-pem-vs-x509-vs-pkcs7-vs/" target="_blank">link</a> they gave explains the different TLS certificate formats (including DER and ASN.1). I found this <a href="https://www.cryptologie.net/article/260/asn1-vs-der-vs-pem-vs-x509-vs-pkcs7-vs/" target="_blank">answer</a> explaining what a PEM file is to be very useful too.
+This <a href="https://www.cryptologie.net/article/260/asn1-vs-der-vs-pem-vs-x509-vs-pkcs7-vs/" target="_blank">link</a> they gave explains the different TLS certificate formats (including DER and ASN.1). I found this <a href="https://serverfault.com/questions/9708/what-is-a-pem-file-and-how-does-it-differ-from-other-openssl-generated-key-file" target="_blank">answer</a> explaining what a PEM file is to be very useful too.
 
 The Python cryptography documentation was also very useful :
 * <a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/serialization/
