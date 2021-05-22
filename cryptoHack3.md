@@ -113,7 +113,7 @@ As shown in the image above, I had to calculate a and b and the flag is the smal
 
 <br/>
 
-# Privacy-Enhanced Mail? (Mathematics)
+# Privacy-Enhanced Mail? (Data Formats)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img39.png)
 
