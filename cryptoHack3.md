@@ -111,4 +111,65 @@ As shown in the image above, I had to calculate a and b and the flag is the smal
 
 **Flag :** 9
 
+<br/>
+
+# Privacy-Enhanced Mail? (Mathematics)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img39.png)
+
+As shown in the image above, I have to convert the given PEM file (a base 64 encoded DER file) into a DER file in order to access the private exponent "d" of the private RSA key, which is the flag.
+
+Image of the contents of the PEM file :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img41.png)
+
+This <a href="https://www.cryptologie.net/article/260/asn1-vs-der-vs-pem-vs-x509-vs-pkcs7-vs/" target="_blank">link</a> they gave explains the different TLS certificate formats (including DER and ASN.1). I found this <a href="https://www.cryptologie.net/article/260/asn1-vs-der-vs-pem-vs-x509-vs-pkcs7-vs/" target="_blank">answer</a> explaining what a PEM file is to be very useful too.
+
+The Python cryptography documentation was also very useful :
+* <a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/serialization/
+" target="_blank">Serialization</a>
+* <a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/#cryptography.hazmat.primitives.asymmetric.rsa.RSAPrivateKey
+" target="_blank">RSAPrivateKey</a>
+* <a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/#cryptography.hazmat.primitives.asymmetric.rsa.RSAPrivateNumbers
+" target="_blank">RSAPrivateNumbers</a>
+
+In order to convert the PEM file to a DER file and then extract the private exponent "d" I wrote the following code :
+
+```python
+
+#!/usr/bin/env python3
+ 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.serialization import load_der_private_key
+ 
+with open("privacy_enhanced_mail_1f696c053d76a78c2c531bb013a92d4a.pem", "rb") as keyfile:
+
+    # Load the PEM format key
+    pemkey = serialization.load_pem_private_key(
+       keyfile.read(),
+       None,
+       default_backend()
+    )
+
+    # Serialize it to DER format
+    derkey = pemkey.private_bytes(
+       serialization.Encoding.DER,
+       serialization.PrivateFormat.TraditionalOpenSSL,
+       serialization.NoEncryption()
+    )
+
+    key = load_der_private_key(derkey, password=None)
+    print(isinstance(key, rsa.RSAPrivateKey))
+    pn = key.private_numbers()
+    print(pn.d)
+  
+```
+
+And after running the program I got the flag (the int private exponent "d") :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img40.png)
+
+**Flag :** 15682700288056331364787171045819973654991149949197959929860861228180021707316851924456205543665565810892674190059831330231436970914474774562714945620519144389785158908994181951348846017432506464163564960993784254153395406799101314760033445065193429592512349952020982932218524462341002102063435489318813316464511621736943938440710470694912336237680219746204595128959161800595216366237538296447335375818871952520026993102148328897083547184286493241191505953601668858941129790966909236941127851370202421135897091086763569884760099112291072056970636380417349019579768748054760104838790424708988260443926906673795975104689
 
