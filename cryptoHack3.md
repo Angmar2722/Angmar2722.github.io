@@ -48,9 +48,9 @@ After running the script, I got the GCD (and this was the flag) :
 
 As shown in the image above, I had to find the integers u and v such that pu + qv = 1 (the GCD of the two prime numbers p and q). This is a case of using <a href="https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity#:~:text=In%20elementary%20number%20theory%2C%20B%C3%A9zout's,exactly%20the%20multiples%20of%20d." target="_blank">Bezout's Identity</a> which this <a href="https://www.youtube.com/watch?v=9KM6bX2rud8" target="_blank">video</a> explains very nicely. To get u and v, I looked at the pseudocode implementation of the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm" target="_blank">Extended Euclidean algorithm</a> on Wikipedia and converted that to the Python code shown below :
 
-```python3
+```python
 
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 p = 26513
 q = 32321
