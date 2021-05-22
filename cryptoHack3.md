@@ -91,3 +91,11 @@ As shown in the image above, I had to calculate a and b and the flag is the smal
 
 **Flag :** 4
 
+# Modular Arithmetic 1 (Mathematics)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img37.png)
+
+`3^17 mod 17` gives 3, `5^17 mod 17` gives 5, `7^16 mod 17` gives 1. So `273246787654^65536 mod 65537` gives 1.
+
+**Flag :** 1
+
