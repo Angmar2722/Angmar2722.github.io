@@ -50,7 +50,7 @@ As shown in the image above, I had to find the integers u and v such that pu + q
 
 ```python3
 
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 p = 26513
 q = 32321
