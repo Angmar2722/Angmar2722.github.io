@@ -13,6 +13,8 @@ The Mathematics section consists of 22 challenges. The challenges are subdivided
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img47.png)
 
 As shown in the image above, I have to first find out which of the numbers 14,6 and 11 is a quadratic residue when the modulo is p = 29. It turns out that only 6 is a quadratic residue. Then the challenge says that the flag is the smaller corresponding root to the quadratic residue 6. 
+ 
+This <a href="https://www.youtube.com/watch?v=M6gDsFhQugM" target="_blank">video</a> does a pretty neat job of explaining what quadratic residues are.
 
 I wrote a program for calculating the quadratic residue for corresponding roots : 
 
