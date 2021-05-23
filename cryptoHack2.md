@@ -4,7 +4,7 @@ title: General - Encoding / XOR
 ---
 <hr/>
 
-The geneal section consists of 18 challenges. The challenges are subdivided into 4 different stages : Encoding, XOR, Mathematics and Data Formats. Below are the writeups for the ones I managed to complete for the Encoding and XOR sections :
+The general section consists of 18 challenges. The challenges are subdivided into 4 different stages : Encoding, XOR, Mathematics and Data Formats. Below are the writeups for the ones I managed to complete for the Encoding and XOR sections :
 
 <br/>
 
