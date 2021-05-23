@@ -179,7 +179,7 @@ And after running the program I got the flag (the int private exponent "d") :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img42.png)
 
-As shown in the image above, I had to extract the integer modulus of the public key of the DER file given (as a DER certificate does not contain a private key but rather the public key). To do this, I used the <a href="https://www.pyopenssl.org/en/stable/" target="_blank">PyOpenSSl library</a>. Below is the code that I wrote to get the modulus n (the product of the primes p and q) :
+As shown in the image above, I had to extract the integer modulus of the public key of the DER file given (as a DER certificate does not contain a private key but rather the public key). To do this, I used the <a href="https://www.pyopenssl.org/en/stable/" target="_blank">PyOpenSSL library</a>. Below is the code that I wrote to get the modulus n (the product of the primes p and q) :
 
 ```python
 
