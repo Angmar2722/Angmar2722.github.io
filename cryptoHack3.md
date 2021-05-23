@@ -202,3 +202,21 @@ And after running the program I got the flag :
 
 **Flag :** 22825373692019530804306212864609512775374171823993708516509897631547513634635856375624003737068034549047677999310941837454378829351398302382629658264078775456838626207507725494030600516872852306191255492926495965536379271875310457319107936020730050476235278671528265817571433919561175665096171189758406136453987966255236963782666066962654678464950075923060327358691356632908606498231755963567382339010985222623205586923466405809217426670333410014429905146941652293366212903733630083016398810887356019977409467374742266276267137547021576874204809506045914964491063393800499167416471949021995447722415959979785959569497
 
+<br/>
+
+# Transparency (Data Formats)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img44.png)
+
+Initially I approached this challenge from a completely wrong angle - I thought that I had to decode the public key which would have some attribute that would point to the required subdomain. After a lot of frustrating time spent down this fruitless and pointless rabbit hole, I realised that I could use  <a href="https://transparencyreport.google.com/https/certificates?hl=en" target="_blank">this website made by Google</a> to find the subdomain of cryptohack.org (and this was so obvious from the hint they gave " "since 2018 Certificate Transparency has been enforced by Google Chrome. Every CA must publish all certificates that they issue to a log, which anyone can search." ).
+
+As shown in the image below, I found the subdomain (on the 3rd page of the results) which had the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img45.png)
+
+After entering the subdomain, the flag was there :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img46.png)
+
+**Flag :** crypto{thx_redpwn_for_inspiration}
+
