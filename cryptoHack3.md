@@ -93,7 +93,7 @@ As shown in the image above, I had to calculate a and b and the flag is the smal
 
 <br/>
 
-# Modular Arithmetic 1 (Mathematics)
+# Modular Arithmetic 2 (Mathematics)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img37.png)
 
