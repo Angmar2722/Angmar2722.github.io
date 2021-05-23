@@ -32,6 +32,6 @@ for i in range (p):
 
 When I run my program as shown below, the corresponding roots to a quadratic residue of 6 is 8 and 21. Therefore the flag is 8.
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img47.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img48.png)
 
 **Flag :** 8
