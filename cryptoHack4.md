@@ -48,7 +48,7 @@ As shown in the image above, I am supposed to find the quadratic residue from th
 
 After finding the quadratic residue, I have to calculate the square root. The Wikipedia article on <a href="https://en.wikipedia.org/wiki/Quadratic_residue" target="_blank">Quadratic Residues</a> explains that when solving x^2 congruent to a mod (p) where a is the quadratic residue and p is the odd prime, the root which gives x equals plus-minus ( a ^ (p+1) / 4 ) % p. This is summarized in the image below :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img50.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img51.png)
 
 So I wrote the following Python script in order to get the root :
 
@@ -76,7 +76,7 @@ print( pow(quadraticResidue, temp, prime) )
 
 And after running the program, I got the flag (the root) :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img51.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img50.png)
 
 **Flag :** 93291799125366706806545638475797430512104976066103610269938025709952247020061090804870186195285998727680200979853848718589126765742550855954805290253592144209552123062161458584575060939481368210688629862036958857604707468372384278049741369153506182660264876115428251983455344219194133033177700490981696141526
 
