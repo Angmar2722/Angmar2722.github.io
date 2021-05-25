@@ -18,10 +18,35 @@ As shown in the image above, I just had to enter the mathematical term for a one
 
 <br/>
 
-# Keyed Permutations (AES)
+# Resisting Bruteforce (AES)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img57.png)
 
 As shown in the image above, I just had to enter the name of the best current single-key attack against AES which is a Biclique attacl..
 
 **Flag :** crypto{Biclique}
+
+<br/>
+
+# Structure of AES (AES)
+
+```python
+
+def bytes2matrix(text):
+    """ Converts a 16-byte array into a 4x4 matrix.  """
+    return [list(text[i:i+4]) for i in range(0, len(text), 4)]
+
+def matrix2bytes(matrix):
+    """ Converts a 4x4 matrix into a 16-byte array.  """
+    ????
+
+matrix = [
+    [99, 114, 121, 112],
+    [116, 111, 123, 105],
+    [110, 109, 97, 116],
+    [114, 105, 120, 125],
+]
+
+print(matrix2bytes(matrix))
+
+```
