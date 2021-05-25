@@ -720,3 +720,30 @@ And after running the program you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img67.png)
 
 **Flag :** crypto{MYAES128}
+
+<br/>
+
+# Block Cipher Mode Starter (Block Cipher Modes)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img68.png)
+
+When you go the <a href="http://aes.cryptohack.org/block_cipher_starter/" target="_blank">link</a> shown in the image above, it takes you to a page which describes the challenge, shows the source code, has functions for interacting with the code and displaying output as well as useful debugging tools :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img69.png)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img70.png)
+
+When I cliked on `Encrypt_Flag()`, it gave me a hex encoded ciphertext :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img71.png)
+
+I then passed that ciphertext into the `decrypt` function and got some hex encoded data :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img72.png)
+
+And after using the ASCII-hex conversion tool on the page, I got the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img73.png)
+
+**Flag :** crypto{bl0ck_c1ph3r5_4r3_f457_!}
+
