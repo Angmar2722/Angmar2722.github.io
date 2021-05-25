@@ -749,7 +749,7 @@ And after using the ASCII-hex conversion tool on the page, I got the flag :
 
 <br/>
 
-# Block Cipher Mode Starter (Block Cipher Modes)
+# Passwords as Keys (Block Cipher Modes)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img74.png)
 
