@@ -530,7 +530,7 @@ def decrypt(key, ciphertext):
 # print(decrypt(key, ciphertext))
 
 ```
-I followed the diagram they provided in the image and started in reverse order. A few modifications to my previous functions such as sub_bytes and add_round_key because I realized that i was creating a new list when I could just modify the existing state (list / matrix). My code :
+I followed the diagram they provided in the image and started in reverse order. A few modifications to my previous functions such as sub_bytes and add_round_key because I realized that instead of creating a new list, I could just modify the existing state (list / matrix). My code :
 
 ```python
 
