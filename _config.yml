@@ -29,7 +29,7 @@ navbar-links:
     - General - Mathematics / Data Formats: "cryptoHack3"
     - Mathematics - Modular Math / Lattices: "cryptoHack4"
     - Block Ciphers - AES / Block Cipher Modes: "cryptoHack6"
-    - Block Ciphers - Block Ciphers - ECB / CBC / OFB / CTR / GCM / Other Modes / Other Ciphers: "cryptoHack7"
+    - Block Ciphers - ECB / CBC / OFB / CTR / GCM / Other Modes / Other Ciphers: "cryptoHack7"
   CTF Writeups:
     - Angstrom (April) 2021: "actf2021"
     - UMass (March) 2021: "umass2021"
