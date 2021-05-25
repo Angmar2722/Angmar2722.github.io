@@ -747,3 +747,98 @@ And after using the ASCII-hex conversion tool on the page, I got the flag :
 
 **Flag :** crypto{bl0ck_c1ph3r5_4r3_f457_!}
 
+<br/>
+
+# Block Cipher Mode Starter (Block Cipher Modes)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img74.png)
+
+When you go the <a href="http://aes.cryptohack.org/passwords_as_keys/">link</a> shown in the image above, it takes you to a page which describes the challenge, shows the source code, has functions for interacting with the code and displaying output as well as useful debugging tools, just like the last challenge. 
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+import hashlib
+import random
+
+
+# /usr/share/dict/words from
+# https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words
+with open("/usr/share/dict/words") as f:
+    words = [w.strip() for w in f.readlines()]
+keyword = random.choice(words)
+
+KEY = hashlib.md5(keyword.encode()).digest()
+FLAG = ?
+
+
+@chal.route('/passwords_as_keys/decrypt/<ciphertext>/<password_hash>/')
+def decrypt(ciphertext, password_hash):
+    ciphertext = bytes.fromhex(ciphertext)
+    key = bytes.fromhex(password_hash)
+
+    cipher = AES.new(key, AES.MODE_ECB)
+    try:
+        decrypted = cipher.decrypt(ciphertext)
+    except ValueError as e:
+        return {"error": str(e)}
+
+    return {"plaintext": decrypted.hex()}
+
+
+@chal.route('/passwords_as_keys/encrypt_flag/')
+def encrypt_flag():
+    cipher = AES.new(KEY, AES.MODE_ECB)
+    encrypted = cipher.encrypt(FLAG.encode())
+
+    return {"ciphertext": encrypted.hex()}
+    
+```
+First, I used `Encrypt_Flag()` function to get the flag ciphertext. Then I used looped through each word in the dictionary and for each word, converted it to its md5 hash and then inputted this flag ciphertext and hash into the `decrypt` function provided. I then compared the decoded string (I had to decode in latin-1 as opposed ot utf-8) to the the flag format "crypto{". If it matched, I would print the flag.
+
+My code : 
+
+```python
+
+from Crypto.Cipher import AES
+import hashlib
+import random
+
+flagCipherText = "c92b7734070205bdf6c0087a751466ec13ae15e6f1bcdd3f3a535ec0f4bbae66"
+
+# /usr/share/dict/words from
+# https://gist.githubusercontent.com/wchargin/8927565/raw/d9783627c731268fb2935a731a618aa8e95cf465/words
+with open("/usr/share/dict/words") as f:
+    words = [w.strip() for w in f.readlines()]
+
+def decrypt(ciphertext, password_hash):
+    ciphertext = bytes.fromhex(ciphertext)
+    key = bytes.fromhex(password_hash)
+
+    cipher = AES.new(key, AES.MODE_ECB)
+    try:
+        decrypted = cipher.decrypt(ciphertext)
+    except ValueError as e:
+        return {"error": str(e)}
+
+    return decrypted.hex()
+
+for i in range ( len(words) ):
+    keyword = words[i]
+    keyGuess = hashlib.md5(keyword.encode()).digest()
+    keyGuess = keyGuess.hex()
+    guessFlag = decrypt(flagCipherText, keyGuess)
+    decoded = bytes.fromhex(guessFlag).decode('latin-1')
+    if (decoded.isprintable() and decoded[0] == "c" and decoded[1] == "r" and decoded[2] == "y" and decoded[3] == "p" and decoded[4] == "t" and decoded[5] == "o" and decoded[6] == "{"):
+        print(decoded)
+
+```
+
+And after running the program, I got the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img75.png)
+
+**Flag :** crypto{k3y5__r__n07__p455w0rdz?}
+
