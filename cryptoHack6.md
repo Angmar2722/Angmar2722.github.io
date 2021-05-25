@@ -84,3 +84,82 @@ And after running the prgram, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img59.png)
 
 **Flag :** crypto{inmatrix}
+
+<br/>
+
+# Round Keys (AES)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img60.png)
+
+As shown in the image above, I just had to XOR each byte of the current state with the corresponding byte of the round key and then use the matrix2bytes function from the previous challenge to output the string (the flag).
+
+Original Code Provided :
+
+```python
+
+state = [
+    [206, 243, 61, 34],
+    [171, 11, 93, 31],
+    [16, 200, 91, 108],
+    [150, 3, 194, 51],
+]
+
+round_key = [
+    [173, 129, 68, 82],
+    [223, 100, 38, 109],
+    [32, 189, 53, 8],
+    [253, 48, 187, 78],
+]
+
+
+def add_round_key(s, k):
+    ???
+
+
+print(add_round_key(state, round_key))
+
+```
+
+New Code :
+
+```python
+
+state = [
+    [206, 243, 61, 34],
+    [171, 11, 93, 31],
+    [16, 200, 91, 108],
+    [150, 3, 194, 51],
+]
+
+round_key = [
+    [173, 129, 68, 82],
+    [223, 100, 38, 109],
+    [32, 189, 53, 8],
+    [253, 48, 187, 78],
+]
+
+def matrix2bytes(matrix):
+    text = ""
+    for i in range ( len(matrix) ):
+        for j in range ( len(matrix[i]) ):
+            text = text + chr(matrix[i][j]  )
+    print(text)
+
+def add_round_key(s, k):
+    newMatrix = list( list( 0 for i in range ( len(s) ) ) for i in range( len(s) ) )
+    for i in range ( len(s) ):
+        for j in range ( len(s[i]) ):
+            newMatrix[i][j] = s[i][j] ^ k[i][j]
+    newMatrix = matrix2bytes(newMatrix)
+    print(newMatrix)
+
+print(add_round_key(state, round_key))
+
+```
+
+And after running the prgram, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img61.png)
+
+**Flag :** crypto{r0undk3y}
+
