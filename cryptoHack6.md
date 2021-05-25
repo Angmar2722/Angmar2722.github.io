@@ -30,6 +30,12 @@ As shown in the image above, I just had to enter the name of the best current si
 
 # Structure of AES (AES)
 
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img58.png)
+
+As shown in the image above, I just had to convert the matrix of ASCII characters back to a 16 byte string. 
+
+Original code provided :
+
 ```python
 
 def bytes2matrix(text):
@@ -50,3 +56,31 @@ matrix = [
 print(matrix2bytes(matrix))
 
 ```
+
+New Code :
+
+```python
+
+def matrix2bytes(matrix):
+    text = ""
+    for i in range ( len(matrix) ):
+        for j in range ( len(matrix[i]) ):
+            text = text + chr(matrix[i][j]  )
+    print(text)
+
+matrix = [
+    [99, 114, 121, 112],
+    [116, 111, 123, 105],
+    [110, 109, 97, 116],
+    [114, 105, 120, 125],
+]
+
+print(matrix2bytes(matrix))
+
+```
+
+And after running the prgram, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img59.png)
+
+**Flag :** crypto{inmatrix}
