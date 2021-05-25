@@ -10,3 +10,9 @@ The Block Ciphers section consists of 22 challenges. The challenges are subdivid
 
 # Keyed Permutations (AES)
 
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img56.png)
+
+As shown in the image above, I just had to enter the mathematical term for a one-to-one correspondence, a bijection.
+
+**Flag :** crypto{bijection}
+
