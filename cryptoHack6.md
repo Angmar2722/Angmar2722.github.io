@@ -753,7 +753,7 @@ And after using the ASCII-hex conversion tool on the page, I got the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img74.png)
 
-When you go the <a href="http://aes.cryptohack.org/passwords_as_keys/">link</a> shown in the image above, it takes you to a page which describes the challenge, shows the source code, has functions for interacting with the code and displaying output as well as useful debugging tools, just like the last challenge. 
+When you go the <a href="http://aes.cryptohack.org/passwords_as_keys/" target="_blank">link</a> shown in the image above, it takes you to a page which describes the challenge, shows the source code, has functions for interacting with the code and displaying output as well as useful debugging tools, just like the last challenge. 
 
 Source Code Provided :
 
