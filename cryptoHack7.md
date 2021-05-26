@@ -136,7 +136,7 @@ I guess the "penguins hate ECB" flag relates to the iconic <a href="https://blog
 
 <br/>
 
-# ECB Oracle (ECB)
+# ECB CBC WTF (CBC)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img80.png)
 
