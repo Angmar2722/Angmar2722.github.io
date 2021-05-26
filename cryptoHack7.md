@@ -53,4 +53,79 @@ Getting the key length wasn't the main part of solving the challenge. What I did
 
 Now if I got the first byte of the flag, I could decrease my input to 46 zeroes and compare the resulting hex ciphertext to the ciphertext resulting from 46 zeroes and the first byte of the flag as well as an ASCII character (I used a loop to go from 33 to 126 in ASCII and if the hex ciphertext matched, that would be the byte of the flag). So each time I got an additonal byte of the flag, I could add it to the flag variable and then reduce the number of zeroes input by one, check the ciphertext and compare it with the ciphertext resulting from the equivalent reduced number of zeroes input along with the flag currently known as well as one byte for the ASCII character guess (the new byte of the flag to get). So each time, I am comparing two hex ciphertexts and if they match, the ASCII character which produced that hex is the byte of the flag. I am using the property of ECB where idential plaintexts yield idential ciphertexts with the same key, which highlights how unsafe ECB really is. Even though the AES is implemented correctly, the weakness of ECB allows me to get the flag.
 
+It is important to note that I was only focusing on the third block and effectively moving the flag and zeroes input down by one each time. The program took around 31 minutes to run, clearly it could be optimized way, way more and reduce the runtime. And since I was using the wrong flag length (26 instead of 25), the program never stopped as I would only stop it if the flag length was 26 (so after getting the flag I had to exit manually). Next time, it would be better to put the correct flag length (obviously) and maybe even a check for the "}" as the closing brace is the last part of the flag in most challenges in CryptoHack and CTFs. So if I reached the closing brace, I could exit the program. Most of what I learnt came from <a href="https://godiego.tech/posts/AES-128-padding-attack/" target="_blank">this</a> excellent CTF writeup.
+
+This is the code that I wrote :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+import requests
+
+def getLength(guess):
+    payloadURL = "http://aes.cryptohack.org/ecb_oracle/encrypt/" + guess + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    return getCiphertextLengthInBytes( temp['ciphertext'] )
+
+def getCiphertextLengthInBytes(ciphertext):
+    return len(ciphertext) // 2
+
+def getHex(guess):
+    payloadURL = "http://aes.cryptohack.org/ecb_oracle/encrypt/" + guess + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    temp = temp['ciphertext']
+    return temp[64:96]
+
+length = 0
+
+def getFlagLength():
+    c = 1
+    guess = "00" * c
+    originalLength = getLength(guess)
+    print(originalLength)
+    check = True
+    c = 1
+    while (check == True):
+        guess = "00" * c
+        length = getLength(guess)
+        if(length == originalLength):
+            c = c + 1
+        elif (length != originalLength):
+            c = c - 1
+            check = False
+            break
+    return (originalLength - c)
+        
+#flagLength = getFlagLength() 
+#print(flagLength)
+
+flag = ""
+
+end = True 
+
+while (end == True):
+
+    payload = "00"*(47-len(flag))
+    hex = getHex(payload)
+
+    for i in range(33, 126):
+        temp = flag + chr(i)
+        payload = "00"*(47-len(flag)) + temp.encode("utf-8").hex()
+        if(hex == getHex(payload)):
+            flag = flag + chr(i)
+            print ("Flag: ", flag)
+            if (len(flag) == 26):
+                break
+        if (len(flag) == 26):
+            end = False
+
+```
+
+And after running the program, you slowly get the flag (I had to manually quit as my flag length was wrong, but the code still worked well enough) :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img77.png)
+
 **Flag :** crypto{p3n6u1n5_h473_3cb}
