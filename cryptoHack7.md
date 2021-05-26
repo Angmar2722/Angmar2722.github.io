@@ -129,3 +129,8 @@ And after running the program, you slowly get the flag (I had to manually quit a
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img77.png)
 
 **Flag :** crypto{p3n6u1n5_h473_3cb}
+
+I guess the "penguins hate ECB" flag relates to the iconic <a href="https://blog.filippo.io/the-ecb-penguin/" target="_blank">ECB Penguin</a>.
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img78.png)
+
