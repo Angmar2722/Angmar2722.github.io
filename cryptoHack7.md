@@ -138,7 +138,7 @@ I guess the "penguins hate ECB" flag relates to the iconic <a href="https://blog
 
 # ECB CBC WTF (CBC)
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img80.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img81.png)
 
 When you go the <a href="http://aes.cryptohack.org/ecbcbcwtf/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
 
