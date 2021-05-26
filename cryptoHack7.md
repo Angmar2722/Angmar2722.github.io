@@ -134,3 +134,93 @@ I guess the "penguins hate ECB" flag relates to the iconic <a href="https://blog
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img78.png)
 
+<br/>
+
+# ECB Oracle (ECB)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img80.png)
+
+When you go the <a href="http://aes.cryptohack.org/ecbcbcwtf/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img80.png)
+
+Original Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+
+
+KEY = ?
+FLAG = ?
+
+
+@chal.route('/ecbcbcwtf/decrypt/<ciphertext>/')
+def decrypt(ciphertext):
+    ciphertext = bytes.fromhex(ciphertext)
+
+    cipher = AES.new(KEY, AES.MODE_ECB)
+    try:
+        decrypted = cipher.decrypt(ciphertext)
+    except ValueError as e:
+        return {"error": str(e)}
+
+    return {"plaintext": decrypted.hex()}
+
+
+@chal.route('/ecbcbcwtf/encrypt_flag/')
+def encrypt_flag():
+    iv = os.urandom(16)
+
+    cipher = AES.new(KEY, AES.MODE_CBC, iv)
+    encrypted = cipher.encrypt(FLAG.encode())
+    ciphertext = iv.hex() + encrypted.hex()
+
+    return {"ciphertext": ciphertext}
+
+```
+
+So what we have here is a decryption function using CBC (Cipher Block Chaining) and decryption using ECB. The diagram they provided was very useful. What I did was first divide the flag ciphertext into 3 blocks (16 bytes of 32 hex characters each). I passed in the last block into the decryption function and XORed that value with the second block of ciphertext (as that is how the cipher block chaining in CBC works). This would give me the last part of the flag. I then did the same thing, I passed in the second cipher block into the decrypt function and XORed that value with the first block of the flag cipher. By then the entirety of the flag was printed, I didn't even have to get the first block of plaintext!
+
+The code that I wrote :
+
+```python
+
+import requests
+import textwrap
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def xor(x, y):
+    return '{:x}'.format(x ^ y)
+
+def getHex(input):
+    payloadURL = "http://aes.cryptohack.org/ecbcbcwtf/decrypt/" + input + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    temp = temp['plaintext']
+    return temp
+
+flagCipher = "9c08a7f404a18e41792f3e0ba29c2ee211402550da530e5f877ab7b43be68ac287759e09226c9d8d2556e8d14cc20dfc"
+
+flagCipherList = textwrap.wrap(flagCipher, 32)
+
+halfStep = getHex(flagCipherList[2])
+lastPlaintextBlock = xor( hexToInt(halfStep), hexToInt(flagCipherList[1]) )
+
+flag = lastPlaintextBlock
+
+halfStep = getHex(flagCipherList[1])
+lastPlaintextBlock = xor( hexToInt(halfStep), hexToInt(flagCipherList[0]) )
+
+flag = lastPlaintextBlock + flag
+
+print(bytes.fromhex(flag).decode('utf-8'))
+
+```
+And after running the program, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img79.png)
+
+**Flag :** crypto{3cb_5uck5_4v01d_17_!!!!!}
