@@ -94,7 +94,7 @@ def getFlagLength():
         if(length == originalLength):
             c = c + 1
         elif (length != originalLength):
-            c = c - 1
+            #Originally wrote this (which increased flag length by 1) : c = c - 1
             check = False
             break
     return (originalLength - c)
