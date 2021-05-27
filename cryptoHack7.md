@@ -117,9 +117,9 @@ while (end == True):
         if(hex == getHex(payload)):
             flag = flag + chr(i)
             print ("Flag: ", flag)
-            if (len(flag) == 26):
+            if (len(flag) == flagLength):
                 break
-        if (len(flag) == 26):
+        if (len(flag) == flagLength):
             end = False
 
 ```
