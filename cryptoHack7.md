@@ -224,3 +224,136 @@ And after running the program, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img79.png)
 
 **Flag :** crypto{3cb_5uck5_4v01d_17_!!!!!}
+
+<br/>
+
+# Flipping Cookie (CBC)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img82.png)
+
+When you go the <a href="http://aes.cryptohack.org/flipping_cookie/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img83.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from datetime import datetime, timedelta
+
+
+KEY = ?
+FLAG = ?
+
+
+@chal.route('/flipping_cookie/check_admin/<cookie>/<iv>/')
+def check_admin(cookie, iv):
+    cookie = bytes.fromhex(cookie)
+    iv = bytes.fromhex(iv)
+
+    try:
+        cipher = AES.new(KEY, AES.MODE_CBC, iv)
+        decrypted = cipher.decrypt(cookie)
+        unpadded = unpad(decrypted, 16)
+    except ValueError as e:
+        return {"error": str(e)}
+
+    if b"admin=True" in unpadded.split(b";"):
+        return {"flag": FLAG}
+    else:
+        return {"error": "Only admin can read the flag"}
+
+
+@chal.route('/flipping_cookie/get_cookie/')
+def get_cookie():
+    expires_at = (datetime.today() + timedelta(days=1)).strftime("%s")
+    cookie = f"admin=False;expiry={expires_at}".encode()
+
+    iv = os.urandom(16)
+    padded = pad(cookie, 16)
+    cipher = AES.new(KEY, AES.MODE_CBC, iv)
+    encrypted = cipher.encrypt(padded)
+    ciphertext = iv.hex() + encrypted.hex()
+
+    return {"cookie": ciphertext}
+
+```
+
+So the objective of this challenge is to change the admin parameter in the cookie from false to true. If that cookie (admin = true) along with the initialization vector (IV) is then inputted into the decrypt function, you get the flag. This kind of exploit is known as a CBC byte/bit flipping attack. This <a href="" target="_blank">resource</a> beautifully explains how the attack works while the image below came from this <a href="https://resources.infosecinstitute.com/topic/cbc-byte-flipping-attack-101-approach/" target="_blank">link</a>.
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img85.png)
+
+The code that I wrote :
+
+```python
+
+import requests
+import textwrap
+from datetime import datetime, timedelta
+from Crypto.Util.Padding import pad, unpad
+import binascii
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def xor(x, y):
+    return '{:x}'.format(x ^ y)
+
+def decrypt(cookie, iv):
+    payloadURL = "http://aes.cryptohack.org/flipping_cookie/check_admin/" + cookie + "/" + iv + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    flag = temp['flag']
+    return flag
+
+getCookieURL = "http://aes.cryptohack.org/flipping_cookie/get_cookie/" 
+r = requests.get(getCookieURL)
+temp = r.json()
+cookie = temp['cookie']
+
+cookieCipherList = textwrap.wrap(cookie, 32)
+iv = cookieCipherList[0]
+
+print("")
+print("The IV is                             : ", iv)
+
+expires_at = (datetime.today() + timedelta(days=1)).strftime("%s")
+cookieTest = f"admin=False;expiry={expires_at}".encode()
+print("Original Cookie Format                : ", cookieTest)
+cookieTest = pad(cookieTest, 16)
+print("Padded Cookie Format                  : ", cookieTest)
+
+blockToExploit = cookieTest[0 : 16]
+print("First block which should be exploited : ", blockToExploit)
+
+print("The position of the 'false' in admin=false is 6 to 10 (10 inclusive)")
+
+ivByteList = textwrap.wrap(iv, 2)
+
+word = "false"
+word2 = "true;"
+c = 0
+
+for i in range (6, 11):
+    temp = xor(  ord(word[c]), ord(word2[c])  )
+    temp2 = hexToInt(ivByteList[i])
+    ivByteList[i] = xor(hexToInt(temp), temp2)
+    c = c + 1
+
+finalIV = ''.join(ivByteList)
+print("Exploited IV to be injected           : ", finalIV)
+print(finalIV)
+print("")
+
+flag =  decrypt(cookieCipherList[1] + cookieCipherList[2], finalIV)
+print(flag)
+
+```
+
+And after running the program, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img84.png)
+
+**Flag :** crypto{4u7h3n71c4710n_15_3553n714l}
