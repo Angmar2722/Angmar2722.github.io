@@ -281,7 +281,7 @@ def get_cookie():
 
 ```
 
-So the objective of this challenge is to change the admin parameter in the cookie from false to true. If that cookie (admin = true) along with the initialization vector (IV) is then inputted into the decrypt function, you get the flag. This kind of exploit is known as a CBC byte/bit flipping attack. This <a href="" target="_blank">resource</a> beautifully explains how the attack works while the image below came from this <a href="https://resources.infosecinstitute.com/topic/cbc-byte-flipping-attack-101-approach/" target="_blank">link</a>.
+So the objective of this challenge is to change the admin parameter in the cookie from false to true. If that cookie (admin = true) along with the initialization vector (IV) is then inputted into the decrypt function, you get the flag. This kind of exploit is known as a CBC byte/bit flipping attack. This <a href="https://resources.infosecinstitute.com/topic/cbc-byte-flipping-attack-101-approach/" target="_blank">resource</a> beautifully explains how the attack works while the image below came from this <a href="https://crypto.stackexchange.com/questions/66085/bit-flipping-attack-on-cbc-mode" target="_blank">link</a>.
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img85.png)
 
