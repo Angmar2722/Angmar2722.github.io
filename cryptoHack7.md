@@ -367,3 +367,113 @@ And after running the program, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img84.png)
 
 **Flag :** crypto{4u7h3n71c4710n_15_3553n714l}
+
+<br/>
+
+# Symmetry (OFB)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img86.png)
+
+When you go the <a href="http://aes.cryptohack.org/symmetry/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img87.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+
+
+KEY = ?
+FLAG = ?
+
+
+@chal.route('/symmetry/encrypt/<plaintext>/<iv>/')
+def encrypt(plaintext, iv):
+    plaintext = bytes.fromhex(plaintext)
+    iv = bytes.fromhex(iv)
+    if len(iv) != 16:
+        return {"error": "IV length must be 16"}
+
+    cipher = AES.new(KEY, AES.MODE_OFB, iv)
+    encrypted = cipher.encrypt(plaintext)
+    ciphertext = encrypted.hex()
+
+    return {"ciphertext": ciphertext}
+
+
+@chal.route('/symmetry/encrypt_flag/')
+def encrypt_flag():
+    iv = os.urandom(16)
+
+    cipher = AES.new(KEY, AES.MODE_OFB, iv)
+    encrypted = cipher.encrypt(FLAG.encode())
+    ciphertext = iv.hex() + encrypted.hex()
+
+    return {"ciphertext": ciphertext}
+    
+```
+
+The way OFB (Output Feedback Mode) works is shown in the image below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img89.png)
+
+So an IV is encrypted using a block cipher like AES (lets call this is the encrypted IV or eIV) and then XORed with the plaintext block in order to get the ciphertext block. And the next block uses the previous block's encrypted IV block (eIV) and encrypts that and XOrs it with the corresponding plaintext block to get the next ciphertext block and so on. So the block that gets encrypted is the IV instead of the plaintext (that is just XORed later with the encrypted IV).
+
+So in our code, we have two functions. The encrypt_flag function returns the ciphertext of which the first 16 bytes is the IV and the next 33 bytes (so the last byte or 33rd byte is the "}" in the flag format "crypto{...}" ) is the flag. What we have to do is get each block's encrypted IV (eIV) and then XOR that with the corresponding ciphertext block which we got from encrypt_flag in order to get each block of the flag.
+
+To get the first eIV, what you could do is create a dummy or test plaintext which you pass into the other encrypt function that they provided along with the IV used for the flag encryption in order to get some ciphertext. XORing that ciphertext block with the corresponding test plaintext block yields the eIV. You could do this for the next block as in this challenge, we are basically looking at 2 blocks or 32 bytes as the last byte is the "}". So the dummy plaintext block should be 32 bytes and when you XOR the second ciphertext block (which you get by passing the 32 byte dummy text into the encrypt function) with the second plaintext block from the test/dummy input, you get the next encrypted IV. So now that we have both encrypted IVs, we can XOR each eIV with the corresponding flag cipher block in order to get the flag. I used a loop to do this. And once we get the flag hex, we decode it to ASCII and add the "}" in order to get the complete flag.
+
+The code that I wrote :
+
+```python
+
+import requests
+import textwrap
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def xor(x, y):
+    return '{:x}'.format(x ^ y)
+
+def encryptFlag():
+    payloadURL = "http://aes.cryptohack.org/symmetry/encrypt_flag/" 
+    r = requests.get(payloadURL)
+    temp = r.json()
+    return temp['ciphertext']
+
+def getCipher(plaintext, iv):
+    payloadURL = "http://aes.cryptohack.org/symmetry/encrypt/" + plaintext + "/" + iv + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    return temp['ciphertext']
+
+receivedCipher = encryptFlag()
+iv = receivedCipher[0:32]
+
+flagCipher = receivedCipher[32:]
+firstBlockFlagCipher = flagCipher[0:32]
+secondBlockFlagCipher = flagCipher[32:64]
+thirdBlockFlagCipher = flagCipher[64:]
+blockFlagCipherList = [firstBlockFlagCipher, secondBlockFlagCipher, thirdBlockFlagCipher]
+
+testPlaintext = ("peruperuperuperu"*2).encode("utf-8").hex()
+testCiphertext = getCipher(testPlaintext, iv)
+testCiphertextList = textwrap.wrap(testCiphertext, 32)
+
+flag = ""
+
+for i in range (2):
+    eIV = xor(hexToInt(testCiphertextList[i]), hexToInt(testPlaintext[0:32]))
+    flag = flag + xor(hexToInt(eIV), hexToInt(blockFlagCipherList[i]))
+
+print(bytes.fromhex(flag).decode('utf-8') + "}")
+
+```
+And after running the program, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img88.png)
+
+**Flag :** crypto{0fb_15_5ymm37r1c4l_!!!11!}
