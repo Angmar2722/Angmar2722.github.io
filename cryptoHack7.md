@@ -370,6 +370,136 @@ And after running the program, you get the flag :
 
 <br/>
 
+# Lazy CBC (CBC)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img90.png)
+
+When you go the <a href="http://aes.cryptohack.org/symmetry/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img91.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+
+
+KEY = ?
+FLAG = ?
+
+
+@chal.route('/lazy_cbc/encrypt/<plaintext>/')
+def encrypt(plaintext):
+    plaintext = bytes.fromhex(plaintext)
+    if len(plaintext) % 16 != 0:
+        return {"error": "Data length must be multiple of 16"}
+
+    cipher = AES.new(KEY, AES.MODE_CBC, KEY)
+    encrypted = cipher.encrypt(plaintext)
+
+    return {"ciphertext": encrypted.hex()}
+
+
+@chal.route('/lazy_cbc/get_flag/<key>/')
+def get_flag(key):
+    key = bytes.fromhex(key)
+
+    if key == KEY:
+        return {"plaintext": FLAG.encode().hex()}
+    else:
+        return {"error": "invalid key"}
+
+
+@chal.route('/lazy_cbc/receive/<ciphertext>/')
+def receive(ciphertext):
+    ciphertext = bytes.fromhex(ciphertext)
+    if len(ciphertext) % 16 != 0:
+        return {"error": "Data length must be multiple of 16"}
+
+    cipher = AES.new(KEY, AES.MODE_CBC, KEY)
+    decrypted = cipher.decrypt(ciphertext)
+
+    try:
+        decrypted.decode() # ensure plaintext is valid ascii
+    except UnicodeDecodeError:
+        return {"error": "Invalid plaintext: " + decrypted.hex()}
+
+    return {"success": "Your message has been received"}
+    
+```
+So the objective of this challenge is to find the key as the key is used as the IV. This <a href="https://cedricvanrompay.gitlab.io/cryptopals/challenges/27.html" target="_blank">resource</a> beautifully explains how I could recover the IV given that the key is reused as the IV throughout the encryption process.
+
+This image below (from the resource linked above) more or less explains what I have to do :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img92.png)
+
+So I have three functions in this challenge. The first function encrypt allows me to input any plaintext (in hex) of my choosing and as long as it is an integral multiple of 16 (one block size), it will output the encrypted text (using the key as key as well as IV). So I can get any encrypted text from an appropriate plaintext. My second function get_flag takes in my key (IV - the terms key and IV will be used interchangeably in this challenge) and if it matches the actual key, it will print out the flag in hex. My third function is called receive and it takes in a ciphertext but it is really a decryption function. If the input ciphertext is an integral multiple of 16, then this function would process it in two ways. After decrypting the ciphertext, if the decreypted text is printable (if it is ASCII characters), it will print "Your message has been received". If the decrypted text is not printable, it will print "Invalid plaintext" and more importantly the decrypted hex. So I need to make sure that whatever I input into this receive function is not printable so that I can utilise the decrypted hex.
+
+The code that I wrote :
+
+```python
+
+from typing import final
+import requests
+import textwrap
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def xor(x, y):
+    return '{:x}'.format(x ^ y)
+
+def encrypt(c):
+    if len(c) % 16 != 0:
+        return "Data length must be multiple of 16"
+    payloadURL = "http://aes.cryptohack.org/lazy_cbc/encrypt/" + c + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    cipher = temp['ciphertext']
+    return cipher
+
+def receive(c):
+    if len(c) % 16 != 0:
+        return "Data length must be multiple of 16"
+    payloadURL = "http://aes.cryptohack.org/lazy_cbc/receive/" + c + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    temp = temp['error'] 
+    return temp[19:]
+
+def getFlag(key):
+    payloadURL = "http://aes.cryptohack.org/lazy_cbc/get_flag/" + key + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    return (temp['plaintext'] )
+
+unprintableHex = "12339312123393121233931212339312"
+encryptedBlocks = encrypt(unprintableHex*3)
+encryptedBlockList = textwrap.wrap(encryptedBlocks, 32)
+encryptedBlockList[1] = "0" * 32
+encryptedBlockList[2] = encryptedBlockList[0]
+encryptedBlocks = ''.join(encryptedBlockList)
+
+temp = receive(encryptedBlocks)
+temp = textwrap.wrap(temp, 32)
+decryptedBlockOne = temp[2]
+
+keyOrIV = xor(hexToInt(decryptedBlockOne), hexToInt(unprintableHex))
+
+flag = getFlag(keyOrIV)
+print(bytes.fromhex(flag).decode('utf-8'))
+
+```
+
+And after running the program, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img93.png)
+
+**Flag :** crypto{50m3_p30pl3_d0n7_7h1nk_IV_15_1mp0r74n7_?}
+
+<br/>
+
 # Symmetry (OFB)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img86.png)
@@ -477,3 +607,7 @@ And after running the program, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img88.png)
 
 **Flag :** crypto{0fb_15_5ymm37r1c4l_!!!11!}
+
+<br/>
+
+
