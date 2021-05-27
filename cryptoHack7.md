@@ -285,6 +285,10 @@ So the objective of this challenge is to change the admin parameter in the cooki
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img85.png)
 
+So in order to get the flag, I have to change the previous block of ciphertext. But in this case, the first block contains the admin parameter and value so this means that I have to modify the IV. When you get the cookie by calling the get_cookie function, it returns 48 bytes of which the first 16 bytes is the IV, the next 16 is block 1 (which contains admin) and then the next 16 is block 2. Also, the text is padded but that only effects the second block as the original cookie size is 29 bytes and the padded cookie adds 3 extra bytes at the end of the second block. 
+
+Suppose you are encrypting the first block using CBC and the resulting ciphertext is C1. When decrypting in CBC, the second block of plaintext (P2) is calculated by C1 XOR C2 (with C2 being the decrypted block from the input cipher of block 2). The byte flip attack is based on the fact that when you change a byte at a particular position in a block and then XOR with another block, the byte that you change in a ciphertext will ONLY affect a byte at the same offset of next plaintext. This means that if I changed the second byte of C1, when XORed with C2 to give P2, the second byte of P2 is changed. So if I do C1(some byte position) XOR C2(some byte position) XOR (some value which is in the known plaintext), that would give me 0 as C1 XOR C2 would yield the plaintext at the byte position specified and that plaintext XORed with the known plaintext at that position would give 0 (as 1 XOR 1 gives 0). And if that calculation ( C1(some position) XOR C2(some position) XOR (known value at the position) = 0) is XORed with a value that you want to change or flip to at that byte position, 0 XOR that value would yield that value. 
+
 The code that I wrote :
 
 ```python
