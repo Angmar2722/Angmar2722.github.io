@@ -55,7 +55,7 @@ Now if I got the first byte of the flag, I could decrease my input to 46 zeroes 
 
 It is important to note that I was only focusing on the third block and effectively moving the flag and zeroes input down by one each time. The program took around 31 minutes to run, clearly it could be optimized way, way more and reduce the runtime. And since I was using the wrong flag length (26 instead of 25), the program never stopped as I would only stop it if the flag length was 26 (so after getting the flag I had to exit manually). Next time, it would be better to put the correct flag length (obviously) and maybe even a check for the "}" as the closing brace is the last part of the flag in most challenges in CryptoHack and CTFs. So if I reached the closing brace, I could exit the program. Most of what I learnt came from <a href="https://godiego.tech/posts/AES-128-padding-attack/" target="_blank">this</a> excellent CTF writeup.
 
-This is the code that I wrote :
+This is the code that I wrote (Flag length error is corrected in this version) :
 
 ```python
 
