@@ -614,4 +614,134 @@ And after running the program, you get the flag :
 
 <br/>
 
+# Bean Counter (CTR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img94.png)
+
+When you go the <a href="http://aes.cryptohack.org/bean_counter/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img95.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+
+
+KEY = ?
+
+
+class StepUpCounter(object):
+    def __init__(self, value=os.urandom(16), step_up=False):
+        self.value = value.hex()
+        self.step = 1
+        self.stup = step_up
+
+    def increment(self):
+        if self.stup:
+            self.newIV = hex(int(self.value, 16) + self.step)
+        else:
+            self.newIV = hex(int(self.value, 16) - self.stup)
+        self.value = self.newIV[2:len(self.newIV)]
+        return bytes.fromhex(self.value.zfill(32))
+
+    def __repr__(self):
+        self.increment()
+        return self.value
+
+
+
+@chal.route('/bean_counter/encrypt/')
+def encrypt():
+    cipher = AES.new(KEY, AES.MODE_ECB)
+    ctr = StepUpCounter()
+
+    out = []
+    with open("challenge_files/bean_flag.png", 'rb') as f:
+        block = f.read(16)
+        while block:
+            keystream = cipher.encrypt(ctr.increment())
+            xored = [a^b for a, b in zip(block, keystream)]
+            out.append(bytes(xored).hex())
+            block = f.read(16)
+
+    return {"encrypted": ''.join(out)}
+    
+```
+
+So how CTR (counter) mode works is that a nonce (something like an IV) is used where for the first block of data, a nonce is fed into the encryption algorithm and the resulting encrypted nonce is XORed with the plaintext. For the next block of data, the nonce is incremented by one, fed into the encryptor and this encrypted nonce is XORed with the second block of plaintext and so on. So instead of encrypting the plaintext, in CTR mode, the nonce is encrypted and incremented for the next block.
+
+In the source code provided, we have a function `encrypt()` which encrypts the bytes of the `bean_flag.png` file and outputs the ciphertext as well as a poorly written `StepUpCounter` class.
+
+The cipher is generated using ECB and a `ctr` object (initialized in the encrypt function) is created from the `StepUpCounter` class. The glaringly obvious mistake is evident in the code for this class. When the `ctr` object is created In the encrypt function), no initialization value is passed in so in the `init` function for the class, the default value of os.urandom(16) is used for the `value` attribute and the default value of false is used for the `step_up` parameter. When the `increment` function is called for this class, since the `ctr` object has initialized `step_up` as false, for increment, `self.newIV = hex(int(self.value, 16) - self.stup)` as the self.stup != true but rather false. And since you are subtracting self.stup which is false from the value and converting that to hex, that is effectively just the value and nothing changes as value - false equals value. This value in hex is also the newIV and this is returned. The zfill function simply adds zeroes to the left of the string until the string is equal to the width specified in zfill. So increment is returning the same value each time.
+
+Since the ctr object is initialized outside the opening of the bean_glag image file, it means that a single value (the 16 byte os.urandom) is initialized. This same is value is used again and again each time 16 bytes (a block) is read from the imgae. So each time a block is read, the keystream parameter is just the same encrypted value passed from the StepUpCounter (so this is the encrypted nonce or IV or whatever you want to call it). This same eIV (I am calling it an encrypted IV) is used again and again (reused) and each byte of it is XORed with a corresponding byte from the image using the zip function. So the first byte of eIV is XORed with the first byte of the block read, second byte of eIV is XORed with the second byte of the block currently being read and so on.
+
+In this program, ECB is used to encrypt the IV to give eIV but this program still behaves like a ctr mode because this eIV is then XORed with the plaintext (the image flag bytes) to give corresponding ciphertext blocks. So if eIV XOR plaintext block gives ciphertext block, and since I know the ciphertext block (as the encrypt function outputs that), if I can find eIV, I can do eIV XOR ciphertext block to get the corresponding plaintext block (the image flag bytes in this case).
+
+So we know that the image is a PNG file. In a PNG file, the first 16 bytes are always the same, they have a standard header ( b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR'). I checked this when I ran my program and tested it with two different PNGs and printed out the first 16 bytes. So if the first 16 bytes are the same for all PNGs, we can get the first plaintext block (this header). So I can get the eIV as eIV = P1 (first plaintext block) XOR C1 (the first ciphertext block we received from encrypt). So now that we have eIV, I can XOR each ciphertext block with the eIV to get the corresponding plaintext block. I also used zfill(32) incase the decrypted block (the plaintext) was not 32 hex characters (or 16 bytes). I then created a new image file from this decrypted block and then got the flag when I opened that image file.
+
+The code that I wrote :
+
+```python
+
+import requests
+import textwrap
+
+def hexToInt(hexString):
+    return int(hexString, 16)
+
+def xor(x, y):
+    return '{:x}'.format(x ^ y)
+
+def encrypt():
+    payloadURL = "http://aes.cryptohack.org/bean_counter/encrypt/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    cipher = temp['encrypted']
+    return cipher
+
+def test():
+    with open("bean_flag.png", 'rb') as f:
+        block = f.read(16)
+        print("The first 16 bytes (block) of a png is : ", block)
+
+def test2():
+    with open("bean_flag2.png", 'rb') as f:
+        block = f.read(16)
+        print("The first 16 bytes (block) of a png is : ", block)
+        return block.hex()
+
+test()
+test2()
+
+ciphertext = encrypt()
+firstBlockOfCipherText = ciphertext[0:32]
+plaintextPNGFirstBlockHex = test2()
+
+eIV = xor(hexToInt(plaintextPNGFirstBlockHex), hexToInt(firstBlockOfCipherText))
+ciphertextList = textwrap.wrap(ciphertext, 32)
+
+decrypted = ""
+
+for i in range(len(ciphertextList)):
+    temp = xor(hexToInt(ciphertextList[i]), hexToInt(eIV))
+    temp = temp.zfill(32)
+    decrypted = decrypted + temp
+
+with open('image.png', 'wb') as file:
+    file.write(bytes.fromhex(decrypted))
+    
+```
+
+When you run the program, you can see that the first 16 bytes are the same for different PNGs :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img96.png)
+
+And when you open the resulting image.png file, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img97.png)
+
+**Flag :** crypto{hex_bytes_beans}
 
