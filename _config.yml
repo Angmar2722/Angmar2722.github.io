@@ -18,7 +18,7 @@ navbar-links:
   #Tools I Built:
   #  - Introduction: "toolsIntro"
   #Past CTF Challenges:
-    - Introduction: "pastCTFintro"
+  #  - Introduction: "pastCTFintro"
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
   CryptoHack:
