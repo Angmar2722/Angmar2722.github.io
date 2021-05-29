@@ -745,3 +745,98 @@ And when you open the resulting image.png file, you get the flag :
 
 **Flag :** crypto{hex_bytes_beans}
 
+<br/>
+
+# CTRIME (CTR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img98.png)
+
+When you go the <a href="http://aes.cryptohack.org/ctrime/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img99.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Util import Counter
+import zlib
+
+
+KEY = ?
+FLAG = ?
+
+
+@chal.route('/ctrime/encrypt/<plaintext>/')
+def encrypt(plaintext):
+    plaintext = bytes.fromhex(plaintext)
+
+    iv = int.from_bytes(os.urandom(16), 'big')
+    cipher = AES.new(KEY, AES.MODE_CTR, counter=Counter.new(128, initial_value=iv))
+    encrypted = cipher.encrypt(zlib.compress(plaintext + FLAG.encode()))
+
+    return {"ciphertext": encrypted.hex()}
+    
+```
+
+So in this challenge, we have an encrypt function which takes in a hex encoded plaintext and returns a ciphertext. The mode of operation is CTR and the encryption used is AES. The interesting thing here is that zlib.compress is used to compress the plaintext prepended to the flag and then this compressed data is encrypted and returned.
+
+This <a href="https://www.euccas.me/zlib/" target="_blank">resource</a> thoroughly explains how zlib works while this <a href="https://ctftime.org/writeup/11327" target="_blank">CTF writeup</a> proved to be very useful. This attack (and the name of the challenge) is based on the <a href="https://en.wikipedia.org/wiki/CRIME" target="_blank">CRIME</a> attack.
+
+Since zlib.compress reduces data when there are identical bytes (within a given sliding window), we can use this knowledge of reduced bytes to our advantage. Since we know that the flag format is "crypto{", say we wanted to find the next byte of the flag. If we loop through and append every printable ASCII character to "crypto{" and check which character produces a smaller byte length (by checking the length of the returned ciphertext), the only unique byte which produces this smallest length is the next byte of the flag. This is shown in the image below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img101.png)
+
+As shown int he image above, the only byte which produces a smaller byte length than 70 is the "C" in "crypto{C" which means that the C byte is being compressed by zlib which means that this is the next flag byte. So we could keep repeating this procedure, loop through every printable ASCII character and append it to the flag until a smaller ciphertext length is returned when compared to every other value in this iteration. One thing to keep note of is the sliding window. When I first coded the solution, I was getting a lot of exclamation marks for my flag after "crypto{CRIM" and this was because if no smaller byte length was found, I would append the first byte in the loop which is ASCII 33 or "!". I noticed that if I removed the c in "crypto{CRIM" and appended ASCII values to "rypto{CRIM", then I would get the next byte "E" using the same method. So this means that after every 11 bytes, I should remove the first byte of the flag guess because the sliding window searches 11 bytes only. With that in mind this is the solution that I wrote :
+
+```python
+
+from typing import ByteString
+import requests
+import textwrap
+
+def getCiphertext(plaintext):
+    payloadURL = "http://aes.cryptohack.org/ctrime/encrypt/" + plaintext + "/"
+    r = requests.get(payloadURL)
+    temp = r.json()
+    return temp['ciphertext']
+
+
+flagLastByte = ""
+realFlag = "crypto{"
+tempFlag = "crypto{"
+
+while(flagLastByte != "}"):
+
+    startChar = 33
+
+    for i in range(startChar, 127):
+
+        temp = tempFlag + chr(i)
+        hexString = temp.encode("utf-8").hex()
+        ciphertext = getCiphertext(hexString)
+        if (i == startChar):
+            bestLength = len(ciphertext)
+            flagLastByte = chr(i)
+        if(bestLength > len(ciphertext)):
+            flagLastByte = chr(i)
+            break
+
+    realFlag = realFlag + flagLastByte
+    tempFlag = tempFlag + flagLastByte
+
+    if(len(tempFlag) == 11):
+        tempFlag = tempFlag[1:]
+
+    print(realFlag)
+
+```
+
+And after running the program, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img100.png)
+
+**Flag :** crypto{CRIME_571ll_p4y5}
+
+
