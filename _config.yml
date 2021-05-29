@@ -15,12 +15,12 @@ author: Angmar
 
 navbar-links:
   #Home: "https://Angmar2722.github.io/"
-  Tools I Built:
-    - Introduction: "toolsIntro"
-  Past CTF Challenges:
+  #Tools I Built:
+  #  - Introduction: "toolsIntro"
+  #Past CTF Challenges:
     - Introduction: "pastCTFintro"
-  Exploit Education:
-    - What is Exploit Education?: "exploitEd"
+  #Exploit Education:
+  #  - What is Exploit Education?: "exploitEd"
   CryptoHack:
     - What Is CryptoHack?: "cryptoHack"
     - Logging In: "cryptoHack0"
