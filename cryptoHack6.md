@@ -796,7 +796,7 @@ def encrypt_flag():
     return {"ciphertext": encrypted.hex()}
     
 ```
-First, I used `Encrypt_Flag()` function to get the flag ciphertext. Then I used looped through each word in the dictionary and for each word, converted it to its md5 hash and then inputted this flag ciphertext and hash into the `decrypt` function provided. I then compared the decoded string (I had to decode in latin-1 as opposed ot utf-8) to the the flag format "crypto{". If it matched, I would print the flag.
+First, I used `Encrypt_Flag()` function to get the flag ciphertext. Then I used looped through each word in the dictionary and for each word, converted it to its md5 hash and then inputted this flag ciphertext and hash into the `decrypt` function provided. I then compared the decoded string (I had to decode in latin-1 as opposed to utf-8) to the the flag format "crypto{". If it matched, I would print the flag.
 
 My code : 
 
