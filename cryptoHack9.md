@@ -9,3 +9,15 @@ The RSA section consists of 29 challenges. The challenges are subdivided into 7 
 <br/>
 
 # RSA Starter 1 (Starter)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img109.png)
+
+As shown in the image above, I just had to find 101^17 mod 22663 which I did using the command shown below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img110.png)
+
+Flag : 19906
+
+<br/>
+
+# RSA Starter 2 (Starter)
