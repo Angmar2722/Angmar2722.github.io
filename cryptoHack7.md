@@ -934,7 +934,7 @@ And towards the end, I found these values (including the flag) :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img108.png)
 
-Special thanks to <a href="https://cryptohack.org/user/rootdiver/" target="_blank">rootdiver</a> for his kind help and patience, since I didn't know how to proceed. ALso thanks to him, I have now started using bytes instead of hex and I discovered a way to easily check if a string is ASCII, using `isascii()`. Thanks rootdiver :D
+Special thanks to <a href="https://cryptohack.org/user/rootdiver/" target="_blank">rootdiver</a> for his kind help and patience, since I didn't know how to proceed. ALso thanks to him, I have now started using bytes instead of hex and I now know a way to easily check if a string is ASCII, using `isascii()`. Thanks rootdiver :D
 
 **Flag :** crypto{k3y57r34m_r3u53_15_f474l}
 
