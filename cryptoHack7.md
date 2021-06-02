@@ -916,7 +916,7 @@ while(check == False):
   
 ```
 
-So in the code above, I get two ciphertexts from the server (C1 and C2) and if they are no the same, I first XOR them and then XOR that result with the flag format (currently "crypto{"). After that, I check if the result (P2) is printable and if so, I print it.
+So in the code above, I get two ciphertexts from the server (C1 and C2) and if they are not the same, I first XOR them and then XOR that result with the flag format (currently "crypto{"). After that, I check if the result (P2) is printable and if so, I print it.
 
 When I ran the program, I got something like this :
 
