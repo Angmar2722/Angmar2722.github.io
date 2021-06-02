@@ -839,4 +839,104 @@ And after running the program, you get the flag :
 
 **Flag :** crypto{CRIME_571ll_p4y5}
 
+<br/>
+
+# Stream of Consciousness (CTR)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img102.png)
+
+When you go the <a href="http://aes.cryptohack.org/ctrime/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img103.png)
+
+Source Code Provided :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Util import Counter
+import random
+
+
+KEY = ?
+TEXT = ['???', '???', ..., FLAG]
+
+
+@chal.route('/stream_consciousness/encrypt/')
+def encrypt():
+    random_line = random.choice(TEXT)
+
+    cipher = AES.new(KEY, AES.MODE_CTR, counter=Counter.new(128))
+    encrypted = cipher.encrypt(random_line.encode())
+
+    return {"ciphertext": encrypted.hex()}
+    
+```
+
+So what we have here is an array/list of random words. When the `encrypt()` function is called, a random word from this list is chosen. It is then encrypted with the same key and IV (nonce) each time the function is called. So here we have key and nonce reuse (as shown in the code above). Initially I thought that there was something wrong with the nonce as it was initialized as counter=Counter.new(128). Turns out that is just the <a href="https://pythonhosted.org/pycrypto/Crypto.Util.Counter-module.html" target="_blank">default</a> setting with the initial value as 1. So the nonce is fine. But the vulnerability lies in the fact that the key/nonce is reused each time encrypt is called.
+
+After a bit of Googling, it was very evident that this was a big mistake. This <a href="https://crypto.stackexchange.com/questions/10505/reusing-keys-with-aes-cbc#:~:text=If%20a%20key%2FIV%20pair,the%20IV%2C%20not%20the%20plaintext." target="_blank">answer</a> explains why while I found this <a href="https://crypto.stackexchange.com/questions/2991/why-must-iv-key-pairs-not-be-reused-in-ctr-mode" target="_blank">answer</a> to be even better and used this as the basis for my attack. The summary of the answer is shown in the image below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img104.png)
+
+So what is being said is that say you have two ciphertexts (C1 and C2) which are encrypted using the same key/nonce. This means that EN (the encrypted nonce) is the same each time in CTR mode for both encryptions which means that C1 = EN1 XOR P1 and C2 = EN1 XOR P2 (with P1 and P2 being plaintexts 1 and 2 respectively). So if we do C1 XOR C2, this is equal to EN1 XOR P1 XOR EN1 XOR P1 and since EN1 XOR EN1 = 0, this means that C1 XOR C2 = P1 XOR P2. And since we have the encrypt function, we can call it and get two ciphertexts each time. So now that we have C1 and C2 then what? We need to know the XOR of P1 and P2 but howwwww?
+
+We know that the flag format is "crypto{" which means that we partly know one of the plaintexts. So if we do C1 XOR C2 and XOR the first 7 bytes of that with "crypto{", we will get the other plaintext (when the flag is XORed with the other plaintext) as P1 (flag) XOR P2 (other plaintext) = C1 XOR C2 (the ciphertexts we got from encrypt). So if do C1 XOR C2 XOR crypto{, we can get many possible P2s and many of them will not be printable (plaintext ASCII). Of the ones which are plaintext, there will be many options as the original list of words is of an unknown but presumably varied length.
+
+I wrote the code below to achieve this :
+
+```python
+
+import requests
+from pwn import xor
+from requests.api import get
+
+
+def getCiphertext():
+   payloadURL = "http://aes.cryptohack.org/stream_consciousness/encrypt/"
+   r = requests.get(payloadURL)
+   temp = r.json()
+   cipher = temp['ciphertext']
+   return bytes.fromhex(cipher)
+
+flagFormat = b"crypto{" 
+check = False
+ 
+while(check == False):
+    c1 = getCiphertext()
+    c2 = getCiphertext()  
+
+    if (c1 != c2):
+    
+       c1XORc2 = xor(c1, c2)
+       p2 = xor(c1XORc2[:len(flagFormat)], flagFormat)
+       
+       if ( p2.isascii() ):
+           print(p2.decode('utf-8'))
+  
+```
+
+So in the code above, I get two ciphertexts from the server (C1 and C2) and if they are no the same, I first XOR them and then XOR that result with the flag format (currently "crypto{"). After that, I check if the result (P2) is printable and if so, I print it.
+
+When I ran the program, I got something like this :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img105.png)
+
+Notice that there is a word " It can' " printed. This means that the 8th byte of that word has to be a "t" so that it spells out as "It can't ". So in this manner, based on this partially printed plaintext, we can use this guess and substitute it for the flag format. So when I first used "crypto{" as the flag format, I got these possible plaintexts (partial) :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img106.png)
+
+So for my guess, I used "No, I'll" as the 'l' was missing in the original 7 bytes ("No I'l"). So I used these 8 bytes as my flag format and did the same process (C1 XOR C2 XOR 8 bytes of "No I'll") to get another set of more complete (by 1 byte usually) plaintexts. I then checked them I tried to see which one I could expand or fill out (guess) and then used that as my next flag format. I kept repeating this process until I got the flag. Here is the evolution of my guesses :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img107.png)
+
+And towards the end, I found these values (including the flag) :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img108.png)
+
+Special thanks to <a href="https://cryptohack.org/user/rootdiver/" target="_blank">rootdiver</a> for his kind help and patience, since I didn't know how to proceed. ALso thanks to him, I have now started using bytes instead of hex and I discovered a way to easily check if a string is ASCII, using `isascii()`. Thanks rootdiver :D
+
+**Flag :** crypto{k3y57r34m_r3u53_15_f474l}
+
+
 
