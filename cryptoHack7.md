@@ -845,7 +845,7 @@ And after running the program, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img102.png)
 
-When you go the <a href="http://aes.cryptohack.org/ctrime/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
+When you go the <a href="http://aes.cryptohack.org/stream_consciousness/" target="_blank">link</a> shown in the image above, it shows you the source code and additional tools like the previous challenges. 
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img103.png)
 
