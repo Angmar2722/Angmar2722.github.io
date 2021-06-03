@@ -357,7 +357,7 @@ And after running the program, you get the flag :
 
 <br/>
 
-# Salty (Primes Part 1)
+# Salty (Public Exponent)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img136.png)
 
