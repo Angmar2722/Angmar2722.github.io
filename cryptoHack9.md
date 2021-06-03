@@ -354,3 +354,45 @@ And after running the program, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img135.png)
 
 **Flag :** crypto{700_m4ny_5m4ll_f4c70r5}
+
+<br/>
+
+# Manyprime (Primes Part 1)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img136.png)
+
+Two files were given, salty.py and output.txt. This is the code for salty.py :
+
+```python
+
+from Crypto.Util.number import long_to_bytes
+
+n = 110581795715958566206600392161360212579669637391437097703685154237017351570464767725324182051199901920318211290404777259728923614917211291562555864753005179326101890427669819834642007924406862482343614488768256951616086287044725034412802176312273081322195866046098595306261781788276570920467840172004530873767                                                                  
+e = 1
+ct = 44981230718212183604274785925793145442655465025264554046028251311164494127485
+
+m = long_to_bytes(ct % n)
+print(m)
+
+```
+
+Output.txt ahd the usual exponent (this time it was 1), N and ct. So in RSA, ct = m^e MOD N (where m is hte message). But since e = 1, this is ct = m MOD N. And we can get m by doing ct % N. So thats what I did :
+
+```python
+
+from Crypto.Util.number import long_to_bytes
+
+n = 110581795715958566206600392161360212579669637391437097703685154237017351570464767725324182051199901920318211290404777259728923614917211291562555864753005179326101890427669819834642007924406862482343614488768256951616086287044725034412802176312273081322195866046098595306261781788276570920467840172004530873767                                                                  
+e = 1
+ct = 44981230718212183604274785925793145442655465025264554046028251311164494127485
+
+m = long_to_bytes(ct % n)
+print(m)
+
+```
+
+And when you run the program you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img137.png)
+
+**Flag :** crypto{saltstack_fell_for_this!}
