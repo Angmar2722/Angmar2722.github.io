@@ -99,3 +99,18 @@ Of note, these two videos explaining RSA encryption are incredible :
 * <a href="https://www.youtube.com/watch?v=4zahvcJ9glg" target="_blank">Part 1</a>
 * <a href="https://www.youtube.com/watch?v=oOcTVTpUsPQ" target="_blank">Part 2</a>
 
+<br/>
+
+# RSA Starter 5 (Starter)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img120.png)
+
+As shown in the image above, I had to decrypt the ciphertext using the private key I got from the previous challenge. In RSA, the decrypted message (m) = c^d Mod N with c being the ciphertext, d being the private key and N being the modulus.
+
+So I did that and got the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img121.png)
+
+Flag : 13371337
+
+
