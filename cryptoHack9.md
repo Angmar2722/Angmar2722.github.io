@@ -96,7 +96,6 @@ Flag : 121832886702415731577073962957377780195510499965398469843281
 
 Of note, these two videos explaining RSA encryption are incredible :
 
-- <a href="https://www.youtube.com/watch?v=4zahvcJ9glg" target="_blank">Part 1</a>
-
-- <a href="https://www.youtube.com/watch?v=oOcTVTpUsPQ" target="_blank">Part 2</a>
+* <a href="https://www.youtube.com/watch?v=4zahvcJ9glg" target="_blank">Part 1</a>
+* <a href="https://www.youtube.com/watch?v=oOcTVTpUsPQ" target="_blank">Part 2</a>
 
