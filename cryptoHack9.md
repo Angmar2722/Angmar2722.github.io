@@ -21,3 +21,13 @@ Flag : 19906
 <br/>
 
 # RSA Starter 2 (Starter)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img111.png)
+
+As shown in the image above, I just had to find 12^65537 mod (17*23) which I did using the command shown below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img112.png)
+
+Flag : 301
+
+<br/>
