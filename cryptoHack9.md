@@ -38,11 +38,11 @@ Flag : 301
 
 As shown in the image above, I went to the <a href="https://leimao.github.io/article/RSA-Algorithm/" target="_blank">link</a> that they provided where some of the mathematics behind RSA encryption was explained. The Euler's Totient Function part is shown below :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img114.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img115.png)
 
 So since I had the two primes p and q, I had to do (p-1) * (q - 1) to get the flag :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img115.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img114.png)
 
 Flag : 882564595536224140639625987657529300394956519977044270821168
 
