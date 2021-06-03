@@ -94,7 +94,7 @@ And when you run the program, you get the private key `d` :
 
 Flag : 121832886702415731577073962957377780195510499965398469843281
 
-Of note, these two videos explaining RSA are incredible :
+Of note, these two videos explaining RSA encryption are incredible :
 
 - <a href="https://www.youtube.com/watch?v=4zahvcJ9glg" target="_blank">Part 1</a>
 
