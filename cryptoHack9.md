@@ -163,13 +163,13 @@ Flag : 19704762736204164635843
 
 # Inferius Prime (Primes Part 1)
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img125.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img126.png)
 
-As shown in the image above, I have two files, an output.txt file and an inferius.py file.
+There were two files, an output.txt file and an inferius.py file.
 
 Contents of output.txt :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img126.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img127.png)
 
 Source code of inferius.py :
 
@@ -235,7 +235,7 @@ Note that for getting the modular multiplicative inverse, instead of the long ex
 
 And after running the program, you get the flag :
 
-![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img127.png)
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img128.png)
 
 **Flag :** crypto{N33d_b1g_pR1m35}
 
