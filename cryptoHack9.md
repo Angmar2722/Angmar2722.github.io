@@ -316,7 +316,7 @@ And after running the script you get the flag :
 
 <br/>
 
-# Square Eyes (Primes Part 1)
+# Manyprime (Primes Part 1)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img134.png)
 
