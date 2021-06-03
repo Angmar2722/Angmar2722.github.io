@@ -284,7 +284,7 @@ And after running the script, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img132.png)
 
-We have a file, output.txt which contains N, e and c (ciphertext). I used the same website 2 challenges earlier to get the repeated prime factor of N. I could have also found this using squareroot as N = p^2. And since p is repeated, the totient function = p(p-1) as explained <a href="https://cs.stackexchange.com/questions/50906/what-if-p-and-q-are-not-distinct-in-rsa-crypto-system-what-could-go-wrong" target="_blank">here</a>.
+We have a file, output.txt which contains N, e and c (ciphertext). I used the same website 2 challenges earlier to get the repeated prime factor (p) of N. I could have also found p by finding the quareroot if N as N = p^2. And since p is repeated, the totient function = p(p-1) as explained <a href="https://cs.stackexchange.com/questions/50906/what-if-p-and-q-are-not-distinct-in-rsa-crypto-system-what-could-go-wrong" target="_blank">here</a>.
 And the rest of the script was the same as in the previous challenges :
 
 ```python
@@ -309,6 +309,8 @@ print(decrypted)
 
 ```
 And after running the script you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img133.png)
 
 **Flag :** crypto{squar3_r00t_i5_f4st3r_th4n_f4ct0r1ng!}
 
