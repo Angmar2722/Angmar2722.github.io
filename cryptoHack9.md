@@ -394,7 +394,7 @@ assert decrypted == flag
 
 ```
 
-Output.txt ahd the usual exponent (this time it was 1), N and ct. So in RSA, ct = m^e MOD N (where m is hte message). But since e = 1, this is ct = m MOD N. And we can get m by doing ct % N. So thats what I did :
+Output.txt had the usual exponent (this time it was 1), N and ct. So in RSA, ct = m^e MOD N (where m is hte message). But since e = 1, this is ct = m MOD N. And we can get m by doing ct % N. So thats what I did :
 
 ```python
 
