@@ -34,7 +34,7 @@ Below are the two images of the answers to the questions as well as the characte
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img6-ConvertImage.png)
 
-If you inputted in a wrong answer, you would not receive the character and would hence have to redo everything again because the jail break would require us to have as many characters available to us as possible. If you get a question wrong, you cannot reanswer that question again. Inputting all the answers also takes a lot of time. As a result, I made an Apple Script to input the answers that we got to save us from the hassle of redoing everything if we inputted a wrong answer. 
+If you inputted in a wrong answer, you would not receive the character and would hence have to redo everything again because the jail break would require us to have as many characters available to us as possible. If you get a question wrong, you cannot reanswer that question again. Inputting all the answers also takes a lot of time. As a result, my teammate made an Apple Script to input the answers that we got to save us from the hassle of redoing everything if we inputted a wrong answer. 
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img7-ConvertImage.png)
 
