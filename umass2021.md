@@ -8,7 +8,7 @@ Me and my team competed in the <a href="https://ctftime.org/event/1282" target="
 
 I learnt alot of new skills and came across my first Python Jail CTF challenge.
 
-Below are the writeups for the 3 challenges that I managed to solve :
+Below are the writeups for the 3 challenges that I managed to solve (with some help) :
 
 <br/>
 
@@ -42,7 +42,7 @@ After this, I was stuck with regards to what should be done. However, my teammat
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img8-ConvertImage.png)
 
-We knew that the flag was inside the `flag.txt` file however the problem was that we did not have access to the letter 'l' (I am guessing that the one question we could not answer would allow us to use the letters j,k and l). After a lot of Googling, I found a way to print out the contents of files based on their first letter. This allowed me to bypass the problem of not having the letter 'l' in order to print out the contents of flag.txt. There was also only one file that started with the letter 'f' so that certainly helped. Sure enough, after printing out the contents of every file that starts with the letter 'f' (since we wanted the contents of flag.txt), we got the flag!
+We knew that the flag was inside the `flag.txt` file however the problem was that we did not have access to the letter 'l' (I am guessing that the one question we could not answer would allow us to use the letters j,k and l). After a lot of Googling, my teammate found a way to print out the contents of files based on their first letter. This allowed us to bypass the problem of not having the letter 'l' in order to print out the contents of flag.txt. There was also only one file that started with the letter 'f' so that certainly helped. Sure enough, after printing out the contents of every file that starts with the letter 'f' (since we wanted the contents of flag.txt), we got the flag!
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img9-ConvertImage.png)
 
