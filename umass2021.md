@@ -38,7 +38,7 @@ If you inputted in a wrong answer, you would not receive the character and would
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img7-ConvertImage.png)
 
-After this, I was stuck with regards to what should be done. However, my teammate had just solved another jailbreak question which gave us a few ideas. We realized that we could print out all the files in the directory using the characters that we had (the image below shows all the characters that we could use after answering the questions as well as the command we used to print out all of the files). 
+After this, I was stuck with regards to what should be done. However, one of my teammates had just solved another jailbreak question which gave us a few ideas. We realized that we could print out all the files in the directory using the characters that we had (the image below shows all the characters that we could use after answering the questions as well as the command we used to print out all of the files). 
 
 ![UMass 2021 Writeup](/assets/img/ctfImages/umass2021/img8-ConvertImage.png)
 
