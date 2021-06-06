@@ -32,7 +32,7 @@ navbar-links:
     - Block Ciphers - ECB / CBC / OFB / CTR : "cryptoHack7"
     - RSA - Starter / Primes Part 1 / Public Exponent : "cryptoHack9"
   CTF Writeups:
-    - test: "test"
+    - test: "https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFs/test.md"
     - Zh3r0 (June) 2021: "zh3r02021"
     - Angstrom (April) 2021: "actf2021"
     - UMass (March) 2021: "umass2021"
