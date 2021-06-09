@@ -784,7 +784,7 @@ And this is what we got for output.txt :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img150.png)
 
-So we have 7 different modulii corresponding to 7 ciphertexts and all of them have the same public exponent of 3. The challenge also states that "Poor Johan has been answering emails all day and the students are all asking the **same questions**" which indicates that at least some of the messages will be repeated. So if we know that at least 3 messages are repeated and the same public exponent is used and assuming that the modulii are relatively prime, we could use a <a href="https://www.youtube.com/watch?v=aS57JCzJw_o" target="_blank">Håstad's broadcast attack</a> as explained by the video. Wikipedia also provides a useful <a href="https://en.wikipedia.org/wiki/Coppersmith%27s_attack#H%C3%A5stad's_broadcast_attack" target="_blank">explanation</a> :
+So we have 7 different modulii corresponding to 7 ciphertexts and all of them have the same public exponent of 3. The challenge also states that "Poor Johan has been answering emails all day and the students are all asking the **same questions**" which indicates that at least some of the messages will be repeated. So if we know that at least 3 messages are repeated and the same public exponent is used and assuming that the modulii are relatively prime, we could use <a href="https://www.youtube.com/watch?v=aS57JCzJw_o" target="_blank">Håstad's broadcast attack</a> as explained by the video. Wikipedia also provides a useful <a href="https://en.wikipedia.org/wiki/Coppersmith%27s_attack#H%C3%A5stad's_broadcast_attack" target="_blank">explanation</a> :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img151.png)
 
