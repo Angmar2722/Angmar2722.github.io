@@ -31,7 +31,7 @@ navbar-links:
     - Block Ciphers - AES / Block Cipher Modes: "/cryptoHackStuff/cryptoHack6"
     - Block Ciphers - ECB / CBC / OFB / CTR : "/cryptoHackStuff/cryptoHack7"
     - RSA - Starter / Primes Part 1 / Public Exponent : "/cryptoHackStuff/cryptoHack9"
-    - RSA - Primes Part 2 / Padding / Signatures Parts 1 & : "/cryptoHackStuff/cryptoHack10"
+    - RSA - Primes Part 2 / Padding / Signatures Parts 1 & 2: "/cryptoHackStuff/cryptoHack10"
   CTF Writeups:
     - Zh3r0 (June) 2021: "/CTFwriteups/zh3r02021"
     - Angstrom (April) 2021: "/CTFwriteups/actf2021"
