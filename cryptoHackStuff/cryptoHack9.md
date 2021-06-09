@@ -788,7 +788,7 @@ So we have 7 different modulii corresponding to 7 ciphertexts and all of them ha
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img151.png)
 
-So as long as we have 3 different ciphertexts whose modulii are relatively prime for the corresponding public exponent (3 in this case) and the messages are the same, we can use the Chinese remainder theorem (CRT) to get the message cubed and cube rooting that will give us the message. So we could choose combinations of 3 ciphertexts and their correspoding modulii from the list of 7 and after finding cuberooting message cubed (found via CRT), we will check if it is printable in ASCII. If it isn't, we will move on to the next one and stop only if a printable ASCII output is found. The reason I chose 3 is because I wasn't sure how many messages were the same.
+So as long as we have 3 different ciphertexts whose modulii are relatively prime for the corresponding public exponent (3 in this case) and the messages are the same, we can use the Chinese remainder theorem (CRT) to get the message cubed and cube rooting that will give us the message. So we could choose combinations of 3 ciphertexts and their correspoding modulii from the list of 7 and after finding the cube root of the message cubed (found via CRT), we will check if it is printable in ASCII. If it isn't, we will move on to the next one and stop only if a printable ASCII output is found. The reason I chose 3 is because I wasn't sure how many messages were the same.
 
 The code that I wrote :
 
@@ -826,6 +826,8 @@ for i in range (len(combinationsList)):
 And after running the script, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img152.png)
+
+Out of curiosity, I wanted to know how many messages were the same. Previously I was selecting 3 ciphertexts at a time. When I increased this number to 4, the flag was still printed out but when I increased it to 5, nothing was printed out. This means that 4 messages were the same.
 
 **Flag :** crypto{1f_y0u_d0nt_p4d_y0u_4r3_Vuln3rabl3}
 
