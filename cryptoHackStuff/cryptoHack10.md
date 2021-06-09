@@ -1,6 +1,6 @@
 ---
 layout: page
-title: RSA - Primes Part 2 / Padding / Signatures Part 1 / Signatures Part 2
+title: RSA - Primes Part 2 / Padding / Signatures Parts 1 & 2
 ---
 <hr/>
 
