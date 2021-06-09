@@ -75,7 +75,7 @@ After running it, we get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img154.png)
 
-This was definitely not how you were expected to solve it.....
+This was definitely not how you were expected to solve it..... Looking at other people's solutions, turns out you had to use Fermat factorization
 
 **Flag :** crypto{f3rm47_w45_4_g3n1u5}
 
