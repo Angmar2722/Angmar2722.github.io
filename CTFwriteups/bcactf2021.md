@@ -632,6 +632,8 @@ The website just had a field for entering the password. Looking around the sourc
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img36.png)
 
+**Flag :** bcactf{w4sm-m4g1c-xRz5}
+
 <br/>
 
 # Little e (Cryptography)
