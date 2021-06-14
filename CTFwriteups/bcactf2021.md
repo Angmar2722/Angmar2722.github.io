@@ -6,7 +6,7 @@ title: BCACTF 2021 CTF Writeup
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img1.png)
 
-I competed in <a href="https://ctftime.org/event/1265" target="_blank">Bergen County Academies' 2021 BCACTF 2.0</a> CTF event on my own (first time playing solo in a CTF). I ranked 117th out of 953 teams (841 scoring) and I managed to solve 27 challenges. Date and time : Fri, 11 June 2021, 08:00 SGT — Mon, 14 June 2021, 08:00 SGT.
+I competed in <a href="https://ctftime.org/event/1265" target="_blank">Bergen County Academies' 2021 BCACTF 2.0</a> CTF event on my own (first time playing solo in a CTF). I ranked 117th out of 953 teams (841 scoring) and I managed to solve 27 challenges. This was the first time that I managed to solve atleast one challenge from every category in a CTF. Date and time : Fri, 11 June 2021, 08:00 SGT — Mon, 14 June 2021, 08:00 SGT.
 
 I was pleased with my performance for the web challenges as since my first two CTFs (Whitehacks 2021 and CTF SG 2021), I have never solved a web challenge.
 
@@ -575,3 +575,43 @@ I tried to use <a href="https://github.com/enodari/zwsp-steg-py" target="_blank"
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/IMG_0602.png)
 
 **Flag :** bcactf{z3r0_w1dth_jungl3_j82axH4}
+
+<br/>
+
+# Secure Zip (Forensics)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img27.png)
+
+This was a password protected zip file so I used the rockyou.txt list of common passwords to bruteforce the password and then get the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img28.png)
+
+**Flag :** bcactf{cr4ck1ng_z1p_p455w0rd5_15_fun_a12ca37bdacef7}
+
+<br/>
+
+# Gerald's New Job (Forensics)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img29.png)
+
+The 'PDF' file was a polyglot generated using <a href="https://github.com/ansemjo/truepolyglot" target="_blank">truepolyglot</a>. I used `binwalk` to extract the file's signature, realized it was a zip, unzipped it and got the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img30.png)
+
+**Flag :** bcactf{g3ra1d_15_a_ma5ter_p01yg1ot_0769348}
+
+<br/>
+
+# A Fun Game (Reverse Engineering)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img31.png)
+
+When you run the executable, it would display a letter and when you enter that letter you get 1 point. You get the flag after getting 1000 points and as pointed out by the hint, instead of painfully typing in 1000 letters, you could use a program like Game Conqueror which can modify the score variable in order to easily get the flag. I installed it on my Kali Linux machine and followed this <a href="https://linuxhint.com/use-gameconqueror-cheat-engine-linux/" target="_blank">guide</a> in order to learn how to use Game Conqueror. After figuring that out and changing the score variable to 1000, I got the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img32.png)
+
+**Flag :** bcactf{h0p3fu1ly_y0U_d1dNt_actUa1ly_tYpe_1000_1ett3rs}
+
+<br/>
+
+
