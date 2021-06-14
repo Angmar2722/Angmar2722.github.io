@@ -408,3 +408,12 @@ The command to bypass the authentication scheme was `' or true--`.
 
 **Flag :** bcactf{h0w_d1d_y0u_g3t_h3r3_th1s_t1m3?!?}
 
+<br/>
+
+# Agent Gerald (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img22.png)
+
+I changed my browser's user agent to "Agent Gerald" and then got the flag.
+
+**Flag :** bcactf{y0u_h@ck3d_5tegos@urus_1nt3lligence}
