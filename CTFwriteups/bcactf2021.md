@@ -557,3 +557,9 @@ After injecting this into the server, we get the flag :
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img24.png)
 
 **Flag :** bcactf{bca_is_taking_APs_in_june_aaaaaaaa_wish_past_me_luck}
+
+<br/>
+
+# More than Meets the Eye (Forensics)
+
+We are given a .txt file which contains just a single string "Pretty empty over here​‌​​​‌‌​‌‌​​​‌‌​‌​​​​‌‌​‌‌​​​‌‌​​​‌​‌‌‌​​‌‌​​‌‌​‌‌​‌‌‌‌​​‌​‌‌‌‌​‌‌​​‌‌​​​‌​​‌‌‌​​​​​‌‌​​‌‌‌‌‌​‌​‌‌‌​‌‌‌​‌​​​‌‌​​​​‌​​‌‌​​​‌​‌‌‌​​​​‌​‌‌​‌‌‌‌‌​‌​​‌​‌​‌‌​‌​‌​‌‌‌​​‌‌‌​‌‌​‌‌‌​​‌‌​​​‌‌​‌‌​‌‌​​‌‌​​‌‌‌‌‌​‌​​‌​‌​‌‌​​​​‌‌‌​​​‌​​‌‌​​‌​​​​‌‌​​​​‌‌‌‌​​​​‌​​‌​​​‌​‌‌​​‌​‌‌‌‌‌​."
