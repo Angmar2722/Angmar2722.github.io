@@ -614,4 +614,149 @@ When you run the executable, it would display a letter and when you enter that l
 
 <br/>
 
+# Movie-Login-1 (Web)
 
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img33.png)
+
+The website was the same as the movie login 2 and 3 challenges, you had to bypass the username and password authentication using a SQL injection. There was no set of blacklisted characters and to bypass the authentication, I used this command : `admin' or '1'='1'--`.
+
+**Flag :** bcactf{s0_y0u_f04nd_th3_fl13r?}
+
+<br/>
+
+# Wasm Protected Site 1 (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img35.png)
+
+The website just had a field for entering the password. Looking around the source code with Chrome Developer tools, I found the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img36.png)
+
+<br/>
+
+# Little e (Cryptography)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img33.png)
+
+Modulus (N) and ciphertext (ct) was given along with the public exponent (e) of 3. The plaintext was the cube root of ct % N which is just the cube root of ct (as ct < N) as ct = m^3 mod N.
+
+**Flag :** bcactf{R54_N0T_50_S3CUR3_33}
+
+<br/>
+
+# BCA Mart (Binary Exploitation)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img37.png)
+
+Source code provided : 
+
+```c
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int money = 15;
+
+int purchase(char *item, int cost) {
+    int amount;
+    printf("How many %s would you like to buy?\n", item);
+    printf("> ");
+    scanf("%d", &amount);
+
+    if (amount > 0) {
+        cost *= amount;
+        printf("That'll cost $%d.\n", cost);
+        if (cost <= money) {
+            puts("Thanks for your purchse!");
+            money -= cost;
+        } else {
+            puts("Sorry, but you don't have enough money.");
+            puts("Sucks to be you I guess.");
+            amount = 0;
+        }
+    } else {
+        puts("I'm sorry, but we don't put up with pranksters.");
+        puts("Please buy something or leave.");
+    }
+
+    return amount;
+}
+
+int main() {
+    int input;
+
+    setbuf(stdout, NULL);
+    setbuf(stdin, NULL);
+    setbuf(stderr, NULL);
+
+    puts("Welcome to BCA MART!");
+    puts("We have tons of snacks available for purchase.");
+    puts("(Please ignore the fact we charge a markup on everything)");
+
+    while (1) {
+        puts("");
+        puts("1) Hichew™: $2.00");
+        puts("2) Lays® Potato Chips: $2.00");
+        puts("3) Water in a Bottle: $1.00");
+        puts("4) Not Water© in a Bottle: $2.00");
+        puts("5) BCA© school merch: $20.00");
+        puts("6) Flag: $100.00");
+        puts("0) Leave");
+        puts("");
+        printf("You currently have $%d.\n", money);
+        puts("What would you like to buy?");
+
+        printf("> ");
+        scanf("%d", &input);
+
+        switch (input) {
+            case 0:
+                puts("Goodbye!");
+                puts("Come back soon!");
+                puts("Obviously, to spend more money :)");
+                return 0;
+            case 1:
+                purchase("fruity pieces of goodness", 2);
+                break;
+            case 2:
+                purchase("b̶a̶g̶s̶ ̶o̶f̶ ̶a̶i̶r̶ potato chips", 2);
+                break;
+            case 3:
+                purchase("bottles of tap water", 1);
+                break;
+            case 4:
+                purchase("generic carbonated beverages", 2);
+                break;
+            case 5:
+                purchase("wonderfully-designed t-shirts", 20);
+                break;
+            case 6:
+                if (purchase("super-cool ctf flags", 100) > 0) {
+                    FILE *fp = fopen("flag.txt", "r");
+                    char flag[100];
+
+                    if (fp == NULL) {
+                        puts("Hmm, I can't open our flag.txt file.");
+                        puts("Sorry, but looks like we're all out of flags.");
+                        puts("Out of luck, we just sold our last one a couple mintues ago.");
+                        puts("[If you are seeing this on the remote server, please contact admin].");
+                        exit(1);
+                    }
+
+                    fgets(flag, sizeof(flag), fp);
+                    puts(flag);
+                }
+                break;
+            default:
+                puts("Sorry, please select a valid option.");
+        }
+    }
+}
+
+```
+
+The objective is to buy the flag which costs $100 when we are given only $15. In C, an integer is 32 bits that is signed by default so if I input an amount that is slightly more than (2^32 / 100), the cost would be negative and we would get the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img38.png)
+
+**Flag :** <p> bcactf{bca_store??_wdym_ive_never_heard_of_that_one_before} </p>
