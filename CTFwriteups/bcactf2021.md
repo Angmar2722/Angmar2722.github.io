@@ -875,7 +875,7 @@ When you go to the website, you have a countdown timer which will print the flag
 
 <br/>
 
-# Countdown Timer (Web)
+# Home Automation (Web)
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img43.png)
 
@@ -883,9 +883,96 @@ When you go the website, this is what you see :
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img44.png)
 
-After clicking on 'lights on' you get the message - `you can see that "You must be admin to turn off the lights. Currently you are "vampire".`. To bypass this, I just changed the cookie from vampire to admin and then got the flag :
+After clicking on 'lights on' you get the message - "You must be admin to turn off the lights. Currently you are "vampire". To bypass this, I just changed the cookie from vampire to admin and then got the flag :
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img45.png)
 
+<p> <b>Flag :</b> bcactf{c00k13s_s3rved_fr3sh_fr0m_th3_smart_0ven_cD7EE09kQ} </p>
+
+<br/>
+
+# Slightly Harder RSA (Cryptography)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img46.png)
+
+Modulus, ciphertext and public exponent was given. I factored the modulus using <a href="http://factordb.com/" target="_blank">factordb</a> and then got the flag.
+
+<p> <b>Flag :</b> bcactf{rsa_factoring} </p>
+
+<br/>
+
+# Storytime : The Opening Gambit (Reverse Engineering)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img47.png)
+
+Searched for the flag string in the executable using `grep` and found it :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img48.png)
+
+<p> <b>Flag :</b> bcactf{w0ol_m4k3s_str1ng_ziv4mk3ca91b} </p>
+
+<br/>
+
+# Infinite Zip (Forensics)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img49.png)
+
+Unzip the recursive zip and then use the inspector to find out more information about the resulting `flag.png`. The flag is shown under the `IPTC` header. Note that the flag shown in `flag.png` is not the real flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img50.png)
+
+<p> <b>Flag :</b> bcactf{z1p_1n51d3_4_z1p_4_3v3r} </p>
+
+<br/>
+
+# Easy RSA (Cryptography)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img51.png)
+
+Modulus and its factors (p and q), public exponent, ciphertext was given, Use that to get the plaintext (flag).
+
+<p> <b>Flag :</b> bcactf{RSA_IS_EASY_AFTER_ALL} </p>
+
+<br/>
+
+# I Can Haz Interwebz? (Miscellaneous)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img52.png)
+
+Connect to their server using Netcat and get the flag.
+
+<p> <b>Flag :</b> bcactf{r41nb0w_P0p_t4rT5_g0_nY4_s3Dy0Bqd6u} </p>
+
+<br/>
+
+# Obligatory Discord Problem (Miscellaneous)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img53.png)
+
+Find the flag on their discord server.
+
+<p> <b>Flag :</b> bcactf{is_too_sanity_checks_two_much?} </p>
+
+<br/>
+
+# Example Problem (Miscellaneous)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img54.png)
+
+Enter the flag shown in the challenge description.
+
+<p> <b>Flag :</b> bcactf{this_is_a_flag} </p>
+
+<br/>
+
+# Survey (Miscellaneous)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img55.png)
+
+Fill out the survey and get the flag.
+
+<p> <b>Flag :</b> bcactf{so_long_and_thanks_for_all_the_flags} </p>
+
+<br/>
 
 
