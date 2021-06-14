@@ -393,3 +393,18 @@ After running it we get the flag :
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img19.png)
 
 **Flag :** bcactf{challenges_are_just_functions_mapping_from_coffee_to_points}
+
+<br/>
+
+# Movie-Login-2 (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img21.png)
+
+Login page was the exact same as Movie-Login-3. The exploit involved a SQL injection and there was a shorter list of blacklisted characters :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img20.png)
+
+The command to bypass the authentication scheme was `' or true--`.
+
+**Flag :** bcactf{h0w_d1d_y0u_g3t_h3r3_th1s_t1m3?!?}
+
