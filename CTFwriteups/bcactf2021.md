@@ -759,4 +759,4 @@ The objective is to buy the flag which costs $100 when we are given only $15. In
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img38.png)
 
-**Flag :** <p> bcactf{bca_store??_wdym_ive_never_heard_of_that_one_before} </p>
+<p> <b>Flag :</b> bcactf{bca_store??_wdym_ive_never_heard_of_that_one_before} </p>
