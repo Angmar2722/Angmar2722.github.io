@@ -229,7 +229,7 @@ list of SQL injections for authentication bypass. This command seemed to work : 
 
 The source code and executable was provided. Here is the source code :
 
-```
+```c
 
 #include <unistd.h>
 #include <stdio.h>
