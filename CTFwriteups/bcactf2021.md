@@ -95,7 +95,7 @@ After a lot of Googling and trying to understand this code, this is what I came 
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img7.png)
 
-So at 0x04e, “i32.load8_u” loads a character from the encoded flag. Since the encoded flag is “bjsxPKMH|\x227N\x1bD\x043b]PR\x19e%\x7f/;\x17”, it loads the character “b” from this encoded flag the first time. The line “local.get $v2” loads the index of the loaded character so for “b” it would be 0, for “j” it would be 1 and so on (like index values in an array). This index is then multiplied by 9. That result is then put in a bitwise AND operation with 127. Then that result is XORed with the selected encoded character (so “b” for the first time, “j” for the second, “s” for the third and so on) and then the server checks the result with the corresponding correct flag character so “bactf{flag}” to see if the character matches. If it doesn't, it exits (lines 0x64 and 0x65) and if it does match, it continues this process character by character to see if the inputted flag matches. 
+<p>So at 0x04e, “i32.load8_u” loads a character from the encoded flag. Since the encoded flag is “bjsxPKMH|\x227N\x1bD\x043b]PR\x19e%\x7f/;\x17”, it loads the character “b” from this encoded flag the first time. The line “local.get $v2” loads the index of the loaded character so for “b” it would be 0, for “j” it would be 1 and so on (like index values in an array). This index is then multiplied by 9. That result is then put in a bitwise AND operation with 127. Then that result is XORed with the selected encoded character (so “b” for the first time, “j” for the second, “s” for the third and so on) and then the server checks the result with the corresponding correct flag character so “bactf{flag}” to see if the character matches. If it doesn't, it exits (lines 0x64 and 0x65) and if it does match, it continues this process character by character to see if the inputted flag matches. </p>
 
 So to get the flag, you could reverse this process which is done using the following Python script :
 
@@ -124,5 +124,82 @@ And after running this script, you get the flag :
 
 <br/>
 
+# Advanced Math Analysis (Binary Exploitation)
 
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img9.png)
 
+The source code and executable was provided. Here is the source code :
+
+```c
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void cheat() {
+    FILE *fp = fopen("flag.txt", "r");
+    char flag[100];
+
+    if (fp == NULL) {
+        puts("My bad, I can't find the answers.");
+        puts("Oh wait, that's a foodable offense!");
+        puts("[If you are seeing this on the remote server, please contact admin].");
+        exit(1);
+    }
+
+    fgets(flag, sizeof(flag), fp);
+    puts(flag);
+}
+
+int main() {
+    char response[50];
+
+    setbuf(stdout, NULL);
+    setbuf(stdin, NULL);
+    setbuf(stderr, NULL);
+
+    puts("Welcome to the more advanced math class!");
+    puts("Unlike the folks in regular analysis, you'll have to put in more effort.");
+    puts("That's because this class has a strict anti-cheating defense.");
+    puts("Ha, take that!");
+    puts("We have to maintain the BCA reputation somehow, y'know.");
+    printf("> ");
+    gets(response);
+
+    if (strcmp(response, "i pledge to not cheat")) {
+        puts("I'm sorry, but you did not type out the honor pledge.");
+        puts("This obviously means that you are a cheater.");
+        puts("And we certainly cannot have that.");
+        puts("Goodbye.");
+        exit(1);
+    }
+
+    puts("Hey, I'm glad you decided to be honest and not cheat!");
+    puts("Makes my life a whole lot easier when I can let my guard down.");
+    puts("You still have to do tests and whatnot, but that's a you problem.");
+}
+
+```
+
+And after running the standard chekcs on the executable, we can see that this challenge involves a buffer overflow (due to the vulnerability of `gets`) as no stack canaries were found and NX was enabled (so this challenge probably had nothing to do with shellcode execution) :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img10.png)
+
+A quick objdump of `main` shows that even though the buffer was initialized with 50 bytes, the buffer is actually allocated 64 bytes :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img11.png)
+
+Note that we also have the line `if (strcmp(response, "i pledge to not cheat")) {` which means that if the strings are equal, the program would not enter this if clause as equal strings in strcmp returns 0. Anything else would have returned a non zero value and hence entered this clause and exited (`exit(1)`). So we know that inside `main`, the buffer is 64 bytes, the next 8 bytes are the base pointer and the next 8 bytes are the return address of main. So if we overflow these 72 bytes and then add the return address of `cheat` which is where we want to go, `main` would return to `cheat` and then print out the flag.
+
+This was the payload : `python2 -c 'print("i pledge to not cheat"+"\x00"*51+"\x16\x12\x40\x00\x00\x00\x00\x00")' | nc bin.bcactf.com 49156`
+
+And after running it on their server, we get the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img12.png)
+
+**Flag :** bcactf{corresponding_parts_of_congurent_triangles_are_congruent_ie_CPCCTCPTPPTCTC}
+
+<br/>
+
+# Movie-Login-3 (Web)
