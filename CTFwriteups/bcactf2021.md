@@ -562,4 +562,16 @@ After injecting this into the server, we get the flag :
 
 # More than Meets the Eye (Forensics)
 
-We are given a .txt file which contains just a single string "Pretty empty over here​‌​​​‌‌​‌‌​​​‌‌​‌​​​​‌‌​‌‌​​​‌‌​​​‌​‌‌‌​​‌‌​​‌‌​‌‌​‌‌‌‌​​‌​‌‌‌‌​‌‌​​‌‌​​​‌​​‌‌‌​​​​​‌‌​​‌‌‌‌‌​‌​‌‌‌​‌‌‌​‌​​​‌‌​​​​‌​​‌‌​​​‌​‌‌‌​​​​‌​‌‌​‌‌‌‌‌​‌​​‌​‌​‌‌​‌​‌​‌‌‌​​‌‌‌​‌‌​‌‌‌​​‌‌​​​‌‌​‌‌​‌‌​​‌‌​​‌‌‌‌‌​‌​​‌​‌​‌‌​​​​‌‌‌​​​‌​​‌‌​​‌​​​​‌‌​​​​‌‌‌‌​​​​‌​​‌​​​‌​‌‌​​‌​‌‌‌‌‌​."
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img25.png)
+
+We are given a zwsp.txt file which contains just a single string "Pretty empty over here​‌​​​‌‌​‌‌​​​‌‌​‌​​​​‌‌​‌‌​​​‌‌​​​‌​‌‌‌​​‌‌​​‌‌​‌‌​‌‌‌‌​​‌​‌‌‌‌​‌‌​​‌‌​​​‌​​‌‌‌​​​​​‌‌​​‌‌‌‌‌​‌​‌‌‌​‌‌‌​‌​​​‌‌​​​​‌​​‌‌​​​‌​‌‌‌​​​​‌​‌‌​‌‌‌‌‌​‌​​‌​‌​‌‌​‌​‌​‌‌‌​​‌‌‌​‌‌​‌‌‌​​‌‌​​​‌‌​‌‌​‌‌​​‌‌​​‌‌‌‌‌​‌​​‌​‌​‌‌​​​​‌‌‌​​​‌​​‌‌​​‌​​​​‌‌​​​​‌‌‌‌​​​​‌​​‌​​​‌​‌‌​​‌​‌‌‌‌‌​." 
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img26.png)
+
+The interesting thing about this string is that between the "e" and "." in "here.", there are dozens of <a href="https://en.wikipedia.org/wiki/Zero-width_space" target="_blank">zero-width spaces</a> hence the name `zwsp.txt`. After putting the string in this <a href="https://www.fontspace.com/unicode/analyzer#e=ZeKAi-KAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAi-KAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAjOKAi-KAi-KAjOKAi-KAjOKAjOKAjOKAjOKAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAjOKAi-KAi-KAi-KAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAjOKAjOKAjOKAi-KAjOKAjOKAjOKAi-KAjOKAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAi-KAjOKAi-KAjOKAi-KAjOKAjOKAi-KAjOKAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAi-KAjOKAi-KAjOKAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAjOKAjOKAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAi-KAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAjOKAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAi-KAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAi-KAi-KAjOKAi-KAjOKAjOKAjOKAjOKAjOKAiw" target="_blank">website</a>, you can see that after the 'e', there are 264 zero-width spaces and zero-width non joiners (special Unicode characters). Since we know that the first letter in the flag is "b" because of the flag format "bcactf{....}", we can see that if the zero-width space corresponds to a 0 and the zero-width non joiner corresponds to a 1, for the first 8 characters we have "01100010" which when reversed to "01100010" corresponds to a "b" in ASCII. Doing the same for the other bytes yields use the flag.
+
+I tried to use <a href="https://github.com/enodari/zwsp-steg-py" target="_blank">zwsp-steg-py</a> but couldn't get it to work so I decoded the flag manually :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/IMG_0602.HEIC)
+
+**Flag :** bcactf{z3r0_w1dth_jungl3_j82axH4}
