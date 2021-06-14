@@ -500,7 +500,7 @@ And after running the program, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img93.png)
 
-**Flag :** crypto{50m3_p30pl3_d0n7_7h1nk_IV_15_1mp0r74n7_?}
+<p> <b>Flag :</b> crypto{50m3_p30pl3_d0n7_7h1nk_IV_15_1mp0r74n7_?} </p>
 
 <br/>
 
@@ -610,7 +610,7 @@ And after running the program, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img88.png)
 
-**Flag :** crypto{0fb_15_5ymm37r1c4l_!!!11!}
+<p> <b>Flag :</b> crypto{0fb_15_5ymm37r1c4l_!!!11!} </p>
 
 <br/>
 
