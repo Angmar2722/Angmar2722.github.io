@@ -867,10 +867,25 @@ Due to `gets()`, we can overflow the buffer and modify the grade to be greater t
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img41.png)
 
-When you go to the website, you have a countdown timer which will print the flag after 100 days. To bypass this, I first started the countdown, then put a breakpoint in the website's Javascript code (using my browser's developer tools), changed the variable time and then resumed the operation and got the flag :
+When you go to the website, you have a countdown timer which will print the flag after 100 days. To bypass this, I first started the countdown, then put a breakpoint in the website's Javascript code (using my browser's developer tools), changed the variable `time` to 0 and then resumed the operation and got the flag :
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img42.png)
 
 <p> <b>Flag :</b> bcactf{1_tH1nK_tH3_CtF_w0u1D_b3_0v3r_bY_1O0_dAy5} </p>
+
+<br/>
+
+# Countdown Timer (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img43.png)
+
+When you go the website, this is what you see :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img44.png)
+
+After clicking on 'lights on' you get the message - `you can see that "You must be admin to turn off the lights. Currently you are "vampire".`. To bypass this, I just changed the cookie from vampire to admin and then got the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img45.png)
+
 
 
