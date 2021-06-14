@@ -223,7 +223,7 @@ And after running the program, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img79.png)
 
-**Flag :** crypto{3cb_5uck5_4v01d_17_!!!!!}
+<p> <b>Flag :</b> crypto{3cb_5uck5_4v01d_17_!!!!!} </p>
 
 <br/>
 
