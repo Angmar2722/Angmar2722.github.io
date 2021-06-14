@@ -190,7 +190,7 @@ A quick objdump of `main` shows that even though the buffer was initialized with
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img11.png)
 
-Note that we also have the line `if (strcmp(response, "i pledge to not cheat")) {` which means that if the strings are equal, the program would not enter this if clause as equal strings in strcmp returns 0. Anything else would have returned a non zero value and hence entered this clause and exited (`exit(1)`). So we know that inside `main`, the buffer is 64 bytes, the next 8 bytes are the base pointer and the next 8 bytes are the return address of main. So if we overflow these 72 bytes and then add the return address of `cheat` which is where we want to go, `main` would return to `cheat` and then print out the flag.
+Note that we also have the line `if (strcmp(response, "i pledge to not cheat")) {` which means that if the strings are equal, the program would not enter this if clause as equal strings in strcmp returns 0. Anything else would have returned a non zero value and hence entered this clause and exited (`exit(1)`). So we know that inside `main`, the buffer is 64 bytes, the next 8 bytes are the base pointer and the next 8 bytes are the return address of main. So if we overflow these 72 bytes and then add the return address of `cheat` (found using objdump) which is where we want to go, `main` would return to `cheat` and then print out the flag.
 
 This was the payload : `python2 -c 'print("i pledge to not cheat"+"\x00"*51+"\x16\x12\x40\x00\x00\x00\x00\x00")' | nc bin.bcactf.com 49156`
 
@@ -203,3 +203,20 @@ And after running it on their server, we get the flag :
 <br/>
 
 # Movie-Login-3 (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img13.png)
+
+When we go to the website, we are shown a login page where we have to enter the username and password :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img14.png)
+
+To bypass this authentication scheme, we have to use a SQL injection. There was a list of blacklisted characters though :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img15.png)
+
+None of those characters could be used. After a bit of Googling, I found <a href="https://github.com/Ne3o1/PayLoadAllTheThings/blob/master/SQL%20injection/README.md#authentication-bypass" target="_blank">this</a>
+list of SQL injections for authentication bypass. This command seemed to work : `admin' or 2 LIKE 2--`. After entering that, we get the flag :
+ 
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img16.png)
+
+**Flag :** bcactf{gu3ss_th3r3s_n0_st0pp1ng_y0u!}
