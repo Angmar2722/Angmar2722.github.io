@@ -572,6 +572,6 @@ The interesting thing about this string is that between the "e" and "." in "here
 
 I tried to use <a href="https://github.com/enodari/zwsp-steg-py" target="_blank">zwsp-steg-py</a> but couldn't get it to work so I decoded the flag manually :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/IMG_0602.HEIC)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/IMG_0602.png)
 
 **Flag :** bcactf{z3r0_w1dth_jungl3_j82axH4}
