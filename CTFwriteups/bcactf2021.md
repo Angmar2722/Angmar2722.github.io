@@ -316,3 +316,78 @@ int main() {
 This challenge involved exploiting the format string vulnerbility in the line `printf(essay);` as you could leak pointer values from the stack with your input. The flag was leaked from the 20th to 32nd argument (%20$p to %32$p). It would give a hexadecimal output which when converted to ASCII and then reversed would give 8 bytes of the flag at a time.
 
 **Flag :** bcactf{totally_not_employing_the_use_of_generic_words_to_reach_the_required_word_limit_nope_not_me}
+
+# Math Analysis (Binary Exploitation)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img18.png)
+
+The source code and executable was provided. Here is the source code :
+
+```c
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void cheat() {
+    FILE *fp = fopen("flag.txt", "r");
+    char flag[100];
+
+    if (fp == NULL) {
+        puts("Hmmm... I can't find my answers.");
+        puts("That's not good, but at least it means you can't cheat!");
+        puts("[If you are seeing this on the remote server, please contact admin].");
+        exit(1);
+    }
+
+    fgets(flag, sizeof(flag), fp);
+    puts(flag);
+}
+
+int main() {
+    char response[50];
+
+    setbuf(stdout, NULL);
+    setbuf(stdin, NULL);
+    setbuf(stderr, NULL);
+
+    puts("It's math time, baby!");
+    puts("WOOO I love my numbers and functions and stuff!!");
+    printf("For example, here's a number: %d.\n", cheat);
+    puts("What do you think about that wonderful number?");
+    printf("> ");
+    gets(response);
+
+    srand(time(NULL));
+    switch (rand() % 5) {
+        case 0:
+            puts("Hmm, that's an interesting way to look at that.");
+            break;
+        case 1:
+            puts("Oh, but you forgot about [insert obscure math fact].");
+            break;
+        case 2:
+            puts("Yeah, isn't that pretty cool?");
+            break;
+        case 3:
+            puts("Well, you better like it because that's what we're learning about.");
+            break;
+        case 4:
+            puts("Numbeerrrrrs!");
+            break;
+    }
+
+    puts("Anyways, we have a test coming up.");
+    puts("Be sure to study!");
+}
+
+```
+
+Similar to the Advanced Math Analysis, we have a buffer overflow vulnerability here due to `gets()`. The buffer is again 64 bytes even though it is initialized wiht 50 bytes. An interesting thing to note here is that we don't even need to use objdump to get the address of `cheat()` as the line `printf("For example, here's a number: %d.\n", cheat);` prints out the address of cheat as calling a function without parentheses in C returns the address of that function. So our payload is similar to the previous challenge - overflow 72 bytes consisting of the 64 byte buffer and 8 byte base pointer and then add the address of `cheat()`. This was the payload : `python2 -c 'print("\x00"*72+"\x56\x12\x40\x00\x00\x00\x00\x00")' | nc bin.bcactf.com 49158`.
+
+After running it we get the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img19.png)
+
+**Flag :** bcactf{challenges_are_just_functions_mapping_from_coffee_to_points}
