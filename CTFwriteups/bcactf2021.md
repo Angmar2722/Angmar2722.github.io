@@ -761,6 +761,8 @@ The objective is to buy the flag which costs $100 when we are given only $15. In
 
 <p> <b>Flag :</b> bcactf{bca_store??_wdym_ive_never_heard_of_that_one_before} </p>
 
+<br/>
+
 # Honors ABCs (Binary Exploitation)
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img39.png)
@@ -858,3 +860,17 @@ Due to `gets()`, we can overflow the buffer and modify the grade to be greater t
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img40.png)
 
 <p> <b>Flag :</b> bcactf{now_i_know_my_A_B_Cs!!_next_time_wont_you_cheat_with_me??}} </p>
+
+<br/>
+
+# Countdown Timer (Web)
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img41.png)
+
+When you go to the website, you have a countdown timer which will print the flag after 100 days. To bypass this, I first started the countdown, then put a breakpoint in the website's Javascript code (using my browser's developer tools), changed the variable time and then resumed the operation and got the flag :
+
+![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img42.png)
+
+<p> <b>Flag :</b> bcactf{1_tH1nK_tH3_CtF_w0u1D_b3_0v3r_bY_1O0_dAy5} </p>
+
+
