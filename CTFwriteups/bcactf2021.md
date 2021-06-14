@@ -317,6 +317,8 @@ This challenge involved exploiting the format string vulnerbility in the line `p
 
 **Flag :** bcactf{totally_not_employing_the_use_of_generic_words_to_reach_the_required_word_limit_nope_not_me}
 
+<br/>
+
 # Math Analysis (Binary Exploitation)
 
 ![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img18.png)
