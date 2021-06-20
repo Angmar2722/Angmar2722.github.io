@@ -813,8 +813,23 @@ And after running it, we get the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img25.png)
 
+There was some miscommunication in my team as one of my teammates had solved this challenge 40 minutes before me but I didn't realize that so I solved it independently of them and was surprised to find that the challenge was already solved when I was about to enter the flag.
+
 <p> <b>Flag :</b> flag{s33d3d_r4nd0m1z3rs_4r3_c00l} </p>
 
 <br/>
 
 # Glass-Windows (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img26.png)
+
+We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/glass-windows.png" target="_blank">image</a>. After uploading it to the awesome and beautifully made <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a> tool and clicking on the Inverse RGBA option, we got the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img27.png)
+
+<p> <b>Flag :</b> flag{this_is_why_i_use_premultiplied_alpha} </p>
+
+<br/>
+
+# Opisthocomus-Hoazin (Cryptography)
+
