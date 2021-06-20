@@ -261,3 +261,114 @@ And as shown below, after running it and waiting for a few minutes, you get the 
 Solving this challenge was a really special moment for me personally since this was the 8th least solved challenge out of the 50 challenges in the CTF and of the 28 teams which solved it, I noticed that all of them were in the top 50. This was probably the first truly hard CTF problem that I managed to solve in terms of the number of solves by all teams. Me and Diamondroxxx spent nearly 13 hours straight on this challenge, from 6 pm Friday to 7 am Saturday and during that time, we thought of using a SAT solver (Boolean satisfiability problem solver), we were stuck over the implementation of the reconstruction algorithm, and times we had no idea what we were doing or what we had to do, but we persevered and finally got it and boy did that feel great. Hopefully solving this challenge proves to be a stepping stone and major milestone in my CTF/cybersecurity learning journey :D  
 
 <p> <b>Flag :</b> flag{P0g_Po5_pOG_i_Sh0Ok_mY-pHoN3_t0_5O_kMs_leTs_goOOoO0oO} </p>
+
+<br/>
+
+# Regulus-Regulus (Cryptography)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img3.png)
+
+So when we connect to the server, two 1024 bit primes are generated and a random number between 0 and the modulus `n` is calculated and that number is the message. From that, the ciphertext and private key is generated. We are also given 4 options. The first option simply prints out the source code (the file was not provided) so here it is :
+
+```python
+
+from Crypto.Util.number import *
+import random
+import sympy
+flag = open('flag.txt','rb').read()
+p,q = getPrime(1024),getPrime(1024)
+e = 0x10001
+n = p*q
+m = random.randrange(0,n)
+c = pow(m,e,n)
+d = sympy.mod_inverse(e,(p-1)*(q-1))
+def menu():
+    print()
+    print("1. Key generation algorithm")
+    print("2. Public key")
+    print("3. Private key")
+    print("4. Decrypt")
+    choice = input(": ").strip()
+    if choice=="1":
+        f = open(__file__)
+        print()
+        print(f.read())
+        print()
+        menu()
+    elif choice=="2":
+        print("n = "+str(n))
+        print("e = 65537")
+        menu()
+    elif choice=="3":
+        print("d = "+str(d))
+        menu()
+    elif choice=="4":
+        d_ = int(input("What private key you like to decrypt the message with?\n : "))
+        if d_%((p-1)*(q-1))==d:
+            print("You are not allowed to use that private key.")
+            menu()
+        if (pow(c,d_,n)==m):
+            print("Congrats! Here is your flag:")
+            print(flag)
+            exit()
+        else:
+            print("Sorry, that is incorrect.")
+            menu()
+    else:
+        print("That is not a valid choice.")
+        menu()
+while 1:
+    menu()
+
+```
+
+The second option gives the public key, the modulus and exponent (65537 for this challenge). The third option prints out the private key which was calculated using Euler's totient and the fourth option is the win state for the challenge. Somehow, we have to provide a private key which decrypts the original message while at the same time, this private key cannot equal the private key provided in option 3. So how could we go about solving this challenge????
+
+Looking at this <a href="https://www.di-mgt.com.au/rsa_alg.html#notespractical" target="_blank">link</a> provides us the answer : 
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img4.png)
+
+Thats right! Instead of using Euler's totient and calculating the corresponding private key, we could also use the <a href="https://en.wikipedia.org/wiki/Carmichael_function" target="_blank">Carmichael function</a> in order to calculate a different private key `d` which decrypts the same message. And Carmichael's totient function in RSA is calculated by `lcm(p-1, q-1)`. So we have to use the modulus given to get the primes p and q, and with that we can get Carmichael's totient, generate the different private key as that is just the modular multiplicative inverse of the public exponent `e` with Carmichael's totient.
+
+So how could we get the primes p and q from the modulus N? Looking at the image above, it does suggest that getting the factors of N is possible given the private key `d` which we have but when we tried out the algorithm suggested, it proved to be too slow for even 128 bit primes, much less 1024 bit ones. So we had to find a different method. Eventually we came across <a href="https://math.stackexchange.com/questions/3082920/how-can-i-break-rsa-if-i-know-the-private-key" target="_blank">this</a> :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img5.png)
+
+So we tried that out and it instatly got the primes p and q. So now we just had to connect to the server, get the modulus and private key, use the script below to get p and q and hence the different private key (with Carmichael's totient) and then input that into the server in order to get the flag. The script :
+
+```python
+
+import math
+from sympy import *
+from Crypto.Util.number import *
+
+n = 17269432726331080815102205208548292687101168303995403484487224124109979166886503645980707822728955127534867693491331939710858081252630733496273112057823278099717134549561273436545474572432760937741416911638236057173568509364825948802469597303785280041455626031878490940209744590141091769199509645510262209753690393857481539992934876578399860565617589556319028332950868142233764152408077184237460198927924380505854957397480947637951827543075517413164781808332461428463827262153423185074949059996471622921625730717828667509351872190960790557673400791944072585111996590791549594028331344116774921948806556877921082161127 
+e = 65537
+d = 16296039307482689638652450931721806989157232577383580842747507537838678023372477302567784822024608571526600588500914615370532620030005072731587012969650197407888776598692613838538257533652123757156147612286852197747608180488104904890231888949112609268104128670666364270799567186293170854366316355757681093699453326295525329940473887272583972290557256494116691976645278158037978790478618389541529950886926045976244727714715283897267617418962761357947122744011661073203128748898915279869864296061251298750374226190850781786090339921234100769324018515387630159194987066528608326115196578392255182169087335618522644070953 
+
+ed = d * e
+k = ceiling(ed / n)
+pPlusq = ( (k * n) - ed + k + 1 ) // k
+pMinusq = math.isqrt(pow(pPlusq, 2) - (4 * n))
+
+p = (pPlusq + pMinusq) // 2
+q = n // p
+
+print(isprime(p))
+print(isprime(q))
+print(p)
+print(q)
+print("Check : ", n - (p * q))
+
+carmichaelsTotient = lcm(p - 1, q - 1)
+payloadD = inverse(e, carmichaelsTotient)
+print(payloadD)
+
+```
+
+And as shown below, after inputting this different private key, we get the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img6.png)
+
+<p> <b>Flag :</b> flag{r3gulus_regu1us_regUlus_regulu5_regUlus_Regulus_reguLus_regulns_reGulus_r3gulus_regu|us} </p>
+
