@@ -389,3 +389,195 @@ Seems like this challenge was basically made for me since I **love** reading abo
 <br/>
 
 # Canis-Lupus-Familiaris-Bernardus (Cryptography)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img8.png)
+
+Source Code provided :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Random import *
+from Crypto.Util.Padding import *
+import random
+
+flag = open('flag.txt','rb').read()
+print("Hello, I'm Bernard the biologist!")
+print()
+print("My friends love to keyboard spam at me, and my favorite hobby is to tell them whether or not their spam is a valid peptide or not. Could you help me with this?")
+print("Your job is to identify if a string is a valid peptide.")
+print()
+print("If it is, type the letter T. If it's not, type F. Then, I'd like for you to return a valid IV that changes the ciphertext such that it is a valid peptide!")
+print()
+print("You only have to get 100 correct. Good luck!")
+print()
+print("Oh yeah, I almost forgot. Here's the list of valid amino acids:")
+print("""
+alanine: A
+arginine: R
+asparagine: N
+aspartic acid: D
+asparagine or aspartic acid: B
+cysteine: C
+glutamic acid: E
+glutamine: Q
+glutamine or glutamic acid: Z
+glycine: G
+histidine: H
+isoleucine: I
+leucine: L
+lysine: K
+methionine: M
+phenylalanine: F
+proline: P
+serine: S
+threonine: T
+tryptophan: W
+tyrosine: Y
+valine: V
+""")
+def spam():
+    r = ""
+    for i in range(16):
+        r+=random.choice(list("ABCDEFGHIKLMNPQRSTVWYZ"))
+    if random.randint(0,1)==0:
+        ra = random.randint(0,15)
+        return [(r[:ra]+random.choice(list("JOUX"))+r[ra+1:]).encode("utf-8"),True]
+    return [r.encode('utf-8'),False]
+    
+def valid(str1):
+    v = list("ABCDEFGHIKLMNPQRSTVWYZ")
+    for i in str1:
+        if i not in v:
+            return False
+    return True
+    
+def enc(key, iv, pt):
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    return cipher.encrypt(pad(pt, AES.block_size))
+    
+def dec(key, iv, ct):
+    try:
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        return unpad(cipher.decrypt(ct), AES.block_size)
+    except (ValueError, KeyError):
+        print("THAT IS NOT A VALID PEPTIDE.")
+        exit(1)
+    
+for i in range(100):
+    key = get_random_bytes(16)
+    iv = get_random_bytes(16)
+    spammmmm=spam()
+    changed=spammmmm[1]
+    spammmmm=spammmmm[0]
+    guess1 = input("Is "+spammmmm.decode('utf-8')+" a valid peptide? ")
+    if (guess1=="T" and not changed) or (guess1=="F" and changed):
+        print("Correct!")
+        if guess1=="F":
+            print("Here's the IV: "+iv.hex())
+            if not valid(dec(key, bytes.fromhex(input("Now, give me an IV to use: ").strip()), enc(key, iv, spammmmm)).decode('utf-8')):
+                print("WRONG.")
+                exit(0)
+            else:
+                print("The peptide is now valid!")
+    else:
+        print("WRONG.")
+        exit(0)
+
+print("Thank you for your service in peptidology. Here's your flag:")
+print(flag)
+
+```
+
+So looking at the source code, when we connect to the server, a random string of 16 letters from A to Z is chosen and then the user is prompted to verify whether the peptide is valid. A peptide is only valid if the 16 letters do not contain the 4 letters "JOUX" as shown in the function `spam` and `valid`. The function `spam` generates 16 letters and after randomly choosing either a 0 or 1, if it chooses a 0, one of the invalid letters is added and this is marked as spam (true) and if it chooses 1, no invalid letter is added and it is marked as not spam (false). The function `valid` checks whether the letter string is valid and it will be as long as any letter in "JOUX" is not present. These 16 letters are called a peptide for the purpose of this challenge.
+
+Here is a brief confirmation of our findings when you connect to the server :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img9.png)
+
+So there is a loop which runs 100 times. After generating a random peptide, the user is prompted to answer whether it is valid or not. If it is valid and the user guesses it correctly, the loop is incremented (if the user guesses incorrectly it exits the program). However when it is invalid, interesting stuff happens. First a random IV is provided .A random key is also generated but not provided. Let us remind ourselves how the CBC mode of operation works :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img10.png)
+
+Ok, so since AES works in blocks of 16 bytes and each letter is 1 byte, we are only interested in the first block as the string is 16 bytes/letters. So when the IV is given, we are then prompted to provide our own IV in order to make the invalid peptide valid. The invalid peptide is first encrypted as shown in the line `enc(key, iv, spammmmm)` and then decrypted with our own IV and the same key as shown in the line `dec(key, bytes.fromhex(input("Now, give me an IV to use: ").strip()), enc(key, iv, spammmmm)).decode('utf-8')`. The .decode('utf-8') part simply makes the decrypted text ASCII characters. This is then checked for its validity. If the invalid "JOUX" letter is removed, we are allowed to proceed to the next iteration of the loop however if our peptide is still invalid, we have to exit the program.
+
+To make our peptide valid, we have to make our IV negate/remove the invalid string and instead replace it with a valid string. Since the encrypted text is the AES encryption of the old IV (IV_1) XOR the invalid text (P_1), when it is decrypted, after the block cipher decryption, we have the same IV_1 XOR P_1. This is then XORed with our own IV. If we made our own IV_2 = P_1 XOR IV_1 XOR P_2 (where P_2 is valid), this would effectively give us back a valid peptide as IV_1 XOR P_1 XOR P_1 XOR IV_1 XOR P_2 equals P_2 XOR 0 XOR 0 which is just P_2 as anything XOR the same thing gives 0. Now that we have our P_2, we can pass the check and proceed to the next part of the loop. So the only think we have to do is first find the invalid letter and replace it with a valid one (in our solve script we chose the letter "A") and then XOR that string with P_1 XOR IV_1 which we have thanks to the program. So that is exactly what we did.
+
+Solve script :
+
+```python
+
+from typing import NewType
+from pwn import *
+ 
+def isValid(str1):
+    v = list("ABCDEFGHIKLMNPQRSTVWYZ")
+    for i in str1:
+        if i not in v:
+            return False
+    return True
+
+def getValidPeptide(invalid, iv):
+    #IV = b00e3cdd4309d09b65b239ef7239ee4d
+    #Invalid Peptide = LZYSNNBDGDMVYGOS
+
+    #t1 = bytes.fromhex("b00e3cdd4309d09b65b239ef7239ee4d")
+    #t2 = "LZYSNNBDGDMVYGOS"
+
+    t1 = bytes.fromhex(iv)
+    t2 = invalid
+    result = xor(t1, t2)
+
+    invalidList = list("JOUX")
+
+    t3 = ""
+
+    for i in range(len(t2)):
+        if t2[i] in invalidList:
+            t3 += "A"
+            continue
+        t3 += t2[i]
+
+    newIV = xor(t3, result)
+    newIV = newIV.hex()
+    return newIV
+
+r = remote('canis-lupus-familiaris-bernardus.hsc.tf', 1337)
+
+for i in range(35):
+    t = r.recvline()
+    #print(i, t)
+
+for i in range(100):
+    t = r.recvuntil(b"a valid peptide? ")
+    peptide = t.split(b' ')[1]
+    peptide = str(peptide)[2:-1]
+    if isValid(peptide):
+        r.sendline("T")
+        print(r.recvline())
+    else:
+        r.sendline("F")
+        t = r.recvline()
+        print(t)
+        t = r.recvline()
+        iv = t.split(b' ')[-1][:-1]
+        iv = str(iv)[2:-1]
+        answer = getValidPeptide(peptide, iv)
+        r.sendlineafter("Now, give me an IV to use: ", answer)
+        print(r.recvline())
+
+temp = r.recvall()
+print(temp)
+
+```
+
+And after running the script, we got our flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img11.png)
+
+<p> <b>Flag :</b> flag{WATCHING_PPL_GET_PEPTIDED_IS_A_VALID_PEPTIDE} </p>
+
+<br/>
+
+# Regulus-Satrapa (Cryptography)
+
