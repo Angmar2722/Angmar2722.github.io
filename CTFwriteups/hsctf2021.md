@@ -645,6 +645,8 @@ And after running the script, we got the flag :
 
 # Geographic-Mapping (Misc)
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img14.png)
+
 This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
 
 The <a href="https://earth.google.com/web/search/35.897,14.515/@35.89806151,14.5179324,22.7104702a,0d,60y,359.99994439h,85t,0r/data=ClEaJxIhGYlBYOXQ8kFAIUfhehSuBy1AKg0zNS44OTcsMTQuNTE1GAEgASImCiQJ4mefVsb6RUAR3dNQ4an3RUAZzJnb8WzzKEAhfnqlLEPkKEAiGgoWX3doR0NzUVEyQks0cjBzOXR6Y1NxQRAC
