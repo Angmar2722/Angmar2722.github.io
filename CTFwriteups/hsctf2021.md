@@ -380,9 +380,11 @@ And as shown below, after inputting this different private key, we get the flag 
 
 Seems like this challenge was basically made for me since I **love** reading about random geography related stuff and participate in many international geography competitions. We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/hsctf2021/geoMapping2images" target="_blank">3 pictures</a> and we have to find their latitude and longitude (their coordinates). Looking at the first picture, I instantly knew that this was in either Vienna or Budapest, by the Danube river and turns out I was correct. I thought the second picture was taken near the Château de Chambord in France but turns out that it was in Germany. The third picture was of a restaurant in Andorra and was found by looking at the signs in the image.
 
-<a href="https://earth.google.com/web/search/hungarian+parliament/@47.50422021,19.04490009,104.11816406a,0d,59.99999999y,265.00100977h,89.45443507t,0r/data=Cn8aVRJPCiUweDQ3NDFkYzEwNDZkNGEzM2Q6MHgzNDIxMjJiOGZmOGYwZjZlGbIOR1fpwEdAIedwrfawCzNAKhRodW5nYXJpYW4gcGFybGlhbWVudBgBIAEiJgokCRrF1hFjSkVAEcqGgZdlR0VAGZCK-vFHEfg_Ico382fmlfc_IhoKFkF0SE5fWW1EMi1KQUNuYUtNendHY0EQAg" target="_blank">Google Earth link</a> for picture 1 (Budapest).
-<a href="https://earth.google.com/web/search/bertha-klingberg-platz/@53.6216865,11.4131794,41.61730005a,0d,61.74782055y,137.23126311h,88.95572653t,0r/data=CigiJgokCaIYp9dk1kpAEZre4c9zy0pAGTRnsbvBDydAIYo6mATtgyZAIjAKLEFGMVFpcE5jV1BtaTRoQTBwSmUxdnZ5S3Jwa3RueldXM1lSbkp6WTRVMDdoEAU" target="_blank">Google Earth link</a> for picture 2 (Bertha Klingberg Platz, Schwerin, Germany).
-<a href="https://earth.google.com/web/search/del+Mas,+Arinsal,+Carrer+de+la+Callissa,+AD400+Mas+de+Ribafeta,+Andorra/@42.56946816,1.48915676,1463.79638672a,0d,60y,130.29194442h,89.28518254t,0r/data=CrQBGokBEoIBCiUweDEyYWY1ZmE0ZDE1YTRjMDU6MHg2NjYxYmJiNzYzMjM4OTQ2GQauPJLcSEVAIQ5AtKBB1Pc_KkdkZWwgTWFzLCBBcmluc2FsLCBDYXJyZXIgZGUgbGEgQ2FsbGlzc2EsIEFENDAwIE1hcyBkZSBSaWJhZmV0YSwgQW5kb3JyYRgBIAEiJgokCfUfIbukz0pAEYZ4Zz92z0pAGdLBhfhG1CZAIbzDFECM0yZAIhoKFjJvWnl5M3NoM2xlazRkeWlOOHR6NEEQAg" target="_blank">Google Earth link</a> picture 3 (del Mas, Arinsal, Carrer de la Callissa, AD400 Mas de Ribafeta, Andorra).
+The <a href="https://earth.google.com/web/search/hungarian+parliament/@47.50422021,19.04490009,104.11816406a,0d,59.99999999y,265.00100977h,89.45443507t,0r/data=Cn8aVRJPCiUweDQ3NDFkYzEwNDZkNGEzM2Q6MHgzNDIxMjJiOGZmOGYwZjZlGbIOR1fpwEdAIedwrfawCzNAKhRodW5nYXJpYW4gcGFybGlhbWVudBgBIAEiJgokCRrF1hFjSkVAEcqGgZdlR0VAGZCK-vFHEfg_Ico382fmlfc_IhoKFkF0SE5fWW1EMi1KQUNuYUtNendHY0EQAg" target="_blank">Google Earth link</a> for picture 1 (Budapest).
+
+The <a href="https://earth.google.com/web/search/bertha-klingberg-platz/@53.6216865,11.4131794,41.61730005a,0d,61.74782055y,137.23126311h,88.95572653t,0r/data=CigiJgokCaIYp9dk1kpAEZre4c9zy0pAGTRnsbvBDydAIYo6mATtgyZAIjAKLEFGMVFpcE5jV1BtaTRoQTBwSmUxdnZ5S3Jwa3RueldXM1lSbkp6WTRVMDdoEAU" target="_blank">Google Earth link</a> for picture 2 (Bertha Klingberg Platz, Schwerin, Germany).
+
+The <a href="https://earth.google.com/web/search/del+Mas,+Arinsal,+Carrer+de+la+Callissa,+AD400+Mas+de+Ribafeta,+Andorra/@42.56946816,1.48915676,1463.79638672a,0d,60y,130.29194442h,89.28518254t,0r/data=CrQBGokBEoIBCiUweDEyYWY1ZmE0ZDE1YTRjMDU6MHg2NjYxYmJiNzYzMjM4OTQ2GQauPJLcSEVAIQ5AtKBB1Pc_KkdkZWwgTWFzLCBBcmluc2FsLCBDYXJyZXIgZGUgbGEgQ2FsbGlzc2EsIEFENDAwIE1hcyBkZSBSaWJhZmV0YSwgQW5kb3JyYRgBIAEiJgokCfUfIbukz0pAEYZ4Zz92z0pAGdLBhfhG1CZAIbzDFECM0yZAIhoKFjJvWnl5M3NoM2xlazRkeWlOOHR6NEEQAg" target="_blank">Google Earth link</a> picture 3 (del Mas, Arinsal, Carrer de la Callissa, AD400 Mas de Ribafeta, Andorra).
 
 <p> <b>Flag :</b> flag{47.504,19.045,53.62,11.41,42.569,1.489} </p>
 
@@ -642,6 +644,20 @@ And after running the script, we got the flag :
 <br/>
 
 # Geographic-Mapping (Misc)
+
+This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
+
+The <a href="https://earth.google.com/web/search/35.897,14.515/@35.89806151,14.5179324,22.7104702a,0d,60y,359.99994439h,85t,0r/data=ClEaJxIhGYlBYOXQ8kFAIUfhehSuBy1AKg0zNS44OTcsMTQuNTE1GAEgASImCiQJ4mefVsb6RUAR3dNQ4an3RUAZzJnb8WzzKEAhfnqlLEPkKEAiGgoWX3doR0NzUVEyQks0cjBzOXR6Y1NxQRAC
+https://earth.google.com/web/search/35.897,+14.515/@35.89797588,14.51796346,22.08028793a,0d,59.99999999y,17.42674303h,90.73065173t,0r/data=ClIaKBIiGYlBYOXQ8kFAIUfhehSuBy1AKg4zNS44OTcsIDE0LjUxNRgBIAEiJgokCWZ8bCfv8kFAESsPBi3M8kFAGbDJfYHyCS1AIQA0EuGnCC1AIhoKFjJlOW5NOFJyUzBrdjJUbkx5VDJxVHcQAg
+" target="_blank">Google Earth link</a> for picture 1 (Malta).
+
+The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.9377669,12.445825,678.55448792a,0d,60.53785234y,85.93357408h,103.21075752t,0r/data=CigiJgokCWA81JslWkZAEaL0NktgxURAGTe_zTwVUitAIX9lMZjeYyNAIjAKLEFGMVFpcE45aEc1UjRNR0todlhhQ3hmcEw1WGN0Rk10Mm83YVQ3WWNCTnJ3EAU
+https://earth.google.com/web/search/university+of+the+republic+of+san+marino/@43.93781197,12.44584726,675.38582416a,45.73201971d,35y,-35.32813243h,37.69886985t,0r/data=CigiJgokCadE9pe--UVAEWyRs5dN9UVAGQ0TvRqA-ihAIcRShO0hyyhA
+" target="_blank">Google Earth link</a> for picture 2 (San Marino).
+
+<p> <b>Flag :</b> flag{35.898,14.518,43.938,12.446}} </p>
+
+
 
 
 
