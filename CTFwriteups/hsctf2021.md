@@ -372,3 +372,20 @@ And as shown below, after inputting this different private key, we get the flag 
 
 <p> <b>Flag :</b> flag{r3gulus_regu1us_regUlus_regulu5_regUlus_Regulus_reguLus_regulns_reGulus_r3gulus_regu|us} </p>
 
+<br/>
+
+# Geographic-Mapping-2 (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img7.png)
+
+Seems like this challenge was basically made for me since I **love** reading about random geography related stuff and participate in many international geography competitions. We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/hsctf2021/geoMapping2images" target="_blank">3 pictures</a> and we have to find their latitude and longitude (their coordinates). Looking at the first picture, I instantly knew that this was in either Vienna or Budapest, by the Danube river and turns out I was correct. I thought the second picture was taken near the Château de Chambord in France but turns out that it was in Germany. The third picture was of a restaurant in Andorra and was found by looking at the signs in the images.
+
+<a href="" target="_blank">Google Earth link</a> for picture 1 (Budapest).
+<a href="" target="_blank">Google Earth link</a> for picture 2 (Bertha Klingberg Platz, Schwerin, Germany).
+<a href="" target="_blank">Google Earth link</a> picture 3 (del Mas, Arinsal, Carrer de la Callissa, AD400 Mas de Ribafeta, Andorra).
+
+<p> <b>Flag :</b> flag{47.504,19.045,53.62,11.41,42.569,1.489} </p>
+
+<br/>
+
+# Canis-Lupus-Familiaris-Bernardus (Cryptography)
