@@ -880,6 +880,79 @@ print(flag)
 
 <br/>
 
-# Opisthocomus-Hoazin (Cryptography)
+# Pallets-Of-Gold (Misc)
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img29.png)
+
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/pallets-of-gold.png" target="_blank">image</a> given. After playing around with the the "Colour Palette (Bitmap) Browser" of <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a>, we got the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img30.png)
+
+<p> <b>Flag :</b> flag{plte_chunks_remind_me_of_gifs} </p>
+
+<br/>
+
+# Queen-Of-The-Hill (Cryptography)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img31.png)
+
+Finally a non-bird or weird cryptography challenge description!!!! The 'hill' indicated that this was a <a href="https://en.wikipedia.org/wiki/Hill_cipher" target="_blank">Hill cipher</a>. We just chucked the ciphertext and encryption key into <a href="https://www.dcode.fr/hill-cipher" target="_blank">this</a> online Hill Cipher decoder and we got the flag.
+
+<p> <b>Flag :</b> flag{climb_your_way_to_the_top} </p>
+
+<br/>
+
+# LSBlue (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img32.png)
+
+We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/lsblue.png" target="_blank">this</a> image. The challenge name indicated that we had to flip the least significant bit of the blue color component of the image. We did just that, once again using StegOnline :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img33.png)
+
+<p> <b>Flag :</b> flag{0rc45_4r3nt_6lu3_s1lly_4895131} </p>
+
+<br/>
+
+# Return of the Intro to Netcat (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img34.png)
+
+Connect to their server using netcat, run the proof of work and get the flag.
+
+<p> <b>Flag :</b> flag{the_cat_says_meow} </p>
+
+<br/>
+
+# NRC (Web)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img35.png)
+
+Going to the website and looking around the source code with the browser's developer tools, we found the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img36.png)
+
+<p> <b>Flag :</b> flag{keyboard_shortcuts_or_taskbar} </p>
+
+<br/>
+
+# Hsctf-Survey (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img37.png)
+
+Fill out the survey and get the flag.
+
+<p> <b>Flag :</b> flag{thanks_for_participating_in_hsctf!} </p>
+
+<br/>
+
+# Sanity-Check (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img38.png)
+
+Enter the flag in the challenge description.
+
+<p> <b>Flag :</b> flag{1m_g0in6_1ns@ne_1m_g0in6_1ns@ne_1m_g0in6_1ns@ne} </p>
+
+<br/>
 
