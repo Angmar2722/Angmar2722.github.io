@@ -581,3 +581,67 @@ And after running the script, we got our flag :
 
 # Regulus-Satrapa (Cryptography)
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img12.png)
+
+We were provided with two files, the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/regulus_satrapa.txt" target="_blank">output.txt</a> as well as the source code shown below :
+
+```python
+
+from Crypto.Util.number import *
+import binascii
+flag = open('flag.txt','rb').read()
+p = getPrime(1024)
+q = getPrime(1024)
+n = p*q
+e = 2**16+1
+pt = int(binascii.hexlify(flag).decode(),16)
+print(p>>512)
+print(q%(2**512))
+print(n, e)
+print(pow(pt,e,n))
+
+```
+
+In output.txt, we are given the prime `p` with its bits shifted to the right by 512 places. Left shifting this result by 512 places would gives us the first 512 bits of `p` (lets call this pMSB) and the next 512 bits (p and q are 1024 bit primes) would be all 0s. We are also given the last 512 bits of q (lets call this qLSB) as that is what `q%(2**512)` does.
+
+After reading this <a href="https://crypto.stackexchange.com/questions/5644/attacks-on-the-rsa-cryptosystem" target="_blank">thread</a> and this <a href="https://crypto.stackexchange.com/questions/76804/rsa-if-the-least-significant-bits-of-the-factors-are-leaked-what-advantage-is" target="_blank">one</a>, I was convinced that I had to obtain the least significant bits of p by implementing the formula shown in the thread by using qLSB. I would then XOR that pLSB with pMSB in order to get `p` (as it would be 512 bit P MSB followed by 512 0s XORed with the 512 bit pLSB) but that didn't seem to work out.
+
+Instead, the final solution involved obtaining qMSB as the floor division (integer division) of the modulus `n` by pMSB which then right shifted by 512 would give us qMSB. After left shifting qMSB by 512, we would get the first 512 bits to be qMSB and the next 512 bits to be 0s. When this is XORed with the given qLSB, we would get `q`. To get `p`, we would then divide the modulus by `q`. After that, we could obtain the plaintext the normal way as used in RSA decryption.
+
+Solve script :
+
+```python
+
+from sympy import *
+from Crypto.Util.number import long_to_bytes, inverse
+ 
+n = 20478919136950514294245372495162786227530374921935352984649681539174637614643555669008696530509252361041808530044811858058082236333967101803171893140577890580969033423481448289254067496901793538675705761458273359594646496576699260837347827885664785268524982706033238656594857347183110547622966141595910495419030633639738370191942836112347256795752107944630943134049527588823032184661809251580638724245630054912896260630873396364113961677176216533916990437967650967366883162620646560056820169862154955001597314689326441684678064934393012107591102558185875890938130348512800056137808443281706098125326248383526374158851
+e= 65537
+ct=19386365681911176116962673929966212779218446893629616096165535479988405148285413619761557889189211704676408056225729231312267774666516067344628902420462860500796694348719854753450503310214423075716290790730397428257808016249943644108687242803494660111203848028946883397960407526446222857172233473980414880412616288479351174943750112131566288658840674793729931330990659775746679427920973741044231239820653713719744056152497641552948891194509604049453065742204369183052918461477609558512635361757334304706673378249269583497003794274869298361016417188996692715520035544727779966978038114830108861813134381830342160591600
+ 
+pRightShifted = 10782851882643568436690840861500470716392138950798808847901800880356088489358510127370728036479767973147003063168467186230765513438172292951359505497400115
+qLSB = 156706242812597368863822639576094365104687347205289704754937898429597824385199919052246554900504787988024439652223718201546746425116946202916886816790677
+
+qMSB_guess = (n // (pRightShifted << 512)) >> 512
+q = (qMSB_guess << 512) ^ qLSB
+p = n // q
+ 
+eulerTotient = (p-1) * (q-1)
+d = inverse(e, eulerTotient)
+pt = pow(ct, d, n)
+decrypted = long_to_bytes(pt)
+print(decrypted)
+
+```
+And after running the script, we got the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img13.png)
+
+<p> <b>Flag :</b> flag{WATCHING_PPL_GET_PEPTIDED_IS_A_VALID_PEPTIDE} </p>
+
+<br/>
+
+# Geographic-Mapping (Misc)
+
+
+
