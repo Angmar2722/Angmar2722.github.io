@@ -712,7 +712,7 @@ We had to find the flag from <a href="https://docs.google.com/spreadsheets/d/1y7
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img22.png)
 
-So to get the flag, we simply went to the find and replace option and put searched for the flag :
+So to get the flag, we simply went to the find and replace option and searched for the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img23.png)
 
@@ -721,6 +721,47 @@ So to get the flag, we simply went to the find and replace option and put search
 <br/>
 
 # Seeded-Randomizer (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img24.png)
+
+Source Code provided :
+
+```Java
+
+import java.util.Random;
+
+public class randomTest {
+    
+    public static void display(char[] arr) {
+		for (char x: arr)
+			System.out.print(x);
+		System.out.println();
+	}
+
+	public static void bruteForce() {
+		int[] c = {13, 35, 15, -18, 88, 68, -72, -51, 73, -10, 63, 
+				1, 35, -47, 6, -18, 10, 20, -31, 100, -48, 33, -12, 
+				13, -24, 11, 20, -16, -10, -76, -63, -18, 118};
+		for (int i = 0; i <= 1000; i++) {
+			Random rand = new Random(i);
+			char[] flag = new char[33];
+			for (int j = 0; j < 33; j++) {
+				int n = rand.nextInt(128) + c[j];
+				flag[j] = (char)n;
+			}
+			if (flag[0] == 'f' && flag[1] == 'l' && flag[2] == 'a' && flag[3] == 'g' && flag[4] == '{' && flag[32] == '}') {
+				display(flag);
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		bruteForce();
+	}
+
+}
+
+```
 
 
 
