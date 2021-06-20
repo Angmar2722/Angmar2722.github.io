@@ -833,3 +833,53 @@ We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/b
 
 # Opisthocomus-Hoazin (Cryptography)
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img28.png)
+
+Source Code provided :
+
+```python
+
+import time
+from Crypto.Util.number import *
+flag = open('flag.txt','r').read()
+p = getPrime(1024)
+q = getPrime(1024)
+e = 2**16+1
+n=p*q
+ct=[]
+for ch in flag:
+    ct.append((ord(ch)^e)%n)
+print(n)
+print(e)
+print(ct)
+
+```
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/opisthocomus_hoazin.txt" target="_blank">output.txt</a> file. So we are given the modulus, public exponent and ciphertext. Each character of the flag is raised to the power of the public exponent `e` and that result is then put in a modulo operation with `n` (the public modulus). So to get the flag, we could just check which printable ASCII value (from 32 to 126) gives us the corresponding ciphertext when raised to the power of the public exponent and then put into a modulo operation with n. If the character matches, we add that to our flag and then print it.
+
+Solve script :
+
+```python
+
+ct = [65639, 65645, 65632, 65638, 65658, 65653, 65609, 65584, 65650, 65630, 65640, 65634, 65586, 65630, 65634, 65651, 65586, 65589, 65644, 65630, 65640, 65588, 65630, 65618, 65646, 65630, 65607, 65651, 65646, 65627, 65586, 65647, 65630, 65640, 65571, 65612, 65630, 65649, 65651, 65586, 65653, 65621, 65656, 65630, 65618, 65652, 65651, 65636, 65630, 65640, 65621, 65574, 65650, 65630, 65589, 65634, 65653, 65652, 65632, 65584, 65645, 65656, 65630, 65635, 65586, 65647, 65605, 65640, 65647, 65606, 65630, 65644, 65624, 65630, 65588, 65649, 65585, 65614, 65647, 65660]
+
+n = 15888457769674642859708800597310299725338251830976423740469342107745469667544014118426981955901595652146093596535042454720088489883832573612094938281276141337632202496209218136026441342435018861975571842724577501821204305185018320446993699281538507826943542962060000957702417455609633977888711896513101590291125131953317446916178315755142103529251195112400643488422928729091341969985567240235775120515891920824933965514217511971572242643456664322913133669621953247121022723513660621629349743664178128863766441389213302642916070154272811871674136669061719947615578346412919910075334517952880722801011983182804339339643
+
+e = 65537
+
+flag = ""
+for i in range(len(ct)):
+    for j in range(32, 127):
+        if ((j^e)% n) == ct[i]:
+            flag = flag + chr(j)
+            break
+
+print(flag)
+
+```
+<p> <b>Flag :</b> flag{tH1s_ic3_cr34m_i5_So_FroZ3n_i"M_pr3tTy_Sure_iT's_4ctua1ly_b3nDin G_mY_5p0On} </p>
+
+<br/>
+
+# Opisthocomus-Hoazin (Cryptography)
+
+
