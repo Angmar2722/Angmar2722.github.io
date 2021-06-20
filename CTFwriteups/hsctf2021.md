@@ -649,15 +649,15 @@ And after running the script, we got the flag :
 
 This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
 
-The <a href="https://earth.google.com/web/search/35.897,14.515/@35.89806151,14.5179324,22.7104702a,0d,60y,359.99994439h,85t,0r/data=ClEaJxIhGYlBYOXQ8kFAIUfhehSuBy1AKg0zNS44OTcsMTQuNTE1GAEgASImCiQJ4mefVsb6RUAR3dNQ4an3RUAZzJnb8WzzKEAhfnqlLEPkKEAiGgoWX3doR0NzUVEyQks0cjBzOXR6Y1NxQRAC
-https://earth.google.com/web/search/35.897,+14.515/@35.89797588,14.51796346,22.08028793a,0d,59.99999999y,17.42674303h,90.73065173t,0r/data=ClIaKBIiGYlBYOXQ8kFAIUfhehSuBy1AKg4zNS44OTcsIDE0LjUxNRgBIAEiJgokCWZ8bCfv8kFAESsPBi3M8kFAGbDJfYHyCS1AIQA0EuGnCC1AIhoKFjJlOW5NOFJyUzBrdjJUbkx5VDJxVHcQAg
-" target="_blank">Google Earth link</a> for picture 1 (Malta).
+The <a href="https://earth.google.com/web/search/35.897,+14.515/@35.89797468,14.51796316,21.98328209a,0d,59.99999999y,17.42674303h,90.73065173t,0r/data=ClIaKBIiGYlBYOXQ8kFAIUfhehSuBy1AKg4zNS44OTcsIDE0LjUxNRgBIAEiJgokCWZ8bCfv8kFAESsPBi3M8kFAGbDJfYHyCS1AIQA0EuGnCC1AIhoKFjJlOW5NOFJyUzBrdjJUbkx5VDJxVHcQAg" target="_blank">Google Earth link</a> for picture 1 (Malta).
 
-The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.9377669,12.445825,678.55448792a,0d,60.53785234y,85.93357408h,103.21075752t,0r/data=CigiJgokCWA81JslWkZAEaL0NktgxURAGTe_zTwVUitAIX9lMZjeYyNAIjAKLEFGMVFpcE45aEc1UjRNR0todlhhQ3hmcEw1WGN0Rk10Mm83YVQ3WWNCTnJ3EAU
-https://earth.google.com/web/search/university+of+the+republic+of+san+marino/@43.93781197,12.44584726,675.38582416a,45.73201971d,35y,-35.32813243h,37.69886985t,0r/data=CigiJgokCadE9pe--UVAEWyRs5dN9UVAGQ0TvRqA-ihAIcRShO0hyyhA
-" target="_blank">Google Earth link</a> for picture 2 (San Marino).
+The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.9377669,12.445825,678.55448792a,0d,60.53785234y,85.93357408h,103.21075752t,0r/data=CigiJgokCWA81JslWkZAEaL0NktgxURAGTe_zTwVUitAIX9lMZjeYyNAIjAKLEFGMVFpcE45aEc1UjRNR0todlhhQ3hmcEw1WGN0Rk10Mm83YVQ3WWNCTnJ3EAU" target="_blank">Google Earth link</a> for picture 2 (San Marino).
 
 <p> <b>Flag :</b> flag{35.898,14.518,43.938,12.446}} </p>
+
+<br/>
+
+# Stonks (Pwn)
 
 
 
