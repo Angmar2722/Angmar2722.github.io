@@ -730,9 +730,55 @@ Source Code provided :
 
 import java.util.Random;
 
+public class SeededRandomizer {
+
+	public static void display(char[] arr) {
+		for (char x: arr)
+			System.out.print(x);
+		System.out.println();
+	}
+
+	public static void sample() {
+		Random rand = new Random(79808677);
+		char[] test = new char[12];
+		int[] b = {9, 3, 4, -1, 62, 26, -37, 75, 83, 11, 30, 3};
+		for (int i = 0; i < test.length; i++) {
+			int n = rand.nextInt(128) + b[i];
+			test[i] = (char)n;
+		}
+		display(test);
+	}
+
+	public static void main(String[] args) {
+		// sample();
+		// Instantiate another seeded randomizer below (seed is integer between 0 and 1000, exclusive):
+		char[] flag = new char[33];
+		int[] c = {13, 35, 15, -18, 88, 68, -72, -51, 73, -10, 63, 
+				1, 35, -47, 6, -18, 10, 20, -31, 100, -48, 33, -12, 
+				13, -24, 11, 20, -16, -10, -76, -63, -18, 118};
+		for (int i = 0; i < flag.length; i++) {
+			int n = (int)(Math.random() * 128) + c[i];
+			flag[i] = (char)n;
+		}
+		display(flag);
+	
+	}
+
+}
+
+```
+
+So what we have here is a comment telling us that a seeded randomizer with a certain seed or integer between 0 and 1000 (not included), we could use the same method as shown in the function `sample()` in order to get the flag (running `sample()` prints "Hello World!"). So we just looped through from 0 to 999 in order to find the right seed and we check that by only printing the output if it matched the flag format (flag{......}). 
+
+Solution Code :
+
+```Java
+
+import java.util.Random;
+
 public class randomTest {
     
-    public static void display(char[] arr) {
+    	public static void display(char[] arr) {
 		for (char x: arr)
 			System.out.print(x);
 		System.out.println();
@@ -742,7 +788,7 @@ public class randomTest {
 		int[] c = {13, 35, 15, -18, 88, 68, -72, -51, 73, -10, 63, 
 				1, 35, -47, 6, -18, 10, 20, -31, 100, -48, 33, -12, 
 				13, -24, 11, 20, -16, -10, -76, -63, -18, 118};
-		for (int i = 0; i <= 1000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			Random rand = new Random(i);
 			char[] flag = new char[33];
 			for (int j = 0; j < 33; j++) {
@@ -763,6 +809,12 @@ public class randomTest {
 
 ```
 
+And after running it, we get the flag :
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img25.png)
 
+<p> <b>Flag :</b> flag{s33d3d_r4nd0m1z3rs_4r3_c00l} </p>
 
+<br/>
+
+# Glass-Windows (Misc)
