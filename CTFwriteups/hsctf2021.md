@@ -657,7 +657,7 @@ The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.937766
 
 <br/>
 
-# Stonks (Pwn)
+# Stonks (Pwn / Binary Exploitation)
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img15.png)
 
@@ -705,5 +705,23 @@ And after running the script, we enter the shell and once in interactive mode, w
 <br/>
 
 # Digits-Of-Pi (Web)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img21.png)
+
+We had to find the flag from <a href="https://docs.google.com/spreadsheets/d/1y7AxYvBwJ1DeapnhV401w0T5HzQNIfrN1WeQFbnwbIE/edit#gid=0" target="_blank">this</a> spreadsheet. Notice that there was a hidden sheet called source :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img22.png)
+
+So to get the flag, we simply went to the find and replace option and put searched for the flag :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img23.png)
+
+<p> <b>Flag :</b> flag{hidden_sheets_are_not_actually_hidden} </p>
+
+<br/>
+
+# Seeded-Randomizer (Misc)
+
+
 
 
