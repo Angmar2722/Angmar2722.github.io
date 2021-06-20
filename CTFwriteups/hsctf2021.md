@@ -637,7 +637,7 @@ And after running the script, we got the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img13.png)
 
-<p> <b>Flag :</b> flag{WATCHING_PPL_GET_PEPTIDED_IS_A_VALID_PEPTIDE} </p>
+<p> <b>Flag :</b> flag{H4lf_4nd_H4lf} </p>
 
 <br/>
 
