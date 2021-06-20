@@ -495,7 +495,7 @@ Here is a brief confirmation of our findings when you connect to the server :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img9.png)
 
-So there is a loop which runs 100 times. After generating a random peptide, the user is prompted to answer whether it is valid or not. If it is valid and the user guesses it correctly, the loop is incremented (if the user guesses incorrectly it exits the program). However when it is invalid, interesting stuff happens. First a random IV is provided .A random key is also generated but not provided. Let us remind ourselves how the CBC mode of operation works :
+So there is a loop which runs 100 times. After generating a random peptide, the user is prompted to answer whether it is valid or not. If it is valid and the user guesses it correctly, the loop is incremented (if the user guesses incorrectly it exits the program). However when it is invalid, interesting stuff happens. First a random IV is provided. A random key is also generated but not provided. Let us remind ourselves how the CBC mode of operation works :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img10.png)
 
