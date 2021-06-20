@@ -726,7 +726,7 @@ So to get the flag, we simply went to the find and replace option and searched f
 
 Source Code provided :
 
-```Java
+```java
 
 import java.util.Random;
 
@@ -772,7 +772,7 @@ So what we have here is a comment telling us that a seeded randomizer with a cer
 
 Solution Code :
 
-```Java
+```java
 
 import java.util.Random;
 
