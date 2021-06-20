@@ -606,7 +606,7 @@ In output.txt, we are given the prime `p` with its bits shifted to the right by 
 
 After reading this <a href="https://crypto.stackexchange.com/questions/5644/attacks-on-the-rsa-cryptosystem" target="_blank">thread</a> and this <a href="https://crypto.stackexchange.com/questions/76804/rsa-if-the-least-significant-bits-of-the-factors-are-leaked-what-advantage-is" target="_blank">one</a>, I was convinced that I had to obtain the least significant bits of p by implementing the formula shown in the thread by using qLSB. I would then XOR that pLSB with pMSB in order to get `p` (as it would be 512 bit P MSB followed by 512 0s XORed with the 512 bit pLSB) but that didn't seem to work out.
 
-Instead, the final solution involved obtaining qMSB as the floor division (integer division) of the modulus `n` by pMSB which then right shifted by 512 would give us qMSB (the first 512 bits of this operation, the next 512 bits are meaningless). After left shifting qMSB by 512, we would get the first 512 bits to be qMSB and the next 512 bits to be 0s. When this is XORed with the given qLSB, we would get `q`. To get `p`, we would then divide the modulus by `q`. After that, we could obtain the plaintext the normal way as used in RSA decryption.
+Instead, the final solution involved obtaining qMSB as the floor division (integer division) of the modulus `n` by pMSB which then right shifted by 512 and then left shifted by 512 would give us qMSB (the first 512 bits of this operation, the next 512 bits are all 0s. When this is XORed with the given qLSB, we would get `q`. To get `p`, we would then divide the modulus by `q`. After that, we could obtain the plaintext the normal way as used in RSA decryption.
 
 Solve script :
 
