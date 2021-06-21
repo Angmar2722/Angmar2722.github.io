@@ -956,3 +956,5 @@ Enter the flag in the challenge description.
 
 <br/>
 
+
+Overall, I thoroughly loved this CTF (probably my favourite one yet). Initially, the infrastructure was a bit unreliable but the overall challenge variety and quality (for my level) more than made up for it and all in all, this was definitely my best CTF experience yet, especially because Diamondroxxx carried us :P
