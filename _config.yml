@@ -17,8 +17,8 @@ navbar-links:
   #Home: "https://Angmar2722.github.io/"
   #Tools I Built:
   #  - Introduction: "toolsIntro"
-  Learning From The Past:
-    - Introduction: "/LearningFromThePast/pastCTFintro"
+  #Learning From The Past:
+  #  - Introduction: "/LearningFromThePast/pastCTFintro"
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
   CryptoHack:
