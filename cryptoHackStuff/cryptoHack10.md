@@ -419,7 +419,7 @@ print(f"c = {c}")
 
 I had no clue how to solve this the proper way so I just used factordb :D
 
-SOlve script :
+Solve script :
 
 ```python
 
