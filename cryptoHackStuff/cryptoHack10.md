@@ -296,5 +296,88 @@ After running it we get the flag :
 The flag "poor Estonia" is a reference to the ROCA vulnerability found <a href="https://www.usenix.org/system/files/sec20summer_parsovs_prepub.pdf
 " target="_blank">previously</a> in Estonia's smart cards.
 
+<br/>
+
+# Ron was Wrong, Whit is Right (Primes Part 2)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img159.png)
+
+A zip file was given which when unzipped revealed a set of 50 ciphertexts and public keys. The public keys had different exponents (65537, 17. 3) and different modulus lengths (some 2048 bit and some even 8192 bit!!!!). Another file was given, `excerpt.py` which is shown below :
+
+```python
+
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
+
+
+msg = "???"
+
+with open('21.key') as f:
+    key = RSA.importKey(f.read())
+
+cipher = PKCS1_OAEP.new(key)
+ciphertext = cipher.encrypt(msg)
+
+with open('21.ciphertext', 'w') as f:
+    f.write(ciphertext.hex())
+
+```
+
+So the challenge title refers to <a href="https://eprint.iacr.org/2012/064.pdf" target="_blank">this paper</a> which revealed that after going through millions of public keys, the researchers found that a small fraction of them contained a shared factor which would completely jeopardise the fundamental basis of RSA's security. Say you have two modulii, n1 and n2. Ideally since they are semi-prime, they should not have any factors, i.e. their GCD should be 1. But in the off chance that their GCD is not one, by computing their GCD, you could get their shared prime factor. From there everything else can also be computed to decrypt the ciphertext. So I did the same thing, my solve script involved finding the set of modulii which had a GCD which was not 1.
+
+My solve script :
+
+```python
+
+from Crypto.Cipher import PKCS1_OAEP
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from Crypto.Util.number import long_to_bytes, inverse
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
+from sympy import *
+
+def decryptText(p, q, e, n, ct):
+    eulerTotient = (p - 1) * (q - 1)
+    d = inverse(e, eulerTotient)
+    key = RSA.construct((n, e, d))
+    cipher1 = PKCS1_OAEP.new(key)
+    m1 = cipher1.decrypt(bytes.fromhex(ct))
+    print(m1)
+
+ciphertextList = []
+modulusList = []
+publicExponentList = []
+
+for i in range(1, 51):
+    ct = open('keys_and_messages/' + str(i) + ".ciphertext",'r')
+    ciphertextList.append(ct.read())
+    f = open('keys_and_messages/' + str(i) + ".pem",'r')
+    key = RSA.import_key(f.read())
+    modulusList.append(key.n)
+    publicExponentList.append(key.e)
+
+for i in range(50):
+    check = modulusList[i]
+    for j in range(50):
+        if (i == j):
+            continue
+        commonFactor = igcd(modulusList[i], modulusList[j])
+        if (commonFactor != 1):
+            #Getting First Block Message
+            decryptText(commonFactor, (modulusList[i] // commonFactor), publicExponentList[i], modulusList[i], ciphertextList[i])
+            #Getting Second Block Message
+            decryptText(commonFactor, (modulusList[j] // commonFactor), publicExponentList[j], modulusList[j], ciphertextList[j])
+            exit(0)
+
+```
+
+And after running it, you get the two plaintexts, one of which was the flag (the link is the same as the paper linked above) :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img160.png)
+
+<p> <b>Flag :</b> crypto{3ucl1d_w0uld_b3_pr0ud} </p>
+
+
 
 
