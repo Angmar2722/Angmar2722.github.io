@@ -302,7 +302,7 @@ The flag "poor Estonia" is a reference to the ROCA vulnerability found <a href="
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img159.png)
 
-A zip file was given which when unzipped revealed a set of 50 ciphertexts and public keys. The public keys had different exponents (65537, 17. 3) and different modulus lengths (some 2048 bit and some even 8192 bit!!!!). Another file was given, `excerpt.py` which is shown below :
+A zip file was given which when unzipped revealed a set of 50 ciphertexts and public keys. The public keys had different exponents (65537, 17, 3) and different modulus lengths (some 2048 bit and some even 8192 bit!!!!). Another file was given, `excerpt.py` which is shown below :
 
 ```python
 
