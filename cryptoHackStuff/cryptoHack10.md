@@ -697,7 +697,7 @@ verifyAndGetFlag(ADMIN_TOKEN.hex(), hex(unblindedSignature))
 
 One thing I didn't understand was why the random number (`k`) = 3 or 7 did not work as both numbers are co-prime to the modulus `n`. I noticed that when `k` equalled 2, `sPrime % k = 0` but it was non-zero for when `k = 3 or 7`. Still many texts said that as long as k was co-prime to n, you could use it.
 
-After runnign the script, you get the flag :
+After running the script, you get the flag :
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img167.png)
 
