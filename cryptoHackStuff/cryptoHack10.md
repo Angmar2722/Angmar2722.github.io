@@ -552,3 +552,152 @@ And after running the script you get the flag :
 
 <p> <b>Flag :</b> crypto{d0n7_516n_ju57_4ny7h1n6} </p>
 
+# Blinding Light (Signatures Part 1)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img165.png)
+
+The source code file for the server was given :
+
+```python
+
+#!/usr/bin/env python3
+
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+from utils import listener
+
+FLAG = "crypto{?????????????????????????????}"
+ADMIN_TOKEN = b"admin=True"
+
+
+class Challenge():
+    def __init__(self):
+        self.before_input = "Watch out for the Blinding Light\n"
+
+    def challenge(self, your_input):
+        if 'option' not in your_input:
+            return {"error": "You must send an option to this server"}
+
+        elif your_input['option'] == 'get_pubkey':
+            return {"N": hex(N), "e": hex(E) }
+
+        elif your_input['option'] == 'sign':
+            msg_b = bytes.fromhex(your_input['msg'])
+            if ADMIN_TOKEN in msg_b:
+                return {"error": "You cannot sign an admin token"}
+
+            msg_i = bytes_to_long(msg_b)
+            return {"msg": your_input['msg'], "signature": hex(pow(msg_i, D, N)) }
+
+        elif your_input['option'] == 'verify':
+            msg_b = bytes.fromhex(your_input['msg'])
+            msg_i = bytes_to_long(msg_b)
+            signature = int(your_input['signature'], 16)
+
+            if msg_i < 0 or msg_i > N:
+                # prevent attack where user submits admin token plus or minus N
+                return {"error": "Invalid msg"}
+
+            verified = pow(signature, E, N)
+            if msg_i == verified:
+                if long_to_bytes(msg_i) == ADMIN_TOKEN:
+                    return {"response": FLAG}
+                else:
+                    return {"response": "Valid signature"}
+            else:
+                return {"response": "Invalid signature"}
+
+        else:
+            return {"error": "Invalid option"}
+
+
+listener.start_server(port=13376)
+
+```
+
+The challenge name "Blinding Light" refers to a blind RSA signature attack where the signature of even a blacklisted string (in our case it is "admin=true") can be calculated. The basis of this attack can be learnt from <a href="http://the2702.com/2015/09/07/RSA-Blinding-Attack.html" target="_blank">this</a> link. 
+
+The important part of the resource is shown below :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img166.png)
+
+My solve script :
+
+```python
+
+from pwn import *
+import json
+
+from pwnlib.util.splash import splash
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+from sympy import *
+
+def json_recv():
+    line = r.recvline()
+    return json.loads(line.decode())
+
+def json_send(hsh):
+    request = json.dumps(hsh).encode()
+    r.sendline(request)
+
+r = remote('socket.cryptohack.org', 13376)
+
+def getInfo(option, output):
+    to_send = {
+        "option": option
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    return int(received[output], 16)
+
+n = getInfo("get_pubkey", "N")
+r.close()
+
+r = remote('socket.cryptohack.org', 13376)
+e = getInfo("get_pubkey", "e")
+r.close()
+
+ADMIN_TOKEN = b"admin=True"
+k = 2
+blindedMessage = (bytes_to_long(ADMIN_TOKEN) * pow(k, e)) % n
+
+def getSignature(msg):
+    to_send = {
+        "option": "sign",
+        "msg": msg
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    return int(received["signature"], 16)
+
+r = remote('socket.cryptohack.org', 13376)
+sPrime = getSignature('{:x}'.format(blindedMessage)) 
+r.close()
+unblindedSignature = (sPrime // k) % n
+
+r = remote('socket.cryptohack.org', 13376)
+
+def verifyAndGetFlag(msg, signature):
+    to_send = {
+        "option": "verify",
+        "msg": msg,
+        "signature": signature
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    print(received["response"])
+
+verifyAndGetFlag(ADMIN_TOKEN.hex(), hex(unblindedSignature))
+
+```
+
+One thing I didn't understand was why the random number (`k`) = 3 or 7 did not work as both numbers are co-prime to the modulus `n`. I noticed that when `k` equalled 2, `sPrime % k = 0` but it was non-zero for when `k = 3 or 7`. Still many texts said that as long as k was co-prime to n, you could use it.
+
+After runnign the script, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img167.png)
+
+<p> <b>Flag :</b> crypto{m4ll34b1l17y_c4n_b3_d4n63r0u5} </p>
+
