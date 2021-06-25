@@ -552,6 +552,8 @@ And after running the script you get the flag :
 
 <p> <b>Flag :</b> crypto{d0n7_516n_ju57_4ny7h1n6} </p>
 
+<br/>
+
 # Blinding Light (Signatures Part 1)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img165.png)
