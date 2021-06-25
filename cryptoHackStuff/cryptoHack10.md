@@ -443,7 +443,112 @@ print(decrypted)
 
 <p> <b>Flag :</b> crypto{I_want_to_Break_Square-free_4p-1} </p>
 
+<br/>
+
+# Signing Server (Signatures Part 1)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img163.png)
+
+The source code file for the server was given :
+
+```python
+
+#!/usr/bin/env python3
+
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+from utils import listener
 
 
 
+class Challenge():
+    def __init__(self):
+        self.before_input = "Welcome to my signing server. You can get_pubkey, get_secret, or sign.\n"
+
+    def challenge(self, your_input):
+        if not 'option' in your_input:
+            return {"error": "You must send an option to this server"}
+
+        elif your_input['option'] == 'get_pubkey':
+            return {"N": hex(N), "e": hex(E) }
+
+        elif your_input['option'] == 'get_secret':
+            secret = bytes_to_long(SECRET_MESSAGE)
+            return {"secret": hex(pow(secret, E, N)) }
+
+        elif your_input['option'] == 'sign':
+            msg = int(your_input['msg'], 16)
+            return {"signature": hex(pow(msg, D, N)) }
+
+        else:
+            return {"error": "Invalid option"}
+
+
+listener.start_server(port=13374)
+
+```
+
+So we have the ciphertext (secret message) and if you look at the signature generation algorithm, it will decrypt the ciphertext we send in.
+
+Solve script :
+
+```python
+
+from pwn import *
+import json
+from Crypto.Util.number import long_to_bytes
+from sympy import *
+
+def json_recv():
+    line = r.recvline()
+    return json.loads(line.decode())
+
+def json_send(hsh):
+    request = json.dumps(hsh).encode()
+    r.sendline(request)
+
+r = remote('socket.cryptohack.org', 13374)
+
+def getInfo(option, output):
+    to_send = {
+        "option": option
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    print(received[output])
+    #print(int(received[output], 16))
+    return int(received[output], 16)
+
+#getInfo("get_pubkey", "N")
+#getInfo("get_pubkey", "e")
+#getInfo("get_secret", "secret")
+
+n = 21771160289113920553146972142465234995814683559987226633675956294378135480885229083009774904629081083141904450599508033322688481167808425165020937163525671384103583167017252878303912244887261813946359532885102091257459085278683596894806698020257323990714768068711297218245422189544960869827261332526441491471751162788329542057106383192814119306090004174075547937096424776761861668156205190519821991920936089342819224776732355372197434012258887575647042307327885415171823790360018503205424910177750570755835173227132799934822949737036115013030518941036525338834446761476517640426656296554000566423790166016274458096007
+
+e = 65537
+
+secret = 6864915043463177492377282469996800343164301482077361279765373665532822727226792788421584831532773481708470052601056979219534433914341042945948694475101504654382578759158658652646903392036853930547737058782205064076746367015273868326718448915159758110555071844072823078536592603986995785967539448412694112073817158206385870487054537421191186729622427405285746510429363025501309326149675274595298353953707870615630811332766591701541520978776254085851339937072275417998774926884882892041726441555354227610509977945960881754602358326328488943443418609342491306813568508364497354114656469400142223866284826425003316711109
+
+def getSignature(msg):
+    to_send = {
+        "option": "sign",
+        "msg": msg
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    #print(int(received["signature"], 16))
+    return int(received["signature"], 16)
+
+flagLong = getSignature("0x36616f25259cd2f073ce920144b1054d891fcd20cf243c4fc0bac556b5d7240fe92d8a19db7cfcee183c64f29585226521189b3d1c8be02d79ee754856cf1efae8a136cb02e045edd3f44b704a759f756574db89571b4b2fc3e52258ff15224e93072360afd7cea95d81029bc59f400dc1492597b958b8183c87a07a909b7ab407d44e5f65875e8b94585bbc60662a022e0c5edb18a28746ead4b8f8247cb80012d53a04ffa720cb10de0927f21a1334a49f5dae246d659672f8ff27703a52412dc9291f4ea50edd0d53a61cd8032336b3e416496bf2c424154018d2793c2d778c83fc245d8fabad2053d3e77767ba0feb3c094887e5424efbf5c5f02f618ec5")
+
+print(long_to_bytes(flagLong))
+
+```
+
+And after running the script you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img164.png)
+
+<p> <b>Flag :</b> crypto{d0n7_516n_ju57_4ny7h1n6} </p>
 
