@@ -891,9 +891,9 @@ pre {
 
 /* Start ADDED BY ME (Code Syntax Highlighting) */
 
-.highlight code{
+.highlight {
   background-color: #070b14;
-  color: #F9EAE1;
+  color: #FFFAFA;
 }
 
 .highlight .k, .highlight .kv, .highlight .ow{
