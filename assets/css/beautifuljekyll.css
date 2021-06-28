@@ -889,6 +889,37 @@ pre {
   border-right: 2px solid #444;
 }
 
+/* Start ADDED BY ME */
+
+.highlight .k, .highlight .kv, .highlight .ow{
+  color: #faba09;
+}
+
+.highlight .o, .highlight .bp, .highlight .kn, .highlight .kd{
+  color: #f92472;
+}
+
+.highlight .nf, .highlight .nb{
+  color: #73e6fe;
+}
+
+.highlight .mi, .highlight .mh, .highlight .mf{
+  color: #ac80ff;
+}
+
+.highlight .nn{
+  color: #efeae1;
+}
+
+.highlight .s, .highlight .s2{
+  color: #ff695a;
+}
+
+.highlight .kt {
+  color: #00cca0;
+}
+/* End ADDED BY ME */
+
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
 .lineno {
   -webkit-user-select: none;
