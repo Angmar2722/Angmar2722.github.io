@@ -889,7 +889,12 @@ pre {
   border-right: 2px solid #444;
 }
 
-/* Start ADDED BY ME */
+/* Start ADDED BY ME (Code Syntax Highlighting) */
+
+.highlight code{
+  background-color: #070b14;
+  color: #F9EAE1;
+}
 
 .highlight .k, .highlight .kv, .highlight .ow{
   color: #faba09;
@@ -918,7 +923,8 @@ pre {
 .highlight .kt {
   color: #00cca0;
 }
-/* End ADDED BY ME */
+/* End ADDED BY ME (Code Syntax Highlighting) */
+
 
 /* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
 .lineno {
