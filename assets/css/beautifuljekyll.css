@@ -381,9 +381,7 @@ footer {
 }
 
 footer p.text-muted {
-  /* ADDED by me to modify footer colour from grey to white (The line below is the original and below that is my modification 
-  /*color: {{ site.footer-text-col | default: "#777777" }} !important; */
-  color: {{ site.footer-text-col | default: "#FFFAFA" }} !important;
+  color: {{ site.footer-text-col | default: "#777777" }} !important; 
 }
 
 footer a {
