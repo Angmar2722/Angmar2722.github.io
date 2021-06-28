@@ -445,6 +445,136 @@ print(decrypted)
 
 <br/>
 
+# Bespoke Padding (Padding)
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img168.png)
+
+Source code for what was running on the server :
+
+```python
+
+#!/usr/bin/env python3
+
+from utils import listener
+from Crypto.Util.number import bytes_to_long, getPrime
+import random
+
+FLAG = b'crypto{???????????????????????????}'
+
+
+class Challenge():
+    def __init__(self):
+        self.before_input = "Come back as much as you want! You'll never get my flag.\n"
+        self.p = getPrime(1024)
+        self.q = getPrime(1024)
+        self.N = self.p * self.q
+        self.e = 11
+
+    def pad(self, flag):
+        m = bytes_to_long(flag)
+        a = random.randint(2, self.N)
+        b = random.randint(2, self.N)
+        return (a, b), a*m+b
+
+    def encrypt(self, flag):
+        pad_var, pad_msg = self.pad(flag)
+        encrypted = (pow(pad_msg, self.e, self.N), self.N)
+        return pad_var, encrypted
+
+    def challenge(self, your_input):
+        if not 'option' in your_input:
+            return {"error": "You must send an option to this server"}
+
+        elif your_input['option'] == 'get_flag':
+            pad_var, encrypted = self.encrypt(FLAG)
+            return {"encrypted_flag": encrypted[0], "modulus": encrypted[1], "padding": pad_var}
+
+        else:
+            return {"error": "Invalid option"}
+
+
+"""
+When you connect, the 'challenge' function will be called on your JSON
+input.
+"""
+listener.start_server(port=13386)
+
+```
+
+So when we connect to the server, after a random 2048 bit modulus is generated, we can request the server to provide an encrypted flag. This flag has been padded in the form `a*m + b` with `m` being the flag (in decimal) and `a, b` being two random numbers generated between 2 and the modulus `n`. So if we ask for the same encrypted flag two different times (during the same connection - this is important as with the same connection, the modulus would remain constant), we could get two different forms of the encrypted flag (a1*m + b1) and (a2*m + b2) where there is a relation between the two encrypted messages. This can be exploited via the <a href="https://en.wikipedia.org/wiki/Coppersmith%27s_attack#Franklin-Reiter_related-message_attack" target="_blank">Franklin-Reiter related-message attack</a> which was explained first in <a href="https://link.springer.com/content/pdf/10.1007/3-540-68339-9_1.pdf" target="_blank">this</a> paper. 
+
+I also found <a href="https://crypto.stackexchange.com/questions/30884/help-understanding-basic-franklin-reiter-related-message-attack" target="_blank">this</a> thread to be particularly useful in the implementation of this attack as I had not used <a href="https://www.sagemath.org/" target="_blank">Sagemath</a> previously (first time trying out Sage which was needed since we were dealing with polynomials and roots).
+
+This was my Sage solve script :
+
+```python
+
+from Crypto.Util.number import *
+from pwn import *
+import json
+
+def json_recv():
+    line = r.recvline()
+    return json.loads(line.decode())
+
+def json_send(hsh):
+    request = json.dumps(hsh).encode()
+    r.sendline(request)
+
+r = remote('socket.cryptohack.org', 13386)
+modulusList = []
+cipherList = []
+aList = []
+bList = []
+
+for i in range(2):
+    to_send = {
+        "option": "get_flag"
+    }
+    json_send(to_send)
+    r.recvline()
+    received = json_recv()
+    encryptedFlag = received["encrypted_flag"]
+    cipherList.append(encryptedFlag)
+    modulus = received["modulus"]
+    modulusList.append(modulus)
+    a = received['padding'][0]
+    aList.append(a)
+    b = received['padding'][1]
+    bList.append(b)
+    to_send = {
+        "option": "get_flag"
+    }
+    json_send(to_send)
+
+n = modulusList[0]
+c1 = cipherList[0]
+c2 = cipherList[1]
+a1 = aList[0]
+a2 = aList[1]
+b1 = bList[0]
+b2 = bList[1]
+e = 11
+
+R.<X> = Zmod(n)[]
+f1 = (a1*X + b1)^e - c1
+f2 = (a2*X + b2)^e - c2
+
+def my_gcd(a, b): 
+    return a.monic() if b == 0 else my_gcd(b, a % b)
+
+print(long_to_bytes(- my_gcd(f1, f2).coefficients()[0]))
+
+```
+
+After running the script, you get the flag :
+
+![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img169.png)
+
+<p> <b>Flag :</b> crypto{linear_padding_isnt_padding} </p>
+
+<br/>
+
 # Signing Server (Signatures Part 1)
 
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img163.png)
@@ -702,4 +832,8 @@ After running the script, you get the flag :
 ![CryptoHack Image](/assets/img/exploitImages/cryptoHack/img167.png)
 
 <p> <b>Flag :</b> crypto{m4ll34b1l17y_c4n_b3_d4n63r0u5} </p>
+
+<br/>
+
+
 
