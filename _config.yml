@@ -60,12 +60,12 @@ round-avatar: false
 # Select the social network links that you want to show in the footer.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-#   email: "someone@example.com"
-#   facebook: deanattali
-  github: Angmar2722
-#   twitter: daattali
-#   patreon: DeanAttali
-#   youtube: c/daattali
+#  email: "someone@example.com"
+#  facebook: deanattali
+#  github: Angmar2722
+#  twitter: daattali
+#  patreon: DeanAttali
+#  youtube: c/daattali
 #  medium: yourname
 #  reddit: yourname
 #  linkedin: daattali
@@ -126,8 +126,10 @@ page-col: "#1C1E26"
 text-col: "#FFFAFA"
 link-col: "#008AFF"
 hover-col: "#0085A1"
-footer-col: "#EAEAEA"
-footer-text-col: "#777777"
+#footer-col: "#EAEAEA"
+footer-col: "#1C1E26"
+#footer-text-col: "#777777"
+footer-text-col: "#FFFAFA"
 footer-link-col: "#404040"
 
 # Alternatively, the navbar, footer, and page background can be set to an image
