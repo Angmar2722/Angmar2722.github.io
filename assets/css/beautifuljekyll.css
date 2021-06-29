@@ -386,6 +386,9 @@ footer p.text-muted {
 
 footer a {
   color: {{ site.footer-link-col | default: "#404040" }};
+  /* Start ADDED BY ME (Footer Social Media Link Circle Icons) */
+  color:#2A85A1 !important;
+  /* End ADDED BY ME (Footer Social Media Link Circle Icons) */
 }
 
 footer .list-inline {
