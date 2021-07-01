@@ -24,7 +24,7 @@ navbar-links:
     - General: "/cryptoHackStuff/general"
     - Mathematics: "/cryptoHackStuff/mathematics"
     - Block Ciphers: "/cryptoHackStuff/blockCiphers"
-    - RSA: "/cryptoHackStuff/RSA"
+    - RSA: "/cryptoHackStuff/rsaCryptosystem"
     - Diffie-Hellman: "/cryptoHackStuff/diffieHellman"
   CTF Writeups:
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
