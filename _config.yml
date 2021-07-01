@@ -24,6 +24,7 @@ navbar-links:
     - General - Encoding / XOR: "/cryptoHackStuff/cryptoHack2"
     - General - Mathematics / Data Formats: "/cryptoHackStuff/cryptoHack3"
     - Mathematics - Modular Math / Lattices: "/cryptoHackStuff/cryptoHack4"
+    - Mathematics - Probability / Brainteasers Parts 1 & 2 / Primes: "/cryptoHackStuff/cryptoHack5"
     - Block Ciphers - AES / Block Cipher Modes: "/cryptoHackStuff/cryptoHack6"
     - Block Ciphers - ECB / CBC / OFB / CTR : "/cryptoHackStuff/cryptoHack7"
     - RSA - Starter / Primes Part 1 / Public Exponent : "/cryptoHackStuff/cryptoHack9"
