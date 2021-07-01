@@ -1,6 +1,6 @@
 ---
 layout: page
-title: General - Encoding / XOR
+title: General - Encoding / XOR / Mathematics / Data Formats
 ---
 <hr/>
 
