@@ -28,6 +28,7 @@ navbar-links:
     - Block Ciphers - ECB / CBC / OFB / CTR : "/cryptoHackStuff/cryptoHack7"
     - RSA - Starter / Primes Part 1 / Public Exponent : "/cryptoHackStuff/cryptoHack9"
     - RSA - Primes Part 2 / Padding / Signatures Parts 1 & 2: "/cryptoHackStuff/cryptoHack10"
+    - Diffie-Hellman - Starter / Man In The Middle / Group Theory / Misc: "/cryptoHackStuff/cryptoHack11"
   CTF Writeups:
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
     - BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
