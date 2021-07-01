@@ -4,7 +4,7 @@ title: Diffie-Hellman
 ---
 <hr/>
 
-The Diffie-Hellman section consists of 14 challenges. The challenges are subdivided into 4 different stages : Starter, Man In The Middle, Group Theory and Misc. Below are the writeups for the ones I managed to complete for the Starter, Man In The Middle, Group Theory and Misc sections :
+The Diffie-Hellman section consists of 14 challenges. The challenges are subdivided into 4 different stages : Starter, Man In The Middle, Group Theory and Misc. Below are the writeups for the challenges that I managed to complete for this section :
 
 <br/>
 
