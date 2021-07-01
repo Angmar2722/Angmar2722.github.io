@@ -30,7 +30,7 @@ From this set of equations, by subtracting equation `4` from `8` we get :
 
 $$ x \equiv 209\ (\text{mod}\ p) $$ 
 
-Since p is bigger than 851 (because 851 is one of the powers of x listed in the question), we know that x equals 209. With that I made a short script to find out which prime between 851 and 1000 satisfys the 10th equation (arbitrarily chosen) :
+Since p is bigger than 851 (because 851 is one of the powers of x listed in the question), we know that x equals 209. With that I made a short script to find out which prime between 851 and 1000 satisfys the 11th equation (arbitrarily chosen) :
 
 ```python
 
