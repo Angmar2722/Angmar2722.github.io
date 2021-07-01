@@ -23,8 +23,7 @@ navbar-links:
     - Introduction: "/cryptoHackStuff/cryptoHack1"
     - General: "/cryptoHackStuff/cryptoHack2"
     - Mathematics: "/cryptoHackStuff/cryptoHack4"
-    - Block Ciphers: "/cryptoHackStuff/cryptoHack6"
-    - Block Ciphers: "/cryptoHackStuff/cryptoHack7"
+    - Block Ciphers: "/cryptoHackStuff/blockCiphers"
     - RSA: "/cryptoHackStuff/cryptoHack9"
     - Diffie-Hellman: "/cryptoHackStuff/cryptoHack11"
   CTF Writeups:
