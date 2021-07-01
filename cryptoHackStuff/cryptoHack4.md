@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Mathematics - Modular Math / Lattices / Probability / Brainteasers Parts 1 & 2 / Primes
+title: Mathematics 
 ---
 <hr/>
 
