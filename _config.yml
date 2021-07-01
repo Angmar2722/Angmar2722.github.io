@@ -23,10 +23,9 @@ navbar-links:
     - Introduction: "/cryptoHackStuff/cryptoHack1"
     - General: "/cryptoHackStuff/cryptoHack2"
     - Mathematics: "/cryptoHackStuff/cryptoHack4"
-    - Block Ciphers - AES / Block Cipher Modes: "/cryptoHackStuff/cryptoHack6"
-    - Block Ciphers - ECB / CBC / OFB / CTR : "/cryptoHackStuff/cryptoHack7"
-    - RSA - Starter / Primes Part 1 / Public Exponent : "/cryptoHackStuff/cryptoHack9"
-    - RSA - Primes Part 2 / Padding / Signatures Parts 1 & 2: "/cryptoHackStuff/cryptoHack10"
+    - Block Ciphers: "/cryptoHackStuff/cryptoHack6"
+    - Block Ciphers: "/cryptoHackStuff/cryptoHack7"
+    - RSA: "/cryptoHackStuff/cryptoHack9"
     - Diffie-Hellman: "/cryptoHackStuff/cryptoHack11"
   CTF Writeups:
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
