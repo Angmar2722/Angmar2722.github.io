@@ -1,10 +1,10 @@
 ---
 layout: page
-title: RSA - Starter / Primes Part 1 / Public Exponent
+title: RSA 
 ---
 <hr/>
 
-The RSA section consists of 29 challenges. The challenges are subdivided into 7 different stages : Starter, Primes Part 1, Public Exponent, Primes Part 2, Padding, Signatures Part 1 and Signatures Part 2. Below are the writeups for the ones I managed to complete for the Starter, Primes Part 1 and Public Exponent sections :
+The RSA section consists of 29 challenges. The challenges are subdivided into 7 different stages : Starter, Primes Part 1, Public Exponent, Primes Part 2, Padding, Signatures Part 1 and Signatures Part 2.  Below are the writeups for the challenges that I managed to complete for this section :
 
 <br/>
 
