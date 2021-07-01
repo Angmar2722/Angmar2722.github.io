@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Diffie-Hellman - Starter / Man In The Middle / Group Theory / Misc
+title: Diffie-Hellman 
 ---
 <hr/>
 
