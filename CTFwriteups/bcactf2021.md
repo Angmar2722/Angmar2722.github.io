@@ -31,7 +31,7 @@ When you go to the website that they provided, you would just see a textfield fo
 After looking around with my browser's developer tools, I found the heart of this website, a Wasm (<a href="https://en.wikipedia.org/wiki/WebAssembly
 " target="_blank">Web Assembly</a>) file which contained some source code :
 
-```wasm
+```WebAssembly
 
 (module
   (memory $memory (;0;) (export "memory") 1)
