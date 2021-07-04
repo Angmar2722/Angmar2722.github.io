@@ -936,16 +936,6 @@ Going to the website and looking around the source code with the browser's devel
 
 <br/>
 
-# Hsctf-Survey (Misc)
-
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img37.png)
-
-Fill out the survey and get the flag.
-
-<p> <b>Flag :</b> flag{thanks_for_participating_in_hsctf!} </p>
-
-<br/>
-
 # Sanity-Check (Misc)
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img38.png)
@@ -953,6 +943,16 @@ Fill out the survey and get the flag.
 Enter the flag in the challenge description.
 
 <p> <b>Flag :</b> flag{1m_g0in6_1ns@ne_1m_g0in6_1ns@ne_1m_g0in6_1ns@ne} </p>
+
+<br/>
+
+# Hsctf-Survey (Misc)
+
+![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img37.png)
+
+Fill out the survey and get the flag.
+
+<p> <b>Flag :</b> flag{thanks_for_participating_in_hsctf!} </p>
 
 <br/>
 
