@@ -17,15 +17,6 @@ navbar-links:
   #Home: "https://Angmar2722.github.io/"
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
-  CryptoHack:
-    - What Is CryptoHack?: "/cryptoHackStuff/cryptoHack"
-    - Logging In: "/cryptoHackStuff/loggingIn"
-    - Introduction: "/cryptoHackStuff/introduction"
-    - General: "/cryptoHackStuff/general"
-    - Mathematics: "/cryptoHackStuff/mathematics"
-    - Block Ciphers: "/cryptoHackStuff/blockCiphers"
-    - RSA: "/cryptoHackStuff/RSA"
-    - Diffie-Hellman: "/cryptoHackStuff/diffieHellman"
   CTF Writeups:
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
     - BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
