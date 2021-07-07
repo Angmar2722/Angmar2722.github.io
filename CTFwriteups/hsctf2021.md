@@ -956,7 +956,7 @@ Fill out the survey and get the flag.
 
 <br/>
 
-I learned so much during the CTF. While trying to solve Regulus Calendula, I came across algebraic reconstruction algorithms and was introducted to lattice based cryptography (such as the Lenstra–Lenstra–Lovász lattice basis reduction algorithm) for the first time. I became more comfortable using <a href="https://docs.pwntools.com/en/stable/" target="_blank">Pwntools</a> and became more familiar with core RSA encryption concepts in general while solving Regulus Regulus and Regulus Satrapa. I also learnt about seeded randomizers and other stuff such as hill ciphers and hiding messages in least significant bits (steganography).
+I learnt so much during this CTF. While trying to solve Regulus Calendula, I came across algebraic reconstruction algorithms and was introducted to lattice based cryptography (such as the Lenstra–Lenstra–Lovász lattice basis reduction algorithm) for the first time. I became more comfortable using <a href="https://docs.pwntools.com/en/stable/" target="_blank">Pwntools</a> and became more familiar with core RSA encryption concepts in general while solving Regulus Regulus and Regulus Satrapa. I also learnt about seeded randomizers and other stuff such as hill ciphers and hiding messages in least significant bits (steganography).
 
 Overall, I thoroughly loved this CTF (probably my favourite one yet). Initially, the infrastructure was a bit unreliable but the overall challenge variety and quality (for my level) more than made up for it and all in all, this was definitely my best CTF experience yet. The cryptography challenges were probably the highlight for me in this CTF.
 
