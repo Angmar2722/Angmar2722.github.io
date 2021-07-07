@@ -19,7 +19,7 @@ navbar-links:
   #  - What is Exploit Education?: "exploitEd"
   CTF Writeups:
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
-    - BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
+    #- BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
     - Zh3r0 (June) 2021: "/CTFwriteups/zh3r02021"
     - Angstrom (April) 2021: "/CTFwriteups/actf2021"
     - UMass (March) 2021: "/CTFwriteups/umass2021"
