@@ -6,7 +6,7 @@ title: HSCTF 2021 CTF Writeup
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/logo.png)
 
-Me and my team (Isengard) competed in <a href="https://ctftime.org/event/1264" target="_blank">West Windsor-Plainsboro High School North's HSCTF</a> event (Tuesday, 15 June 2021, 08:00 SGT — Sat, 19 June 2021, 20:00 SGT). This was my longest CTF yet (4.5 days). Originally the CTF was supposed to start at 8 pm on Monday 14th June but it was delayed by 12 hours due to some technical difficulties. We ranked 57th out of 1165 scoring teams and this was easily our best showing yet (we scored over 10k points!!).
+Me and my team (Isengard) competed in <a href="https://ctftime.org/event/1264" target="_blank">West Windsor-Plainsboro High School North's HSCTF</a> event (Tuesday, 15 June 2021, 08:00 SGT — Sat, 19 June 2021, 20:00 SGT). This was my second longest CTF yet (4.5 days). Originally the CTF was supposed to start at 8 pm on Monday 14th June but it was delayed by 12 hours due to some technical difficulties. We ranked 57th out of 1165 scoring teams and this was easily our best showing yet (we scored over 10k points!!).
 
 I managed to solve 18 challenges (though there was some confusion over one of them due to team miscommunicaiton) and a lot of these challenges were solved by collaborating closely with and learning from my teammate and great friend **Diamondroxxx**. 
 
