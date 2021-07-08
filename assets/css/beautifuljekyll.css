@@ -812,12 +812,18 @@ table {
 }
 table tr {
   border-top: 1px solid #cccccc;
-  background-color: #ffffff;
+  /* Start ADDED BY ME (Tables - Changed to modify contents table) */
+  /* background-color: #ffffff; */
+  background-color: #1C1E26;
+  /* END ADDED BY ME (Tables - Changed to modify contents table) */
   margin: 0;
   padding: 0;
 }
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  /* Start ADDED BY ME (Tables - Changed to modify contents table) */
+  /* background-color: #f8f8f8; */
+  background-color: #071636;
+  /* END ADDED BY ME (Tables - Changed to modify contents table) */
 }
 table tr th {
   font-weight: bold;
