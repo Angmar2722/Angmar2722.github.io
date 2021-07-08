@@ -16,15 +16,15 @@ Below are the writeups :
 
 ## Contents
 
-| Challenge | Category | Points | 
+| Challenge | Category | Points | Solves | 
 | ------------- |  -------------: |
-|[Regulus-Calendula](# Regulus-Calendula, AKA 'Squeakers' (Cryptography)) | Cryptography | 490 |
-|[Regulus-Regulus](# Regulus-Regulus (Cryptography)) | Cryptography | 464 |
-|[Geographic-Mapping-2](# Geographic-Mapping-2 (Misc))| Misc | 459 | 
+|[Regulus-Calendula](#Regulus-Calendula, AKA 'Squeakers' (Cryptography)) | Cryptography | 490 | 28 | 
+|[Regulus-Regulus](# Regulus-Regulus (Cryptography)) | Cryptography | 464 | 93 |
+|[Geographic-Mapping-2](# Geographic-Mapping-2 (Misc))| Misc | 459 | 105 |
 
 <br/>
 
-# Regulus-Calendula, AKA 'Squeakers' (Cryptography)
+##Regulus-Calendula, AKA 'Squeakers' (Cryptography)
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img1.png)
 
