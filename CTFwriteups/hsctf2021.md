@@ -24,7 +24,7 @@ Below are the writeups :
 
 <br/>
 
-## Regulus-Calendula, AKA 'Squeakers' (Cryptography)
+# Regulus-Calendula, AKA 'Squeakers' (Cryptography)
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img1.png)
 
