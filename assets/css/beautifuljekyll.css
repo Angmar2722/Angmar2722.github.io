@@ -809,6 +809,9 @@ nav.top-nav-short-permanent ~ header > .intro-header.big-img {
 
 table {
   padding: 0;
+  /* Start ADDED BY ME (Tables - Changed to modify contents table font color) */
+  color: #7EFFCA;
+   /* END ADDED BY ME (Tables - Changed to modify contents table font color) */
 }
 table tr {
   border-top: 1px solid #cccccc;
