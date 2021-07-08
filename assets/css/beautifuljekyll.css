@@ -46,7 +46,10 @@ h1, h2, h3, h4 {
   margin-top: 1.25rem;
 }
 a {
-  color: {{ site.link-col | default: "#008AFF" }};
+  /* START ADDED BY ME : Change hyperlink color */
+  color: {{ site.link-col | default: "#7CEBFF" }};
+  /* color: {{ site.link-col | default: "#008AFF" }}; */
+  /* END ADDED BY ME : Change hyperlink color */
 }
 a:hover,
 a:focus {
@@ -810,7 +813,7 @@ nav.top-nav-short-permanent ~ header > .intro-header.big-img {
 table {
   padding: 0;
   /* Start ADDED BY ME (Tables - Changed to modify contents table font color) */
-  color: #7EFFCA;
+  color: #CACACA;
    /* END ADDED BY ME (Tables - Changed to modify contents table font color) */
 }
 table tr {
