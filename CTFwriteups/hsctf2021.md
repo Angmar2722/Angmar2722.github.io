@@ -34,9 +34,9 @@ Below are the writeups :
 |[Queen-Of-The-Hill](#queen-of-the-hill) | Cryptography | 221 | 514 |
 |[LSBlue](#lsblue) | Misc | 220 | 516 |
 |[Return of the Intro to Netcat](#return-of-the-intro-to-netcat) | Misc | 160 | 662 |
-|[Stonks](#stonks) | Pwn | 391 | 231 |
-|[Stonks](#stonks) | Pwn | 391 | 231 |
-|[Stonks](#stonks) | Pwn | 391 | 231 |
+|[NRC](#nrc) | Web | 107 | 955 |
+|[Sanity-Check](#sanity-check) | Misc | 100 | 1061 |
+|[Hsctf-Survey](#hsctf-survey) | Misc | 1 | 253 |
 
 
 <br/>
