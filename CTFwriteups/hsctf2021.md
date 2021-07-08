@@ -19,19 +19,19 @@ Below are the writeups :
 
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
-|[Regulus-Calendula](#regulus-calendula) | Cryptography | 490 | 28 | 
-|[Regulus-Regulus](#regulus-regulus) | Cryptography | 464 | 93 |
+|[Regulus-Calendula](#regulus-calendula) | Crypto | 490 | 28 | 
+|[Regulus-Regulus](#regulus-regulus) | Crypto | 464 | 93 |
 |[Geographic-Mapping-2](#geographic-mapping-2)| Misc | 459 | 105 |
-|[Canis-Lupus-Familiaris-Bernardus](#canis-lupus-familiaris-bernardus) | Cryptography | 456 | 112 |
-|[Regulus-Satrapa ](#regulus-satrapa) | Cryptography | 447 | 129 |
+|[Canis-Lupus-Familiaris-Bernardus](#canis-lupus-familiaris-bernardus) | Crypto | 456 | 112 |
+|[Regulus-Satrapa ](#regulus-satrapa) | Crypto | 447 | 129 |
 |[Geographic-Mapping](#geographic-mapping)| Misc | 429 | 164 |
 |[Stonks](#stonks) | Pwn | 391 | 231 |
 |[Digits-Of-Pi](#digits-of-pi) | Web | 388 | 236 |
 |[Seeded-Randomizer](#seeded-randomizer) | Misc | 391 | 231 |
 |[Glass-Windows](#glass-windows) | Misc | 311 | 359 |
-|[Opisthocomus-Hoazin](#opisthocomus-hoazin) | Cryptography | 300 | 376 |
+|[Opisthocomus-Hoazin](#opisthocomus-hoazin) | Crypto | 300 | 376 |
 |[Pallets-Of-Gold](#pallets-of-gold) | Misc | 289 | 394 |
-|[Queen-Of-The-Hill](#queen-of-the-hill) | Cryptography | 221 | 514 |
+|[Queen-Of-The-Hill](#queen-of-the-hill) | Crypto | 221 | 514 |
 |[LSBlue](#lsblue) | Misc | 220 | 516 |
 |[Return of the Intro to Netcat](#return-of-the-intro-to-netcat) | Misc | 160 | 662 |
 |[NRC](#nrc) | Web | 107 | 955 |
