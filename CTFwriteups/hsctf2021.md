@@ -14,10 +14,6 @@ Below are the writeups :
 
 <br/>
 
-## Contents
-
-<br/>
-
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
 |[Regulus-Calendula](#regulus-calendula) | Crypto | 490 | 28 | 
