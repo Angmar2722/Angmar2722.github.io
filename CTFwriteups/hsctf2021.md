@@ -16,11 +16,28 @@ Below are the writeups :
 
 ## Contents
 
+
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
 |[Regulus-Calendula](#regulus-calendula) | Cryptography | 490 | 28 | 
 |[Regulus-Regulus](#regulus-regulus) | Cryptography | 464 | 93 |
 |[Geographic-Mapping-2](#geographic-mapping-2)| Misc | 459 | 105 |
+|[Canis-Lupus-Familiaris-Bernardus](#canis-lupus-familiaris-bernardus) | Cryptography | 456 | 112 |
+|[Regulus-Satrapa ](#regulus-satrapa) | Cryptography | 447 | 129 |
+|[Geographic-Mapping](#geographic-mapping)| Misc | 429 | 164 |
+|[Stonks](#stonks) | Pwn | 391 | 231 |
+|[Digits-Of-Pi](#digits-of-pi) | Web | 388 | 236 |
+|[Seeded-Randomizer](#seeded-randomizer) | Misc | 391 | 231 |
+|[Glass-Windows](#glass-windows) | Misc | 311 | 359 |
+|[Opisthocomus-Hoazin](#opisthocomus-hoazin) | Cryptography | 300 | 376 |
+|[Pallets-Of-Gold](#pallets-of-gold) | Misc | 289 | 394 |
+|[Queen-Of-The-Hill](#queen-of-the-hill) | Cryptography | 221 | 514 |
+|[LSBlue](#lsblue) | Misc | 220 | 516 |
+|[Return of the Intro to Netcat](#return-of-the-intro-to-netcat) | Misc | 160 | 662 |
+|[Stonks](#stonks) | Pwn | 391 | 231 |
+|[Stonks](#stonks) | Pwn | 391 | 231 |
+|[Stonks](#stonks) | Pwn | 391 | 231 |
+
 
 <br/>
 
@@ -400,7 +417,7 @@ The <a href="https://earth.google.com/web/search/del+Mas,+Arinsal,+Carrer+de+la+
 
 <br/>
 
-# Canis-Lupus-Familiaris-Bernardus (Cryptography)
+## Canis-Lupus-Familiaris-Bernardus 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img8.png)
 
@@ -591,7 +608,7 @@ And after running the script, we got our flag :
 
 <br/>
 
-# Regulus-Satrapa (Cryptography)
+## Regulus-Satrapa 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img12.png)
 
@@ -653,7 +670,7 @@ And after running the script, we got the flag :
 
 <br/>
 
-# Geographic-Mapping (Misc)
+## Geographic-Mapping 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img14.png)
 
@@ -667,7 +684,7 @@ The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.937766
 
 <br/>
 
-# Stonks (Pwn / Binary Exploitation)
+## Stonks 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img15.png)
 
@@ -714,7 +731,7 @@ And after running the script, we enter the shell and once in interactive mode, w
 
 <br/>
 
-# Digits-Of-Pi (Web)
+## Digits-Of-Pi 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img21.png)
 
@@ -730,7 +747,7 @@ So to get the flag, we simply went to the find and replace option and searched f
 
 <br/>
 
-# Seeded-Randomizer (Misc)
+## Seeded-Randomizer 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img24.png)
 
@@ -829,7 +846,7 @@ There was some miscommunication in my team as one of my teammates had solved thi
 
 <br/>
 
-# Glass-Windows (Misc)
+## Glass-Windows 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img26.png)
 
@@ -841,7 +858,7 @@ We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/b
 
 <br/>
 
-# Opisthocomus-Hoazin (Cryptography)
+## Opisthocomus-Hoazin 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img28.png)
 
@@ -890,7 +907,7 @@ print(flag)
 
 <br/>
 
-# Pallets-Of-Gold (Misc)
+## Pallets-Of-Gold 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img29.png)
 
@@ -902,7 +919,7 @@ This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/ma
 
 <br/>
 
-# Queen-Of-The-Hill (Cryptography)
+## Queen-Of-The-Hill 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img31.png)
 
@@ -912,7 +929,7 @@ Finally a non-bird or weird cryptography challenge description!!!! The 'hill' in
 
 <br/>
 
-# LSBlue (Misc)
+## LSBlue 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img32.png)
 
@@ -924,7 +941,7 @@ We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/m
 
 <br/>
 
-# Return of the Intro to Netcat (Misc)
+## Return of the Intro to Netcat 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img34.png)
 
@@ -934,7 +951,7 @@ Connect to their server using netcat, run the proof of work and get the flag.
 
 <br/>
 
-# NRC (Web)
+## NRC 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img35.png)
 
@@ -946,7 +963,7 @@ Going to the website and looking around the source code with the browser's devel
 
 <br/>
 
-# Sanity-Check (Misc)
+## Sanity-Check 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img38.png)
 
@@ -956,7 +973,7 @@ Enter the flag in the challenge description.
 
 <br/>
 
-# Hsctf-Survey (Misc)
+## Hsctf-Survey 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img37.png)
 
