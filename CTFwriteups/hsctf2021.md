@@ -24,7 +24,7 @@ Below are the writeups :
 |[Geographic-Mapping](#geographic-mapping)| Misc | 429 | 164 |
 |[Stonks](#stonks) | Pwn | 391 | 231 |
 |[Digits-Of-Pi](#digits-of-pi) | Web | 388 | 236 |
-|[Seeded-Randomizer](#seeded-randomizer) | Misc | 391 | 231 |
+|[Seeded-Randomizer](#seeded-randomizer) | Misc | 380 | 250 |
 |[Glass-Windows](#glass-windows) | Misc | 311 | 359 |
 |[Opisthocomus-Hoazin](#opisthocomus-hoazin) | Crypto | 300 | 376 |
 |[Pallets-Of-Gold](#pallets-of-gold) | Misc | 289 | 394 |
