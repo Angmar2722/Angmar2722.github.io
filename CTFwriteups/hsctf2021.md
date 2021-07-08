@@ -18,9 +18,9 @@ Below are the writeups :
 
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
-|[Regulus-Calendula](#Regulus-Calendula) | Cryptography | 490 | 28 | 
-|[Regulus-Regulus](#Regulus-Regulus) | Cryptography | 464 | 93 |
-|[Geographic-Mapping-2](#Geographic-Mapping-2)| Misc | 459 | 105 |
+|[Regulus-Calendula](#regulus-calendula) | Cryptography | 490 | 28 | 
+|[Regulus-Regulus](#regulus-regulus) | Cryptography | 464 | 93 |
+|[Geographic-Mapping-2](#geographic-mapping-2)| Misc | 459 | 105 |
 
 <br/>
 
