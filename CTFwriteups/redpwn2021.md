@@ -721,7 +721,7 @@ If the challenge name and descriptions weren't glaring enough, what we had to pe
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img14.jpg)
 
-What we had to do was overflow the buffer (we can do that as there is a gets() call) and change the return address of main to `system` in libc. After that, we had to find a pointer to a shell (in our case /bin/sh) and if this argument (/bin/sh) is passed into system, it will spawn a shell and with that we could read any flag file in the server directory. We could use a libc function like `printf` whose address is conviniently given to us in the line `printf("rob said i'd need this to get there: %llx\n", printf);` ;D
+What we had to do was overflow the buffer (we can do that as there is a gets() call) and change the return address of main to `system` in libc. After that, we had to find a pointer to a shell (in our case /bin/sh) and if this argument (/bin/sh) is passed into system, it will spawn a shell and with that we could read any flag file in the server directory. We could use a libc function like `printf` whose address is conveniently given to us in the line `printf("rob said i'd need this to get there: %llx\n", printf);` ;D
 
 In order to solve this challenge, I mostly read this <a href="https://wiki.bi0s.in/pwning/return2libc/return-to-libc/" target="_blank">this explanation</a> of how a Return-to-libc attack worked and <a href="https://tripoloski1337.github.io/ctf/2020/01/26/return-to-libc-attack.html" target="_blank">this writeup</a> for how to implement the attack using `printf` as the libc function. Other useful resources are listed in the solve script below :
 
