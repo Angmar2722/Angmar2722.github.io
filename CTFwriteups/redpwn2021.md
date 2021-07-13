@@ -654,7 +654,7 @@ What we have here is definitely now RSA. What do all of these values correspond 
 
 Let us briefly see what ECC is all about. All elliptic curves in this cryptographic system conform to the following equation and have the following shape :
 
-\\(y^2 = x^3 + ax + b\\)
+#\\(y^2 = x^3 + ax + b\\)
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img12.webp)
 
