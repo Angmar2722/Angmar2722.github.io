@@ -623,7 +623,9 @@ And if we run this script we get the following :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img10.png)
 
-So what we did above was we XORed two ciphertexts and XORed that result with "flag{". Lets say the C1 = "flag{........" XOR EN and C2 = ".........." XOR EN. Since there are only 11 possible nonces and we have 400+ ciphertexts, getting this sitation is pretty likely. Now C1 XOR C2 = M1 XOR M2 XOR EN XOR EN which is C1 XOR C2 = "flag{...." XOR ".........". Now "........." = C1 XOR C2 XOR "flag{....." and with that, we would get the first 5 bytes of the second message. As shown above, we would print the result if it were made up of ASCII printable characters and output that. We can clearly see parts of different messages. For example, "I did" probably expands to "I didn't" and with that, we got 2 additional bytes which could reveal two additional bytes of other messages if we updated our flag to "I didn't" and changed the index (mainList[0]) to mainList[61]. Like that we kept guessing and expanding our variable till we got the flag as more additional bytes of different words were revealed.
+So what we did above was we XORed two ciphertexts and XORed that result with "flag{". Lets say the C1 = "flag{........" XOR EN and C2 = ".........." XOR EN. Since there are only 11 possible nonces and we have 400+ ciphertexts, getting this sitation is pretty likely. Now C1 XOR C2 = M1 XOR M2 XOR EN XOR EN which is C1 XOR C2 = "flag{...." XOR ".........". Now "........." = C1 XOR C2 XOR "flag{....." and with that, we would get the first 5 bytes of the second message. As shown above, we would print the result if it were made up of ASCII printable characters and output that. 
+
+We can clearly see parts of different messages. For example, "I did" probably expands to "I didn't" and with that, we got 2 additional bytes which could reveal two additional bytes of other messages if we updated our flag to "I didn't" and changed the index (mainList[0]) to mainList[61]. Like that we kept guessing and expanding our variable till we got the flag as more additional bytes of different words were revealed.
 
 <p> <b>Flag :</b> flag{0h_W41t_ther3s_nO_3ntr0py} </p>
 
@@ -633,7 +635,7 @@ So what we did above was we XORed two ciphertexts and XORed that result with "fl
 
 The contents of blecc.txt :
 
-```txt
+```python
 
 p = 17459102747413984477
 a = 2
