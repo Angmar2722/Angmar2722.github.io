@@ -330,7 +330,7 @@ The calculations for computing r, s and the verification of a signature in the f
 
 Turns out that is the case as pointed out by <a href="https://crypto.stackexchange.com/questions/7904/attack-on-dsa-with-signatures-made-with-k-k1-k2" target="_blank">this thread</a> where a vulnerability is discussed when two consecutive random numbers, k and k + 1 are chosen. With that implementation, as answered in the thread, by using Gaussian elimination, the value of the random number `k` can be calculated. 
 
-The trick to getting two consecutive values of k (k and k+1) was making sure that the hash of our messages, `H(m)`, were equal. Since the value of pad was declared outside the loop, it would have a constant value for both signatures. Similarly, if the values of the hash were equal (for two different messages), this would effectively be a constant value added to the value of the iteration in the loop. This means that it would be some constant mod q for the first signature and some constant plus one the whole mod q for the second signature hence having two consecutive values of k (as it would be more or less improbable for the second value to wrap around the modulus q one more time than the first one).
+The trick to getting two consecutive values of k (k and k+1) was making sure that the hash of our messages, `H(m)`, were equal. Since the value of `pad` was declared outside the loop, it would have a constant value for both signatures. Similarly, if the values of the hash were equal (for two different messages), this would effectively be a constant value added to the value of the iteration in the loop. This means that it would be some constant mod q for the first signature and some constant plus one the whole mod q for the second signature hence having two consecutive values of k (as it would be more or less improbable for the second value to wrap around the modulus q one more time than the first one).
 
 To get two different messages with the same hash, we had to find an instance of a SHA-1 collision which we got from <a href="https://shattered.io/" target="_blank">this website</a> (this was a <a href="https://techcrunch.com/2017/02/23/security-researchers-announce-first-practical-sha-1-collision-attack/" target="_blank">very big breakthrough</a> in 2017).
 
@@ -424,3 +424,166 @@ And after running the script, we got the flag :
 <p> <b>Flag :</b> flag{here_it_is_a8036d2f57ec7cecf8acc2fe6d330a71} </p>
 
 <br/>
+
+## Scrambled-Elgs
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img6.png)
+
+The Sage code provided :
+
+```python
+
+#!/usr/bin/env sage
+import secrets
+import json
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+from sage.combinat import permutation
+
+n = 25_000
+Sn = SymmetricGroup(n)
+
+def pad(M):
+    padding = long_to_bytes(secrets.randbelow(factorial(n)))
+    padded = padding[:-len(M)] + M
+    return bytes_to_long(padded)
+
+#Prepare the flag
+with open('flag.txt','r') as flag:
+    M = flag.read().strip().encode()
+m = Sn(permutation.from_rank(n,pad(M)))
+
+#Scramble the elgs
+g = Sn.random_element()
+a = secrets.randbelow(int(g.order()))
+h = g^a
+pub = (g, h)
+
+#Encrypt using scrambled elgs
+g, h = pub
+k = secrets.randbelow(n)
+t1 = g^k
+t2 = m*h^k
+ct = (t1,t2)
+
+#Provide public key and ciphertext
+with open('output.json','w') as f:
+	json.dump({'g':str(g),'h':str(h),'t1':str(t1),'t2':str(t2)}, f)
+
+```
+
+This is a <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/output.json" target="_blank">link</a> to the output.json file which was provided.
+
+The method of encryption looks really weird with Sage functions like Symmetric Groups and permutations from rank. Since `n` was below 25,000, we could bruteforce the value of `k`. After that, by playing around with similar Sage functions, we found a way to retrieve the flag, by using Permutation.rank().
+
+Our Sage solve script :
+
+```python
+
+import json
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+from sage.combinat import permutation
+
+output = json.load(open('output.json', 'r'))
+n = 25_000
+Sn = SymmetricGroup(n)
+
+g = Sn(output["g"])
+h = Sn(output["h"])
+
+t1 = Sn(output["t1"])
+t2 = Sn(output["t2"])
+
+for k in range(n):
+    if (g^k == t1):
+        break
+
+m = t2/(h^k)
+flag = long_to_bytes( Permutation(m).rank() )
+print(flag[-50:])
+
+```
+<p> <b>Flag :</b> flag{1_w1ll_n0t_34t_th3m_s4m_1_4m} </p>
+
+<br/>
+
+## Yahtzee
+
+The server code provided :
+
+```python
+
+#!/usr/local/bin/python
+
+from Crypto.Cipher import AES
+from Crypto.Util.number import long_to_bytes
+from random import randint
+from binascii import hexlify
+
+with open('flag.txt','r') as f:
+    flag = f.read().strip()
+
+with open('keyfile','rb') as f:
+    key = f.read()
+    assert len(key)==32
+
+'''
+Pseudorandom number generators are weak!
+True randomness comes from phyisical objects, like dice!
+'''
+class TrueRNG:
+
+    @staticmethod
+    def die():
+        return randint(1, 6)
+
+    @staticmethod
+    def yahtzee(N):
+        dice = [TrueRNG.die() for n in range(N)]
+        return sum(dice)
+
+    def __init__(self, num_dice):
+        self.rolls = num_dice
+
+    def next(self):
+        return TrueRNG.yahtzee(self.rolls)
+
+def encrypt(message, key, true_rng):
+    nonce = true_rng.next()
+    cipher = AES.new(key, AES.MODE_CTR, nonce = long_to_bytes(nonce))
+    return cipher.encrypt(message)
+
+'''
+Stick the flag in a random quote!
+'''
+def random_message():
+    NUM_QUOTES = 25
+    quote_idx = randint(0,NUM_QUOTES-1)
+    with open('quotes.txt','r') as f:
+        for idx, line in enumerate(f):
+            if idx == quote_idx:
+                quote = line.strip().split()
+                break
+    quote.insert(randint(0, len(quote)), flag)
+    return ' '.join(quote)
+
+banner = '''
+============================================================================
+=            Welcome to the yahtzee message encryption service.            =
+=  We use top-of-the-line TRUE random number generators... dice in a cup!  =
+============================================================================
+Would you like some samples?
+'''
+prompt = "Would you like some more samples, or are you ready to 'quit'?\n"
+
+if __name__ == '__main__':
+    NUM_DICE = 2
+    true_rng = TrueRNG(NUM_DICE)
+    inp      = input(banner)
+    while 'quit' not in inp.lower():
+        message = random_message().encode()
+        encrypted = encrypt(message, key, true_rng)
+        print('Ciphertext:', hexlify(encrypted).decode())
+        inp = input(prompt)
+
+```
+
