@@ -18,6 +18,7 @@ navbar-links:
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
   CTF Writeups:
+    - Redpwn (July) 2021: "/CTFwriteups/redpwn2021"
     - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
     #- BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
     - Zh3r0 (June) 2021: "/CTFwriteups/zh3r02021"
