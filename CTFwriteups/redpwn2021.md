@@ -332,6 +332,8 @@ Turns out that is the case as pointed out by <a href="https://crypto.stackexchan
 
 The trick to getting two consecutive values of k (k and k+1) was making sure that the hash of our messages, `H(m)`, were equal. Since the value of pad was declared outside the loop, it would have a constant value for both signatures. Similarly, if the values of the hash were equal (for two different messages), this would effectively be a constant value added to the value of the iteration in the loop. This means that it would be some constant mod q for the first signature and some constant plus one the whole mod q for the second signature hence having two consecutive values of k (as it would be more or less improbable for the second value to wrap around the modulus q one more time than the first one).
 
+To get two different messages with the same hash, we had to find an instance of a SHA-1 collision which we got from <a href="https://shattered.io/" target="_blank">this website</a> (this was a <a href="https://techcrunch.com/2017/02/23/security-researchers-announce-first-practical-sha-1-collision-attack/" target="_blank">very big breakthrough</a> in 2017).
+
 With that, the private key `x` can also be recovered. We used the equations shown in that thread to recover k but it didn't work for `x` so instead after finding k, we used the equation `x = ((s * k - h) * rinv) % q` from <a href="https://github.com/AdityaVallabh/ctf-write-ups/blob/master/CSAW%20Finals%202018/Disastrous%20Security%20Apparatus/README.md" target="_blank">this writeup</a> to recover the private key.
 
 After getting x and k, we could sign "give_flag" ourselves as we had all the paramters used for signing a message and we could pass that to the server and with that, we got the flag.
