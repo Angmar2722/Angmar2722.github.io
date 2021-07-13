@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
 When you first connect to the server, you had to run a proof of work. After that, a 1024 bit modulus `n` (a product of two 512 bit primes) is provided along with a random number `k` which is smaller than n. After that, we are expected to provide two inputs, `cmd` which is in bytes and `sig` which is in hex. The main challenge is shown in the function `authorize_command`. 
 
-Over here, the server first checks whether the length of sig is 256 bytes and assigns the lower 128 bytes to `a` and the upper 128 bytes to `sig` to `b`. It then checks whether the following bivariate equation holds true :
+Over here, the server first checks whether the length of sig is 256 bytes and assigns the lower 128 bytes to `a` and the upper 128 bytes of sig to `b`. It then checks whether the following bivariate equation holds true :
 
 \\(\(a^2 + kb^2) mod n = h(cmd)\\)
 
