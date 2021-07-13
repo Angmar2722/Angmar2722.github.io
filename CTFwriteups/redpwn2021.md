@@ -110,4 +110,4 @@ Over here, the server first checks whether the length of sig is 256 bytes and as
 
 \\((a^2 + kb^2) \ mod n = h(cmd)\\)
 
-So the integer hash of `cmd` has to equal the left hand side, a squared plus b squared times k the whole mod n. That seems really hard to do since we are dealing with modular arithmetic and two variables. Also of note, if we successfully meet this condition, the server then checks whether `cmd` equals the string `"sice_deets"` which immediatly tells us that that our input for cmd has to be "sice_deets" and nothing else. So how do we go about beating this condition????
+So the integer hash of cmd, `h(cmd)`, has to equal the left hand side, a squared plus b squared times k the whole mod n. That seems really hard to do since we are dealing with modular arithmetic and two variables. Also of note, if we successfully meet this condition, the server then checks whether cmd equals the string `"sice_deets"` which immediatly tells us that that our input for cmd has to be "sice_deets" and nothing else. So how do we go about beating this condition????
