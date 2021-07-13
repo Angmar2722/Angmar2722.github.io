@@ -851,7 +851,7 @@ We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/m
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img19.png)
 
-54, 49, 48 and 32 (in hex) are T, I, H and 2 respectively. If you remove T and 2 and treat H as 0 and I as 1, you get a binary string which when decoded would yield the flag.
+54, 49, 48 and 32 (in hex) are T, I, H and 2 respectively (in ASCII). If you remove T and 2 and treat H as 0 and I as 1, you get a binary string which when decoded would yield the flag.
 
 <p> <b>Flag :</b> flag{w0w_th4t_w4s_4ll_wr4pp3d_up} </p>
 
