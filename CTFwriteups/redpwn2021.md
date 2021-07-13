@@ -654,6 +654,66 @@ What we have here is definitely now RSA. What do all of these values correspond 
 
 Let us briefly see what ECC is all about. All elliptic curves in this cryptographic system conform to the following equation and have the following shape :
 
-\\(\y^2 = x^3 + ax + b\\)
+\\(y^2 = x^3 + ax + b\\)
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img12.webp)
+
+This <a href="https://www.youtube.com/watch?v=dCvB-mhkT0w" target="_blank">video</a> does a really good job of explaining generally how ECC works. So after watching this video, you would realize that calculating the private `n` in Q = nP is hard because of the <a href="https://en.wikipedia.org/wiki/Discrete_logarithm" target="_blank">Discrete logarithm problem</a>. So what is wrong with what we are given? Well if you look closely, one thing stand out. The prime number is very small which means that by using certain algorithms like the <a href="https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm" target="_blank">Pohlig-Hellman algorithm</a>, the message could be decrypted. Luckily for us, Sage has some really handy features for cracking discrete logs (granted the prime is small as it is in our case).
+
+Sage solve script :
+
+```python
+
+from Crypto.Util.number import *
+
+E = EllipticCurve(GF(17459102747413984477), [2,3])
+P = E.gens()[0]
+Q = E(8859996588597792495, 2628834476186361781)
+
+d = discrete_log(Q, P, P.order(), operation='+')
+print(b'flag{' + long_to_bytes(d) + b'}')
+
+#https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/constructor.html
+#https://doc.sagemath.org/html/en/reference/groups/sage/groups/generic.html
+
+```
+
+<p> <b>Flag :</b> flag{m1n1_3cc} </p>
+
+<br/>
+
+## Ret2the-Unknown
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img13.png)
+
+The source code :
+
+```c
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+  char your_reassuring_and_comforting_we_will_arrive_safely_in_libc[32];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts("that board meeting was a *smashing* success! rob loved the challenge!");
+  puts("in fact, he loved it so much he sponsored me a business trip to this place called 'libc'...");
+  puts("where is this place? can you help me get there safely?");
+
+  // please i cant afford the medical bills if we crash and segfault
+  gets(your_reassuring_and_comforting_we_will_arrive_safely_in_libc);
+
+  puts("phew, good to know. shoot! i forgot!");
+  printf("rob said i'd need this to get there: %llx\n", printf);
+  puts("good luck!");
+}
+
+```
+
+All 4 downloadble files for this challenge can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/redpwn2021/ret2theUnknown" target="_blank">here</a>.
+
