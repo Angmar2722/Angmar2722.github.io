@@ -320,6 +320,105 @@ else:
 
 Once again when you first connect to the server, you had to solve the proof of work. The signature algorithm in this challenge was the <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Digital Signature Algorithm (DSA)</a>. The public key consists of the parameters `p, q, g, y` which is provided to us and the private key is `x`. When signing a message, you have to first choose a random integer `k` which is between 1 and (q-1). After that, the signature (r, s) is calculated by the following equations :
 
-\\(r = ( \ (g^k) \ mod \ p\\) ) \ mod \ q
+\\(r = ( \ (g^k) \ mod \ p) ) \ mod \ q\\)
 
-\\(s = (k^(-1) \ H(m) + xr) \ mod \ q\\)
+\\(s = (k^{-1} \ H(m) + xr) \ mod \ q\\)
+
+As shown in the server code above, the aim of this challenge was to compute the correct signature for the string "give flag". The server would sign any 2 messages for us. The catch was that we obviously couldn't get the signature for "give flag", that was blacklisted, and also we couldn't get the signature for the same message twice as if we could, it <a href="https://wiki.x10sec.org/crypto/signature/dsa/#principle" target="_blank">would be trivial</a> to recover the private key `x`.
+
+The calculations for r, s and verification of a signature in the function `verify(r, s, m)` seem to be correct so what is the vulnerability in the code shown above. Remember that k has to be a random number between 1 and (q-1) but over here, `k = (H(m) + pad + i) % q`. Hmmm, that seems rather odd, there is a custom implementation for generating k so surely there must be a flaw in this implementation?
+
+Turns out that is the case as pointed out by <a href="https://crypto.stackexchange.com/questions/7904/attack-on-dsa-with-signatures-made-with-k-k1-k2" target="_blank">this thread</a> where a vulnerability is discussed when two consecutive random numbers, k and k + 1 are chosen. With that implementation, as answered in the thread, using Gaussian elimination, the value of the random number `k` can be found. 
+
+The trick to getting two consecutive values of k (k and k+1) was making sure that the hash of our messages, `H(m)`, were equal. Since the value of pad was declared outside the loop, it would have a constant value for both signatures. Similarly, if the values of the hash were equal (for two different messages), this would effectively be a constant value added to the value of the iteration in the loop. This means that it would be some constant mod q for the first signature and some constant plus one the whole mod q for the second signature hence having two consecutive values of k (as it would be more or less improbable for the second value to wrap around the modulus q one more time than the first one).
+
+With that, the private key `x` can also be recovered. We used the equations shown in that thread to recover k but it didn't work for `x` so instead after finding k, we used the equation `x = ((s * k - h) * rinv) % q` from <a href="https://github.com/AdityaVallabh/ctf-write-ups/blob/master/CSAW%20Finals%202018/Disastrous%20Security%20Apparatus/README.md" target="_blank">this writeup</a> to recover the private key.
+
+After getting x and k, we could sign "give_flag" ourselves as we had all the paramters used for signing a message and we could pass that to the server and with that, we got the flag.
+
+Our Sage solve script :
+
+```python
+
+from pwn import *
+from Crypto.Util.number import *
+import os
+
+local = False
+debug = False
+
+if local:
+    r = process(["python3", "kotf.py"], level='debug') if debug else process(["python3", "kotf.py"])
+else:
+    r = remote("mc.ax", 31538, level = 'debug') if debug else remote("mc.ax", 31538)
+    r.recvuntil("proof of work: ")
+    proof_of_work = r.recvline(keepends=False).decode()
+    print(f"{proof_of_work=}")
+    ans = os.popen(proof_of_work).read()
+    r.sendafter("solution: ", ans)
+
+p = Integer(r.recvline(keepends=False).decode())
+q = Integer(r.recvline(keepends=False).decode())
+g = Integer(r.recvline(keepends=False).decode())
+y = Integer(r.recvline(keepends=False).decode())
+print(f"{p=}\n{q=}\n{g=}\n{y=}")
+
+import urllib.request
+res = urllib.request.urlopen('http://shattered.io/static/shattered-1.pdf')
+m1 = res.read().hex()
+res = urllib.request.urlopen('http://shattered.io/static/shattered-2.pdf')
+m2 = res.read().hex()
+
+r.recvuntil("what would you like me to sign? in hex, please\n")
+r.sendline(m1)
+
+h1 = Integer(r.recvline(keepends=False).decode())
+r1 = Integer(r.recvline(keepends=False).decode())
+s1 = Integer(r.recvline(keepends=False).decode())
+print(f"{h1=}\n{r1=}\n{s1=}")
+
+r.recvuntil("what would you like me to sign? in hex, please\n")
+r.sendline(m2)
+
+h2 = Integer(r.recvline(keepends=False).decode())
+r2 = Integer(r.recvline(keepends=False).decode())
+s2 = Integer(r.recvline(keepends=False).decode())
+print(f"{h2=}\n{r1=}\n{s1=}")
+
+# Formula gotten from
+# https://crypto.stackexchange.com/questions/7904/attack-on-dsa-with-signatures-made-with-k-k1-k2
+k = ((h2 - s2 - (h1 * r2 / r1))//(s2 - (s1 * r2 / r1))) % q
+# Formula for x gotten from
+# https://github.com/AdityaVallabh/ctf-write-ups/blob/master/CSAW%20Finals%202018/Disastrous%20Security%20Apparatus/README.md
+x = ((s1 * k - h1) * inverse(r1, q)) % q
+
+print(f"{k=}\n{x=}")
+r.recvuntil("'give flag':")
+hashedGiveFlag = Integer(r.recvline(keepends=False).decode())
+print(f"{hashedGiveFlag=}")
+
+# Sign "Give Flag"
+while True:
+    R = int(pow(g, k, p)) % int(q)
+    if R == 0:
+        continue
+    S = (pow(k, q - 2, q) * (hashedGiveFlag + x * R)) % q
+    if S == 0:
+        continue
+    break
+
+outputR = str(R).encode()
+outputS = str(S).encode()
+r.sendline(outputR)
+r.sendline(outputS)
+
+print(r.recvall())
+
+```
+And after running the script, we got the flag :
+ 
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img5.png)
+
+<p> <b>Flag :</b> flag{here_it_is_a8036d2f57ec7cecf8acc2fe6d330a71} </p>
+
+<br/>
