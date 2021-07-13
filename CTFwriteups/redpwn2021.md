@@ -41,9 +41,7 @@ Below are the writeups :
 
 ## Retrosign
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/redpwn2021/img1.png)
-
-![HSCTF 2021 Writeup](/assets/img/ctfImages/redpwn2021/img2.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img2.png)
 
 Source Code provided :
 
