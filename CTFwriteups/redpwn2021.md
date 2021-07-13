@@ -903,7 +903,7 @@ int main(void)
 ```
 The vulnerability lies in the implementation of `printf(buffer);` as it can be used to leak pointers to values in the stack.
 
-My solve script (this time I didn't use Google Docs and manually decode :D ):
+The solve script (this time I didn't use Google Docs and manually decode :D ):
 
 ```python
 
