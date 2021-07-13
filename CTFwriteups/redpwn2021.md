@@ -627,6 +627,8 @@ So what we did above was we XORed two ciphertexts and XORed that result with "fl
 
 We can clearly see parts of different messages. For example, "I did" probably expands to "I didn't" and with that, we got 2 additional bytes which could reveal two additional bytes of other messages if we updated our flag to "I didn't" and changed the index (mainList[0]) to mainList[61]. Like that we kept guessing and expanding our variable till we got the flag as more additional bytes of different words were revealed.
 
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img31.png)
+
 <p> <b>Flag :</b> flag{0h_W41t_ther3s_nO_3ntr0py} </p>
 
 <br/>
@@ -654,7 +656,7 @@ What we have here is definitely now RSA. What do all of these values correspond 
 
 Let us briefly see what ECC is all about. All elliptic curves in this cryptographic system conform to the following equation and have the following shape :
 
-#\\(y^2 = x^3 + ax + b\\)
+<!--- \\(y^2 = x^3 + ax + b\\) ---> 
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img12.webp)
 
