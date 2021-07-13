@@ -320,9 +320,9 @@ else:
 
 Once again when you first connect to the server, you had to solve the proof of work. The signature algorithm in this challenge was the <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Digital Signature Algorithm (DSA)</a>. The public key consists of the parameters `p, q, g, y` which is provided to us and the private key is `x`. When signing a message, you have to first choose a random integer `k` which is between 1 and (q-1). After that, the signature (r, s) is calculated by the following equations :
 
-\\(r = ( \ (g^k) \ mod \ p) ) \ mod \ q\\)
+\\(r = ( \ g^k \ mod \ p) ) \ mod \ q\\)
 
-\\(s = (k^{-1} \ H(m) + xr) \ mod \ q\\)
+\\(s = (k^{-1} \ (H(m) + xr)) \ mod \ q\\)
 
 As shown in the server code above, the aim of this challenge was to compute the correct signature for the string "give flag". The server would sign any 2 messages for us. The catch was that we obviously couldn't get the signature for "give flag", that was blacklisted, and also we couldn't get the signature for the same message twice as if we could, it <a href="https://wiki.x10sec.org/crypto/signature/dsa/#principle" target="_blank">would be trivial</a> to recover the private key `x`.
 
