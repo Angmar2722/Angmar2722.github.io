@@ -508,6 +508,8 @@ print(flag[-50:])
 
 ## Yahtzee
 
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img7.png)
+
 The server code provided :
 
 ```python
