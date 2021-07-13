@@ -1087,7 +1087,7 @@ c: 126721104148692049427127809839057445790
 
 ```
 
-Factorise the prime and print flag. The solve script :
+Factorise the modulus and print flag. The solve script :
 
 ```python
 
