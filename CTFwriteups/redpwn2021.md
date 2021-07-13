@@ -6,7 +6,7 @@ title: Redpwn 2021 CTF Writeup
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/logo.png)
 
-Me and Diamondroxxx competed as the two man CTF team "Isengard" in the <a href="https://ctftime.org/event/1327" target="_blank">Redpwn 2021 CTF</a> event (Sat, 10 July 2021, 03:00 SGT — Tue, 13 July 2021, 03:00 SGT). We got up at 3 am since thats when it started and the CTF lasted for 3 days. We ranked 41st out of 1418 scoring teams and once again, this was our best CTF performance yet. 
+Me and Diamondroxxx competed as the two man CTF team "Isengard" in the <a href="https://ctftime.org/event/1327" target="_blank">Redpwn 2021 CTF</a> event (Sat, 10 July 2021, 03:00 SGT — Tue, 13 July 2021, 03:00 SGT). We got up at 3 am since that's when it started and the CTF lasted for 3 days. We ranked 41st out of 1418 scoring teams and once again, this was our best CTF performance yet. 
 
 I managed to solve 18 challenges and once again, a lot of these challenges were solved by collaborating closely with Diamondroxxx. Overall it was a great time and as with nearly every CTF, it was a great learning experience. We solved 8 out of the 9 cryptography challenges and the one we couldn't solve - "quaternion-revenge" was a 'troll' challenge, more on that towards the end of the writeup. I also managed to solve at least one challenge from every category.
 
@@ -220,7 +220,7 @@ And after running this script, we got the flag :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img3.png)
 
-Curiously, our script kept crashing when we weren't in debug mode (this is from Pwntools) for some reason so thats why we had to use that to get the flag. Also I was super happy that I found this signature system in a timely manner - 2 hours before the CTF ended.
+Curiously, our script kept crashing when we weren't in debug mode (this is from Pwntools) for some reason so that's why we had to use that to get the flag. Also I was super happy that I found this signature system in a timely manner - 2 hours before the CTF ended.
 
 <p> <b>Flag :</b> flag{w0w_th4t_s1gn4tur3_w4s_pr3tty_r3tr0} </p>
 
@@ -629,6 +629,8 @@ We can clearly see parts of different messages. For example, "I did" probably ex
 
 <p> <b>Flag :</b> flag{0h_W41t_ther3s_nO_3ntr0py} </p>
 
+<br/>
+
 ## Blecc
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img11.png)
@@ -647,3 +649,11 @@ Can you help me find `d`?
 Decode it as a string and wrap in flag format.
 
 ```
+
+What we have here is definitely now RSA. What do all of these values correspond to? The hint lies in the challenge name itself "blecc". ECC! That's right. This challenge involved elliptic curve cryptography.
+
+Let us briefly see what ECC is all about. All elliptic curves in this cryptographic system conform to the following equation and have the following shape :
+
+\\(\y^2 = x^3 + ax + b\\)
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img12.webp)
