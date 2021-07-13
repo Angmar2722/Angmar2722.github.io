@@ -110,4 +110,210 @@ Over here, the server first checks whether the length of sig is 256 bytes and as
 
 \\((a^2 + kb^2) \ mod \ n = h(cmd)\\)
 
-So the integer hash of cmd, `h(cmd)`, has to equal the left hand side, a squared plus b squared times k the whole mod n. That seems really hard to do since we are dealing with modular arithmetic and two variables. Also of note, if we successfully meet this condition, the server then checks whether cmd equals the string `"sice_deets"` which immediatly tells us that that our input for cmd has to be "sice_deets" and nothing else. So how do we go about beating this condition????
+So the integer hash of cmd, `h(cmd)`, has to equal the left hand side, a squared plus b squared times k the whole mod n. That seems really hard to do since we are dealing with modular arithmetic and two variables. We control the value of a and b (as it is based on our input in sig) but the server assigns a random n and k. Also of note, if we successfully meet this condition, the server then checks whether cmd equals the string `"sice_deets"` which immediatly tells us that that our input for cmd has to be "sice_deets" and nothing else. So how do we go about beating this condition????
+
+I spent so many hours going in different tangents with regards to solving this challenge. Eventually, I came across this relatively obscure identification and signature system known as the <a href="https://sci-hub.do/10.1145/800057.808683" target="_blank">w Ong-Schnorr-Shamir</a> signature system or OSS for short. The method of verifying if a signature was valid was more or less perfectly analogous to the bivariate equation shown above. This scheme was introduced in 184 and hence fit the theme of the challenge name "retrosign". This looked promising.
+
+Turns out there is a <a href="https://sci-hub.do/10.1109/tit.1987.1057350" target="_blank">1987 research paper</a> which is literally called "An Efficient Solution of the Congruence ((x^2 + ky^2) \ mod \ n = m \ (mod \ n)\\)" which was exactly what we needed. The authors, John M. Pollard and Claus P. Schnorr had created an algorithm which finds the solutions to this equation. In fact, someone had even implemented this algorithm in a past CTF in <a href="" target="_blank">this writeup</a>. After implementing that algorithm, finding the correct values of a and b was a breeze. With that we made our solve script and got the flag.
+
+Our Sage solve script :
+
+```python
+
+from Crypto.Util.number import getPrime, bytes_to_long
+from Crypto.Hash import SHA256
+from binascii import unhexlify
+from secrets import randbelow
+from pwn import *
+
+def sha256(val):
+    h = SHA256.new()
+    h.update(val)
+    return h.digest()
+
+def mult(x1, y1, x2, y2, k):
+    """(x1^2 + ky^1)(x^2 + ky^2)"""
+    return (x1 * x2 + k*y1*y2) % n, (x1 * y2 - y1 * x2) % n
+
+def pollard(k, m):
+    # Generate a valid prime m0 < m and x0
+    while True:
+        while True:
+            u = randrange(n)
+            v = randrange(n)
+            m0 = m*(u*u+k*v*v)%n
+            if m0 % 4 == 3: break
+        x0 = pow(-k, (m0 + 1)/4, m0)
+        if pow(x0, 2, m0) == -k % m0:
+            break
+    xx = [0,Integer(x0)]
+    mm = [0,m0]
+
+    # Generate the series x_i, m_i, till m_I
+    while not (xx[-2] <= mm[-1] <= mm[-2]):
+        mm.append((xx[-1] * xx[-1] + k) / mm[-1] % n)
+        xx.append(min(xx[-1] % mm[-1], (mm[-1] - xx[-1]) % mm[-1]) % n)
+
+    # Multiply all the equations to get s0, t0
+    s, t = xx[1], 1
+    for x in xx[2:-1]:
+        s, t = s * x-k * t, s + x*t
+
+    # Get s1, t1 from s0, t0
+    M = mul(mm[2:]) % n
+    s1 = s * inverse_mod(M, n) % n
+    t1 = t * inverse_mod(M, n) % n
+
+    # Get s2, t2 either trivially or recursivelly
+    if is_square(mm[-1]):
+        s2, t2 = sqrt(mm[-1]), 0
+    elif mm[-1] == k:
+        s2, t2 = 0, 1
+    else:
+        # Change variables and solve recursively
+        s22, t22 = pollard(Integer(-mm[-1]), -k)
+        # Change variables back
+        t2 = inverse_mod(t22, n)
+        s2 = s22 * t2
+
+    # Get s4, t4 multiplying previous solutions
+    s3, t3 = mult(u, v, s1, t1, k)
+    s4, t4 = mult(s3, t3, s2, t2, k)
+
+    # Obtain the solution to the original problem
+    m0inv = inverse_mod(Integer(m0), n)
+    return s4 * m * m0inv % n, t4 * m * m0inv % n
+
+local = False
+debug = True
+
+if local:
+    r = process(["python3", "server.py"], level='debug') if debug else process(["python3", "server.py"])
+else:
+    r = remote("mc.ax", 31079, level = 'debug') if debug else remote("mc.ax", 31538)
+    r.recvuntil("proof of work: ")
+    proof_of_work = r.recvline(keepends=False).decode()
+    print(f"{proof_of_work=}")
+    ans = os.popen(proof_of_work).read()
+    r.sendafter("solution: ", ans)
+
+r.recvuntil("The following configuration is in place:\n")
+
+n = r.recvline()
+n = Integer(n[4:-2].decode())
+
+k = r.recvline()
+k = Integer(k[4:-2].decode())
+
+signature = bytes_to_long(sha256(b"sice_deets"))
+
+x, y = pollard(k, signature)
+payload = hex(x)[2:]+hex(y)[2:]
+
+r.sendlineafter(">>> ", "sice_deets")
+r.sendlineafter("$$$ ", payload)
+print(r.recvall())
+
+```
+
+And after running this script, we got the flag :
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img3.png)
+
+Curiously, our script kept crashing when we weren't in debug mode (this is from Pwntools) for some reason so thats why we had to use that to get the flag. Also I was super happy that I found this signature system in a timely manner - 2 hours before the CTF ended.
+
+<p> <b>Flag :</b> flag{w0w_th4t_s1gn4tur3_w4s_pr3tty_r3tr0} </p>
+
+<br/>
+
+## Keeper-of-the-Flag
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img4.png)
+
+The source code provided :
+
+```python
+
+#!/usr/local/bin/python3
+
+from Crypto.Util.number import *
+from Crypto.PublicKey import DSA
+from random import *
+from hashlib import sha1
+
+rot = randint(2, 2 ** 160 - 1)
+chop = getPrime(159)
+
+def H(s):
+    x = bytes_to_long(sha1(s).digest())
+    return pow(x, rot, chop)
+
+
+L, N = 1024, 160
+dsakey = DSA.generate(1024)
+p = dsakey.p
+q = dsakey.q
+h = randint(2, p - 2)
+g = pow(h, (p - 1) // q, p)
+if g == 1:
+    print("oops")
+    exit(1)
+
+print(p)
+print(q)
+print(g)
+
+x = randint(1, q - 1)
+y = pow(g, x, p)
+
+print(y)
+
+
+def verify(r, s, m):
+    if not (0 < r and r < q and 0 < s and s < q):
+        return False
+    w = pow(s, q - 2, q)
+    u1 = (H(m) * w) % q
+    u2 = (r * w) % q
+    v = ((pow(g, u1, p) * pow(y, u2, p)) % p) % q
+    return v == r
+
+
+pad = randint(1, 2 ** 160)
+signed = []
+for i in range(2):
+    print("what would you like me to sign? in hex, please")
+    m = bytes.fromhex(input())
+    if m == b'give flag' or m == b'give me all your money':
+        print("haha nice try...")
+        exit()
+    if m in signed:
+        print("i already signed that!")
+        exit()
+    signed.append(m)
+    k = (H(m) + pad + i) % q
+    if k < 1:
+        exit()
+    r = pow(g, k, p) % q
+    if r == 0:
+        exit()
+    s = (pow(k, q - 2, q) * (H(m) + x * r)) % q
+    if s == 0:
+        exit()
+    print(H(m))
+    print(r)
+    print(s)
+
+print("ok im done for now")
+print("you visit the flag keeper...")
+print("for flag, you must bring me signed message:")
+print("'give flag':" + str(H(b"give flag")))
+
+r1 = int(input())
+s1 = int(input())
+if verify(r1, s1, b"give flag"):
+    print(open("flag.txt").readline())
+else:
+    print("sorry")
+
+```
