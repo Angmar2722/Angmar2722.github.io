@@ -18,13 +18,13 @@ navbar-links:
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
   CTF Writeups:
-    - Redpwn (July) 2021: "/CTFwriteups/redpwn2021"
-    - HSCTF (June) 2021: "/CTFwriteups/hsctf2021"
-    #- BCACTF (June) 2021: "/CTFwriteups/bcactf2021"
-    - Zh3r0 (June) 2021: "/CTFwriteups/zh3r02021"
-    - Angstrom (April) 2021: "/CTFwriteups/actf2021"
-    - UMass (March) 2021: "/CTFwriteups/umass2021"
-    - SMU Whitehacks (March) 2021: "/CTFwriteups/wh2021"
+    - Redpwn (July) 2021: "/CTFwriteups/2021/redpwn2021"
+    - HSCTF (June) 2021: "/CTFwriteups/2021/hsctf2021"
+    #- BCACTF (June) 2021: "/CTFwriteups/2021/bcactf2021"
+    - Zh3r0 (June) 2021: "/CTFwriteups/2021/zh3r02021"
+    - Angstrom (April) 2021: "/CTFwriteups/2021/actf2021"
+    - UMass (March) 2021: "/CTFwriteups/2021/umass2021"
+    - SMU Whitehacks (March) 2021: "/CTFwriteups/2021/wh2021"
 
 # --- Logo --- #
 
