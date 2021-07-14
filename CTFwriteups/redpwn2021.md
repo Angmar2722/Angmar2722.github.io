@@ -112,7 +112,7 @@ Over here, the server first checks whether the length of sig is 256 bytes and as
 
 So the integer hash of cmd, `h(cmd)`, has to equal the left hand side, a squared plus b squared times k the whole mod n. That seems really hard to do since we are dealing with modular arithmetic and two variables. We control the value of a and b (as it is based on our input in sig) but the server assigns a random n and k. Also of note, if we successfully meet this condition, the server then checks whether cmd equals the string `"sice_deets"` which immediatly tells us that that our input for cmd has to be "sice_deets" and nothing else. So how do we go about beating this condition????
 
-I spent so many hours going in different tangents with regards to solving this challenge. Eventually, I came across this relatively obscure identification and signature system known as the <a href="https://sci-hub.do/10.1145/800057.808683" target="_blank">Ong-Schnorr-Shamir signature system</a> or OSS for short. The method of verifying if a signature was valid was more or less perfectly analogous to the bivariate equation shown above. This scheme was introduced in 184 and hence fit the theme of the challenge name "retrosign". This looked promising.
+I spent so many hours going in different tangents with regards to solving this challenge. Eventually, I came across this relatively obscure identification and signature system known as the <a href="https://sci-hub.do/10.1145/800057.808683" target="_blank">Ong-Schnorr-Shamir signature system</a> or OSS for short. The method of verifying if a signature was valid was more or less perfectly analogous to the bivariate equation shown above. This scheme was introduced in 1984 and hence fit the theme of the challenge name "retrosign". This looked promising.
 
 Turns out there is a <a href="https://sci-hub.do/10.1109/tit.1987.1057350" target="_blank">1987 research paper</a> which is literally called "An Efficient Solution of the Congruence \\((x^2 + ky^2) = m \ mod \ n \\)" which was exactly what we needed. The authors, John M. Pollard and Claus P. Schnorr had created an algorithm which finds the solutions to this equation. In fact, someone had even implemented this algorithm in a past CTF in <a href="https://abeaumont.me/posts/OSS-Service-Hard-crypto-500.html" target="_blank">this writeup</a>. After implementing that algorithm, finding the correct values of a and b was a breeze. With that we made our solve script and got the flag.
 
@@ -1176,3 +1176,7 @@ Enter the flag in the challenge description.
 <p> <b>Flag :</b> flag{1_l0v3_54n17y_ch3ck_ch4ll5} </p>
 
 <br/>
+
+Once again, this was an awesome CTF. I learnt so many new concepts. While trying to solve the cryptography challenges, I learnt how the Digital Signature Algorithm (DSA) and elliptic curve cryptography (ECC) worked. I also learnt about this obscure signature system known as the Ong-Schnorr-Shamir (OSS) signature system. Apart from that, I learnt about how the Return-to-libc attack worked which seems to be a very important facet of binary exploitation and I was amazed by how hackers can gain spawn a shell from seemingly nothing ;D
+
+Overall, this CTF had an excellent 
