@@ -34,6 +34,8 @@ Below are the writeups :
 
 ![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img2.png)
 
+![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img3.png)
+
 Server source code provided (this is in the <a href="https://en.wikipedia.org/wiki/Dart_(programming_language)" target="_blank">Dart</a> programming language) :
 
 ```dart
