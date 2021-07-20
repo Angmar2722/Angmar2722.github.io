@@ -649,7 +649,7 @@ All in all, it took around 11 minutes to run (considerable time was saved due to
 
 ![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img9.png)
 
-We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten). We also did our team name 'gcmTime' justice.
+We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten). We also did our team name 'gcmTime' justice. Even though this had more than twice as many solves as Story, this was still a harder cryptography challenge.
 
 <p> <b>Flag :</b> CTF{gCm_1s_n0t_v3ry_r0bust_4nd_1_sh0uld_us3_s0m3th1ng_els3_h3r3} </p>
 
@@ -816,7 +816,7 @@ for _ in range(30):
            
 ```
 
-After running the script, we got the flag :
+After running the script, we got the flag (this was the most solved challenge in the entire CTF by a considerable margin) :
 
 ![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img12.png)
 
