@@ -406,192 +406,9 @@ So we have an oracle! After some research, we found just what we needed. There h
 
 Sounds awesome, they have even written a Sage implementation of their attack for AEAD modes such as GCM over <a href="https://github.com/julialen/key_multicollision" target="_blank">here</a> which is exactly what we needed. Again quoting the research paper : "The main cryptanalytic step for our attacks is constructing (what we call) key multi-collisions, in which a single AEAD ciphertext can be built such that decryption succeeds under some number k of keys. We formalize this cryptanalytic goal and give an algorithm for computing key multi-collisions for AES-GCM. It builds key multi-collision ciphertexts of length O(k) in O(k^2) time using polynomial interpolation from off-the-shelf libraries, making them reasonably scalable even to large k. Given access to an oracle that reveals whether decryption succeeds, our key multi-collisions for AES-GCM enable a partitioning oracle attack that recovers the secret key in roughly m+logk queries in situations where possible keys fall in a set of size d = m·k. This will not work to recover much information about, e.g., random 128-bit keys where d = 2^128, but we show that it suffices to be damaging in settings where keys are derived from user-selected passwords or where key anonymity is important."
 
-We first precomputed a partion list of 1000 keys locally (written in Sage) in order to speed up the actual process when connecting with the server :
+We first precomputed a partion list of 1000 keys locally (written in Sage) in order to speed up the actual process when connecting with the server. The script for that can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherListgenerator.sage" target="_blank">here</a>. We then deployed this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherList.txt" target="_blank">cipherList</a> in our actual Sage solve script :
 
-```sage
-
-import random
-import string
-import time
-from cryptography.hazmat.primitives.ciphers import (
-        Cipher, algorithms, modes
-    )
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.exceptions import InvalidTag
-from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
-from Crypto.Util.number import long_to_bytes, bytes_to_long
-from bitstring import BitArray, Bits
-import binascii
-import sys
-from base64 import b64encode, b64decode
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
-
-
-ALL_ZEROS = b'\x00'*16
-GCM_BITS_PER_BLOCK = 128
-
-
-def check_correctness(keyset, nonce, ct):
-    flag = True
-
-    for i in range(len(keyset)):
-        aesgcm = AESGCM(key)
-        try:
-            aesgcm.decrypt(nonce, ct, None)
-        except InvalidTag:
-            print('key %s failed' % i)
-            flag = False
-
-    if flag:
-        print("All %s keys decrypted the ciphertext" % len(keyset))
-
-
-
-def pad(a):
-    if len(a) < GCM_BITS_PER_BLOCK:
-        diff = GCM_BITS_PER_BLOCK - len(a)
-        zeros = ['0'] * diff
-        a = a + zeros
-    return a
-
-
-
-def bytes_to_element(val, field, a):
-    bits = BitArray(val)
-    result = field.fetch_int(0)
-    for i in range(len(bits)):
-        if bits[i]:
-            result += a^i
-    return result
-
-
-
-def multi_collide_gcm(keyset, nonce, tag, first_block=None, use_magma=False):
-
-    # initialize matrix and vector spaces
-    P.<x> = PolynomialRing(GF(2))
-    p = x^128 + x^7 + x^2 + x + 1
-    GFghash.<a> = GF(2^128,'x',modulus=p)
-    if use_magma:
-        t = "p:=IrreducibleLowTermGF2Polynomial(128); GFghash<a> := ext<GF(2) | p>;"
-        magma.eval(t)
-    else:
-        R = PolynomialRing(GFghash, 'x')
-
-    # encode length as lens
-    if first_block is not None:
-        ctbitlen = (len(keyset) + 1) * GCM_BITS_PER_BLOCK
-    else:
-        ctbitlen = len(keyset) * GCM_BITS_PER_BLOCK
-    adbitlen = 0
-    lens = (adbitlen << 64) | ctbitlen
-    lens_byte = int(lens).to_bytes(16,byteorder='big')
-    lens_bf = bytes_to_element(lens_byte, GFghash, a)
-
-    # increment nonce
-    nonce_plus = int((int.from_bytes(nonce,'big') << 32) | 1).to_bytes(16,'big')
-
-    # encode fixed ciphertext block and tag
-    if first_block is not None:
-        block_bf = bytes_to_element(first_block, GFghash, a)
-    tag_bf = bytes_to_element(tag, GFghash, a)
-    keyset_len = len(keyset)
-
-    if use_magma:
-        I = []
-        V = []
-    else:
-        pairs = []
-
-    for k in keyset:
-        # compute H
-        aes = AES.new(k, AES.MODE_ECB)
-        H = aes.encrypt(ALL_ZEROS)
-        h_bf = bytes_to_element(H, GFghash, a)
-
-        # compute P
-        P = aes.encrypt(nonce_plus)
-        p_bf = bytes_to_element(P, GFghash, a)
-
-        if first_block is not None:
-            # assign (lens * H) + P + T + (C1 * H^{k+2}) to b
-            b = (lens_bf * h_bf) + p_bf + tag_bf + (block_bf * h_bf^(keyset_len+2))
-        else:
-            # assign (lens * H) + P + T to b
-            b = (lens_bf * h_bf) + p_bf + tag_bf
-
-        # get pair (H, b*(H^-2))
-        y =  b * h_bf^-2
-        if use_magma:
-            I.append(h_bf)
-            V.append(y)
-        else:
-            pairs.append((h_bf, y))
-
-    # compute Lagrange interpolation
-    if use_magma:
-        f = magma("Interpolation(%s,%s)" % (I,V)).sage()
-    else:
-        f = R.lagrange_polynomial(pairs)
-    coeffs = f.list()
-    coeffs.reverse()
-
-    # get ciphertext
-    if first_block is not None:
-        ct = list(map(str, block_bf.polynomial().list()))
-        ct_pad = pad(ct)
-        ct = Bits(bin=''.join(ct_pad))
-    else:
-        ct = ''
-    
-    for i in range(len(coeffs)):
-        ct_i = list(map(str, coeffs[i].polynomial().list()))
-        ct_pad = pad(ct_i)
-        ct_i = Bits(bin=''.join(ct_pad))
-        ct += ct_i
-    ct = ct.bytes
-    
-    return ct+tag
-
-
-keyList = [a + b + c for a in string.ascii_lowercase for b in string.ascii_lowercase for c in string.ascii_lowercase]
-#keyList = [a + b for a in string.ascii_lowercase for b in string.ascii_lowercase]
-
-scryptedKeyList = []
-
-for key in keyList:
-    kdf = Scrypt(salt=b'', length=16, n=2**4, r=8, p=1, backend=default_backend())
-    key = kdf.derive(key.encode())
-    scryptedKeyList.append(key)
-
-collisionLength = 1000
-chunks = [scryptedKeyList[x:x+collisionLength] for x in range(0, len(scryptedKeyList), collisionLength)]
-
-first_block = b'\x01'
-nonce = b'\x01'*12
-tag = b'\x00'*16
-
-cipherList = []
-
-for keyset in chunks:
-    #print('hi')
-    payloadCT = multi_collide_gcm(keyset, nonce, tag, first_block=first_block)
-    cipherList.append(payloadCT)
-    
-print(cipherList)
-
-#with open("cipherList.txt", "w") as f:
-    #f.write(str(cipherList))
-    
-```
-
-We then deployed this cipherList in our actual Sage solve script :
-
-```sage
+```python
 from cryptography.hazmat.primitives.ciphers import (
         Cipher, algorithms, modes
     )
@@ -768,7 +585,7 @@ collisionLength = 1000
 chunks = [scryptedKeyList[x:x+collisionLength] for x in range(0 , len(scryptedKeyList), collisionLength)]
 
 cipherList = [b'.....]
-#The full cipherList (removed from writeup since it is too long) can be found here : https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/cipherList.txt
+#The full cipherList (removed from writeup since it is too long) can be found here : https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherList.txt
 
 def getPassword(key_used):
     option = b"1"
@@ -831,7 +648,7 @@ All in all, it took around 11 minutes to run (considerable time was saved due to
 
 ![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img9.png)
 
-We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten) :
+We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten). We also did our team name 'gcmTime' justice.
 
 <p> <b>Flag :</b> CTF{gCm_1s_n0t_v3ry_r0bust_4nd_1_sh0uld_us3_s0m3th1ng_els3_h3r3} </p>
 
