@@ -772,7 +772,7 @@ time.sleep(1)
 This challenge involved understanding the storage mechanism shown here. The first choice 'load' would print the contents of a file given the file ID. The second option stores the provided data. The server stores it in a rather peculiar way by using data deduplication. For example, if the existing storage comprised of "flag, hello there, ....." and if you added the word "hello", it would still look like "flag, hello there, ....." as the word 'hello' is repeated in the original data structure. This process of removing duplicates saves a lot of space but has some vulnerabilities. The index or position of the stored string is tracked by the
 `files` dictionary. The third option 'status' prints the amount of memory currently occupied (if there is a duplication, there is no change).
 
-Suppose currently the strings stored were "CTF{this_is_a_test_flag}". If I made a loop which added all printable ASCII characters after "CTF{" and then checked for the status or memory occupied, the string which causes no change in memory (i.e. "CTF{t") would be a character of the flag. This is how we solved it, by checking which character caused no change in memory size and slowly leaking the flag, character by character.
+Suppose currently the strings stored were "CTF{this_is_a_test_flag}". If I made a loop which added all printable ASCII characters after "CTF{" and then checked for the status or memory occupied, the string which causes no change in memory (i.e. "CTF{t") would be a character of the flag. This is how we solved it, by checking which character caused no change in memory size and hence slowly leaking the flag, character by character.
 
 The solve script :
 
