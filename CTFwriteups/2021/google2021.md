@@ -589,7 +589,7 @@ print(cipherList)
     
 ```
 
-We then deployed this cipherList in our actual Sage solve script (warning mobile users, the cipher list is incredibly long) :
+We then deployed this cipherList in our actual Sage solve script :
 
 ```sage
 from cryptography.hazmat.primitives.ciphers import (
