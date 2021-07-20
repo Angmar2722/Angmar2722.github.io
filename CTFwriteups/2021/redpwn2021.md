@@ -653,7 +653,7 @@ Decode it as a string and wrap in flag format.
 
 ```
 
-What we have here is definitely now RSA. What do all of these values correspond to? The hint lies in the challenge name itself "blecc". ECC! That's right. This challenge involved elliptic curve cryptography.
+What we have here is definitely not RSA. What do all of these values correspond to? The hint lies in the challenge name itself "blecc". ECC! That's right. This challenge involved elliptic curve cryptography.
 
 Let us briefly see what ECC is all about. All elliptic curves in this cryptographic system conform to the following equation and have the following shape :
 
