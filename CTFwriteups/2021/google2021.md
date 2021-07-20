@@ -585,7 +585,8 @@ collisionLength = 1000
 chunks = [scryptedKeyList[x:x+collisionLength] for x in range(0 , len(scryptedKeyList), collisionLength)]
 
 cipherList = [b'.....]
-#The full cipherList (removed from writeup since it is too long) can be found here : https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherList.txt
+# The full cipherList (removed from writeup since it is too long) can be found here : 
+# https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherList.txt
 
 def getPassword(key_used):
     option = b"1"
