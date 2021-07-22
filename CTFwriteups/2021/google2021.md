@@ -601,7 +601,7 @@ def getPassword(key_used):
     output = b""
 
     while (output != b"Decryption successful\n"):
-        index += _sage_const_1 
+        index += 1 
         option = b"3"
         r.sendlineafter(">>> ", option)
         payloadCT = cipherList[index]
