@@ -10,8 +10,8 @@ I started my cybersecurity journey in March 2021 when I participated in my first
 
 <br/>
 
-| CTF | Date | Team Name | Team Rank | CTFTime Points | 
-| ------------- |  ------- | ------ | ---- | ----: |
+| CTF Writeup | Date | Team Name | Team Rank | CTFTime Points | 
+| ------------- |  ------- | ----- | ---- | -----: |
 |[Google CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/google2021/) | July | gcmTime (Isengard) | 80 / 379 | 8.435 |
 |[Redpwn CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/) | July | Isengard | 41 / 1418 | 9.532 | 
 |[HSCTF 8 2021](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/) | June | Isengard | 57 / 1165 | 15.190 | 
