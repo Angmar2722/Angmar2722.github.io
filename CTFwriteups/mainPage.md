@@ -4,6 +4,8 @@ title: CTF Writeups
 ---
 <hr/>
 
+![CTF Writeups Main Page](/assets/img/ctfImages/misc/genericCTFimage.png)
+
 I started my cybersecurity journey in March 2021 when I participated in my first CTF - Whitehacks by SMU (a university in Singapore). Since then, I have participated in many more and have written writeups for each CTF which explains how I solved some challenges. Below are the writeups :
 
 <br/>
