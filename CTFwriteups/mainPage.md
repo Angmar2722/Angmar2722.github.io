@@ -18,7 +18,7 @@ I started my cybersecurity journey in March 2021 in high school when I participa
 |[Zh3r0 CTF V2 2021](https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/) | June | Isengard | 48 / 509 | 2.893 |
 |[Angstrom CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/actf2021/) | April | Isengard | 278 / 1245 | 6.340 |
 |[UMassCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/umass2021/) | March | Dog 1.2 | 46 / 660 | 8.474 |
-|[SMU Whitehacks 2021](https://angmar2722.github.io/CTFwriteups/2021/wh2021/) | March | | 35 / Around 130 | N/A |
+|[SMU Whitehacks 2021](https://angmar2722.github.io/CTFwriteups/2021/wh2021/) | March | | 35 / ~130 | N/A |
 
 <br/>
 
