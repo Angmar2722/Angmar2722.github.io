@@ -79,12 +79,19 @@ if __name__ == "__main__":
 Lets break down the code. There are 63 levels which we have to pass. Every level, two random bytes are generated. After that, we are asked to input a nonce. This is appended to the two random bytes. After that the hash of the (two random bytes + nonce) is calculated. Since the SHA-256 hashing algorithm is used, this hash will be 32 bytes. Also, every level a power is calculated which is 32 bytes. The main goal is to pass each level and that can be down by making sure that the bitwise and operation of each pair of bytes for the hash and power equals zero (for example -  32nd byte of hash & 32nd byte of power = 0). The power level is generated in such a way that it is made up of mostly leading zeroes with only non zero bytes towards the end. Here are a few power levels (in hex) :
 
 Level 1  : 0000000000000000000000000000000000000000000000000000000000000001
-Lev2l 2  : 0000000000000000000000000000000000000000000000000000000000000003
+
+Level 2  : 0000000000000000000000000000000000000000000000000000000000000003
+
 Level 3  : 0000000000000000000000000000000000000000000000000000000000000007
+
 Level 4  : 000000000000000000000000000000000000000000000000000000000000000f
+
 Level 60 : 0000000000000000000000000000000000000000000000000fffffffffffffff
+
 Level 61 : 0000000000000000000000000000000000000000000000001fffffffffffffff
+
 Level 62 : 0000000000000000000000000000000000000000000000003fffffffffffffff
+
 Level 63 : 0000000000000000000000000000000000000000000000007fffffffffffffff
 
 So we can clearly see that most of the bytes are zeroes. For the last level (level 63), there are 8 non-zero bytes and for the first level there is only one non-zero byte. So this means that when the bitwise and operation is being performed, most of the hash bytes will be anded with zero bytes from the power. The only ones we have to care about are the non-zero bytes of the power. So we have to somehow make sure that the hash of the two random bytes plus nonce has at least 8 trailing zero bytes for the last power level. Obviously since SHA-256 is impossible to reverse at the moment, we cannot bruteforce anything over here as pointed out in the challenge description. We had to think of a smarter way to get enough trailing zero bytes for our hash. 
@@ -110,6 +117,160 @@ To get this block data, we used the <a href="https://www.blockchain.com/api/bloc
 Let me summarize this once again. We will first make a request for a single block's data using the aforementioned API. We will then calculate the first hash by hasing the (version number + previous block hash + hash of Merkle root + time + bits + nonce) i.e. the 6 parameters for a block header and after getting that hash, the first 2 bytes will be the key and next 30 bytes the value in a dictionary. We will run this request many times (and always increment the block number since we want unique blocks) in order to accumulate a lot of key-value pairs. Obviously, if we obtain say 4000 hashes (the first hash), dozens of them will have the same first two bytes which means that they are redundant. So we will need to run it way more than 65536 times since there will be many duplicate first two bytes. Once we collect enough of these key-value pairs, we can save it in a file and use that file for our solve script. 
 
 So if the server provides the two random bytes b'\xde\x83', the solve script will check if the dictionary has a key which matches b'\xde\x83' and if it does, it will provide the value (the last 30 bytes of the first hash) and output that to the server. The server will then append that to b'\xde\x83' and hash it again which will give something which ends with at least 8 trailing zero bytes which means it will pass that level. The key here is accumulating enough key value pairs as we need to pass 63 levels. We also used the blocks starting from block number 300,000 because the older blocks didn't have as many trailing zeroes as the difficulty of mining a bitcoin block increased with time so we would like to use newer versions which have more trailing zeroes (and are hence harder to compute).
+
+The script for the key-value pair finder (multithreading was used in order to speed up computational efficiency) :
+
+```python
+
+import requests
+from Crypto.Util.number import long_to_bytes
+from hashlib import sha256
+import threading
+import pickle
+from datetime import datetime, timedelta
+
+nonces = pickle.load(open("nonces.pickle", "rb"))
+THREAD_SIZE = 7500
+NUM_THREADS = 40
+START = 300000
+NONCESPERSECOND = 10
+completed = 0
+
+now = datetime.now()
+print(f"now: {now.strftime('%I:%M:%S %p')}")
+print(f"eta: {(now + timedelta(seconds=(THREAD_SIZE*NUM_THREADS)//NONCESPERSECOND)).strftime('%I:%M:%S %p')}")
+
+def get_hash(block_number):
+    try:
+        block = requests.get(f"https://blockchain.info/rawblock/{block_number}").json()
+        version = block['ver'].to_bytes(4, "little")
+        hashPrevBlock = bytes.fromhex(block['prev_block'])[::-1]
+        hashMerkleRoot = bytes.fromhex(block['mrkl_root'])[::-1]
+        time = long_to_bytes(block['time'])[::-1]
+        bits = long_to_bytes(block['bits'])[::-1]
+        nonce = long_to_bytes(block['nonce'])[::-1]
+
+        return sha256(version + hashPrevBlock + hashMerkleRoot + time + bits + nonce).digest()
+    except ValueError:
+        return None
+    except Exception as e:
+        print(e)
+
+def single_thread(start, end):
+    for i in range(START + start, START + end):
+        block_hash = get_hash(i)
+        if block_hash is not None:
+            nonces[block_hash[:2].hex()] = block_hash[2:].hex()
+        else:
+            print(f"Connection error on block number: {i}")
+
+class myThread (threading.Thread):
+    def __init__(self, threadID, threadName, startRange, endRange):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.threadName = threadName
+        self.startRange = startRange
+        self.endRange = endRange
+    def run(self):
+        global completed
+        print("Starting " + self.name)
+        single_thread(self.startRange, self.endRange)
+        completed += 1
+        print(f"{completed}. Exiting " + self.name)
+
+# Create new threads
+threads = [myThread(i+1, f"Thread-{i+1}", THREAD_SIZE*i, THREAD_SIZE*i + THREAD_SIZE) for i in range(NUM_THREADS)]
+
+# Start new Threads
+for thread in threads:
+    thread.start()
+
+# Join threads
+for thread in threads:
+    thread.join()
+
+print()
+#Unique Nonces Found
+print(len(nonces))
+
+with open("nonces.pickle", "wb") as file:
+    pickle.dump(nonces, file)
+
+print("Exiting Main Thread")
+
+```
+
+While building the key-value pair finder, I used this <a href="https://battardi.medium.com/header-calculations-bitcoin-9531731445e4" target="_blank">resource</a> which explains in detail how headers are calculated and this <a href="https://www.linkedin.com/pulse/how-does-bitcoin-blockchain-mining-work-kirill-eremenko" target="_blank">resource</a> which generally explains how blockchain/bitcoin mining works. Also, rarely we got first hashes which when hashed did not end in at least 8 zero bytes so we used the following script to remove them (I suspect this has something to do with blocks with an <a href="https://bitcoin.stackexchange.com/questions/79273/unusual-version-number-in-blocks" target="_blank">unusual version number</a> due to miners who used the ASICBOOST hardware level mining optimization (but these blocks were very infrequently encountered which meant that most of our blocks gave the deisred hashes) :
+
+```python
+
+import hashlib
+import os
+from pwn import *
+from Crypto.Util.number import *
+import pickle
+import ast
+
+
+with open("nonces.pickle", "rb") as f:
+    nonces = pickle.load(f)
+new = {}
+count = 0
+
+for randomByte in nonces:
+    hash = hashlib.sha256(bytes.fromhex(randomByte) + bytes.fromhex(nonces[randomByte]) ).digest()
+    if((not hash.endswith(b'\x00'*8))):
+        count += 1
+    else:
+        new[randomByte] = nonces[randomByte]
+print(count)
+
+with open("nonces.pickle", "wb") as f:
+    pickle.dump(new, f)
+    
+```
+
+Since we would probably not get all 65,536 possible key-value pairs, we still needed to increase our probability of success of passing all levels. Even if hypothetically we got around 63,000 key-value pairs out of the 65,536 possible pairs, we would still need to hope that the remaining 2536 pairs were not required by the server (the random two bytes). To increase our probability of success, what I did was that I created a script which computed a valid nonce we provide to the server for every possible random two bytes (65536 of those) for the first 14 levels. This means that we would always pass the first 14 levels and hence further decrease the probability of an uncomputed key-value pair from appearing. The script for the brute force for the first 14 levels is shown below :
+
+```python
+
+import os
+import secrets
+import hashlib
+from Crypto.Util.number import *
+
+rainbowTable = []
+
+powerList = []
+
+FLAG_DIFFICULTY = 64
+
+for difficulty in range(1, FLAG_DIFFICULTY):
+    power = bytes_to_long(((1 << difficulty) - 1).to_bytes(32, 'big'))
+    power = long_to_bytes(power)
+    powerList.append(power)
+
+constCounter = 0
+
+for i in range(14):
+    tempList = []
+    for j in range(65536):
+        randomByte = long_to_bytes(j)
+        c = constCounter
+        temp = hashlib.sha256(randomByte + long_to_bytes(c)).digest()
+        while( not all (a & b == 0 for a, b in zip(temp, powerList[i]) )  ):
+            c += 1
+            temp = hashlib.sha256(randomByte + long_to_bytes(c)).digest()
+        tempList.append(long_to_bytes(c))
+    constCounter = c
+    rainbowTable.append(tempList)
+    #print(tempList)
+    print(i)
+
+with open("rainbowTable.txt", "w") as f:
+    f.write(str(rainbowTable))
+
+```
 
 
 
