@@ -327,7 +327,7 @@ print(r.recvall())
 
 ```
 
-For the solve script, I am printing the level number followed by the nonce we send to the server and the two random bytes the server generates for each level. After running it, we got the flag (I tested it a few times and it worked most of the times as we have 98.603% of all unique key-value pairs):
+For the solve script, I am printing the level number followed by the nonce we send to the server and the two random bytes the server generates for each level. After running it, we got the flag (I tested it a few times and it worked most of the times as we have 98.603% of all unique key-value pairs) :
 
 ![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img9.png)
 
