@@ -603,3 +603,5 @@ Find the flag in the Discord server for the CTF.
 <p> <b>Flag :</b> uiuctf{y0u_j01n3d_tH3_dIsCorD!!!} </p>
 
 <br/>
+
+All in all, I enjoyted the CTF but I wish that it had more cryptography challenges. One thing that I should have tried was to at the very least look at some other challenges like the Jail escape ones which sounds pretty cool, maybe next time. I learnt a lot of new skills in the process of solving "pow_erful" such as multithreading and learning how Bitcoin and blockchain works. I think the most important thing was playing a CTF with the new team that I joined. I was pretty happy with our rank and look forward to playing more CTFs with them if I have time as my holidays are ending :(
