@@ -118,7 +118,7 @@ Let me summarize this once again. We will first make a request for a single bloc
 
 So if the server provides the two random bytes b'\xde\x83', the solve script will check if the dictionary has a key which matches b'\xde\x83' and if it does, it will provide the value (the last 30 bytes of the first hash) and output that to the server. The server will then append that to b'\xde\x83' and hash it again which will give something which ends with at least 8 trailing zero bytes which means it will pass that level. The key here is accumulating enough key value pairs as we need to pass 63 levels. We also used the blocks starting from block number 300,000 because the older blocks didn't have as many trailing zeroes as the difficulty of mining a bitcoin block increased with time so we would like to use newer versions which have more trailing zeroes (and are hence harder to compute).
 
-The script for the key-value pair finder (multithreading was used in order to speed up computational efficiency) :
+The script for the key-value pair finder (multithreading was used in order to speed up computational efficiency and the Bitcoin blocks numbered 300,000 to 600,000 were used) :
 
 ```python
 
