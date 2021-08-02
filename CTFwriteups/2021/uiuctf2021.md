@@ -379,7 +379,7 @@ print("Ciphertext: ", ciphertext.hex())
 
 ```
 
-The "dhke" in the challenge name stands for Diffie-Hellman key exchange. The main weakness in this implementation is the fact that we are asked to give a prime (between 1024 and 2048 bits) so instead of giving a safe prime (a Sophie Germain prime of form 2q + 1 where q is prime), we could give a prime p such that p-1 is smooth (i.e. it has many small factors). If that is the case, for even large primes of length greater than 1024 bits, the discrete logarithm can be calculated in order to obtain `b`. This can be done so using the Pohlig-Hellman algorithm which is a special-purpose algorithm for computing discrete logarithms in a finite abelian group whose order is a smooth integer. From there the key can be calculated and used to decrypt the ciphertext and hence obtain the flag.
+The "dhke" in the challenge name stands for Diffie-Hellman key exchange. The main weakness in this implementation is the fact that we are asked to give a prime (between 1024 and 2048 bits) so instead of giving a safe prime (a Sophie Germain prime of form 2q + 1 where q is prime), we could give a prime p such that p-1 is smooth (i.e. it has many small factors). If that is the case, for even large primes of length greater than 1024 bits, the discrete logarithm can be calculated in order to obtain `b`. This can be done so using the Pohlig-Hellman algorithm which is a special-purpose algorithm for computing discrete logarithms in a finite abelian group whose order is a smooth integer. Since the `discrete_log` function uses the Pohlig-Hellman algorithm, there was no need to implement it. From there the key can be calculated and used to decrypt the ciphertext and hence obtain the flag.
 
 The solve script (wrriten in Sage) :
 
