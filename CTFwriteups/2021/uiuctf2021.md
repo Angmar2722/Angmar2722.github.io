@@ -576,7 +576,7 @@ print(r.recvall())
 
 ## Wasmbaby
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img12.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
 
 Find the flag as a comment in the source code of the website.
 
@@ -586,7 +586,7 @@ Find the flag as a comment in the source code of the website.
 
 ## Feedback Survey
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img14.png)
 
 Fill out the survey to get the flag.
 
@@ -594,9 +594,9 @@ Fill out the survey to get the flag.
 
 <br/>
 
-## Feedback Survey
+## Join our Discord
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img15.png)
 
 Find the flag in the Discord server for the CTF.
 
