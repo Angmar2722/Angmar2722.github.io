@@ -272,7 +272,7 @@ with open("rainbowTable.txt", "w") as f:
 
 ```
 
-Since different computers were used to get as many key-value pairs as possible in a reasonable amount of time (still many hours), we used the following script to merge the two 'nonces.pickle' files and combine them to get an updated list of unique nonces (when I say nonce I mean key-value pairs) : 
+Since different computers were used to get as many key-value pairs as possible in a reasonable amount of time (still many hours), this generated multiple 'nonces.pickle' files so we used the following script to merge two 'nonces.pickle' files and combine them to get an updated list of unique nonces (when I say nonce I mean key-value pairs) : 
 
 ```python
 
