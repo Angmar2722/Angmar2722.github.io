@@ -37,7 +37,7 @@ There were only 4 cryptography challenges of which I solved 3 and Zeyu solved th
 
 ## Pow-erful
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img4.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img5.png)
 
 Server code provided :
 
