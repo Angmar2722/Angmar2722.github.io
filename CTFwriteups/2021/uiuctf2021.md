@@ -246,8 +246,7 @@ powerList = []
 FLAG_DIFFICULTY = 64
 
 for difficulty in range(1, FLAG_DIFFICULTY):
-    power = bytes_to_long(((1 << difficulty) - 1).to_bytes(32, 'big'))
-    power = long_to_bytes(power)
+    power = ((1 << difficulty) - 1).to_bytes(32, 'big')
     powerList.append(power)
 
 constCounter = 0
@@ -287,7 +286,96 @@ pickle.dump(nonces, open("nonces.pickle", "wb"))
 
 ```
 
+So after spending many hours generating a massive dictionary of key-value pairs, we generated a file with 64,621 unique and valid key-value pairs. That file (nonces.pickle) can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/powerful/nonces.pickle" target="_blank">here</a>. Additionally, the file 'rainbowTable.txt' which contains the solutions for every two random bytes for the first 14 levels can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/powerful/rainbowTable.txt" target="_blank">here</a>. After generating these two files, we wrote our solve script :
 
+```python
 
+import hashlib
+import os
+from pwn import *
+from Crypto.Util.number import *
+import pickle
+import ast
 
+with open("nonces.pickle", "rb") as f:
+    nonces = pickle.load(f)
+
+with open("rainbowTable.txt", "r") as f2:
+    rainbowTable = ast.literal_eval(f2.read())
+
+local = False
+debug = False
+
+if local:
+    r = process(["python3", "test.py"], level='debug') if debug else process(["python3", "test.py"])
+else:
+    r = remote("pow-erful.chal.uiuc.tf", 1337, level = 'debug') if debug else remote("pow-erful.chal.uiuc.tf", 1337)
+
+for level in range(63):
+    r.recvuntil("sha256( ")
+    randomBytes = r.recvuntil(' ').strip()
+    if (level < 14):
+        nonce = rainbowTable[level][bytes_to_long(bytes.fromhex( randomBytes.decode() ) )].hex()
+    else:
+        nonce = nonces[randomBytes.decode()]
+    print(level, nonce, randomBytes)
+    r.sendlineafter("nonce = ", nonce)
+    r.recvline()
+    print(r.recvline())
+
+print(r.recvall())
+
+```
+
+And after running the script (I am printing the level number followed by the nonce we send to the server and the two random bytes the server generates for each level), we got the flag :
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img9.png)
+
+<p> <b>Flag :</b> uiuctf{bitcoin_to_the_moon} </p>
+
+<br/>
+
+## Dhke-adventure
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img10.png)
+
+Server code provided :
+
+```python
+
+from random import randint
+from Crypto.Util.number import isPrime
+from Crypto.Cipher import AES
+from hashlib import sha256
+
+print("I'm too lazy to find parameters for my DHKE, choose for me.")
+print("Enter prime at least 1024 at most 2048 bits: ")
+# get user's choice of p
+p = input()
+p = int(p)
+# check prime valid
+if p.bit_length() < 1024 or p.bit_length() > 2048 or not isPrime(p):
+    exit("Invalid input.")
+# prepare for key exchange
+g = 2
+a = randint(2,p-1)
+b = randint(2,p-1)
+# generate key
+dio = pow(g,a,p)
+jotaro = pow(g,b,p)
+key = pow(dio,b,p)
+key = sha256(str(key).encode()).digest()
+
+with open('flag.txt', 'rb') as f:
+    flag = f.read()
+
+iv = b'uiuctf2021uiuctf'
+cipher = AES.new(key, AES.MODE_CFB, iv)
+ciphertext = cipher.encrypt(flag)
+
+print("Dio sends: ", dio)
+print("Jotaro sends: ", jotaro)
+print("Ciphertext: ", ciphertext.hex())
+
+```
  
