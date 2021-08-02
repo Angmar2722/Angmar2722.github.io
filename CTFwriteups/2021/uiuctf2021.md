@@ -6,9 +6,10 @@ title: UIUCTF 2021 CTF Writeup
 
 ![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/logo.png)
 
-I participated in the [University of Illinois Urbana-Champaign's UIUCTF 2021](https://ctftime.org/event/1372) event which took place from Sat, 31 July 2021, 08:00 SGT — Mon, 02 Aug. 2021, 08:00 SGT. I wasn't keen on participating in this CTF but since I joined a new team, I thought I would give it a shot and try out this new experience. I joined the team [Social Engineering Experts](https://ctftime.org/team/154571). I was looking at some Singaporean teams on CTFtime and saw that this team had a form which had a mini cryptography challenge to solve in order to get invited. I thought that now would be a good time to level up and join a bigger team instead of playing with small groups of people who I know. Also one of the leaders [Zeyu](https://zeyu2001.gitbook.io/ctfs/) has some well written writeups so make sure to check that out for the challenges that he solved in this CTF.
+I participated in the <a href="https://ctftime.org/event/1372" target="_blank">University of Illinois Urbana-Champaign's UIUCTF 2021</a> event which took place from Sat, 31 July 2021, 08:00 SGT — Mon, 02 Aug. 2021, 08:00 SGT. I wasn't keen on participating in this CTF but since I joined a new team, I thought I would give it a shot and try out this new experience. I joined the team <a href="https://ctftime.org/team/154571" target="_blank">Social Engineering Experts</a>
+. I was looking at some Singaporean teams on CTFtime and saw that this team had a form which had a mini cryptography challenge to solve in order to get invited. I thought that now would be a good time to level up and join a bigger team instead of playing with small groups of people who I know. Also one of the leaders <a href="https://zeyu2001.gitbook.io/ctfs/" target="_blank">Zeyu</a> has some well written writeups so make sure to check that out for the challenges that he solved in this CTF.
 
-Playing in this team was a great experience. The players used [HedgeDoc](https://hedgedoc.org/) to collaborate, work on and share solutions to various challenges. The Discord server was well organised and since I have no clue how to do even basic web or Rev challenges, it was pretty nice knowing that someone out there was working on those. Great experience! This was definitely the most successful CTF that I have participated in so far as we ranked 18th out of 658 scoring teams. I managed to solve 7 challenges (mostly focused on the cryptography challenges) :
+Playing in this team was a great experience. The players used <a href="https://hedgedoc.org/" target="_blank">HedgeDoc</a> to collaborate, work on and share solutions to various challenges. The Discord server was well organised and since I have no clue how to do even basic web or Rev challenges, it was pretty nice knowing that someone out there was working on those. Great experience! This was definitely the most successful CTF that I have participated in so far as we ranked 18th out of 658 scoring teams. I managed to solve 7 challenges (mostly focused on the cryptography challenges) :
 
 ![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img1.png)
 
@@ -36,7 +37,7 @@ There were only 4 cryptography challenges of which I solved 3 and Zeyu solved th
 
 ## Pow-erful
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img3.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img4.png)
 
 Server code provided :
 
