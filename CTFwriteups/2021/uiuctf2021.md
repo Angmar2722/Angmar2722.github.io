@@ -378,4 +378,94 @@ print("Jotaro sends: ", jotaro)
 print("Ciphertext: ", ciphertext.hex())
 
 ```
- 
+
+The "dhke" in the challenge name stands for Diffie-Hellman key exchange. The main weakness in this implementation is the fact that we are asked to give a prime (between 1024 and 2048 bits) so instead of giving a safe prime (a Sophie Germain prime of form 2q + 1 where q is prime), we could give a prime p such that p-1 is smooth (i.e. it has many small factors). If that is the case, for even large primes of length greater than 1024 bits, the discrete logarithm can be calculated in order to obtain `b`. This can be done so using the Pohlig-Hellman algorithm which is a special-purpose algorithm for computing discrete logarithms in a finite abelian group whose order is a smooth integer. From there the key can be calculated and used to decrypt the ciphertext and hence obtain the flag.
+
+The solve script (wrriten in Sage) :
+
+```python
+
+from pwn import *
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+from hashlib import sha256
+import sys, pdb, time
+
+local = False
+debug = False
+
+if local:
+    r = process(["python3", "dhke_adventure.py"], level='debug') if debug else process(["python3", "dhke_adventure.py"])
+else:
+    r = remote("dhke-adventure.chal.uiuc.tf", 1337, level = 'debug') if debug else remote("dhke-adventure.chal.uiuc.tf", 1337)
+
+r.recvuntil(b"Enter prime at least 1024 at most 2048 bits: \n")
+
+#Smooth prime generator gotten from :
+#https://github.com/mimoo/Diffie-Hellman_Backdoor/blob/master/backdoor_generator/backdoor_generator.sage
+def B_smooth(total_size, small_factors_size, big_factor_size):
+
+    smooth_prime = 2
+    factors = [2]
+
+    # large B-sized prime
+    large_prime = random_prime(1<<(big_factor_size + 1), lbound=1<<(big_factor_size-3))
+    factors.append(large_prime)
+    smooth_prime *= large_prime
+    # all the other small primes
+    number_small_factors = (total_size - big_factor_size) // small_factors_size
+    i = 0
+    for i in range(number_small_factors - 1):
+        small_prime = random_prime(1<<(small_factors_size + 1), lbound=1<<(small_factors_size-3))
+        factors.append(small_prime)
+        smooth_prime *= small_prime
+    # we try to find the last factor so that the total number is a prime
+    # (it should be faster than starting from scratch every time)
+    prime_test = 0
+    while not is_prime(prime_test):    
+        last_prime = random_prime(1<<(small_factors_size + 1), lbound=1<<(small_factors_size-3))
+        prime_test = smooth_prime * last_prime + 1
+
+    factors.append(last_prime)
+    smooth_prime = smooth_prime * last_prime + 1
+
+    return smooth_prime, factors
+
+
+prime_size = 1160
+small_factors_size = 20
+big_factor_size = 21
+# p - 1 = B_prime * small_prime_1 * small_prime2 * ...
+p, p_factors = B_smooth(prime_size, small_factors_size, big_factor_size)
+#Check if factors are small :
+#print(p, p_factors)
+
+r.sendline(str(p).encode())
+
+r.recvuntil(b"Dio sends:  ")
+dio = int(r.recvline())
+r.recvuntil(b'Jotaro sends:  ')
+jotaro = int(r.recvline())
+r.recvuntil(b'Ciphertext:  ')
+ct = r.recvline().decode()
+#print(dio, jotaro, ct)
+
+g = 2
+b = discrete_log(jotaro, Mod(g, p))
+
+key = pow(dio,b,p)
+key = sha256(str(key).encode()).digest()
+
+iv = b'uiuctf2021uiuctf'
+cipher = AES.new(key, AES.MODE_CFB, iv)
+print(cipher.decrypt(bytes.fromhex(ct)))
+
+```
+
+<p> <b>Flag :</b> uiuctf{give_me_chocolate_every_day_7b8b06} </p>
+
+<br/>
+
+## Dhke-intro
+
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img11.png)
