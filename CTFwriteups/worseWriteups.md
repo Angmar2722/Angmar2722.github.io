@@ -1,6 +1,6 @@
 ---
 layout: page
-title: CTF Writeups
+title: Bad CTF Writeups
 ---
 <hr/>
 
