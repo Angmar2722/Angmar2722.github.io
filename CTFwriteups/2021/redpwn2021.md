@@ -607,7 +607,7 @@ from pwn import xor
 
 mainList = [b'.....', b'....', b'.....', .....]
 #The full cipherList (removed from writeup since it is too long) can be found in the link below :
-#https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/Yahtzee/cipherList.txt
+#https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/Yahtzee/cipherList.txt
 
 flag = b'flag{'
 c1 = bytes.fromhex(mainList[0].decode())
