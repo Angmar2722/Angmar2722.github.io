@@ -471,7 +471,7 @@ with open('output.json','w') as f:
 
 ```
 
-This is a <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/output.json" target="_blank">link</a> to the output.json file which was provided.
+This is a <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/output.json" target="_blank">link</a> to the output.json file which was provided.
 
 The method of encryption looks really weird with Sage functions like Symmetric Groups and permutations from rank. Since `n` was below 25,000, we could bruteforce the value of `k`. After that, by playing around with similar Sage functions, we found a way to retrieve the flag, by using Permutation.rank().
 
@@ -597,7 +597,7 @@ This message is then encrypted in a very peculiar way. The key is constant throu
 
 Solving this challenge involves exploiting the situation where the nonce and key is repeated. Lets say the encrypted nonce is EN which is repeated. So the ciphertext for message one would be C1 = M1 XOR EN and for message two, the ciphertext would be C2 = M2 XOR EN. If you XOR C1 and C2 this would be C1 XOR C2 = M1 XOR EN XOR M2 XOR EN which is just C1 XOR C2 = M1 XOR M2 as EN XOR EN is 0. So if a nonce is repeated (and so is the key), the XOR of two different messages would equal the XOR of the corresponding two ciphertexts.
 
-So to solve this challenge, we first accumulated **a lot** of different ciphertexts which can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/Yahtzee/cipherList.txt" target="_blank">here</a>. Since the sum of two dices is used as the nonce, we could only have 11 possible nonce values, from 2 (which is 1 + 1) to 12 (which is 6 + 6). Now assuming that we got a message where the flag was inserted right at the start and assuming we had another different message where the flag was inserted anywhere but at the start, by XORing their ciphertexts with "flag{" which we know is the first 5 bytes of the message with flag at the start, we would get the first 5 bytes of the other message.
+So to solve this challenge, we first accumulated **a lot** of different ciphertexts which can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/Yahtzee/cipherList.txt" target="_blank">here</a>. Since the sum of two dices is used as the nonce, we could only have 11 possible nonce values, from 2 (which is 1 + 1) to 12 (which is 6 + 6). Now assuming that we got a message where the flag was inserted right at the start and assuming we had another different message where the flag was inserted anywhere but at the start, by XORing their ciphertexts with "flag{" which we know is the first 5 bytes of the message with flag at the start, we would get the first 5 bytes of the other message.
 
 If this is slightly confusing, hopefully the code below will demonstrate this :
 
@@ -718,7 +718,7 @@ int main(void)
 
 ```
 
-All 4 downloadble files for this challenge can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/redpwn2021/ret2theUnknown" target="_blank">here</a>.
+All 4 downloadble files for this challenge can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/redpwn2021/ret2theUnknown" target="_blank">here</a>.
 
 If the challenge name and descriptions weren't glaring enough, what we had to perform was a <a href="https://en.wikipedia.org/wiki/Return-to-libc_attack" target="_blank">Return-to-libc attack</a>.
 
@@ -777,7 +777,7 @@ And after running the script, we spawned a shell and got the flag :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img16.png)
 
-This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". To avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
+This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". To avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img17.png)
 
@@ -850,7 +850,7 @@ print(r.recvall())
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img18.png)
 
-We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/round-the-bases" target="_blank">this file</a>. It was encoded in base 85. Decoding that would give us a base 64 string. Decoding that gave us integers. Treating those integers as hexadecimal and converting that to base 10 and then converting those integers to bytes gave us this :
+We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/round-the-bases" target="_blank">this file</a>. It was encoded in base 85. Decoding that would give us a base 64 string. Decoding that gave us integers. Treating those integers as hexadecimal and converting that to base 10 and then converting those integers to bytes gave us this :
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img19.png)
 
@@ -1122,7 +1122,7 @@ print(decrypted)
 
 ![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img25.png)
 
-This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/redpwn2021/wstrings" target="_blank">executable</a> given. I opened it in a disassembler and found the flag in the disassembly.
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/wstrings" target="_blank">executable</a> given. I opened it in a disassembler and found the flag in the disassembly.
 
 <p> <b>Flag :</b> flag{flag{n0t_al1_str1ngs_ar3_sk1nny}} </p>
 
