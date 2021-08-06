@@ -588,7 +588,7 @@ chunks = [scryptedKeyList[x:x+collisionLength] for x in range(0 , len(scryptedKe
 
 cipherList = [b'.....', b'....', b'.....', .....]
 #The full cipherList (removed from writeup since it is too long) can be found in the link below :
-#https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/google2021/Pythia/cipherList.txt
+#https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/google2021/Pythia/cipherList.txt
 
 def getPassword(key_used):
     option = b"1"
