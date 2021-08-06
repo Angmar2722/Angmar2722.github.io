@@ -286,7 +286,7 @@ pickle.dump(nonces, open("nonces.pickle", "wb"))
 
 ```
 
-So after spending many hours generating a massive dictionary of key-value pairs, we generated a file with 64,621 unique and valid key-value pairs. That file (nonces.pickle) can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/powerful/nonces.pickle" target="_blank">here</a>. Additionally, the file 'rainbowTable.txt' which contains the solutions for every two random bytes for the first 14 levels can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/powerful/rainbowTable.txt" target="_blank">here</a>. After generating these two files, we wrote our solve script :
+So after spending many hours generating a massive dictionary of key-value pairs, we generated a file with 64,621 unique and valid key-value pairs. That file (nonces.pickle) can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/uiuctf2021/powerful/nonces.pickle" target="_blank">here</a>. Additionally, the file 'rainbowTable.txt' which contains the solutions for every two random bytes for the first 14 levels can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/uiuctf2021/powerful/rainbowTable.txt" target="_blank">here</a>. After generating these two files, we wrote our solve script :
 
 ```python
 
