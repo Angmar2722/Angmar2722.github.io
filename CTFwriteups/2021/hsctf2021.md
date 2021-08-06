@@ -403,7 +403,7 @@ And as shown below, after inputting this different private key, we get the flag 
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img7.png)
 
-Seems like this challenge was basically made for me since I **love** reading about random geography related stuff and participate in many international geography quiz competitions. We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/hsctf2021/geoMapping2images" target="_blank">3 pictures</a> and we have to find their latitude and longitude (their coordinates). Looking at the first picture, I instantly knew that this was in either Vienna or Budapest, by the Danube river and turns out I was correct. I thought the second picture was taken near the Château de Chambord in France but turns out that it was in Germany. The third picture was of a restaurant in Andorra and was found by looking at the signs in the image.
+Seems like this challenge was basically made for me since I **love** reading about random geography related stuff and participate in many international geography quiz competitions. We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/hsctf2021/geoMapping2images" target="_blank">3 pictures</a> and we have to find their latitude and longitude (their coordinates). Looking at the first picture, I instantly knew that this was in either Vienna or Budapest, by the Danube river and turns out I was correct. I thought the second picture was taken near the Château de Chambord in France but turns out that it was in Germany. The third picture was of a restaurant in Andorra and was found by looking at the signs in the image.
 
 The <a href="https://earth.google.com/web/search/hungarian+parliament/@47.50422021,19.04490009,104.11816406a,0d,59.99999999y,265.00100977h,89.45443507t,0r/data=Cn8aVRJPCiUweDQ3NDFkYzEwNDZkNGEzM2Q6MHgzNDIxMjJiOGZmOGYwZjZlGbIOR1fpwEdAIedwrfawCzNAKhRodW5nYXJpYW4gcGFybGlhbWVudBgBIAEiJgokCRrF1hFjSkVAEcqGgZdlR0VAGZCK-vFHEfg_Ico382fmlfc_IhoKFkF0SE5fWW1EMi1KQUNuYUtNendHY0EQAg" target="_blank">Google Earth link</a> for picture 1 (Budapest).
 
@@ -610,7 +610,7 @@ And after running the script, we got our flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img12.png)
 
-We were provided with two files, the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/regulus_satrapa.txt" target="_blank">output.txt</a> as well as the source code shown below :
+We were provided with two files, the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/regulus_satrapa.txt" target="_blank">output.txt</a> as well as the source code shown below :
 
 ```python
 
@@ -672,7 +672,7 @@ And after running the script, we got the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img14.png)
 
-This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/hsctf2021/geoMapping1" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
+This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/hsctf2021/geoMapping1" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
 
 The <a href="https://earth.google.com/web/search/35.897,+14.515/@35.89797468,14.51796316,21.98328209a,0d,59.99999999y,17.42674303h,90.73065173t,0r/data=ClIaKBIiGYlBYOXQ8kFAIUfhehSuBy1AKg4zNS44OTcsIDE0LjUxNRgBIAEiJgokCWZ8bCfv8kFAESsPBi3M8kFAGbDJfYHyCS1AIQA0EuGnCC1AIhoKFjJlOW5NOFJyUzBrdjJUbkx5VDJxVHcQAg" target="_blank">Google Earth link</a> for picture 1 (Malta).
 
@@ -686,7 +686,7 @@ The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.937766
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img15.png)
 
-We were only given an <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/chal" target="_blank">executable</a>. 
+We were only given an <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/chal" target="_blank">executable</a>. 
 
 Connecting to the server, this is what we get :
 
@@ -848,7 +848,7 @@ There was some miscommunication in my team as one of my teammates had solved thi
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img26.png)
 
-We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/glass-windows.png" target="_blank">image</a>. After uploading it to the awesome and beautifully made <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a> tool and clicking on the Inverse RGBA option, we got the flag :
+We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/glass-windows.png" target="_blank">image</a>. After uploading it to the awesome and beautifully made <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a> tool and clicking on the Inverse RGBA option, we got the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img27.png)
 
@@ -879,7 +879,7 @@ print(e)
 print(ct)
 
 ```
-This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/opisthocomus_hoazin.txt" target="_blank">output.txt</a> file. So we are given the modulus, public exponent and ciphertext. Each character of the flag is raised to the power of the public exponent `e` and that result is then put in a modulo operation with `n` (the public modulus). So to get the flag, we could just check which printable ASCII value (from 32 to 126) gives us the corresponding ciphertext when raised to the power of the public exponent and then put into a modulo operation with n. If the character matches, we add that to our flag and then print it.
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/opisthocomus_hoazin.txt" target="_blank">output.txt</a> file. So we are given the modulus, public exponent and ciphertext. Each character of the flag is raised to the power of the public exponent `e` and that result is then put in a modulo operation with `n` (the public modulus). So to get the flag, we could just check which printable ASCII value (from 32 to 126) gives us the corresponding ciphertext when raised to the power of the public exponent and then put into a modulo operation with n. If the character matches, we add that to our flag and then print it.
 
 Solve script :
 
@@ -909,7 +909,7 @@ print(flag)
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img29.png)
 
-This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/pallets-of-gold.png" target="_blank">image</a> given. After playing around with the the "Colour Palette (Bitmap) Browser" of <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a>, we got the flag :
+This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/pallets-of-gold.png" target="_blank">image</a> given. After playing around with the the "Colour Palette (Bitmap) Browser" of <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a>, we got the flag :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img30.png)
 
@@ -931,7 +931,7 @@ Finally a non-bird or weird cryptography challenge description!!!! The 'hill' in
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img32.png)
 
-We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/lsblue.png" target="_blank">this</a> image. The challenge name indicated that we had to flip the least significant bit of the blue color component of the image. We did just that, once again using StegOnline :
+We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/lsblue.png" target="_blank">this</a> image. The challenge name indicated that we had to flip the least significant bit of the blue color component of the image. We did just that, once again using StegOnline :
 
 ![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img33.png)
 
