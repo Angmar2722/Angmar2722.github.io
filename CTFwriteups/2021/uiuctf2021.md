@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
 ```
 
-Lets break down the code. There are 63 levels which we have to pass. Every level, two random bytes are generated. After that, we are asked to input a nonce. This is appended to the two random bytes. After that the hash of the (two random bytes + nonce) is calculated. Since the SHA-256 hashing algorithm is used, this hash will be 32 bytes. Also, every level a power is calculated which is 32 bytes. The main goal is to pass each level and that can be down by making sure that the bitwise and operation of each pair of bytes for the hash and power equals zero (for example -  32nd byte of hash & 32nd byte of power = 0). The power level is generated in such a way that it is made up of mostly leading zeroes with only non zero bytes towards the end. Here are a few power levels (in hex) :
+Lets break down the code. There are 63 levels which we have to pass. Every level, two random bytes are generated. After that, we are asked to input a nonce. This is appended to the two random bytes. After that the hash of the (two random bytes + nonce) is calculated. Since the SHA-256 hashing algorithm is used, this hash will be 32 bytes. Also, every level a power is calculated which is 32 bytes. The main goal is to pass each level and that can be done by making sure that the bitwise and operation of each pair of bytes for the hash and power equals zero (for example -  32nd byte of hash & 32nd byte of power = 0). The power level is generated in such a way that it is made up of mostly leading zeroes with only non zero bytes towards the end. Here are a few power levels (in hex) :
 
 Level 1  : 0000000000000000000000000000000000000000000000000000000000000001
 
