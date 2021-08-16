@@ -4,7 +4,7 @@ title: InCTF 2021 CTF Writeup
 ---
 <hr/>
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
+<!--- ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png) -->
 
 Below are the writeups :
 
