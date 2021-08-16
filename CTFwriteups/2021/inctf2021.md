@@ -4,7 +4,7 @@ title: InCTF 2021 CTF Writeup
 ---
 <hr/>
 
-[InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
 
 During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event. I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges :
 
