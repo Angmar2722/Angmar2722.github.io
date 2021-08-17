@@ -6,7 +6,7 @@ title: InCTF 2021 CTF Writeup
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
 
-During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event (Fri, 13 Aug. 2021, 21:30 SGT — Sun, 15 Aug. 2021, 21:30 SGT). I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges, some in conjuction with Diamondroxxx who has also joined the team :
+During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event (Fri, 13 Aug. 2021, 21:30 SGT — Sun, 15 Aug. 2021, 21:30 SGT). I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges, some in conjuction with Diamondroxxx who has also joined the team recently :
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img1.png)
 
@@ -591,13 +591,18 @@ Assuming that the current message bit (i) is 0 :
 
 $$ c \equiv ( x^\text{2r} (\text{mod}\ N) * r^2 ) \ (\text{mod}\ N) $$ 
 
-$$ c \equiv ( x^\text{r}^\text{2} (\text{mod}\ N) * r^2 (\text{mod}\ N) ) \ (\text{mod}\ N) $$ 
+$$ c \equiv ( x^r^2(\text{mod}\ N) * r^2 (\text{mod}\ N) ) \ (\text{mod}\ N) $$ 
 
-This looks awfully similar to a quadratic residue. In number theory, an integer q is called a quadratic residue modulo n if it is congruent to a perfect square modulo n; i.e., if there exists an integer x such that :
+This looks awfully similar to a quadratic residue. In number theory, an integer q is called a quadratic residue modulo <i>N</i> if it is congruent to a perfect square modulo n; i.e., if there exists an integer x such that :
 
 $$ x^2 \equiv ( q ) \ (\text{mod}\ N) $$ 
 
-Otherwise, q is called a quadratic non-residue modulo n. In our case, we have two quadratic residues, ( x^\text{r}^\text{2} (\text{mod}\ N) and (r^2 (\text{mod}\ N) ). An important property of quadratic residues is that the product of two quadratic residues modulo <i>N</i> is a quadratic residue modulo <i>N</i> which is exactly what we have here. So if the bit of the message (the flag) is a 0, we will have a quadratic residue and if we have a quadratic non-residue, the bit will be 1. 
+Otherwise, q is called a quadratic non-residue modulo <i>N</i>. In our case, we have two quadratic residues :
+
+$$ ( x^2^r ) \ (\text{mod}\ N) $$ 
+$$ ( r^2 ) \ (\text{mod}\ N) $$ 
+
+An important property of quadratic residues is that the product of two quadratic residues modulo <i>N</i> is a quadratic residue modulo <i>N</i> which is exactly what we have here. So if the bit of the message (the flag) is a 0, we will have a quadratic residue and if we have a quadratic non-residue, the bit will be 1. 
 
 The Legendre symbol is usually used to check whether a number is a quadratic residue modulo an odd prime <i>p</i> but we obviously cannot use that here since <i>N</i> isn't prime. Instead we could use the <a href="https://en.wikipedia.org/wiki/Jacobi_symbol" target="_blank">Jacobi Symbol</a> which efficiently checks whether a number is a quadratic residue modulo an odd number <i>N</i>. If it is, 1 is returned else a 0 or -1 is returned. We could use that to check each bit and hence reconstruct the original flag.
 
