@@ -211,7 +211,20 @@ if __name__ == '__main__':
 
 ```
 
-The file with the ciphertext, IV and leak can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/inctf2021/rightNowGenerator/enc.pickle" target="_blank">here</a>.
+The file with the ciphertext, IV and leak can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/inctf2021/rightNowGenerator/enc.pickle" target="_blank">here</a>. We have a `RNG` class which supposedly acts as a random number generator. Let's break it down. The key for decrypting the ciphertext (AES-CBC where IV is given) is the variable `out1`. Our objective is to recover out1 given the leak which is the values of out2.
+
+Firstly, a RNG object is created (denoted by `obj` in the source code), a constant prime number is used as shown by the line `mod = int(gmpy2.next_prime(2**sze))`. The value of this is 18446744073709551629 and will be denoted as `P` henceforth. The object is initialized with 16 random bytes (128 random bits) using the `random` library in Python. Since no seed is specified, after ensuring that the seed_val is 128 bits, the `gen_seed` function is called. This function isn't really that important as all it returns is a list of 64 numbers by performing a series of calculations. After that, since the `next` method is called, four variables, a, b, c and d are calculated by the line `a, b, c, d = (self.seed[self.ctr^i] for i in range(4))`. After that, a serious of modular operations are performed. There is a counter which increments each time `next` is called (out1 calls it 64 times). The variable `k` equals 1 if the counter is an even number else it is 2. Focusing just on a and b :
+
+\\(a = ( ka - b ) \ mod \ P\\)
+
+One thing I noticed after running the programs a few times and printing different values locally was that the first time `next` is called, a equals the first number in the list of 64 primes and b equals the second number in that list. The second time `next` is called, a equals the second number and b equals the first number in the list. The third time it is called, a is the third number and b is the fourth and the fourth time it is called, a is the fourth number and b the third. Hence thinking of it as pairs of two `next` calls, a is always the first number when the call (starting from 0 to 63) and hence counter is even (and k = 2) and b is always the first number when the counter (and call) is odd. This means that these two variables can be related in some way as they switch their values every 2 values. 
+
+I found that :
+
+
+
+
+
 
 
 
