@@ -12,6 +12,7 @@ I started my cybersecurity journey in March 2021 in high school when I participa
 
 | CTF Writeup | Date | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
+|[InCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/inctf2021/) | August | Social Engineering Experts | 22/604 | 19.143 |
 |[UIUCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/uiuctf2021/) | July/August | Social Engineering Experts | 18/658 | 8.222 |
 |[Google CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/google2021/) | July | Isengard | 80/379 | 8.435 |
 |[Redpwn CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/) | July | Isengard | 41/1418 | 9.532 | 
