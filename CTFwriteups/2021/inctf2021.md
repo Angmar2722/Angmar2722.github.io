@@ -236,16 +236,19 @@ Remember that the values are switched for a and b in the second equation in the 
 If (2a - b) < P and (b - a) < P :
 
 2a - b = l<sub>1</sub>
+
 b - a = l<sub>2</sub>
 
 If (2a - b) < P and (b - a) > P :
 
 2a - b = l<sub>1</sub>
+
 b - a = -(-l<sub>2</sub> + P)
 
 If (2a - b) > P and (b - a) < P :
 
 2a - b = -(-l<sub>1</sub> + P)
+
 b - a = l<sub>2</sub>
 
 Using Sage which can solve these systems of modular equations. I tested these 3 cases, whichever case returned a non-empty list was the real value for a and b. We can now recover the previous state which would provide us with the list of 64 wrapped numbers. To reverse the operations in `wrap`, a bit of knowledge regarding modular arithmetic is required. Let's look at `wrap` :
