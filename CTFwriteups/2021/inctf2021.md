@@ -235,13 +235,7 @@ Remember that the values are switched for a and b in the second equation in the 
 
 <br/>
 
-If (2a - b) < P and (b - a) < P 	:
-
-2a - b = \\( ( 2a - b ) \ mod \ P\\) 		
-
-b - a = \\( ( b - a ) \ mod \ P\\) :
-
-Hence :
+If (2a - b) < P and (b - a) < P :
 
 2a - b = l<sub>1</sub>
 
