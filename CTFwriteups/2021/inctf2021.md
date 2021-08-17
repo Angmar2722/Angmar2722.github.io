@@ -6,11 +6,11 @@ title: InCTF 2021 CTF Writeup
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
 
-During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event (Fri, 13 Aug. 2021, 21:30 SGT — Sun, 15 Aug. 2021, 21:30 SGT). I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges :
+During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event (Fri, 13 Aug. 2021, 21:30 SGT — Sun, 15 Aug. 2021, 21:30 SGT). I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges, some in conjuction with Diamondroxxx who has also joined the team :
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img1.png)
 
-Timestamps of the challenges that I solved :
+Timestamps for the challenges that I solved :
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img2.png)
 
@@ -583,9 +583,63 @@ The message is first converted to binary. Each bit is then looped through and a 
 
 $$ c \equiv ( x^\text{r + i} (\text{mod}\ N) * r^2 ) \ (\text{mod}\ N) $$ 
 
+Since appending i to r and then converting to binary essentialy shifts r by 2, the ciphertext is actually :
+
+$$ c \equiv ( x^\text{2r + i} (\text{mod}\ N) * r^2 ) \ (\text{mod}\ N) $$ 
+
 Assuming that the current message bit (i) is 0 :
 
+$$ c \equiv ( x^\text{2r} (\text{mod}\ N) * r^2 ) \ (\text{mod}\ N) $$ 
 
+$$ c \equiv ( x^\text{r}^\text{2} (\text{mod}\ N) * r^2 (\text{mod}\ N) ) \ (\text{mod}\ N) $$ 
+
+This looks awfully similar to a quadratic residue. In number theory, an integer q is called a quadratic residue modulo n if it is congruent to a perfect square modulo n; i.e., if there exists an integer x such that :
+
+$$ x^2 \equiv ( q ) \ (\text{mod}\ N) $$ 
+
+Otherwise, q is called a quadratic non-residue modulo n. In our case, we have two quadratic residues, ( x^\text{r}^\text{2} (\text{mod}\ N) and (r^2 (\text{mod}\ N) ). An important property of quadratic residues is that the product of two quadratic residues modulo <i>N</i> is a quadratic residue modulo <i>N</i> which is exactly what we have here. So if the bit of the message (the flag) is a 0, we will have a quadratic residue and if we have a quadratic non-residue, the bit will be 1. 
+
+The Legendre symbol is usually used to check whether a number is a quadratic residue modulo an odd prime <i>p</i> but we obviously cannot use that here since <i>N</i> isn't prime. Instead we could use the <a href="https://en.wikipedia.org/wiki/Jacobi_symbol" target="_blank">Jacobi Symbol</a> which efficiently checks whether a number is a quadratic residue modulo an odd number <i>N</i>. If it is, 1 is returned else a 0 or -1 is returned. We could use that to check each bit and hence reconstruct the original flag.
+
+The solve script :
+
+```python
+
+import gmpy2
+import ast
+from Crypto.Util.number import long_to_bytes
+
+N = 76412591878589062218268295214588155113848214591159651706606899098148826991765244918845852654692521227796262805383954625826786269714537214851151966113019
+x = 72734035256658283650328188108558881627733900313945552572062845397682235996608686482192322284661734065398540319882182671287066089407681557887237904496283
+
+with open("handout.txt", "r") as f:
+    temp = f.readlines()
+
+ct = ast.literal_eval(temp[0][3:])
+
+flag = ""
+
+for cipherBit in ct:
+    if (gmpy2.jacobi(int(cipherBit), N) == 1):
+        flag += "0"
+    else:
+        flag += "1"
+
+print(long_to_bytes(int(flag, 2)))
+
+```
+
+<p> <b>Flag :</b> inctf{n0w_I_4in7_73ll1ng_u_4_g0ldd1gg3r} </p>
+
+<br/>
+
+<br/>
+
+Honestly this was not a good CTF for me because the cryptography challenges that I solved were high in solves and low in points. I only managed to solve 4/7 crypto challenges :
+
+![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img8.png)
+
+I spent quite a bit on time on the BLS-signature challenge "Trouble With Pairs" but to no avail. I think I need to upgrade my cryptography knowledge by a decent bit now. I will be starting the book "An Introduction To Mathematical Cryptography" in order to improve my foundational knowledge and understand cryptosystems better.
 
 
 
