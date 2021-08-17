@@ -83,7 +83,9 @@ The file with the ciphertext and IV can be found <a href="https://github.com/Ang
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img5.png)
 
-The function `gen_bob_key` generates Bob's private key d<sub>B</sub> but it has a serious vulnerability as it uses the function `gen_key` which returns the sum of 4 unknown bytes. Although there are 256<sup>4</sup> possibilities for the 4 bytes, since the sum is returned as the private key, there can only be a maximum value of 1020 (255 * 4) with in-between values being different combinations of 4 bytes. Alice's private key D<sub>a</sub> is also generated using `gen_key` hence it too will have only a maximum value of 1020. Alice's public key Q<sub>a</sub> is calculated by Q<sub>a</sub> = D<sub>a</sub> * G which is the result of adding G to itself d times as explained above. G or the generator point can be caluclated as curve parameters are given. By running two loops till 1020 in order to guess the correct private keys for both, the shared secret (SS) can be quickly calculated as SS = d<sub>B</sub> * Q<sub>a</sub>. Note that this is the x-coordinate of SS hence in the solve script, SS = d<sub>B</sub> * Q<sub>a</sub>.xy()[0] is used. From there, the shared secret can be used as the key to decrypt the AES-CBC ciphertext to get the flag.
+The function `gen_bob_key` generates Bob's private key d<sub>B</sub> but it has a serious vulnerability as it uses the function `gen_key` which returns the sum of 4 unknown bytes. Although there are 256<sup>4</sup> possibilities for the 4 bytes, since the sum is returned as the private key, there can only be a maximum value of 1020 (255 * 4) with in-between values being different combinations of 4 bytes. Alice's private key D<sub>a</sub> is also generated using `gen_key` hence it too will have only a maximum value of 1020. 
+
+Alice's public key Q<sub>a</sub> is calculated by Q<sub>a</sub> = D<sub>a</sub> * G which is the result of adding G to itself d times as explained above. G or the generator point can be caluclated as curve parameters are given. By running two loops till 1020 in order to guess the correct private keys for both, the shared secret (SS) can be quickly calculated as SS = d<sub>B</sub> * Q<sub>a</sub>. Note that this is the x-coordinate of SS hence in the solve script, SS = d<sub>B</sub> * Q<sub>a</sub>.xy()[0] is used. From there, the shared secret can be used as the key to decrypt the AES-CBC ciphertext to get the flag.
 
 The Sage solve script :
 
@@ -227,6 +229,7 @@ Second equation in the pair = \\( ( b - a ) \ mod \ P\\)
 
 Remember that the values are switched for a and b in the second equation in the pair. I found that looking at each pair (counter even and counter odd and not) where l<sub>1</sub> is the first leaked value in the pair and l<sub>2</sub> the second leaked value in the pair :
 
+<br/>
 
 If 2a - b < P i.e. 2a - b = \\( ( 2a - b ) \ mod \ P\\) and b - a < P i.e. b - a = \\( ( b - a ) \ mod \ P\\) :
 
@@ -234,6 +237,7 @@ If 2a - b < P i.e. 2a - b = \\( ( 2a - b ) \ mod \ P\\) and b - a < P i.e. b - a
 
 b - a = l<sub>2</sub>
 
+<br/>
 
 If 2a - b < P and b - a > P :
 
@@ -241,6 +245,7 @@ If 2a - b < P and b - a > P :
 
 b - a = -(-l<sub>2</sub> + P)
 
+<br/>
 
 If 2a - b > P and b - a < P :
 
@@ -248,22 +253,233 @@ If 2a - b > P and b - a < P :
 
 b - a = l<sub>2</sub>
 
+<br/>
 
 Using Sage which can solve these systems of modular equations. I tested these 3 cases, whichever case returned a non-empty list was the real value for a and b. We can now recover the previous state which would provide us with the list of 64 wrapped numbers. To reverse the operations in `wrap`, a bit of knowledge regarding modular arithmetic is required. Let's look at `wrap` :
 
-The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE and the symbol `^` denotes XOR) :
+The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE) :
 
-\\(wv = ( \ (r1 ^ PAD) * r2 \ mod \ P \\)
+\\(wv = ( \ (r1 XOR PAD) * r2 \ mod \ P \\)
 
-Assuming that (r1 ^ PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
+Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
 $$ k_1 \equiv xy\ (\text{mod}\ P) $$ 
 
 $$ k_2 \equiv yk_2\ (\text{mod}\ P) $$ 
 
-Since k<sub>1</sub>, k<sub>2</sub> and P are known and keeping in mind that P is co-prime to k<sub>1</sub> and k<sub>2</sub>, the modular multiplicative inverse can be used to recover x and y and hence r1 and r2 (i.e. the original out1 values which is the key).
+Since k<sub>1</sub>, k<sub>2</sub> and P are known and keeping in mind that P is co-prime to k<sub>1</sub> and k<sub>2</sub>, the modular multiplicative inverse can be used to recover x and y and hence r1 and r2 (i.e. the original out1 values which is the key). 
 
+A modular multiplicative inverse of an integer a with respect to the modulus P is a solution of the linear congruence :
 
+$$ ax \equiv 1\ (\text{mod}\ P) $$ 
+
+This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where `inv(k_1, P)` denotes the modular multiplicative inverse of k_1 with respect to P), found using a Crypto.Util.number package):
+
+y = (k2 * inv(k_1, P) ) mod P
+
+Therefore r1 = y XOR PAD. After recovering r1, similarly x can be found :
+
+x = (k_1 * inv(r1, P) ) mod P
+
+After recovering the original r2 as r2 = x ^^ PAD, the original 64 number list for `out1` has been found. Now all that remains is joining the 64 numbers in hex into a single block and using the reconstructed `out1` as a key to decrypt the ciphertext.
+
+The Sage solve script :
+
+```python
+
+import pickle
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Util.number import inverse
+import random, hashlib, os, gmpy2, pickle
+from Crypto.Cipher import AES
+
+with open("enc.pickle", "rb") as f:
+    given = pickle.load(f)
+
+ct = given["cip"]
+givenIV = given["iv"]
+leak = given["leak"]
+
+mod = 18446744073709551629
+
+leakList = []
+
+for i in range(64):
+    temp = leak[i*16:(i+1)*16]
+    leakList.append(temp)
+
+def getOut2SeedValues(leak):
+
+    seedValues = []
+
+    for i in range(0, 64, 2):
+        leak1 = leakList[i]
+        leak2 = leakList[i + 1]
+        #print(f"Leak 1 = {leak1}, Leak 2 ={leak2}")
+        #print(f"Counter pair = {i}, {i+1}")
+
+        var('a, b')
+	
+	#First positive, second negative
+        eq1 = 2*a-b ==  int(leak1, 16)
+        eq2 = b - a == -(-int(leak2, 16) + mod)
+        ans = solve([eq1, eq2], a, b, solution_dict=True)
+        dictAns = ans[0]
+        aValue, bValue = dictAns[a], dictAns[b]
+        if (ans != [] and aValue > 0 and bValue > 0):
+            dictAns = ans[0]
+            aValue, bValue = dictAns[a], dictAns[b]
+            seedValues.append(aValue)
+            seedValues.append(bValue)
+            continue
+	
+	#First negative, second positive
+        eq1 = 2*a-b == -(-int(leak1, 16) + mod)
+        eq2 = b - a == int(leak2, 16)
+        ans = solve([eq1, eq2], a, b, solution_dict=True)
+        dictAns = ans[0]
+        aValue, bValue = dictAns[a], dictAns[b]
+        if (ans != [] and aValue > 0 and bValue > 0):
+            dictAns = ans[0]
+            aValue, bValue = dictAns[a], dictAns[b]
+            seedValues.append(aValue)
+            seedValues.append(bValue)
+            continue
+
+        #Both equations positive
+        eq1 = 2*a-b == int(leak1, 16)
+        eq2 = b - a == int(leak2, 16)
+        ans = solve([eq1, eq2], a, b, solution_dict=True)
+        dictAns = ans[0]
+        aValue, bValue = dictAns[a], dictAns[b]
+        if (ans != [] and aValue > 0 and bValue > 0):
+            dictAns = ans[0]
+            aValue, bValue = dictAns[a], dictAns[b]
+            seedValues.append(aValue)
+            seedValues.append(bValue)
+            continue
+
+    #print("Out 2 seed values : ", seedValues)
+    return seedValues
+
+seedValuesOut2 = getOut2SeedValues(leak)
+out1SeedValues = [0 for i in range(64)]
+
+def getOut1Seed(out2Seed):
+    pad = int("0xDEADC0DE", 16)
+    sze = 64
+    hsze = sze//2
+    for i in range(32):
+        r1 = int(out2Seed[i])
+        r2 = int(out2Seed[(i+hsze)%sze])
+        y = (r2 * inverse(r1, mod)) % mod
+        realR1 = y ^^ pad
+        out1SeedValues[(i+hsze)%sze] = realR1
+        x = (r1 * inverse(realR1, mod)) % mod
+        realR2 = x ^^ pad
+        out1SeedValues[i] = realR2
+
+getOut1Seed(seedValuesOut2)
+#print(out1SeedValues)
+
+finalOut1 = ""
+
+for i in range(len(out1SeedValues)):
+    if (i % 2 == 0):
+        k = 2
+        a = out1SeedValues[i]
+        b = out1SeedValues[i + 1]
+    else:
+        k = 1
+        a = out1SeedValues[i]
+        b = out1SeedValues[i-1]
+    ans = (k*a - b) % mod
+    temp = hex(ans)[2:]
+    if(len(temp) < 16):
+        temp = ("0"*(16-len(temp)) + temp)
+    else:
+        pass
+    finalOut1 += temp
+    #print(i, ans, temp, len(temp))
+    #print(len(finalOut1), (i+1)*16)
+
+#print("Len final out 1 :", len(finalOut1))
+
+def decrypt(key: bytes, ct: bytes) -> bytes:
+	key = hashlib.sha256(key).digest()[:16]
+	cipher = AES.new(key, AES.MODE_CBC, bytes.fromhex(givenIV))
+	return cipher.decrypt(pad(ct, 16)).hex()
+
+flag = decrypt(bytes.fromhex(finalOut1), bytes.fromhex(ct))
+print(bytes.fromhex(flag))
+
+```
+
+<p> <b>Flag :</b> inctf{S1mpl3_RN65_r_7h3_b35t!_b35e496b4d570c16} </p>
+
+<br/>
+
+## Lost Baggage
+
+![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img6.png)
+
+The source code provided :
+
+```python
+
+#!/usr/bin/python3
+
+from random import getrandbits as rand
+from gmpy2 import next_prime, invert
+import pickle
+
+FLAG = open('flag.txt', 'rb').read()
+BUF = 16
+
+def encrypt(msg, key):
+	msg = format(int(msg.hex(), 16), f'0{len(msg)*8}b')[::-1]
+	assert len(msg) == len(key)
+	return sum([k if m=='1' else 0 for m, k in zip(msg, key)])
+
+def decrypt(ct, pv):
+	b, r, q = pv
+	ct = (invert(r, q)*ct)%q
+	msg = ''
+	for i in b[::-1]:
+		if ct >= i:
+			msg += '1'
+			ct -= i
+		else:
+			msg += '0'
+	return bytes.fromhex(hex(int(msg, 2))[2:])
+
+def gen_inc_list(size, tmp=5):
+	b = [next_prime(tmp+rand(BUF))]
+	while len(b)!=size:
+		val = rand(BUF)
+		while tmp<sum(b)+val:
+			tmp = next_prime(tmp<<1)
+		b += [tmp]
+	return list(map(int, b))
+
+def gen_key(size):
+	b = gen_inc_list(size)
+	q = b[-1]
+	for i in range(rand(BUF//2)):
+		q = int(next_prime(q<<1))
+	r = b[-1]+rand(BUF<<3)
+	pb = [(r*i)%q for i in b]
+	return (b, r, q), pb
+
+if __name__ == '__main__':
+    pvkey, pbkey = gen_key(len(FLAG) * 8)
+    cip = encrypt(FLAG, pbkey)
+    assert FLAG == decrypt(cip, pvkey)
+    pickle.dump({'cip': cip, 'pbkey': pbkey}, open('enc.pickle', 'wb'))
+    
+```
+
+The file with the ciphertext and public keys can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/inctf2021/lostBaggage/enc.pickle" target="_blank">here</a>.
 
 
 
