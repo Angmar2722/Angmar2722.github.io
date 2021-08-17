@@ -275,7 +275,7 @@ $$ ax \equiv 1\ (\text{mod}\ P) $$
 
 This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where `inv(k_1, P)` denotes the modular multiplicative inverse of k_1 with respect to P), found using a Crypto.Util.number package):
 
-$$ y \equiv (k_2 * inv(k_1, P) ) \ (\text{mod}\ P) $$ 
+$$ y \equiv (k_2 * inv(k_1, P) ) \ text{mod}\ P $$ 
 
 Therefore r1 = y XOR PAD. After recovering r1, similarly x can be found :
 
