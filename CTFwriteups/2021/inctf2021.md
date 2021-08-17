@@ -599,7 +599,8 @@ $$ x^2 \equiv ( q ) \ (\text{mod}\ N) $$
 
 Otherwise, q is called a quadratic non-residue modulo <i>N</i>. In our case, we have two quadratic residues :
 
-$$ ( x^2^r ) \ (\text{mod}\ N) $$ 
+$$ ( x<sup>2</sup>^r ) \ (\text{mod}\ N) $$ 
+
 $$ ( r^2 ) \ (\text{mod}\ N) $$ 
 
 An important property of quadratic residues is that the product of two quadratic residues modulo <i>N</i> is a quadratic residue modulo <i>N</i> which is exactly what we have here. So if the bit of the message (the flag) is a 0, we will have a quadratic residue and if we have a quadratic non-residue, the bit will be 1. 
