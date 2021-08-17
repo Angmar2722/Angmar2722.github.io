@@ -599,7 +599,7 @@ $$ x^2 \equiv ( q ) \ (\text{mod}\ N) $$
 
 Otherwise, q is called a quadratic non-residue modulo <i>N</i>. In our case, we have two quadratic residues :
 
-$$ ( x<sup>2</sup>^r ) \ (\text{mod}\ N) $$ 
+$$ ( (x^r)^\text{2} ) \ (\text{mod}\ N) $$ 
 
 $$ ( r^2 ) \ (\text{mod}\ N) $$ 
 
