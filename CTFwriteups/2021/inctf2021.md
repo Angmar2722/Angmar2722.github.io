@@ -645,7 +645,7 @@ Honestly this was not a good CTF for me because the cryptography challenges that
 
 ![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img8.png)
 
-I spent quite a bit on time on the BLS-signature challenge "Trouble With Pairs" but to no avail. I think I need to upgrade my cryptography knowledge by a decent bit now. I will be starting the book "An Introduction To Mathematical Cryptography" in order to improve my foundational knowledge and understand cryptosystems better.
+I spent quite a bit on time on the BLS-signature challenge "Trouble With Pairs" but to no avail. I think I need to upgrade my cryptography knowledge by a decent bit now. I will be starting the book "An Introduction To Mathematical Cryptography" by Hoffstein, Pipher and Silverman in order to improve my foundational knowledge and understand cryptosystems better.
 
 
 
