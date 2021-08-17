@@ -251,6 +251,23 @@ b - a = l<sub>2</sub>
 
 Using Sage which can solve these systems of modular equations. I tested these 3 cases, whichever case returned a non-empty list was the real value for a and b. We can now recover the previous state which would provide us with the list of 64 wrapped numbers. To reverse the operations in `wrap`, a bit of knowledge regarding modular arithmetic is required. Let's look at `wrap` :
 
+The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE and the symbol `^` denotes XOR) :
+
+\\(wv = ( \ (r1 ^ PAD) * r2 \ mod \ P \\)
+
+Assuming that (r1 ^ PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
+
+$$ k<sub>1</sub> \equiv xy\ (\text{mod}\ P) $$ 
+
+$$ k<sub>2</sub> \equiv yk<sub>2</sub>\ (\text{mod}\ P) $$ 
+
+Since k<sub>1</sub>, k<sub>2</sub> and P are known and keeping in mind that P is co-prime to k<sub>1</sub> and k<sub>2</sub>, the modular multiplicative inverse can be used to recover x and y and hence r1 and r2 (i.e. the original out1 values which is the key).
+
+
+
+
+
+
 
 
 
