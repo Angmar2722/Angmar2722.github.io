@@ -259,7 +259,7 @@ Using Sage which can solve these systems of modular equations. I tested these 3 
 
 The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE) :
 
-\\(wv = ( \ (r1 XOR PAD) * r2 \ mod \ P \\)
+$$ wv \equiv ( (r1 xor PAD) * r2) \ (\text{mod}\ P) $$
 
 Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
@@ -275,11 +275,11 @@ $$ ax \equiv 1\ (\text{mod}\ P) $$
 
 This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where `inv(k_1, P)` denotes the modular multiplicative inverse of k_1 with respect to P), found using a Crypto.Util.number package):
 
-y = (k2 * inv(k_1, P) ) mod P
+$$ y \equiv (k_2 * inv(k_1, P) ) \ (\text{mod}\ P) $$ 
 
 Therefore r1 = y XOR PAD. After recovering r1, similarly x can be found :
 
-x = (k_1 * inv(r1, P) ) mod P
+$$ x \equiv (k_1 * inv(r1, P) ) \ (\text{mod}\ P) $$ 
 
 After recovering the original r2 as r2 = x ^^ PAD, the original 64 number list for `out1` has been found. Now all that remains is joining the 64 numbers in hex into a single block and using the reconstructed `out1` as a key to decrypt the ciphertext.
 
