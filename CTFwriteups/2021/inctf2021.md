@@ -215,9 +215,11 @@ if __name__ == '__main__':
 
 The file with the ciphertext, IV and leak can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/inctf2021/rightNowGenerator/enc.pickle" target="_blank">here</a>. We have a `RNG` class which supposedly acts as a random number generator. Let's break it down. The key for decrypting the ciphertext (AES-CBC where IV is given) is the variable `out1`. Our objective is to recover out1 given the leak which is the values of out2.
 
-Firstly, a RNG object is created (denoted by `obj` in the source code), a constant prime number is used as shown by the line `mod = int(gmpy2.next_prime(2**sze))`. The value of this is 18446744073709551629 and will be denoted as `P` henceforth. The object is initialized with 16 random bytes (128 random bits) using the `random` library in Python. Since no seed is specified, after ensuring that the seed_val is 128 bits, the `gen_seed` function is called. This function isn't really that important as all it returns is a list of 64 numbers by performing a series of calculations. After that, since the `next` method is called, four variables, a, b, c and d are calculated by the line `a, b, c, d = (self.seed[self.ctr^i] for i in range(4))`. After that, a serious of modular operations are performed. There is a counter which increments each time `next` is called (out1 calls it 64 times). The variable `k` equals 1 if the counter is an even number else it is 2. Focusing just on a and b :
+Firstly, a RNG object is created (denoted by `obj` in the source code), a constant prime number is used as shown by the line `mod = int(gmpy2.next_prime(2**sze))`. The value of this is 18446744073709551629 and will be denoted as `P` henceforth. The object is initialized with 16 random bytes (128 random bits) using the `random` library in Python. Since no seed is specified, after ensuring that the seed_val is 128 bits, the `gen_seed` function is called. This function isn't really that important as all it returns is a list of 64 numbers by performing a series of calculations. 
 
-\\(a = ( ka - b ) \ mod \ P\\)
+After that, the `next` method is called, four variables, a, b, c and d are calculated by the line `a, b, c, d = (self.seed[self.ctr^i] for i in range(4))`. After that, a serious of modular operations are performed. There is a counter which increments each time `next` is called (out1 calls it 64 times). The variable `k` equals 1 if the counter is an even number else it is 2. Focusing just on a and b :
+
+$$ a \equiv ( ka - b )\ (\text{mod}\ P) $$ 
 
 Note that if the counter reaches 64, the values of a are returned for `out1` and `out2` and then the `wrap` function is called which performs a series of operations shown in the source code above which transforms the original list of 64 numbers. So in our case, we have the 64 leaked a values for out2 and somehow we have to get to the transformed and 'wrapped' list of 64 numbers. After that, we have to reverse the operations performed in `wrap` after which we would reach the original list of 64 values used for `out1` which is the key itself.
 
@@ -231,11 +233,18 @@ Remember that the values are switched for a and b in the second equation in the 
 
 <br/>
 
-If 2a - b < P i.e. 2a - b = \\( ( 2a - b ) \ mod \ P\\) and b - a < P i.e. b - a = \\( ( b - a ) \ mod \ P\\) :
+If (2a - b) < P and (b - a) < P:
 
-2a - b = l<sub>1</sub>
+This means that :
 
-b - a = l<sub>2</sub>
+2a - b = \\( ( 2a - b ) \ mod \ P\\) a
+b - a = \\( ( b - a ) \ mod \ P\\) :
+
+Hence :
+
+l<sub>1</sub> = 2a - b 
+
+l<sub>2</sub> = b - a 
 
 <br/>
 
@@ -259,7 +268,7 @@ Using Sage which can solve these systems of modular equations. I tested these 3 
 
 The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE) :
 
-$$ wv \equiv ( (r1 xor PAD) * r2) \ (\text{mod}\ P) $$
+$$ wv \equiv ( (text{r1 xor PAD}) * r2) \ (\text{mod}\ P) $$
 
 Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
@@ -275,7 +284,7 @@ $$ ax \equiv 1\ (\text{mod}\ P) $$
 
 This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where `inv(k_1, P)` denotes the modular multiplicative inverse of k_1 with respect to P), found using a Crypto.Util.number package):
 
-$$ y \equiv (k_2 * inv(k_1, P) ) \ text{mod}\ P $$ 
+$$ y \equiv (k_2 * inv(k_1, P) ) \ (\text{mod}\ P) $$ 
 
 Therefore r1 = y XOR PAD. After recovering r1, similarly x can be found :
 
