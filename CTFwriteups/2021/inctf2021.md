@@ -243,7 +243,7 @@ b - a = l<sub>2</sub>
 
 <br/>
 
-If 2a - b < P and b - a > P :
+If (2a - b) < P and (b - a) > P :
 
 2a - b = l<sub>1</sub>
 
@@ -251,7 +251,7 @@ b - a = -(-l<sub>2</sub> + P)
 
 <br/>
 
-If 2a - b > P and b - a < P :
+If (2a - b) > P and (b - a) < P :
 
 2a - b = -(-l<sub>1</sub> + P)
 
