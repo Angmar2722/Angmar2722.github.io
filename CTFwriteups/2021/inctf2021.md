@@ -217,7 +217,7 @@ The file with the ciphertext, IV and leak can be found <a href="https://github.c
 
 Firstly, a RNG object is created (denoted by `obj` in the source code), a constant prime number is used as shown by the line `mod = int(gmpy2.next_prime(2**sze))`. The value of this is 18446744073709551629 and will be denoted as `P` henceforth. The object is initialized with 16 random bytes (128 random bits) using the `random` library in Python. Since no seed is specified, after ensuring that the seed_val is 128 bits, the `gen_seed` function is called. This function isn't really that important as all it returns is a list of 64 numbers by performing a series of calculations. 
 
-After that, the `next` method is called, four variables, a, b, c and d are calculated by the line `a, b, c, d = (self.seed[self.ctr^i] for i in range(4))`. After that, a serious of modular operations are performed. There is a counter which increments each time `next` is called (out1 calls it 64 times). The variable `k` equals 1 if the counter is an even number else it is 2. Focusing just on a and b :
+After that, the `next` method is called, four variables, a, b, c and d are calculated by the line `a, b, c, d = (self.seed[self.ctr^i] for i in range(4))`. After that, a series of modular operations is performed. There is a counter which increments each time `next` is called (out1 calls it 64 times). The variable `k` equals 1 if the counter is an even number else it is 2. Focusing just on a and b :
 
 $$ a \equiv ( ka - b )\ (\text{mod}\ P) $$ 
 
@@ -265,7 +265,7 @@ The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers i
 
 $$ wv \equiv ( (\text{r1 xor PAD}) * r2) \ (\text{mod}\ P) $$
 
-Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
+Assuming that (r1 xor PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
 $$ k_1 \equiv xy\ (\text{mod}\ P) $$ 
 
@@ -277,15 +277,15 @@ A modular multiplicative inverse of an integer a with respect to the modulus P i
 
 $$ ax \equiv 1\ (\text{mod}\ P) $$ 
 
-This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where `inv(k_1, P)` denotes the modular multiplicative inverse of k_1 with respect to P), found using a Crypto.Util.number package):
+This congruence only holds if a and P are coprime (i.e. gcd(a, P) = 1). In our case, since P is prime the numbers are coprime hence the following equations can be derived (where inv(k<sub>1</sub>, P) denotes the modular multiplicative inverse of k<sub>1</sub> with respect to P), found using a Crypto.Util.number package):
 
 $$ y \equiv (k_2 * inv(k_1, P) ) \ (\text{mod}\ P) $$ 
 
-Therefore r1 = y XOR PAD. After recovering r1, similarly x can be found :
+Therefore r1 = y xor PAD. After recovering r1, similarly x can be found :
 
 $$ x \equiv (k_1 * inv(r1, P) ) \ (\text{mod}\ P) $$ 
 
-After recovering the original r2 as r2 = x ^^ PAD, the original 64 number list for `out1` has been found. Now all that remains is joining the 64 numbers in hex into a single block and using the reconstructed `out1` as a key to decrypt the ciphertext.
+After recovering the original r2 as r2 = x xor PAD, the original 64 number list for `out1` has been found. Now all that remains is joining the 64 numbers in hex into a single block and using the reconstructed `out1` as a key to decrypt the ciphertext.
 
 The Sage solve script :
 
