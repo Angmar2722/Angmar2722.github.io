@@ -257,9 +257,9 @@ The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers i
 
 Assuming that (r1 ^ PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
-$$ k<sub>1</sub> \equiv xy\ (\text{mod}\ P) $$ 
+$$ k_1 \equiv xy\ (\text{mod}\ P) $$ 
 
-$$ k<sub>2</sub> \equiv yk<sub>2</sub>\ (\text{mod}\ P) $$ 
+$$ k_2 \equiv yk_2\ (\text{mod}\ P) $$ 
 
 Since k<sub>1</sub>, k<sub>2</sub> and P are known and keeping in mind that P is co-prime to k<sub>1</sub> and k<sub>2</sub>, the modular multiplicative inverse can be used to recover x and y and hence r1 and r2 (i.e. the original out1 values which is the key).
 
