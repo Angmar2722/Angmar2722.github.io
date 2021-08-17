@@ -225,20 +225,17 @@ Note that if the counter reaches 64, the values of a are returned for `out1` and
 
 One thing I noticed after running the programs a few times and printing different values locally was that the first time `next` is called, a equals the first number in the list of 64 numbers and b equals the second number in that list. The second time `next` is called, a equals the second number and b equals the first number in the list. The third time it is called, a is the third number and b is the fourth and the fourth time it is called, a is the fourth number and b the third. Hence thinking of it as pairs of two `next` calls, a is always the first number when the call (starting from 0 to 63) and hence counter is even (and k = 2) and b is always the first number when the counter (and call) is odd. This means that these two variables can be related in some way as they switch their values every 2 values. 
 
-First equation in the pair = \\( ( 2a - b ) \ mod \ P\\)
+First equation in the pair 	=	 \\( ( 2a - b ) \ mod \ P\\)
 
-Second equation in the pair = \\( ( b - a ) \ mod \ P\\)
+Second equation in the pair 	= 	\\( ( b - a ) \ mod \ P\\)
 
 Remember that the values are switched for a and b in the second equation in the pair. I found that looking at each pair (counter even and counter odd and not) where l<sub>1</sub> is the first leaked value in the pair and l<sub>2</sub> the second leaked value in the pair :
 
 <br/>
 
-If (2a - b) < P and (b - a) < P:
+If (2a - b) < P and (b - a) < P 	:
 
-This means that :
-
-2a - b = \\( ( 2a - b ) \ mod \ P\\) a
-b - a = \\( ( b - a ) \ mod \ P\\) :
+2a - b = \\( ( 2a - b ) \ mod \ P\\) 		b - a = \\( ( b - a ) \ mod \ P\\) :
 
 Hence :
 
@@ -268,7 +265,7 @@ Using Sage which can solve these systems of modular equations. I tested these 3 
 
 The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE) :
 
-$$ wv \equiv ( (text{r1 xor PAD}) * r2) \ (\text{mod}\ P) $$
+$$ wv \equiv ( (\text{r1 xor PAD}\) * r2) \ (\text{mod}\ P) $$
 
 Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
