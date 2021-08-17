@@ -235,13 +235,15 @@ Remember that the values are switched for a and b in the second equation in the 
 
 If (2a - b) < P and (b - a) < P 	:
 
-2a - b = \\( ( 2a - b ) \ mod \ P\\) 		b - a = \\( ( b - a ) \ mod \ P\\) :
+2a - b = \\( ( 2a - b ) \ mod \ P\\) 		
+
+b - a = \\( ( b - a ) \ mod \ P\\) :
 
 Hence :
 
-l<sub>1</sub> = 2a - b 
+2a - b = l<sub>1</sub>
 
-l<sub>2</sub> = b - a 
+b - a = l<sub>2</sub>
 
 <br/>
 
@@ -265,7 +267,7 @@ Using Sage which can solve these systems of modular equations. I tested these 3 
 
 The constant `hsze` is 64//2 which is 32. Each value in the list of 64 numbers is then looped through. r1 stores the value of the list corresponding to the counter in the loop and r2 stores the value of the counter + 32 modulo 64. So for the first run of the loop, r1 = 0 and r2 = 32, then r1 = 1 and r2 = 33 and so on. Once r1 = 32, r2 = (32 + 32) mod 64 which is 0 so the pair is reversed i.e. r1 = 32 and r2 = 0 (just like the first iteration in the loop). The wrapped value (wv) is calculated as follows (keeping in mind that the constant PAD = 0xDEADC0DE) :
 
-$$ wv \equiv ( (\text{r1 xor PAD}\) * r2) \ (\text{mod}\ P) $$
+$$ wv \equiv ( (\text{r1 xor PAD}) * r2) \ (\text{mod}\ P) $$
 
 Assuming that (r1 XOR PAD) = x, r2 = y and the recovered wrap states k<sub>1</sub> and k<sub>2</sub> equals the returned value from the pair of opposites (like 0 and 32 for r1 and r2, and, 32 and 0 for r1 and r2) :
 
