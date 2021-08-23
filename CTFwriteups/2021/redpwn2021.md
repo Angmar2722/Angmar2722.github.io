@@ -4,7 +4,7 @@ title: Redpwn 2021 CTF Writeup
 ---
 <hr/>
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/logo.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/logo.png)
 
 Me and Diamondroxxx competed as the two man CTF team "Isengard" in the <a href="https://ctftime.org/event/1327" target="_blank">Redpwn 2021 CTF</a> event (Sat, 10 July 2021, 03:00 SGT — Tue, 13 July 2021, 03:00 SGT). We got up at 3 am since that's when it started and the CTF lasted for 3 days. We ranked 41st out of 1418 scoring teams and once again, this was our best CTF performance yet. 
 
@@ -41,7 +41,7 @@ Below are the writeups :
 
 ## Retrosign
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img2.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img2.png)
 
 Source Code provided :
 
@@ -218,7 +218,7 @@ print(r.recvall())
 
 And after running this script, we got the flag :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img3.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img3.png)
 
 Curiously, our script kept crashing when we weren't in debug mode (this is from Pwntools) for some reason so that's why we had to use that to get the flag. Also I was super happy that I found this signature system in a timely manner - 2 hours before the CTF ended.
 
@@ -228,7 +228,7 @@ Curiously, our script kept crashing when we weren't in debug mode (this is from 
 
 ## Keeper-of-the-Flag
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img4.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img4.png)
 
 The source code provided :
 
@@ -419,7 +419,7 @@ print(r.recvall())
 ```
 And after running the script, we got the flag :
  
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img5.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img5.png)
 
 <p> <b>Flag :</b> flag{here_it_is_a8036d2f57ec7cecf8acc2fe6d330a71} </p>
 
@@ -427,7 +427,7 @@ And after running the script, we got the flag :
 
 ## Scrambled-Elgs
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img6.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img6.png)
 
 The Sage code provided :
 
@@ -508,7 +508,7 @@ print(flag[-50:])
 
 ## Yahtzee
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img7.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img7.png)
 
 The server code provided :
 
@@ -593,7 +593,7 @@ Lets break down the code above. In the function main, the number of dice is set 
 
 This message is then encrypted in a very peculiar way. The key is constant throughout the encryption process for any message. The nonce is constructed via `true_rng.next` where the sum of two random rolls of two dice is outputted. This is then used as a nonce and the message which contains the flag is encrypted using AES CTR mode. So if the two random rolls were 5 and 4, their sum 9 would be used as the inital nonce (the IV) and from there the nonce would be incremented for each block. The image below shows how the CTR mode of operation works :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img8.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img8.png)
 
 Solving this challenge involves exploiting the situation where the nonce and key is repeated. Lets say the encrypted nonce is EN which is repeated. So the ciphertext for message one would be C1 = M1 XOR EN and for message two, the ciphertext would be C2 = M2 XOR EN. If you XOR C1 and C2 this would be C1 XOR C2 = M1 XOR EN XOR M2 XOR EN which is just C1 XOR C2 = M1 XOR M2 as EN XOR EN is 0. So if a nonce is repeated (and so is the key), the XOR of two different messages would equal the XOR of the corresponding two ciphertexts.
 
@@ -622,13 +622,13 @@ for i in range(0, len(mainList)):
 
 And if we run this script we get the following :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img10.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img10.png)
 
 So what we did above was we XORed two ciphertexts and XORed that result with "flag{". Lets say the C1 = "flag{........" XOR EN and C2 = ".........." XOR EN. Since there are only 11 possible nonces and we have 400+ ciphertexts, getting this sitation is pretty likely. Now C1 XOR C2 = M1 XOR M2 XOR EN XOR EN which is C1 XOR C2 = "flag{...." XOR ".........". Now "........." = C1 XOR C2 XOR "flag{....." and with that, we would get the first 5 bytes of the second message. As shown above, we would print the result if it were made up of ASCII printable characters and output that. 
 
 We can clearly see parts of different messages. For example, "I did" probably expands to "I didn't" and with that, we got 2 additional bytes which could reveal two additional bytes of other messages if we updated our flag to "I didn't" and changed the index (mainList[0]) to mainList[61]. Like that we kept guessing and expanding our variable till we got the flag as more additional bytes of different words were revealed :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img31.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img31.png)
 
 <p> <b>Flag :</b> flag{0h_W41t_ther3s_nO_3ntr0py} </p>
 
@@ -636,7 +636,7 @@ We can clearly see parts of different messages. For example, "I did" probably ex
 
 ## Blecc
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img11.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img11.png)
 
 The contents of blecc.txt :
 
@@ -659,7 +659,7 @@ Let us briefly see what ECC is all about. All elliptic curves in this cryptograp
 
 <!--- \\(y^2 = x^3 + ax + b\\) ---> 
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img12.webp)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img12.webp)
 
 This <a href="https://www.youtube.com/watch?v=dCvB-mhkT0w" target="_blank">video</a> does a really good job of explaining generally how ECC works. So after watching this video, you would realize that calculating the private `n` in Q = nG is hard because of the <a href="https://en.wikipedia.org/wiki/Discrete_logarithm" target="_blank">Discrete logarithm problem</a>. So what is wrong with what we are given? Well if you look closely, one thing stand out. The prime number is very small which means that by using certain algorithms like the <a href="https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm" target="_blank">Pohlig-Hellman algorithm</a>, the message could be decrypted. Luckily for us, Sage has some really handy features for cracking discrete logs (granted the prime is small as it is in our case).
 
@@ -687,7 +687,7 @@ print(b'flag{' + long_to_bytes(d) + b'}')
 
 ## Ret2the-Unknown
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img13.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img13.png)
 
 The source code :
 
@@ -722,7 +722,7 @@ All 4 downloadble files for this challenge can be found <a href="https://github.
 
 If the challenge name and descriptions weren't glaring enough, what we had to perform was a <a href="https://en.wikipedia.org/wiki/Return-to-libc_attack" target="_blank">Return-to-libc attack</a>.
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img14.jpg)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img14.jpg)
 
 What we had to do was overflow the buffer (we can do that as there is a gets() call) and change the return address of main to `system` in libc. After that, we had to find a pointer to a shell (in our case /bin/sh) and if this argument (/bin/sh) is passed into system, it will spawn a shell and with that we could read any flag file in the server directory. We could use a libc function like `printf` whose address is conveniently given to us in the line `printf("rob said i'd need this to get there: %llx\n", printf);` ;D
 
@@ -767,7 +767,7 @@ r.interactive()
 
 And after running the script, we spawned a shell and got the flag :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img15.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img15.png)
 
 <p> <b>Flag :</b> flag{rob-is-proud-of-me-for-exploring-the-unknown-but-i-still-cant-afford-housing} </p>
 
@@ -775,11 +775,11 @@ And after running the script, we spawned a shell and got the flag :
 
 ## Bread-Making
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img16.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img16.png)
 
 This is easily one of the weirdest challenges that I have ever solved. We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/bread" target="_blank">executable</a>. There would be a command given such as "add ingredients to the bowl" and we would have to find the right command such as "add flour" or "add yeast". There were some really weird situations such as when "the ingredients are added and stirred into a lumpy dough", the correct option was to "hide the bowl inside a box". To avoid losing the game or story or whatever, we had to avoid the following conditions by the time we chose to go to sleep :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img17.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img17.png)
 
 This was the story of a boy who just wanted to bake bread but in the process of doing so, he nearly set his house on fire.... And for some reason he didn't want his mom or brother to know that he was baking bread. Weird D:
 
@@ -848,11 +848,11 @@ print(r.recvall())
 
 ## Round-The-Bases
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img18.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img18.png)
 
 We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/round-the-bases" target="_blank">this file</a>. It was encoded in base 85. Decoding that would give us a base 64 string. Decoding that gave us integers. Treating those integers as hexadecimal and converting that to base 10 and then converting those integers to bytes gave us this :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img19.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img19.png)
 
 54, 49, 48 and 32 (in hex) are T, I, H and 2 respectively (in ASCII). If you remove T and 2 and treat H as 0 and I as 1, you get a binary string which when decoded would yield the flag.
 
@@ -862,7 +862,7 @@ We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/m
 
 ## Printf-Please
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img20.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img20.png)
 
 The source code :
 
@@ -946,7 +946,7 @@ for i in range(len(payloadList)):
 
 And after running the script, we got the flag :
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img21.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img21.png)
 
 <p> <b>Flag :</b> flag{pl3as3_pr1ntf_w1th_caut10n_9a3xl} </p>
 
@@ -954,7 +954,7 @@ And after running the script, we got the flag :
 
 ## Ret2generic-Flag-Reader
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img22.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img22.png)
 
 The source code :
 
@@ -1017,7 +1017,7 @@ print(r.recvall())
 
 ## Beginner-Generic-Pwn-Number-0
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img23.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img23.png)
 
 The source code :
 
@@ -1078,7 +1078,7 @@ r.interactive()
 
 ## Baby
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img24.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img24.png)
 
 Contents of output.txt :
 
@@ -1120,7 +1120,7 @@ print(decrypted)
 
 ## Wstrings
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img25.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img25.png)
 
 This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/redpwn2021/wstrings" target="_blank">executable</a> given. I opened it in a disassembler and found the flag in the disassembly.
 
@@ -1130,7 +1130,7 @@ This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/ma
 
 ## Scissor
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img26.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img26.png)
 
 Caesar cipher with right shift of 12.
 
@@ -1140,7 +1140,7 @@ Caesar cipher with right shift of 12.
 
 ## Inspect-Me
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img27.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img27.png)
 
 Find the flag as a comment in the source code of the webpage.
 
@@ -1150,7 +1150,7 @@ Find the flag as a comment in the source code of the webpage.
 
 ## Survey
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img28.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img28.png)
 
 Fill out the survey and get the flag.
 
@@ -1160,7 +1160,7 @@ Fill out the survey and get the flag.
 
 ## Discord
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img29.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img29.png)
 
 Find the flag in Redpwn's Discord server.
 
@@ -1170,7 +1170,7 @@ Find the flag in Redpwn's Discord server.
 
 ## Sanity-Check
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/redpwn2021/img30.png)
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img30.png)
 
 Enter the flag in the challenge description.
 
