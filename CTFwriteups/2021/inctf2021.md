@@ -4,15 +4,15 @@ title: InCTF 2021 CTF Writeup
 ---
 <hr/>
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/logo.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/logo.png)
 
 During the weekend, I participated in Amrita University's <a href="https://ctftime.org/event/1370" target="_blank">InCTF 2021</a> event (Fri, 13 Aug. 2021, 21:30 SGT — Sun, 15 Aug. 2021, 21:30 SGT). I was part of my new team Social Engineering Experts and we ranked 22nd out of 604 scoring teams. I managed to solve only 4 challenges, some in conjuction with Diamondroxxx who has also joined the team recently :
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img1.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img1.png)
 
 Timestamps for the challenges that I solved :
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img2.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img2.png)
 
 Below are the writeups :
 
@@ -31,7 +31,7 @@ Below are the writeups :
 
 ## Eazy Xchange
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img3.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img3.png)
 
 The Sage source code provided :
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
 The file with the ciphertext and IV can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/inctf2021/eazyXchange/enc.pickle" target="_blank">here</a>. The cryptosystem implemeted here is <a href="https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman" target="_blank">ECDH</a> (Elliptic Curve Diffie-Hellman) key exchange. The gist of it can be seen in the image below :
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img5.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img5.png)
 
 The function `gen_bob_key` generates Bob's private key d<sub>B</sub> but it has a serious vulnerability as it uses the function `gen_key` which returns the sum of 4 unknown bytes. Although there are 256<sup>4</sup> possibilities for the 4 bytes, since the sum is returned as the private key, there can only be a maximum value of 1020 (255 * 4) with in-between values being different combinations of 4 bytes. Alice's private key D<sub>a</sub> is also generated using `gen_key` hence it too will have only a maximum value of 1020. 
 
@@ -139,7 +139,7 @@ for i in range(1021):
 
 ## Right Now Generator
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img4.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img4.png)
 
 The source code provided :
 
@@ -417,7 +417,7 @@ print(bytes.fromhex(flag))
 
 ## Lost Baggage
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img6.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img6.png)
 
 The source code provided :
 
@@ -543,7 +543,7 @@ print(flag)
 
 ## Gold Digger
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img7.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img7.png)
 
 The source code provided :
 
@@ -643,7 +643,7 @@ print(long_to_bytes(int(flag, 2)))
 
 Honestly this was not a good CTF for me because the cryptography challenges that I solved were high in solves and low in points. I only managed to solve 4/7 crypto challenges :
 
-![InCTF 2021 Writeup](/assets/img/ctfImages/inctf2021/img8.png)
+![InCTF 2021 Writeup](/assets/img/ctfImages/2021/inctf2021/img8.png)
 
 I spent quite a bit on time on the BLS-signature challenge "Trouble With Pairs" but to no avail. I think I need to upgrade my cryptography knowledge by a decent bit now. I will be starting the book "An Introduction To Mathematical Cryptography" by Hoffstein, Pipher and Silverman in order to improve my foundational knowledge and understand cryptosystems better.
 
