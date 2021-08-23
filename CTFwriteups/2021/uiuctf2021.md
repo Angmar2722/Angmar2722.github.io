@@ -4,18 +4,18 @@ title: UIUCTF 2021 CTF Writeup
 ---
 <hr/>
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/logo.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/logo.png)
 
 I participated in the <a href="https://ctftime.org/event/1372" target="_blank">University of Illinois Urbana-Champaign's UIUCTF 2021</a> event which took place from Sat, 31 July 2021, 08:00 SGT — Mon, 02 Aug. 2021, 08:00 SGT. I wasn't keen on participating in this CTF but since I joined a new team, I thought I would give it a shot and try out this new experience. I joined the team <a href="https://ctftime.org/team/154571" target="_blank">Social Engineering Experts</a>
 . I was looking at some Singaporean teams on CTFtime and saw that this team had a form which had a mini cryptography challenge to solve in order to get invited. I thought that now would be a good time to level up and join a bigger team instead of playing with small groups of people who I know. Also one of the leaders <a href="https://zeyu2001.gitbook.io/ctfs/" target="_blank">Zeyu</a> has some well written writeups so make sure to check that out for the challenges that he solved in this CTF.
 
 Playing in this team was a great experience. The players used <a href="https://hedgedoc.org/" target="_blank">HedgeDoc</a> to collaborate, work on and share solutions to various challenges. The Discord server was well organised and since I have no clue how to do even basic web or Rev challenges, it was pretty nice knowing that someone out there was working on those. Great experience! This was definitely the most successful CTF that I have participated in so far as we ranked 18th out of 658 scoring teams. I managed to solve 7 challenges (mostly focused on the cryptography challenges) :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img1.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img1.png)
 
 I spent an insane amount of time on the cryptography challenge "pow_erful" and finally managed to solve it at 3:50 am, a few hours before the CTF ended. These are the timestamps of the challenges that I solved :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img2.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img2.png)
 
 There were only 4 cryptography challenges of which I solved 3 and Zeyu solved the other one. I wished there were more challenges but all in all, it was once again a great experience. This time, the majority of my time was focused on learning about Bitcoin for the 'pow_erful' challenge which was pretty cool since I had no idea how cryptocurrencies worked in general. I couldn't spend enough time on this CTF since I had to do some school work and also watched the most bizarre Olympics Men's 100m finals I have ever seen. I still cannot belive that Marcell Jacobs of Italy clocked a 9.80s 100m when he was a long jumper the prior year and only recently started training for sprints (and only very recently cracked the 10s barrier for the 100m). Maybe this will be the start of a great career for him? Anyways, below are the writeups :
 
@@ -37,7 +37,7 @@ There were only 4 cryptography challenges of which I solved 3 and Zeyu solved th
 
 ## Pow-erful
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img5.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img5.png)
 
 Server code provided :
 
@@ -98,15 +98,15 @@ So we can clearly see that most of the bytes are zeroes. For the last level (lev
 
 After some Googling, I came across this <a href="https://stackoverflow.com/questions/33976555/is-it-possible-for-the-output-of-sha-1-to-end-in-zero-bytes" target="_blank">thread</a>. One of the comments said "I think BC hashes are tested to start with zero bits, but as either bit is as likely to be 0 that doesn't matter much". So what they were saying was that bitcoin hashes are produced in such a way that they have many leading zero bits (while we needed trailing). Ok that might not seem correct at first but then I looked at the <a href="https://en.bitcoin.it/wiki/Block_hashing_algorithm" target="_blank">Block hashing algorithm</a> for Bitcoin. The most important details of it are shown below (this is for the block header of a bitcoin block) :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img6.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img6.png)
 
 So as shown above, the block header for a bitcoin block consists of 4 bytes of a version number, 32 bytes of the hash of the previous block, 32 bytes of the hash of a Merkle Root (this hash is the link between the block and all the transactions that are within the block and that the miner is looking to process) followed by 4 bytes of a timestamp and then 4 bytes of a field called 'bits' (also known as the current target) and then 4 bytes of a nonce which the bitcoin miner increments or changes in order to find a successful hash. Once these 6 fields for the header are added together, it is first reversed and then hashed. **This hash is hashed once again (this is very important) and is then reversed**. Lets look at a Python implementation below (this is from the same Block Hashing algorithm page linked above) :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img7.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img7.png)
 
 So, we can clearly see in the last line `hexlify(hash[::-1]).decode("utf-8")` that the hash is reversed. What this means is that before reversing the final second hash, it had trailing zeroes, not leading zeroes which is exactly what we need. It only has leading zeroes because it is reversed! Remember that I said that it is important to remember that the header is hashed twice? You can see it is hashed twice in the line `hash = hashlib.sha256(hashlib.sha256(header_bin).digest()).digest()` Well that plays a huge role in solving the challenge. Since our input appended to the random nonce provided by the server is hashed, this means that we need to use the first hash of the header and provide that to the server. Let me explain this more clearly by building on the example shown above :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img8.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img8.png)
 
 We can clearly see from the image above that after the second hash, we get our trailing zeroes (8 trailing zero bytes which is what we need to pass the last level). Looking at the first hash, we can see that the first two bytes are b'\xb9\xd7'. Ok so lets say that for one of the levels, the server provides us with the random two byte nonce of b'\xb9\xd7'. What this means is that if we provide the rest of the first hash (the 30 bytes after b'\xb9\xd7') as our nonce, the server will append that to b'\xb9\xd7' and then hash that which will produce the second hash shown above (the one with the 8 trailing zero bytes). Since this second hash has 8 trailing zero bytes, it would pass any level as the last level has 8 trailing non-zero bytes and lower levels have fewer non-zero bytes (assuming the nonce was the correct one provided for this case). 
 
@@ -329,7 +329,7 @@ print(r.recvall())
 
 For the solve script, I am printing the level number followed by the nonce we send to the server and the two random bytes the server generates for each level. After running it, we got the flag (I tested it a few times and it worked most of the times as we have 98.603% of all unique key-value pairs) :
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img9.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img9.png)
 
 <p> <b>Flag :</b> uiuctf{bitcoin_to_the_moon} </p>
 
@@ -337,7 +337,7 @@ For the solve script, I am printing the level number followed by the nonce we se
 
 ## Dhke-adventure
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img10.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img10.png)
 
 Server code provided :
 
@@ -468,7 +468,7 @@ print(cipher.decrypt(bytes.fromhex(ct)))
 
 ## Dhke-intro
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img11.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img11.png)
 
 The source code provided :
 
@@ -551,7 +551,7 @@ for pair in gpList:
 
 ## Pwn Warmup
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img12.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img12.png)
 
 The given binary can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/pwnWarmup/challenge" target="_blank">here</a>. This is a standard buffer overflow challenge where you have to overflow the return address of the function “vulnerable” to point to ‘give_flag’ which then outputs the flag.
 
@@ -576,7 +576,7 @@ print(r.recvall())
 
 ## Wasmbaby
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img13.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img13.png)
 
 Find the flag as a comment in the source code of the website.
 
@@ -586,7 +586,7 @@ Find the flag as a comment in the source code of the website.
 
 ## Feedback Survey
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img14.png)
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img14.png)
 
 Fill out the survey to get the flag.
 
