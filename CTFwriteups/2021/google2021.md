@@ -4,7 +4,7 @@ title: Google 2021 CTF Writeup
 ---
 <hr/>
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/googleCTFlogo.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/googleCTFlogo.png)
 
 Initially, I wasn't planning on even participating in the <a href="https://ctftime.org/event/1318" target="_blank">2021 Google CTF</a> event because it had a rating weight of 99.22 on CTFtime which speaks volumes about its immensive difficulty. I was rightfully positive about the fact that even the simplest challenges would be much more difficult than normal CTFs. I was still relatively new to CTFs (it had been nearly 5 months since I started) and I knew that this was definitely an 'elite' CTF which all the top teams would participate in.
 
@@ -12,7 +12,7 @@ The CTF time schedule was Sat, 17 July 2021, 08:00 SGT — Mon, 19 July 2021, 07
 
 As expected, even the easiest challenge (in terms of solves) would still be considered a medium difficulty challenge in some other CTFs (at least in my opinion). The challenges were of very high quality and most proved to be out of reach for us. In the end, we managed to solve 3 challenges and we ranked 80th out of 379 scoring teams. 
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img1.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img1.png)
 
 Overall, this CTF was a fantastic learning experience and gave me a sense of what a top or elite CTF looked like, suffice to say it was very challenging.... Even for the challenges that I couldn't solve but at least attempted, I managed to learn a lot and was introduced to new concepts which I had absolutely no knowledge about previously such as the Hidden Number Problem and Huffman Coding.
 
@@ -32,7 +32,7 @@ Below are the writeups :
 
 ## Story
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img3.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img3.png)
 
 Server source code provided (this is in the <a href="https://en.wikipedia.org/wiki/Dart_(programming_language)" target="_blank">Dart</a> programming language) :
 
@@ -283,11 +283,11 @@ void main() {
 
 So what we inputted into the server was 512 capital 'A's and based on the random CRC values outputted by the server, we modified the CRC bit flipper to get the corresponding text :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img4.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img4.png)
 
 We were the 13th solver for this challenge so that was pretty neat :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img5.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img5.png)
 
 <p> <b>Flag :</b> CTF{eb64749d08bd99b681f2bc75aa65eab35a80310f7426f6872ba869d244e37135} </p>
 
@@ -295,7 +295,7 @@ We were the 13th solver for this challenge so that was pretty neat :
 
 ## Pythia
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img6.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img6.png)
 
 The server source code provided :
 
@@ -396,11 +396,11 @@ The third option is where the most interesting stuff happens. We are prompted to
 
 It works the following way and is explained in detail in this <a href="https://www.youtube.com/watch?v=TkWAgeSYL_Q&t=742s" target="_blank">video</a> :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img7.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img7.png)
 
 After that, an AES-GCM cipher object is generated from this key and is used to decrypt the ciphertext. If the decryption was successful (meaning that our ciphertext did correspond to the actual key/password), the server would prompt us with "Decryption successful" and otherwise it would prompt us with a failure in decryption. We have a maximum of 150 queries and each query is delayed by 10 seconds to prevent possible bruteforce attacks (by making it take too long in the server interaction since there are only 26 cubed or 17,576 password possibilities). A quick reminder into how AES-GCM (which is widely used now) works :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img8.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img8.png)
 
 So we have an oracle! After some research, we found just what we needed. There has been some pretty new academic literature on Partitioning Oracle Attacks which was the title of <a href="https://eprint.iacr.org/2020/1491.pdf" target="_blank">this paper</a> published by Julia Len, Paul Grubbs and Thomas Ristenpart of Cornell University in 2020. They describe partitioning oracles as a new class of decryption error oracles which, conceptually, take a ciphertext as input and output whether the decryption key belongs to some known subset of keys. The attack works by creating **key multi-collisions** which is when a ciphertext is created such that its decryption succeeds under *k* number of keys. 
 
@@ -649,9 +649,9 @@ exit(0 )
 
 All in all, it took around 11 minutes to run (considerable time was saved due to the precomputed cipher list) :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img9.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img9.png)
 
-We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten). We also did our team name 'gcmTime' justice. Even though this had more than twice as many solves as Story, this was still a harder cryptography challenge.
+We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/img/ctfImages/2021/google2021/img10.png" target="_blank">9th solver</a> for this challenge so that was pretty cool, especially the fact that our team name was in the company of some legendary CTF teams like PPP, Dice Gang and pasten). We also did our team name 'gcmTime' justice. Even though this had more than twice as many solves as Story, this was still a harder cryptography challenge.
 
 <p> <b>Flag :</b> CTF{gCm_1s_n0t_v3ry_r0bust_4nd_1_sh0uld_us3_s0m3th1ng_els3_h3r3} </p>
 
@@ -659,7 +659,7 @@ We were the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/mas
 
 ## Filestore
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img11.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img11.png)
 
 The server source code provided :
 
@@ -820,7 +820,7 @@ for _ in range(30):
 
 After running the script, we got the flag (this was the most solved challenge in the entire CTF by a considerable margin) :
 
-![Google CTF 021 Writeup](/assets/img/ctfImages/google2021/img12.png)
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/img12.png)
 
 <p> <b>Flag :</b> CTF{CR1M3_0f_d3dup1ic4ti0n} </p>
 
