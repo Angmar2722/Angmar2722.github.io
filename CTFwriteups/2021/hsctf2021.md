@@ -4,7 +4,7 @@ title: HSCTF 2021 CTF Writeup
 ---
 <hr/>
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/logo.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/logo.png)
 
 Me and my team (Isengard) competed in <a href="https://ctftime.org/event/1264" target="_blank">West Windsor-Plainsboro High School North's HSCTF</a> event (Tuesday, 15 June 2021, 08:00 SGT — Sat, 19 June 2021, 20:00 SGT). This was my second longest CTF yet (4.5 days). Originally the CTF was supposed to start at 8 pm on Monday 14th June but it was delayed by 12 hours due to some technical difficulties. We ranked 57th out of 1165 scoring teams and this was easily our best showing yet (we scored over 10k points!!).
 
@@ -41,7 +41,7 @@ Below are the writeups :
 
 ## Regulus-Calendula
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img1.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img1.png)
 
 Source Code provided :
 
@@ -281,7 +281,7 @@ print("done")
 
 And as shown below, after running it and waiting for a few minutes, you get the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img2.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img2.png)
 
 Solving this challenge was a really special moment for me personally since this was the 8th least solved challenge out of the 50 challenges in the CTF and of the 28 teams which solved it, I noticed that all of them were in the top 50. This was probably the first truly hard CTF problem that I managed to solve in terms of the number of solves by all teams. Me and Diamondroxxx spent nearly 13 hours straight on this challenge, from 6 pm Friday to 7 am Saturday and during that time, we thought of using a SAT solver (Boolean satisfiability problem solver), we were stuck over the implementation of the reconstruction algorithm, and times we had no idea what we were doing or what we had to do, but we persevered and finally got it and boy did that feel great. Hopefully solving this challenge proves to be a stepping stone and major milestone in my CTF/cybersecurity learning journey :D  
 
@@ -291,7 +291,7 @@ Solving this challenge was a really special moment for me personally since this 
 
 ## Regulus-Regulus
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img3.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img3.png)
 
 So when we connect to the server, two 1024 bit primes are generated and a random number between 0 and the modulus `n` is calculated and that number is the message. From that, the ciphertext and private key is generated. We are also given 4 options. The first option simply prints out the source code (the file was not provided) so here it is :
 
@@ -351,13 +351,13 @@ The second option gives the public key, the modulus and exponent (65537 for this
 
 Looking at this <a href="https://www.di-mgt.com.au/rsa_alg.html#notespractical" target="_blank">link</a> provides us the answer : 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img4.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img4.png)
 
 Thats right! Instead of using Euler's totient and calculating the corresponding private key, we could also use the <a href="https://en.wikipedia.org/wiki/Carmichael_function" target="_blank">Carmichael function</a> in order to calculate a different private key `d` which decrypts the same message. And Carmichael's totient function in RSA is calculated by `lcm(p-1, q-1)`. So we have to use the modulus given to get the primes p and q, and with that we can get Carmichael's totient, generate the different private key as that is just the modular multiplicative inverse of the public exponent `e` with Carmichael's totient.
 
 So how could we get the primes p and q from the modulus N? Looking at the image above, it does suggest that getting the factors of N is possible given the private key `d` which we have but when we tried out the algorithm suggested, it proved to be too slow for even 128 bit primes, much less 1024 bit ones. So we had to find a different method. Eventually we came across <a href="https://math.stackexchange.com/questions/3082920/how-can-i-break-rsa-if-i-know-the-private-key" target="_blank">this</a> :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img5.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img5.png)
 
 So we tried that out and it instatly got the primes p and q. So now we just had to connect to the server, get the modulus and private key, use the script below to get p and q and hence the different private key (with Carmichael's totient) and then input that into the server in order to get the flag. The script :
 
@@ -393,7 +393,7 @@ print(payloadD)
 
 And as shown below, after inputting this different private key, we get the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img6.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img6.png)
 
 <p> <b>Flag :</b> flag{r3gulus_regu1us_regUlus_regulu5_regUlus_Regulus_reguLus_regulns_reGulus_r3gulus_regu|us} </p>
 
@@ -401,7 +401,7 @@ And as shown below, after inputting this different private key, we get the flag 
 
 ## Geographic-Mapping-2
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img7.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img7.png)
 
 Seems like this challenge was basically made for me since I **love** reading about random geography related stuff and participate in many international geography quiz competitions. We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/hsctf2021/geoMapping2images" target="_blank">3 pictures</a> and we have to find their latitude and longitude (their coordinates). Looking at the first picture, I instantly knew that this was in either Vienna or Budapest, by the Danube river and turns out I was correct. I thought the second picture was taken near the Château de Chambord in France but turns out that it was in Germany. The third picture was of a restaurant in Andorra and was found by looking at the signs in the image.
 
@@ -417,7 +417,7 @@ The <a href="https://earth.google.com/web/search/del+Mas,+Arinsal,+Carrer+de+la+
 
 ## Canis-Lupus-Familiaris-Bernardus 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img8.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img8.png)
 
 Source Code provided :
 
@@ -520,11 +520,11 @@ So looking at the source code, when we connect to the server, a random string of
 
 Here is a brief confirmation of our findings when you connect to the server :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img9.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img9.png)
 
 So there is a loop which runs 100 times. After generating a random peptide, the user is prompted to answer whether it is valid or not. If it is valid and the user guesses it correctly, the loop is incremented (if the user guesses incorrectly it exits the program). However when it is invalid, interesting stuff happens. First a random IV is provided. A random key is also generated but not provided. Let us remind ourselves how the CBC mode of operation works :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img10.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img10.png)
 
 Ok, so since AES works in blocks of 16 bytes and each letter is 1 byte, we are only interested in the first block as the string is 16 bytes/letters. So when the IV is given, we are then prompted to provide our own IV in order to make the invalid peptide valid. The invalid peptide is first encrypted as shown in the line `enc(key, iv, spammmmm)` and then decrypted with our own IV and the same key as shown in the line `dec(key, bytes.fromhex(input("Now, give me an IV to use: ").strip()), enc(key, iv, spammmmm)).decode('utf-8')`. The .decode('utf-8') part simply makes the decrypted text ASCII characters. This is then checked for its validity. If the invalid "JOUX" letter is removed, we are allowed to proceed to the next iteration of the loop however if our peptide is still invalid, we have to exit the program.
 
@@ -600,7 +600,7 @@ print(temp)
 
 And after running the script, we got our flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img11.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img11.png)
 
 <p> <b>Flag :</b> flag{WATCHING_PPL_GET_PEPTIDED_IS_A_VALID_PEPTIDE} </p>
 
@@ -608,7 +608,7 @@ And after running the script, we got our flag :
 
 ## Regulus-Satrapa 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img12.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img12.png)
 
 We were provided with two files, the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/regulus_satrapa.txt" target="_blank">output.txt</a> as well as the source code shown below :
 
@@ -662,7 +662,7 @@ print(decrypted)
 ```
 And after running the script, we got the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img13.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img13.png)
 
 <p> <b>Flag :</b> flag{H4lf_4nd_H4lf} </p>
 
@@ -670,7 +670,7 @@ And after running the script, we got the flag :
 
 ## Geographic-Mapping 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img14.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img14.png)
 
 This challenge is the same as Geography-Mapping-2 but instead of 3 pictures, we have <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/hsctf2021/geoMapping1" target="_blank">2 pictures</a>. The first picture shows the flag of Malta and Malta is a very tiny country :D The second picture shows the flag of San Marino (the hilly terrain of the Appenine mountain range doubly confirms this) and San Marino is an even tinier country!!!!!! The cable car makes picture 2 even more easy to find.
 
@@ -684,25 +684,25 @@ The <a href="https://earth.google.com/web/search/san+marino+cable+car/@43.937766
 
 ## Stonks 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img15.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img15.png)
 
 We were only given an <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/chal" target="_blank">executable</a>. 
 
 Connecting to the server, this is what we get :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img16.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img16.png)
 
 Running the usual checks on the binary, we get this :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img17.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img17.png)
 
 No canaries enabled, could be a buffer overflow problem? After disassembling the binary with `objdump`, we find a `gets` call and an allocated buffer of 40 bytes  in the function `vuln` (which is called by `main()`) :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img18.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img18.png)
 
 Disassembling the binary with Ghidra, we find the function `ai_debug` which is not called by any other function. Notice that if you reach this function, it runs the `/bin/sh` shell :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img19.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img19.png)
 
 So we simply have to design a payload that would overflow the buffer in `vuln` and then jump to `ai_debug` and from there we could enter the shell and cat the flag.
 
@@ -723,7 +723,7 @@ r.interactive()
 
 And after running the script, we enter the shell and once in interactive mode, we can get the flag. Solving this challenge took way longer than it should have because I forgot to enter into interactive mode ......
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img20.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img20.png)
 
 <p> <b>Flag :</b> flag{to_the_moon} </p>
 
@@ -731,15 +731,15 @@ And after running the script, we enter the shell and once in interactive mode, w
 
 ## Digits-Of-Pi 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img21.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img21.png)
 
 We had to find the flag from <a href="https://docs.google.com/spreadsheets/d/1y7AxYvBwJ1DeapnhV401w0T5HzQNIfrN1WeQFbnwbIE/edit#gid=0" target="_blank">this</a> spreadsheet. Notice that there was a hidden sheet called source :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img22.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img22.png)
 
 So to get the flag, we simply went to the find and replace option and searched for the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img23.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img23.png)
 
 <p> <b>Flag :</b> flag{hidden_sheets_are_not_actually_hidden} </p>
 
@@ -747,7 +747,7 @@ So to get the flag, we simply went to the find and replace option and searched f
 
 ## Seeded-Randomizer 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img24.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img24.png)
 
 Source Code provided :
 
@@ -836,7 +836,7 @@ public class randomTest {
 
 And after running it, we get the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img25.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img25.png)
 
 There was some miscommunication in my team as one of my teammates had solved this challenge 40 minutes before me but I didn't realize that so I solved it independently of them and was surprised to find that the challenge was already solved when I was about to enter the flag.
 
@@ -846,11 +846,11 @@ There was some miscommunication in my team as one of my teammates had solved thi
 
 ## Glass-Windows 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img26.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img26.png)
 
 We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/glass-windows.png" target="_blank">image</a>. After uploading it to the awesome and beautifully made <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a> tool and clicking on the Inverse RGBA option, we got the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img27.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img27.png)
 
 <p> <b>Flag :</b> flag{this_is_why_i_use_premultiplied_alpha} </p>
 
@@ -858,7 +858,7 @@ We were given this <a href="https://github.com/Angmar2722/Angmar2722.github.io/b
 
 ## Opisthocomus-Hoazin 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img28.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img28.png)
 
 Source Code provided :
 
@@ -907,11 +907,11 @@ print(flag)
 
 ## Pallets-Of-Gold 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img29.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img29.png)
 
 This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/pallets-of-gold.png" target="_blank">image</a> given. After playing around with the the "Colour Palette (Bitmap) Browser" of <a href="https://stegonline.georgeom.net/upload" target="_blank">StegOnline</a>, we got the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img30.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img30.png)
 
 <p> <b>Flag :</b> flag{plte_chunks_remind_me_of_gifs} </p>
 
@@ -919,7 +919,7 @@ This was the <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/ma
 
 ## Queen-Of-The-Hill 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img31.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img31.png)
 
 Finally a non-bird or weird cryptography challenge description!!!! The 'hill' indicated that this was a <a href="https://en.wikipedia.org/wiki/Hill_cipher" target="_blank">Hill cipher</a>. We just chucked the ciphertext and encryption key into <a href="https://www.dcode.fr/hill-cipher" target="_blank">this</a> online Hill Cipher decoder and we got the flag.
 
@@ -929,11 +929,11 @@ Finally a non-bird or weird cryptography challenge description!!!! The 'hill' in
 
 ## LSBlue 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img32.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img32.png)
 
 We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/lsblue.png" target="_blank">this</a> image. The challenge name indicated that we had to flip the least significant bit of the blue color component of the image. We did just that, once again using StegOnline :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img33.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img33.png)
 
 <p> <b>Flag :</b> flag{0rc45_4r3nt_6lu3_s1lly_4895131} </p>
 
@@ -941,7 +941,7 @@ We were given <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/m
 
 ## Return of the Intro to Netcat 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img34.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img34.png)
 
 Connect to their server using netcat, run the proof of work and get the flag.
 
@@ -951,11 +951,11 @@ Connect to their server using netcat, run the proof of work and get the flag.
 
 ## NRC 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img35.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img35.png)
 
 Going to the website and looking around the source code with the browser's developer tools, we found the flag :
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img36.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img36.png)
 
 <p> <b>Flag :</b> flag{keyboard_shortcuts_or_taskbar} </p>
 
@@ -963,7 +963,7 @@ Going to the website and looking around the source code with the browser's devel
 
 ## Sanity-Check 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img38.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img38.png)
 
 Enter the flag in the challenge description.
 
@@ -973,7 +973,7 @@ Enter the flag in the challenge description.
 
 ## Hsctf-Survey 
 
-![HSCTF 2021 Writeup](/assets/img/ctfImages/hsctf2021/img37.png)
+![HSCTF 2021 Writeup](/assets/img/ctfImages/2021/hsctf2021/img37.png)
 
 Fill out the survey and get the flag.
 
