@@ -593,7 +593,7 @@ $$ c \equiv ( x^\text{2r} (\text{mod}\ N) * r^2 ) \ (\text{mod}\ N) $$
 
 $$ c \equiv ( (x^r)^\text{2} (\text{mod}\ N) * r^2 (\text{mod}\ N) ) \ (\text{mod}\ N) $$ 
 
-This looks awfully similar to a quadratic residue. In number theory, an integer q is called a quadratic residue modulo <i>N</i> if it is congruent to a perfect square modulo n; i.e., if there exists an integer x such that :
+This looks awfully similar to a quadratic residue. In number theory, an integer q is called a quadratic residue modulo <i>N</i> if it is congruent to a perfect square modulo <i>N</i>; i.e., if there exists an integer x such that :
 
 $$ x^2 \equiv ( q ) \ (\text{mod}\ N) $$ 
 
