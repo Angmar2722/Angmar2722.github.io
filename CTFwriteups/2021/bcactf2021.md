@@ -4,17 +4,17 @@ title: BCACTF 2021 CTF Writeup
 ---
 <hr/>
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img1.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img1.png)
 
 I competed in <a href="https://ctftime.org/event/1265" target="_blank">Bergen County Academies' 2021 BCACTF 2.0</a> CTF event on my own (first time playing solo in a CTF). I ranked 117th out of 953 teams (841 scoring) and I managed to solve 27 challenges. This was the first time that I managed to solve atleast one challenge from every category in a CTF. Date and time : Fri, 11 June 2021, 08:00 SGT — Mon, 14 June 2021, 08:00 SGT.
 
 I was pleased with my performance for the web challenges as since my first two CTFs (Whitehacks 2021 and CTF SG 2021), I have never solved a web challenge.
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img3.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img3.png)
 
 I managed to solve 3/4ths of the binary exploitation challenges too :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img4.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img4.png)
 
 Below are the writeups for the challenges that I managed to solve :
 
@@ -22,11 +22,11 @@ Below are the writeups for the challenges that I managed to solve :
 
 # Wasm Protected Site 2 (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img5.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img5.png)
 
 When you go to the website that they provided, you would just see a textfield for entering the flag. If what you entered wasn't the flag, it would output incorrect flag and vice-versa. Nothing interesting here.
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img6.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img6.png)
 
 After looking around with my browser's developer tools, I found the heart of this website, a Wasm (<a href="https://en.wikipedia.org/wiki/WebAssembly
 " target="_blank">Web Assembly</a>) file which contained some source code :
@@ -93,7 +93,7 @@ After looking around with my browser's developer tools, I found the heart of thi
 
 After a lot of Googling and trying to understand this code, this is what I came up with :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img7.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img7.png)
 
 <p>So at 0x04e, “i32.load8_u” loads a character from the encoded flag. Since the encoded flag is “bjsxPKMH|\x227N\x1bD\x043b]PR\x19e%\x7f/;\x17”, it loads the character “b” from this encoded flag the first time. The line “local.get $v2” loads the index of the loaded character so for “b” it would be 0, for “j” it would be 1 and so on (like index values in an array). This index is then multiplied by 9. That result is then put in a bitwise AND operation with 127. Then that result is XORed with the selected encoded character (so “b” for the first time, “j” for the second, “s” for the third and so on) and then the server checks the result with the corresponding correct flag character so “bactf{flag}” to see if the character matches. If it doesn't, it exits (lines 0x64 and 0x65) and if it does match, it continues this process character by character to see if the inputted flag matches. </p>
 
@@ -118,7 +118,7 @@ print("Flag:",flag)
 
 And after running this script, you get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img8.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img8.png)
 
 **Flag :** bcactf{w4sm-w1z4rDry-Xc0wZ}
 
@@ -126,7 +126,7 @@ And after running this script, you get the flag :
 
 # Advanced Math Analysis (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img9.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img9.png)
 
 The source code and executable was provided. Here is the source code :
 
@@ -184,11 +184,11 @@ int main() {
 
 And after running the standard chekcs on the executable, we can see that this challenge involves a buffer overflow (due to the vulnerability of `gets`) as no stack canaries were found and NX was enabled (so this challenge probably had nothing to do with shellcode execution) :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img10.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img10.png)
 
 A quick objdump of `main` shows that even though the buffer was initialized with 50 bytes, the buffer is actually allocated 64 bytes :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img11.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img11.png)
 
 Note that we also have the line `if (strcmp(response, "i pledge to not cheat")) {` which means that if the strings are equal, the program would not enter this if clause as equal strings in strcmp returns 0. Anything else would have returned a non zero value and hence entered this clause and exited (`exit(1)`). So we know that inside `main`, the buffer is 64 bytes, the next 8 bytes are the base pointer and the next 8 bytes are the return address of main. So if we overflow these 72 bytes and then add the return address of `cheat` (found using objdump) which is where we want to go, `main` would return to `cheat` and then print out the flag.
 
@@ -196,7 +196,7 @@ This was the payload : `python2 -c 'print("i pledge to not cheat"+"\x00"*51+"\x1
 
 And after running it on their server, we get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img12.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img12.png)
 
 **Flag :** bcactf{corresponding_parts_of_congurent_triangles_are_congruent_ie_CPCCTCPTPPTCTC}
 
@@ -204,20 +204,20 @@ And after running it on their server, we get the flag :
 
 # Movie-Login-3 (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img13.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img13.png)
 
 When we go to the website, we are shown a login page where we have to enter the username and password :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img14.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img14.png)
 
 To bypass this authentication scheme, we have to use a SQL injection. There was a list of blacklisted characters though :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img15.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img15.png)
 
 None of those characters could be used. After a bit of Googling, I found <a href="https://github.com/Ne3o1/PayLoadAllTheThings/blob/master/SQL%20injection/README.md#authentication-bypass" target="_blank">this</a>
 list of SQL injections for authentication bypass. This command seemed to work : `admin' or 2 LIKE 2--`. After entering that, we get the flag :
  
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img16.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img16.png)
 
 **Flag :** bcactf{gu3ss_th3r3s_n0_st0pp1ng_y0u!}
 
@@ -225,7 +225,7 @@ list of SQL injections for authentication bypass. This command seemed to work : 
 
 # American Literature (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img17.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img17.png)
 
 The source code and executable was provided. Here is the source code :
 
@@ -321,7 +321,7 @@ This challenge involved exploiting the format string vulnerbility in the line `p
 
 # Math Analysis (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img18.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img18.png)
 
 The source code and executable was provided. Here is the source code :
 
@@ -390,7 +390,7 @@ Similar to the Advanced Math Analysis, we have a buffer overflow vulnerability h
 
 After running it we get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img19.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img19.png)
 
 **Flag :** bcactf{challenges_are_just_functions_mapping_from_coffee_to_points}
 
@@ -398,11 +398,11 @@ After running it we get the flag :
 
 # Movie-Login-2 (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img21.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img21.png)
 
 Login page was the exact same as Movie-Login-3. The exploit involved a SQL injection and there was a shorter list of blacklisted characters :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img20.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img20.png)
 
 The command to bypass the authentication scheme was `' or true--`.
 
@@ -412,7 +412,7 @@ The command to bypass the authentication scheme was `' or true--`.
 
 # Agent Gerald (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img22.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img22.png)
 
 I changed my browser's user agent to "Agent Gerald" and then got the flag when I entered the website.
 
@@ -422,7 +422,7 @@ I changed my browser's user agent to "Agent Gerald" and then got the flag when I
 
 # AP ABCs (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img23.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img23.png)
 
 Source code for the challenge :
 
@@ -554,7 +554,7 @@ I have to overflow the buffer to make the score equal 0x73434241 and if that hap
 
 After injecting this into the server, we get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img24.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img24.png)
 
 **Flag :** bcactf{bca_is_taking_APs_in_june_aaaaaaaa_wish_past_me_luck}
 
@@ -562,17 +562,17 @@ After injecting this into the server, we get the flag :
 
 # More than Meets the Eye (Forensics)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img25.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img25.png)
 
 We are given a zwsp.txt file which contains just a single string "Pretty empty over here​‌​​​‌‌​‌‌​​​‌‌​‌​​​​‌‌​‌‌​​​‌‌​​​‌​‌‌‌​​‌‌​​‌‌​‌‌​‌‌‌‌​​‌​‌‌‌‌​‌‌​​‌‌​​​‌​​‌‌‌​​​​​‌‌​​‌‌‌‌‌​‌​‌‌‌​‌‌‌​‌​​​‌‌​​​​‌​​‌‌​​​‌​‌‌‌​​​​‌​‌‌​‌‌‌‌‌​‌​​‌​‌​‌‌​‌​‌​‌‌‌​​‌‌‌​‌‌​‌‌‌​​‌‌​​​‌‌​‌‌​‌‌​​‌‌​​‌‌‌‌‌​‌​​‌​‌​‌‌​​​​‌‌‌​​​‌​​‌‌​​‌​​​​‌‌​​​​‌‌‌‌​​​​‌​​‌​​​‌​‌‌​​‌​‌‌‌‌‌​." 
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img26.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img26.png)
 
 The interesting thing about this string is that between the "e" and "." in "here.", there are dozens of <a href="https://en.wikipedia.org/wiki/Zero-width_space" target="_blank">zero-width spaces</a> hence the name `zwsp.txt`. After putting the string in this <a href="https://www.fontspace.com/unicode/analyzer#e=ZeKAi-KAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAi-KAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAjOKAi-KAi-KAjOKAi-KAjOKAjOKAjOKAjOKAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAjOKAi-KAi-KAi-KAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAjOKAjOKAjOKAi-KAjOKAjOKAjOKAi-KAjOKAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAi-KAjOKAi-KAjOKAi-KAjOKAjOKAi-KAjOKAi-KAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAi-KAjOKAjOKAi-KAjOKAjOKAi-KAjOKAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAjOKAjOKAjOKAjOKAi-KAjOKAi-KAi-KAjOKAi-KAjOKAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAjOKAjOKAi-KAi-KAi-KAjOKAi-KAi-KAjOKAjOKAi-KAi-KAjOKAi-KAi-KAi-KAi-KAjOKAjOKAi-KAi-KAi-KAi-KAjOKAjOKAjOKAjOKAi-KAi-KAi-KAi-KAjOKAi-KAi-KAjOKAi-KAi-KAi-KAjOKAi-KAjOKAjOKAi-KAi-KAjOKAi-KAjOKAjOKAjOKAjOKAjOKAiw" target="_blank">website</a>, you can see that after the 'e', there are 264 zero-width spaces and zero-width non joiners (special Unicode characters). Since we know that the first letter in the flag is "b" because of the flag format "bcactf{....}", we can see that if the zero-width space corresponds to a 0 and the zero-width non joiner corresponds to a 1, for the first 8 characters we have "01100010" which when reversed to "01100010" corresponds to a "b" in ASCII. Doing the same for the other bytes yields use the flag.
 
 I tried to use <a href="https://github.com/enodari/zwsp-steg-py" target="_blank">zwsp-steg-py</a> but couldn't get it to work so I decoded the flag manually :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/IMG_0602.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/IMG_0602.png)
 
 **Flag :** bcactf{z3r0_w1dth_jungl3_j82axH4}
 
@@ -580,11 +580,11 @@ I tried to use <a href="https://github.com/enodari/zwsp-steg-py" target="_blank"
 
 # Secure Zip (Forensics)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img27.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img27.png)
 
 This was a password protected zip file so I used the rockyou.txt list of common passwords to bruteforce the password and then get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img28.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img28.png)
 
 **Flag :** bcactf{cr4ck1ng_z1p_p455w0rd5_15_fun_a12ca37bdacef7}
 
@@ -592,11 +592,11 @@ This was a password protected zip file so I used the rockyou.txt list of common 
 
 # Gerald's New Job (Forensics)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img29.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img29.png)
 
 The 'PDF' file was a polyglot generated using <a href="https://github.com/ansemjo/truepolyglot" target="_blank">truepolyglot</a>. I used `binwalk` to extract the file's signature, realized it was a zip, unzipped it and got the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img30.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img30.png)
 
 **Flag :** bcactf{g3ra1d_15_a_ma5ter_p01yg1ot_0769348}
 
@@ -604,11 +604,11 @@ The 'PDF' file was a polyglot generated using <a href="https://github.com/ansemj
 
 # A Fun Game (Reverse Engineering)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img31.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img31.png)
 
 When you run the executable, it would display a letter and when you enter that letter you get 1 point. You get the flag after getting 1000 points and as pointed out by the hint, instead of painfully typing in 1000 letters, you could use a program like Game Conqueror which can modify the score variable in order to easily get the flag. I installed it on my Kali Linux machine and followed this <a href="https://linuxhint.com/use-gameconqueror-cheat-engine-linux/" target="_blank">guide</a> in order to learn how to use Game Conqueror. After figuring that out and changing the score variable to 1000, I got the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img32.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img32.png)
 
 **Flag :** bcactf{h0p3fu1ly_y0U_d1dNt_actUa1ly_tYpe_1000_1ett3rs}
 
@@ -616,7 +616,7 @@ When you run the executable, it would display a letter and when you enter that l
 
 # Movie-Login-1 (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img33.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img33.png)
 
 The website was the same as the movie login 2 and 3 challenges, you had to bypass the username and password authentication using a SQL injection. There was no set of blacklisted characters and to bypass the authentication, I used this command : `admin' or '1'='1'--`.
 
@@ -626,11 +626,11 @@ The website was the same as the movie login 2 and 3 challenges, you had to bypas
 
 # Wasm Protected Site 1 (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img35.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img35.png)
 
 The website just had a field for entering the password. Looking around the source code with Chrome Developer tools, I found the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img36.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img36.png)
 
 **Flag :** bcactf{w4sm-m4g1c-xRz5}
 
@@ -638,7 +638,7 @@ The website just had a field for entering the password. Looking around the sourc
 
 # Little e (Cryptography)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img33.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img33.png)
 
 Modulus (N) and ciphertext (ct) was given along with the public exponent (e) of 3. The plaintext was the cube root of ct % N which is just the cube root of ct (as ct < N) as ct = m^3 mod N.
 
@@ -648,7 +648,7 @@ Modulus (N) and ciphertext (ct) was given along with the public exponent (e) of 
 
 # BCA Mart (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img37.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img37.png)
 
 Source code provided : 
 
@@ -759,7 +759,7 @@ int main() {
 
 The objective is to buy the flag which costs $100 when we are given only $15. In C, an integer is 32 bits that is signed by default so if I input an amount that is slightly more than (2^32 / 100), the cost would be negative and we would get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img38.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img38.png)
 
 <p> <b>Flag :</b> bcactf{bca_store??_wdym_ive_never_heard_of_that_one_before} </p>
 
@@ -767,7 +767,7 @@ The objective is to buy the flag which costs $100 when we are given only $15. In
 
 # Honors ABCs (Binary Exploitation)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img39.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img39.png)
 
 Source code provided : 
 
@@ -859,7 +859,7 @@ int main() {
 
 Due to `gets()`, we can overflow the buffer and modify the grade to be greater than 100 by inputting in a really large number and with that, we get the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img40.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img40.png)
 
 <p> <b>Flag :</b> bcactf{now_i_know_my_A_B_Cs!!_next_time_wont_you_cheat_with_me??}} </p>
 
@@ -867,11 +867,11 @@ Due to `gets()`, we can overflow the buffer and modify the grade to be greater t
 
 # Countdown Timer (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img41.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img41.png)
 
 When you go to the website, you have a countdown timer which will print the flag after 100 days. To bypass this, I first started the countdown, then put a breakpoint in the website's Javascript code (using my browser's developer tools), changed the variable `time` to 0 and then resumed the operation and got the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img42.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img42.png)
 
 <p> <b>Flag :</b> bcactf{1_tH1nK_tH3_CtF_w0u1D_b3_0v3r_bY_1O0_dAy5} </p>
 
@@ -879,15 +879,15 @@ When you go to the website, you have a countdown timer which will print the flag
 
 # Home Automation (Web)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img43.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img43.png)
 
 When you go the website, this is what you see :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img44.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img44.png)
 
 After clicking on 'lights on' you get the message - "You must be admin to turn off the lights. Currently you are "vampire". To bypass this, I just changed the cookie from vampire to admin and then got the flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img45.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img45.png)
 
 <p> <b>Flag :</b> bcactf{c00k13s_s3rved_fr3sh_fr0m_th3_smart_0ven_cD7EE09kQ} </p>
 
@@ -895,7 +895,7 @@ After clicking on 'lights on' you get the message - "You must be admin to turn o
 
 # Slightly Harder RSA (Cryptography)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img46.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img46.png)
 
 Modulus, ciphertext and public exponent was given. I factored the modulus using <a href="http://factordb.com/" target="_blank">factordb</a> and then got the flag.
 
@@ -905,11 +905,11 @@ Modulus, ciphertext and public exponent was given. I factored the modulus using 
 
 # Storytime : The Opening Gambit (Reverse Engineering)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img47.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img47.png)
 
 Searched for the flag string in the executable using `grep` and found it :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img48.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img48.png)
 
 <p> <b>Flag :</b> bcactf{w0ol_m4k3s_str1ng_ziv4mk3ca91b} </p>
 
@@ -917,11 +917,11 @@ Searched for the flag string in the executable using `grep` and found it :
 
 # Infinite Zip (Forensics)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img49.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img49.png)
 
 Unzip the recursive zip and then use the inspector to find out more information about the resulting `flag.png`. The flag is shown under the `IPTC` header. Note that the flag shown in `flag.png` is not the real flag :
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img50.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img50.png)
 
 <p> <b>Flag :</b> bcactf{z1p_1n51d3_4_z1p_4_3v3r} </p>
 
@@ -929,7 +929,7 @@ Unzip the recursive zip and then use the inspector to find out more information 
 
 # Easy RSA (Cryptography)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img51.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img51.png)
 
 Modulus and its factors (p and q), public exponent, ciphertext was given, Use that to get the plaintext (flag).
 
@@ -939,7 +939,7 @@ Modulus and its factors (p and q), public exponent, ciphertext was given, Use th
 
 # I Can Haz Interwebz? (Miscellaneous)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img52.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img52.png)
 
 Connect to their server using Netcat and get the flag.
 
@@ -949,7 +949,7 @@ Connect to their server using Netcat and get the flag.
 
 # Obligatory Discord Problem (Miscellaneous)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img53.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img53.png)
 
 Find the flag on their discord server.
 
@@ -959,7 +959,7 @@ Find the flag on their discord server.
 
 # Example Problem (Miscellaneous)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img54.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img54.png)
 
 Enter the flag shown in the challenge description.
 
@@ -969,7 +969,7 @@ Enter the flag shown in the challenge description.
 
 # Survey (Miscellaneous)
 
-![BCACTF 2021 Writeup](/assets/img/ctfImages/bcactf2021/img55.png)
+![BCACTF 2021 Writeup](/assets/img/ctfImages/2021/bcactf2021/img55.png)
 
 Fill out the survey and get the flag.
 
