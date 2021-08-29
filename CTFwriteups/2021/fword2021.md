@@ -11,6 +11,7 @@ Originally I wasn't planning to play any CTF during this weekend but Diamondroxx
 Turns out the top CTF team from Tunisia Fword was hosting their own CTF <a href="https://ctftime.org/event/1405" target="_blank">Fword CTF 2021</a> and it had some crypto challenges so we decided to play as Isengard as it was only the both of us for that. Sadly we joined late for both CTFs. Fword was only 1 and a half days long and was from Sat, 28 Aug. 2021, 01:00 SGT — Sun, 29 Aug. 2021, 13:00 SGT and we only joined at around 4pm on Saturday. We tried to solve as many crypto challenges as we could until 3 am (we were stuck on the Ed25519 curve challenge). We ranked 55<sup>th</sup> out of 428 scoring teams, focusing only on the crypto challenges.
 
 Solved challenges stats :
+
 ![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img2.png)
 
 Timestamps of the challenges we solved :
