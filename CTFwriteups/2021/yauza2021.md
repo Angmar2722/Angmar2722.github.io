@@ -8,9 +8,9 @@ title: Yauza 2021 CTF Writeup
 
 Originally I wasn't planning to play any CTF during this weekend but Diamondroxxx asked me if I could as he and the other members of Social Engineering Experts were participating in <a href="https://ctftime.org/event/1417" target="_blank">Yauza CTF 2021</a>, a Soviet themed CTF. Me and Diamondroxxx solved all the crypto challenges in Yauza in a few hours so we decided to check out Fword CTF after that (writeups for that can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/fword2021/" target="_blank">here</a>). 
 
-We joined late for Yauza as it was Fri, 27 Aug. 2021, 20:00 SGT — Sun, 29 Aug. 2021, 20:00 SGT while we started playing at 9 am Saturday. In the end, we ranked 10<sup>th</sup> out of 226 scoring teams (and therefore qualifying for the finals), focusing only on the crypto challenges :
+We joined late for Yauza as it was Fri, 27 Aug. 2021, 20:00 SGT — Sun, 29 Aug. 2021, 20:00 SGT while we started playing at 9 am Saturday. In the end, we ranked 9<sup>th</sup> out of 227 scoring teams (and therefore qualifying for the finals), focusing only on the crypto challenges :
 
-![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img1.png)
+![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img6.png)
 
 We managed to solve all 3 crypto challenges (the scoring system was generous to say the least) :
 
@@ -22,9 +22,9 @@ Below are the writeups :
 
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
-|[Signature](#signature) | Crypto | 9109 | 30 | 
+|[Signature](#signature) | Crypto | 9109 | 31 | 
 |[Knapsack](#knapsack) | Crypto | 8856 | 35 | 
-|[Sharing Secrets](#sharing-secrets) | Crypto | 7720 | 49 | 
+|[Sharing Secrets](#sharing-secrets) | Crypto | 7624 | 50 | 
 
 <br/>
 
@@ -32,7 +32,7 @@ Below are the writeups :
 
 ## Signature
 
-![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img3.png)
+![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img7.png)
 
 The server source code provided :
 
