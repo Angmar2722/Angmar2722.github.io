@@ -24,7 +24,7 @@ Below are the writeups :
 | ------------- |  ------- | --- | ---: |
 |[Signature](#signature) | Crypto | 9109 | 30 | 
 |[Knapsack](#knapsack) | Crypto | 8856 | 35 | 
-|[Signature](#signature) | Crypto | 7720 | 49 | 
+|[Sharing Secrets](#sharing-secrets) | Crypto | 7720 | 49 | 
 
 <br/>
 
