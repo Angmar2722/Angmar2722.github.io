@@ -29,7 +29,7 @@ Below are the writeups :
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
 |[Login](#login) | Crypto | 991 | 11 | 
-|[Login](#login) | Crypto | 930 | 28 | 
+|[Invincible](#invincible) | Crypto | 930 | 28 | 
 |[Boombastic](#boombastic) | Crypto | 738 | 54 | 
 |[Leaky Blinders](#leaky-blinders) | Crypto | 100 | 120 | 
 |[Welcome](#welcome) | Welcome | 10 | 369 | 
