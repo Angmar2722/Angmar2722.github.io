@@ -32,6 +32,8 @@ Below are the writeups :
 
 ## Signature
 
+![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img3.png)
+
 The server source code provided :
 
 ```python
