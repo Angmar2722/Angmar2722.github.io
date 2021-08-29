@@ -6,7 +6,7 @@ title: Yauza 2021 CTF Writeup
 
 ![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/logo.png)
 
-Originally I wasn't planning to play any CTF during this weekend but Diamondroxxx asked me if I could as he and the other members of Social Engineering Experts were participating in <a href="https://ctftime.org/event/1417" target="_blank">Yauza CTF 2021</a>, a Soviet themed CTF. Me and Diamondroxxx solved all the crypto challenges in Yauza in a few hours so we decided to check out Fword CTF after that (writeups for that can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/fword2021/" target="_blank">here</a>. 
+Originally I wasn't planning to play any CTF during this weekend but Diamondroxxx asked me if I could as he and the other members of Social Engineering Experts were participating in <a href="https://ctftime.org/event/1417" target="_blank">Yauza CTF 2021</a>, a Soviet themed CTF. Me and Diamondroxxx solved all the crypto challenges in Yauza in a few hours so we decided to check out Fword CTF after that (writeups for that can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/fword2021/" target="_blank">here</a>). 
 
 We joined late for Yauza as it was Fri, 27 Aug. 2021, 20:00 SGT — Sun, 29 Aug. 2021, 20:00 SGT while we started playing at 9 am Saturday. In the end, we ranked 10<sup>th</sup> out of 226 scoring teams (and therefore qualifying for the finals), focusing only on the crypto challenges :
 
