@@ -19,6 +19,7 @@ navbar-links:
   #  - What is Exploit Education?: "exploitEd"
   CTF Related Stuff:
     - Writeups: "/CTFwriteups/mainPage"
+    - Crypto: "/CTFwriteups/Crypto/cryptoWriteupsMainPage"
 
 # --- Logo --- #
 
