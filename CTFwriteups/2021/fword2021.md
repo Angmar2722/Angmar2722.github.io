@@ -1055,6 +1055,8 @@ exit()
 
 Find the flag in the Discord server.
 
+<p> <b>Flag :</b> FwordCTF{Welcome_To_FwordCTF_2021} </p>
+
 <br/>
 
 <br/>
