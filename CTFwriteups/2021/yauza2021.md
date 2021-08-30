@@ -389,7 +389,7 @@ The secrets.json file can be found <a href="https://github.com/Angmar2722/Angmar
 
 The first 11 primes are provided to us along with 10 corresponding primes (the first prime's shadow isn't provided). We could use the <a href="https://en.wikipedia.org/wiki/Chinese_remainder_theorem" target="_blank">Chinese Remainder Theorem</a> to solve the challenge. In number theory, the Chinese remainder theorem (CRT) states that if one knows the remainders of the Euclidean division of an integer n by several integers, then one can determine uniquely the remainder of the division of n by the product of these integers, under the condition that the divisors are pairwise coprime. 
 
-In our case, the dividend n is the flag itself, 10/11 of the remainders are known as they are the shadows while it is worth noting that the divisors are all prime and are hence coprime to each other. We can first get the CRT of the 10 known shadows with the 11 primes. To get the flag, we still don't know the first shadow (the first remainder) so we can keep adding multiples of the last 10 primes multiplied by each other (denoted by lcm) to the original CRT until we get the flag. 
+In our case, the dividend n is the flag itself, 10/11 of the remainders are known as they are the shadows while it is worth noting that the divisors are all prime and are hence coprime to each other. We can first get the CRT of the 10 known shadows with the 11 primes. To get the flag, we still don't know the first shadow (the first remainder) so we can keep adding multiples of the last 10 primes multiplied by each other (denoted by lcm) to the original CRT until we get the flag (we can check this by verifying if the resulting integer contains the flag format). 
 
 Our Sage solve script :
 
