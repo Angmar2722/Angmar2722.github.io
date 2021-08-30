@@ -1049,4 +1049,12 @@ exit()
 
 <br/>
 
+## Welcome
+
+![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img11.png)
+
+Find the flag in the Discord server.
+
+<br/>
+
 <br/>
