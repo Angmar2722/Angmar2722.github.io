@@ -12,7 +12,7 @@ Turns out Fword, the top CTF team from Tunisia, was hosting their own <a href="h
 
 Solved challenges stats :
 
-![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img2.png)
+![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img13.png)
 
 Timestamps of the challenges we solved :
 
