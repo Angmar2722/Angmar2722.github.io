@@ -177,6 +177,8 @@ It still isn't straightforward to generate the signature as we don't have the mo
 
 ![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img12.png)
 
+One thing to note is that in the writeup, the range of possible k values where `(ed-1)*e / k == (p-1)*(q-1)` traversed was from 1 to 100,000 but in reality, the possible values of k would not exceed the public exponent e = 65537.
+
 Our solve script :
 
 ```python
@@ -470,10 +472,11 @@ print(r.recvline())
 
 ```
 
-And after running the script, we got the flag :
+And after running the script, we can see that the possible values of phi are selected and after reconstructing the modulus and hence the signature, we got the flag :
 
 ![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img5.png)
 
+<p> <b>Flag :</b> FwordCTF{N3v3r_judg3_s0m3th1ng_y0u_kn0w_n0thing_4b0ut_3sp3c14lly_pr1v4t3_k3ys} </p>
 
 
 
