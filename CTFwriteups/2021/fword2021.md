@@ -859,7 +859,9 @@ $$ r \equiv ( (y^\text{2} - 1) * (secret^2)^\text{-1} (\text{mod}\ p) ) \ (\text
 
 $$ s \equiv ( (1 + y) * secret^\text{-1} (\text{mod}\ p) ) \ (\text{mod}\ p) $$ 
 
-<p> The prime p along with the values r and s are returned by the server. Our objective is to predict the 'ticket' (i.e. the p, r and s values) of the word 'Boombastic'. Since the prime p and secret is constant per server session we already have that. Recently, we learned of something known as a <a href="https://en.wikipedia.org/wiki/Gr%C3%B6bner_basis" target="_blank">Gröbner basis</a> where it is defined for ideals (an ideal of a ring is a special subset of its elements) in a polynomial ring R = K[x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, ..., x<sub>n</sub>],over a field K. Although the theory works for any field, most Gröbner basis computations are done either when K is the field of rationals or the integers modulo a prime number as it is in our case. Our ideal would be a relation of the given equations above so for the first one, r - (y<sup>2</sup> - 1) * k<sup>2</sup> and the second one being s - (y + 1) * k where k represents the modular multiplicative inverse of the secret with respect to the prime p. Hence we could use the inbuilt Sage function for the Gröbner basis to recover the secret and hence the r and s values. </p>
+<p> The prime p along with the values r and s are returned by the server. Our objective is to predict the 'ticket' (i.e. the p, r and s values) of the word 'Boombastic'. Since the prime p and secret is constant per server session we already have that. Recently, we learned of something known as a <a href="https://en.wikipedia.org/wiki/Gr%C3%B6bner_basis" target="_blank">Gröbner basis</a> where it is defined for ideals (an ideal of a ring is a special subset of its elements) in a polynomial ring R = K[x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, ..., x<sub>n</sub>],over a field K. </p>
+	
+Although the theory works for any field, most Gröbner basis computations are done either when K is the field of rationals or the integers modulo a prime number as it is in our case. Our ideal would be a relation of the given equations above so for the first one, r - (y<sup>2</sup> - 1) * k<sup>2</sup> and the second one being s - (y + 1) * k where k represents the modular multiplicative inverse of the secret with respect to the prime p. Hence we could use the inbuilt Sage function for the Gröbner basis to recover the secret and hence the r and s values. 
 
 Our Sage solve script :
 
@@ -922,6 +924,8 @@ And after running the script, we recovered the `secret` and hence the flag :
 <br/>
 
 ## Leaky Blinders
+
+![Fword CTF 2021 Writeup](/assets/img/ctfImages/2021/fword2021/img10.png)
 
 The server source code provided :
 
@@ -999,3 +1003,50 @@ if __name__ == "__main__":
     challenge.start()
     
 ```
+
+This was a really weird challenge. In option 2, we are asked to provide a key and ciphertext which is then decrypted by the server. If the bytes "FwordCTF" are found in the decrypted text, we get the flag so that is exactly what we did, we made a key and encrypted the word "FwordCTF{leaky_blinders}" using the encryption function provided by the server.
+
+Our solve script :
+
+```python
+
+from pwn import *
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+
+local = False
+debug = False
+
+if local:
+    r = process(["python3", "leaky_blinders.py"], level='debug') if debug else process(["python3", "leaky_blinders.py"])
+else:
+    r = remote("52.149.135.130", 4869, level = 'debug') if debug else remote("52.149.135.130", 4869)
+
+key = bytes.fromhex("deadbeefdeadbeefdeadbeefdeadbeef")
+
+def xor(a, b):
+    return bytearray([a[i % len(a)] ^ b[i % len(b)] for i in range(max(len(a), len(b)))])
+
+def encrypt(msg):
+    aes = AES.new(key, AES.MODE_ECB)
+    if len(msg) % 16 != 0:
+        msg = pad(msg, 16)
+    cipher = aes.encrypt(msg)
+    cipher = xor(cipher, key)
+    return cipher
+
+ct = encrypt(b"FwordCTF{leaky_blinders}")
+
+r.sendlineafter(b"> ", b"2")
+r.sendlineafter(b"Key : ", b"deadbeefdeadbeefdeadbeefdeadbeef")
+r.sendlineafter(b"Ciphertext : ", ct.hex())
+print(r.recvline())
+exit()
+
+```
+
+<p> <b>Flag :</b> FwordCTF{N3v3r_x0r_w1thout_r4nd0m1s1ng_th3_k3y_0r_m4yb3_s3cur3_y0ur_c0d3} </p>
+
+<br/>
+
+<br/>
