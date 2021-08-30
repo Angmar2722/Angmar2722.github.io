@@ -271,7 +271,7 @@ print(checkSignature(forgedSignature))
 
 ![Yauza CTF 2021 Writeup](/assets/img/ctfImages/2021/yauza2021/img8.png)
 
-The flag.txt and pubkey.txt files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/knapsack/flag.txt" target="_blank">here</a> and <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/knapsack/pubkey.txt" target="_blank">here</a>. The challenge name suggests that the flag was encrypted using the Merkle–Hellman knapsack cryptosystem. I hadn't heard of this before but one repositry which contains a huge list of common crypto attacks did have one for this system, something known as a Low Density Attack. That can be found <a href="https://github.com/jvdsn/crypto-attacks/blob/master/knapsack/low_density.py" target="_blank">here</a>. So we just used that to get the flag. We don't know anything about lattices :(
+The flag.txt and pubkey.txt files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/knapsack/flag.txt" target="_blank">here</a> and <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/knapsack/pubkey.txt" target="_blank">here</a>. The challenge name suggests that the flag was encrypted using the <a href="https://en.wikipedia.org/wiki/Merkle%E2%80%93Hellman_knapsack_cryptosystem" target="_blank">Merkle–Hellman knapsack cryptosystem</a>. I hadn't heard of this before but one repositry which contains a huge list of common crypto attacks did have one for this system, something known as a Low Density Attack. That can be found <a href="https://github.com/jvdsn/crypto-attacks/blob/master/knapsack/low_density.py" target="_blank">here</a>. So we just used that to get the flag. We don't know anything about lattices :(
 
 The Sage solve script :
 
@@ -385,7 +385,11 @@ if __name__ == '__main__':
         
 ```
 
-The secrets.json file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/sharingSecrets/secrets.json" target="_blank">here</a>. Firstly, a list of 25 primes is generated. Afterwards, the last 10 primes are multiplied with each other and stored in `pmin`.
+The secrets.json file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/yauza2021/sharingSecrets/secrets.json" target="_blank">here</a>. Firstly, a list of 25 primes is generated. Afterwards, the last 10 primes are multiplied with each other and stored in `pmin`. The first 11 primes are multiplied with each and stored in `pmax`. Note that pmin < flag < pmax. Afterwards, so called 'shadows' are calculated by flag % x where x is from the list of primes. Since the flag is obviously bigger than any prime, this means that we have values which have 'wrapped' around the modulus (the prime) multiple times.
+
+The first 11 primes are provided to us along with 10 corresponding primes (the first prime's shadow isn't provided). We could use the <a href="https://en.wikipedia.org/wiki/Chinese_remainder_theorem" target="_blank">Chinese Remainder Theorem</a> to solve the challenge. In number theory, the Chinese remainder theorem (CRT) states that if one knows the remainders of the Euclidean division of an integer n by several integers, then one can determine uniquely the remainder of the division of n by the product of these integers, under the condition that the divisors are pairwise coprime. 
+
+In our case, the dividend n is the flag itself, 10/11 of the remainders are known as they are the shadows while it is worth noting that the divisors are all prime and are hence coprime to each other. We can first get the CRT of the 10 known shadows with the 11 primes. To get the flag, we still don't know the first shadow (the first remainder) so we can keep adding multiples of the last 10 primes multiplied by each other (denoted by lcm) to the original CRT until we get the flag. 
 
 Our Sage solve script :
 
