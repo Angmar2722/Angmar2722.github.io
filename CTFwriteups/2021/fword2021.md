@@ -159,7 +159,7 @@ if __name__ == "__main__":
     
 ```
 
-While one may be tempted to straight away think that the main goal of the challenge is to somehow create a valid signature where the cryptosystem used is some form of RSA, you first have to login (hence the challenge name). Choosing option 1 allows you to enter a username. After that using the function `sign_up()`, a password <i>P</i> is generated which is a SHA-256 hash (H) of a server token <i>st</i> (16 random and unknown secret bytes) followed by the entered username name <i>user</i> and then a <i>proof</i> set to `is_admin=false` such that :
+While one may be tempted to straight away think that the main goal of the challenge is to somehow create a valid signature where the cryptosystem used is some form of RSA, you first have to login (hence the challenge name). Choosing option 1 allows you to enter a username. After that using the function `sign_up()`, a password <i>P</i> is generated which is a SHA-256 hash (H) of a server token <i>st</i> (16 random and unknown secret bytes) followed by the entered username and then a proof set to `is_admin=false` such that :
 
 <p align="center"> Password = H(st + user + proof) </p>
 
