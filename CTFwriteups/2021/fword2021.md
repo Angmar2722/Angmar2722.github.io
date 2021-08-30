@@ -1004,7 +1004,7 @@ if __name__ == "__main__":
     
 ```
 
-This was a really weird challenge. In option 2, we are asked to provide a key and ciphertext which is then decrypted by the server. If the bytes "FwordCTF" are found in the decrypted text, we get the flag so that is exactly what we did, we made a key and encrypted the word "FwordCTF{leaky_blinders}" using the encryption function provided by the server.
+This was a really weird challenge. In option 2, we are asked to provide a key and ciphertext which is then decrypted by the server. If the bytes "FwordCTF" are found in the decrypted text, we get the flag so that is exactly what we did, we made a key and encrypted the word "FwordCTF{leaky_blinders}" using the encryption function provided by the server and passed that key and ciphertext over to get the flag.
 
 Our solve script :
 
