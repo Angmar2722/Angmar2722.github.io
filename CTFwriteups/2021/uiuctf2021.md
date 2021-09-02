@@ -512,7 +512,7 @@ print(ciphertext.hex())
 
 ```
 
-The ciphertext file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/dhkeIntro/output.txt" target="_blank">here</a>. Another Diffie-Hellman problem but not really because the numbers here are so small.... A random pair of a generator and corresponding prime is selected. After that the standard implementation of Diffie-Hellman key exchange takes place. All possible pairs of generators and primes and random values of `a` and `b` can be bruteforced to obtain the key and if the chosen values successfully decrypt the ciphertext to output a message which starts with the flag format 'uiuctf{', the program will exit and output the flag. That is how I implemented the solve script :
+The ciphertext file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/uiuctf2021/dhkeIntro/output.txt" target="_blank">here</a>. Another Diffie-Hellman problem but not really because the numbers here are so small.... A random pair of a generator and corresponding prime is selected. After that the standard implementation of Diffie-Hellman key exchange takes place. All possible pairs of generators and primes and random values of `a` and `b` can be bruteforced to obtain the key and if the chosen values successfully decrypt the ciphertext to output a message which starts with the flag format 'uiuctf{', the program will exit and output the flag. That is how I implemented the solve script :
 
 ```python
 
@@ -553,7 +553,7 @@ for pair in gpList:
 
 ![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img12.png)
 
-The given binary can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/uiuctf2021/pwnWarmup/challenge" target="_blank">here</a>. This is a standard buffer overflow challenge where you have to overflow the return address of the function “vulnerable” to point to ‘give_flag’ which then outputs the flag.
+The given binary can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/uiuctf2021/pwnWarmup/challenge" target="_blank">here</a>. This is a standard buffer overflow challenge where you have to overflow the return address of the function “vulnerable” to point to ‘give_flag’ which then outputs the flag.
 
 The solve script :
 
