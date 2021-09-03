@@ -30,9 +30,9 @@ Below are the writeups :
 | Challenge | Category | Points | Solves | 
 | ------------- |  ------- | --- | ---: |
 |[Login](#login) | Crypto | 991 | 11 | 
-|[Invincible](#invincible) | Crypto | 930 | 28 | 
-|[Boombastic](#boombastic) | Crypto | 738 | 54 | 
-|[Leaky Blinders](#leaky-blinders) | Crypto | 100 | 120 | 
+|[Invincible](#invincible) | Crypto | 930 | 29 | 
+|[Boombastic](#boombastic) | Crypto | 738 | 55 | 
+|[Leaky Blinders](#leaky-blinders) | Crypto | 100 | 121 | 
 |[Welcome](#welcome) | Welcome | 10 | 369 | 
 
 <br/>
