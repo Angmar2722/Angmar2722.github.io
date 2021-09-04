@@ -6,6 +6,8 @@ bigimg:
   - "/assets/img/LOTRimages/minasTirith.jpg" : "Minas Tirith, opposite Mordor"
 ---
 
+<div style="text-align:center">
+
 <!-- <img src="/assets/img/Misc/mountains1.jpg" alt="A Gorgeous Mountain Image"> -->
 
 <!-- <img src="/assets/img/Misc/helmsDeep.jpg" alt="The Greatest Battle In History!"> -->
