@@ -17,8 +17,9 @@ navbar-links:
   #Home: "https://Angmar2722.github.io/"
   #Exploit Education:
   #  - What is Exploit Education?: "exploitEd"
-  CTF Related Stuff:
-    - Writeups: "/CTFwriteups/mainPage"
+  CTF Writeups: "/CTFwriteups/mainPage"
+  #CTF Related Stuff:
+    #- Writeups: "/CTFwriteups/mainPage"
 
 # --- Logo --- #
 
