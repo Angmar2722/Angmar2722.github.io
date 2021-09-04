@@ -3,7 +3,7 @@ layout: home
 title: Hola!
 subtitle: "This website is still a work in progress. So far I only have some CTF writeups."
 bigimg:
-  - "/img/LOTRimages/minasTirith.jpg" : "Minas Tirith, opposite Mordor"
+  - "/assets/img/LOTRimages/minasTirith.jpg" : "Minas Tirith, opposite Mordor"
 ---
 
 <!-- <img src="/assets/img/Misc/mountains1.jpg" alt="A Gorgeous Mountain Image"> -->
