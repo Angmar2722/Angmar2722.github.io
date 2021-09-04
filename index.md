@@ -1,7 +1,7 @@
 ---
 layout: home
 title: Hola!
-subtitle: "This website is still a work in progress. So far I only have some CTF writeups."
+subtitle: "This website is still a work in progress. So far I only have a few CTF writeups."
 bigimg:
   - "/assets/img/LOTRimages/minasTirith.jpg" : "Minas Tirith, opposite Mordor"
 ---
