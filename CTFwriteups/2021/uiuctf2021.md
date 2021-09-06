@@ -596,8 +596,8 @@ Fill out the survey to get the flag.
 
 ## Join our Discord
 
-![UIUCTF 2021 Writeup](/assets/img/ctfImages/uiuctf2021/img15.png)
-
+![UIUCTF 2021 Writeup](/assets/img/ctfImages/2021/uiuctf2021/img15.png)
+    
 Find the flag in the Discord server for the CTF.
 
 <p> <b>Flag :</b> uiuctf{y0u_j01n3d_tH3_dIsCorD!!!} </p>
