@@ -12,6 +12,7 @@ This page will contain a directory of my writeups for challenges that I have sol
 
 | CTF Writeup | Date | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
+| TBD | TBD | TBD | TBD | TBD |
 
 <br/>
 
