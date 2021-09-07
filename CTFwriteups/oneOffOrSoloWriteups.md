@@ -6,7 +6,7 @@ title: Random Challenge / Solo CTF Writeups
 
 ![CTF Writeups Main Page](/assets/img/ctfImages/misc/randomFlagImage.jpg)
 
-This page will contain a directory of my writeups for challenges that I have solved during a CTF while playing completely individually. A lot of these writeups are for CTFs where I did not have enough time to play properly. All the writeups are for challenges solved only during the duration of the CTF. Below are the writeups :
+This page will contain a directory of my writeups for challenges that I have solved during a CTF while playing <b>completely individually</b>. A lot of these writeups are for CTFs where I did not have enough time to play properly. All the writeups are for challenges solved only during the duration of the CTF. Below are the writeups :
 
 <br/>
 
