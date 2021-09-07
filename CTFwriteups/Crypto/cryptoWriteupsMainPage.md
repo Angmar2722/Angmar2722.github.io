@@ -39,7 +39,8 @@ Below is a list of writeups for all the cryptography related challenges that I h
 
 <br/>
 
-**Note :** T
+<!-- **Note :** T -->
+
 
 
 
