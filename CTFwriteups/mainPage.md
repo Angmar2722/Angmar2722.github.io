@@ -1,6 +1,6 @@
 ---
 layout: page
-title: CTF Writeups
+title: Main CTF Writeups
 ---
 <hr/>
 
@@ -24,7 +24,7 @@ I started my cybersecurity journey in March 2021 in high school when I participa
 
 **Note :** The rating points are calculated by <a href="https://ctftime.org/rating-formula/" target="_blank">CTFtime</a>.
 
-**Note :** My older writeups and writeups which I am not particularly proud of can be found <a href="https://angmar2722.github.io/CTFwriteups/worseWriteups" target="_blank">here</a>.
+**Note :** My writeups for when I play a CTF completely on my own can be found <a href="https://angmar2722.github.io/CTFwriteups/oneOffOrSoloWriteups" target="_blank">here</a>.
 
 <!-- **Note :** My older writeups and writeups which I am not particularly proud of can be found <a href="https://angmar2722.github.io/CTFwriteups/worseWriteups" target="_blank">here</a>. -->
 
