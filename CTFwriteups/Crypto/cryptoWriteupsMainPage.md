@@ -32,10 +32,16 @@ Below is a list of writeups for all the cryptography related challenges that I h
 |[Baby](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#baby) | Redpwn CTF 2021 | RSA, FactorDB | 827/1418 |
 |[Round-The-Bases](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#round-the-bases) | Redpwn CTF 2021 | Encodings | 348/1418 |
 |[Blecc](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#blecc) | Redpwn CTF 2021 | ECC, Discrete Log | 146/1418 |
-|[Yahtzee](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#blecc) | Redpwn CTF 2021 | Weak Nonce, Chosen Plaintext Attack | 103/1418 |
+|[Yahtzee](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#blecc) | Redpwn CTF 2021 | AES-CTR Weak Nonce, Chosen Plaintext Attack | 103/1418 |
 |[Scrambled-Elgs](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#scrambled-elgs) | Redpwn CTF 2021 | Custom Encryption, Sage | 70/1418 |
 |[Keeper-of-the-Flag](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#keeper-of-the-flag) | Redpwn CTF 2021 | DSA, Flawed Implementation, SHA-1 Collisions | 42/1418 |
 |[Retrosign](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#retrosign) | Redpwn CTF 2021 | Ong-Schnorr-Shamir Signature System | 26/1418 |
+|[Queen-Of-The-Hill](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#queen-of-the-hill) | HSCTF 2021 | Hill Cipher | 514/1165 |
+|[Opisthocomus-Hoazin](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#opisthocomus-hoazin) | HSCTF 2021 | Char Bruteforce, RSA | 376/1165 |
+|[Regulus-Satrapa](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-satrapa) | HSCTF 2021 | RSA Bitshifts | 129/1165 |
+|[Canis-Lupus-Familiaris-Bernardus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#canis-lupus-familiaris-bernardus) | HSCTF 2021 | AES-CBC Byte Flipping Attack | 112/1165 |
+|[Regulus-Regulus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-regulus) | HSCTF 2021 | Deriving Carmichael Function | 93/1165 |
+|[Regulus-Calendula](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-calendula) | HSCTF 2021 | Algebraic Reconstruction Algorithm, Branch and Prune Attack | 28/1165 |
 
 <br/>
 
