@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Random Challenge / Solo CTF Writeups
+title: Solo CTF Writeups
 ---
 <hr/>
 
