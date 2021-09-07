@@ -37,7 +37,7 @@ Below is a list of writeups for all the cryptography related challenges that I h
 |[Keeper-of-the-Flag](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#keeper-of-the-flag) | Redpwn CTF 2021 | DSA, Flawed Implementation, SHA-1 Collisions | 42/1418 |
 |[Retrosign](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#retrosign) | Redpwn CTF 2021 | Ong-Schnorr-Shamir Signature System | 26/1418 |
 |[Queen-Of-The-Hill](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#queen-of-the-hill) | HSCTF 2021 | Hill Cipher | 514/1165 |
-|[Opisthocomus-Hoazin](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#opisthocomus-hoazin) | HSCTF 2021 | Char Bruteforce, RSA | 376/1165 |
+|[Opisthocomus-Hoazin](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#opisthocomus-hoazin) | HSCTF 2021 | Char Brute-force, RSA | 376/1165 |
 |[Regulus-Satrapa](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-satrapa) | HSCTF 2021 | RSA Bitshifts | 129/1165 |
 |[Canis-Lupus-Familiaris-Bernardus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#canis-lupus-familiaris-bernardus) | HSCTF 2021 | AES-CBC Byte Flipping Attack | 112/1165 |
 |[Regulus-Regulus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-regulus) | HSCTF 2021 | Deriving Carmichael Function | 93/1165 |
