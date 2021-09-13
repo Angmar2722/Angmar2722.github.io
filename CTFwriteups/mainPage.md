@@ -14,6 +14,7 @@ Below are the writeups :
 
 | CTF Writeup | Date | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
+|[CSAW Quals 2021](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/) | September | Social Engineering Experts | 23/1216 | TBD |
 |[Yauza CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/yauza2021/) | August | Social Engineering Experts | 9/227 | 14.452 |
 |[Fword CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/fword2021/) | August | Isengard | 55/428 | 3.407 |
 |[InCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/inctf2021/) | August | Social Engineering Experts | 22/604 | 19.143 |
