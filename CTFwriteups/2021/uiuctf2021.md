@@ -333,7 +333,7 @@ For the solve script, I am printing the level number followed by the nonce we se
 
 <p> <b>Flag :</b> uiuctf{bitcoin_to_the_moon} </p>
 
-<p> <b>Edit :</b> This writeup actually managed to win $45 which is the first time that I have gotten a prize in any CTF. So happy! </p>
+<p> <b>Edit :</b> This writeup actually managed to win $45 USD which is the first time that I have gotten a prize in any CTF. So happy! </p>
 
 <br/>
 
