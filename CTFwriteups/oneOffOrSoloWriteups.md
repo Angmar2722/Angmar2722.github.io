@@ -6,13 +6,13 @@ title: Solo CTF Writeups
 
 ![CTF Writeups Main Page](/assets/img/ctfImages/misc/randomFlagImage.jpg)
 
-This page will contain a directory of my writeups for challenges that I have solved during a CTF while playing <b>completely individually</b>. A lot of these writeups are for CTFs where I did not have enough time to play properly. All the writeups are for challenges solved only during the duration of the CTF. Below are the writeups :
+This page will contain a directory of my writeups for challenges that I have solved during a CTF while playing <b>completely individually</b>. A lot of these writeups are for CTFs where I did not have enough time to play properly due to school etc. However I still want to document my cybersecurity learning journey so that is why I am writing these. All the writeups are for challenges solved only during the duration of the CTF. Below are the writeups :
 
 <br/>
 
 | CTF Writeup | Date | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-|[TMUCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/tmuctf2021/) | September | regulus_satrapa | 126/496 | TBD |
+| TBD | TBD | TBD | TBD | TBD |
 
 <br/>
 
