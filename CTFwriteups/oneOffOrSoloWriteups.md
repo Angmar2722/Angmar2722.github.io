@@ -12,7 +12,7 @@ This page will contain a directory of my writeups for challenges that I have sol
 
 | CTF Writeup | Date | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-| TBD | TBD | TBD | TBD | TBD |
+|[TMUCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/tmuctf2021/) | September | regulus_satrapa | 126/496 | TBD |
 
 <br/>
 
