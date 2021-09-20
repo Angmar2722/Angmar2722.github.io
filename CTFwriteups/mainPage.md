@@ -6,7 +6,7 @@ title: CTF Writeups
 
 ![CTF Writeups Main Page](/assets/img/ctfImages/misc/homePageImage.png)
 
-I started my cybersecurity journey in March 2021 in high school when I participated in my first CTF - Whitehacks by Singapore Management University (SMU). Since then, I have gone for many more and have written writeups for each CTF which explains how I solved some challenges (usually in collaboration with my team). 
+I started my cybersecurity journey in March 2021 in high school when I participated in my first CTF - Whitehacks by Singapore Management University (SMU). Since then, I have gone for many more and have written writeups for each CTF which explains how I solved some challenges (usually in collaboration with my team, specifically my close friend Diamondroxxx). 
 
 Below are the writeups :
 
@@ -26,6 +26,8 @@ Below are the writeups :
 <br/>
 
 **Note :** The rating points are calculated by <a href="https://ctftime.org/rating-formula/" target="_blank">CTFtime</a>.
+
+**Note :** Since I mainly specialise in cryptography related challenges, a list of all crypto related challenges that I have solved during the duration of a CTF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/edit/master/CTFwriteups/Crypto/cryptoWriteupsMainPage.md" target="_blank">here</a>.
 
 <!-- **Note :** My writeups for when I play a CTF completely on my own can be found <a href="https://angmar2722.github.io/CTFwriteups/oneOffOrSoloWriteups" target="_blank">here</a>. -->
 
