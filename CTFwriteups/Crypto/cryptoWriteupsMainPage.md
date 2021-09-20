@@ -12,6 +12,10 @@ Below is a list of writeups for all the cryptography related challenges that I h
 
 | Challenge | CTF | Category | Solves |  
 | ------------- |  --- | --- | ------: | 
+|[RSA Pop Quiz](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#rsa-pop-quiz) | CSAW Quals 2021 | Wiener's Attack, Fermat Factorization, RSA LSB Oracle, Partial Key Exposure Attack (Coppersmith) | 137/1216 |
+|[Forgery](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#forgery) | CSAW Quals 2021 | ElGamal Signature Existential Forgery | 127/1216 |
+|[ECC Pop Quiz](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#ecc-pop-quiz) | CSAW Quals 2021 | Smart's Attack, MOV Attack, Singular Curve Attack | 63/1216 |
+|[Bits](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#bits) | CSAW Quals 2021 | Discrete Log Oracle, Bit Propagation | 24/1216 |
 |[Sharing Secrets](https://angmar2722.github.io/CTFwriteups/2021/yauza2021/#sharing-secrets) | Yauza CTF 2021 | CRT | 50/227 |
 |[Knapsack](https://angmar2722.github.io/CTFwriteups/2021/yauza2021/#knapsack) | Yauza CTF 2021 | Hellman-Knapsack | 35/227 |
 |[Signature](https://angmar2722.github.io/CTFwriteups/2021/yauza2021/#signature) | Yauza CTF 2021 | Custom Signature Scheme | 31/227 |
