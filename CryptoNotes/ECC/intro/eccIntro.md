@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Introduction To Elliptic Curve Cryptography
+title: Introduction 
 ---
 <hr/>
 
