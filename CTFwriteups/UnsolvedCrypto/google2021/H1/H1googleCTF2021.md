@@ -1,8 +1,31 @@
 ---
 layout: page
-title: Google CTF 2021 - H1 (283 Points, 23 Solves)
+title: Google CTF 2021 
 ---
 <hr/>
+
+![Google CTF 021 Writeup](/assets/img/ctfImages/2021/google2021/googleCTFlogo.png)
+
+I couldn't solve the cryptography challenge "H1" during the duration of Google CTF 2021 (the main writeup for the challenges solved during the duration of that CTF can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/google2021/" target="_blank">here</a>. It was the hardest challenge in that CTF, it was worth 283 points and was solved by 23 teams. I spent at least 15+ hours on this challenge including a night without any sleep however it proved to be useless as the level of mathematics involved for this challenge proved to be far too complicated for me. The challenge involved exploiting a weak 'biased' nonce in an <a href="https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm" target="_blank">Elliptic Curve Digital Signature Algorithm</a> scheme.
+
+As a result, I wanted to use this writeup as an opportunity to slowly explore and comprehensively break down how to solve this challenge. This writeup will be written over the course of many weeks and months (and frequently updated) in order to break down every little aspect of ECDSA, Elliptic Curves, Lattices, Hidden Number Probelm and biased nonces that I cam across in order to help me understand and adequately prepare for future such challenges in the future. Hopefully this writeup will provide valuable notes for me and anyone like me - those with absolutely no mathematical understanding of the aforementioned topics. 
+
+The writeup will be divded into many relevant sections, the table of contents being provided below :
+
+<br/>
+
+| Section | Description |
+| ------------- |  -------------: | 
+|[H1](#h1) | Challenge source code and files |
+|[Rough Overview](#rough-overview) | Rough outline of the challenge |
+
+<br/>
+
+<br/>
+
+## H1
+
+![Google CTF 2021 Unsolved Cryptography Challenge "H1" Writeup](/CTFwriteups/UnsolvedCrypto/google2021/H1/images/img1.png)
 
 The source code provided :
 
@@ -191,4 +214,12 @@ recv_msg = Decrypt(cb, ka)
 assert Verify(recv_msg, Qb, rb, sb)
 
 ```
+
+The accompanying `output.txt` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/UnsolvedCrypto/google2021/H1/output.txt" target="_blank">here</a>.
+
+<br/>
+
+## Rough Overview
+
+I called this section a 'rough overview' because it contains my initial thoughts about this challenge for someone who isn't well versed in the field of elliptic curve cryptography.
 
