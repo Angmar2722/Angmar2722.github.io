@@ -25,6 +25,12 @@ Below are the writeups :
 
 <br/>
 
+Arguably the most important part of the CTF journey is learning from your mistakes and shortcomings. I have often found loads of challenges where I spent insane amounts of time trying to solve them but was unable to do so during the duration of the CTF. Even after the CTF ended and writeups were provided, I realized that I lacked the fundamental and foundational knowledge to understand even the writeups, hence I have created very detailed writeups for challenges which I was unable to solve but tried to understand months after the CTF ended. These writeups can be found here. Do note that a lot of these writeups are incomplete and will be updated over the course of many months or to this day as they act as my notes for certain types of challenges.
+
+<br/>
+
+<br/>
+
 **Note :** The rating points are calculated by <a href="https://ctftime.org/rating-formula/" target="_blank">CTFtime</a>.
 
 **Note :** Since I mainly specialise in cryptography related challenges, a list of writeups for all crypto related challenges that I have solved during the duration of a CTF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/Crypto/cryptoWriteupsMainPage.md" target="_blank">here</a>.
