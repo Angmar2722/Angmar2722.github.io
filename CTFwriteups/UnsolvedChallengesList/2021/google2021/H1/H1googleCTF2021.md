@@ -25,7 +25,7 @@ The writeup will be divded into many relevant sections, the table of contents be
 
 ## H1
 
-![Google CTF 2021 Unsolved Cryptography Challenge "H1" Writeup](/CTFwriteups/UnsolvedCrypto/google2021/H1/images/img1.png)
+![Google CTF 2021 Unsolved Cryptography Challenge "H1" Writeup](CTFwriteups/UnsolvedChallengesList/2021/google2021/H1/images/img1.png)
 
 The source code provided :
 
