@@ -215,7 +215,7 @@ assert Verify(recv_msg, Qb, rb, sb)
 
 ```
 
-The accompanying `output.txt` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/UnsolvedCrypto/google2021/H1/output.txt" target="_blank">here</a>.
+The accompanying `output.txt` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/UnsolvedChallengesList/2021/google2021/H1/output.txt" target="_blank">here</a>.
 
 <br/>
 
