@@ -25,11 +25,11 @@ Below are the writeups :
 
 <br/>
 
-Arguably the most important part of the CTF journey is learning from your mistakes and shortcomings. I have often found loads of challenges where I spent insane amounts of time trying to solve them but was unable to do so during the duration of the CTF. Even after the CTF ended and writeups were provided, I realized that many times, I lacked the fundamental and foundational knowledge to understand even the writeups made by other people after the CTF ended. 
+<!-- Arguably the most important part of the CTF journey is learning from your mistakes and shortcomings. I have often found loads of challenges where I spent insane amounts of time trying to solve them but was unable to do so during the duration of the CTF. Even after the CTF ended and writeups were provided, I realized that many times, I lacked the fundamental and foundational knowledge to understand even the writeups made by other people after the CTF ended. 
 
 As a result, I have created very detailed writeups for challenges which I was unable to solve but tried to understand months after the CTF ended. These writeups can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/UnsolvedChallengesList/unsolvedChallenges.md" target="_blank">here</a>. Do note that a lot of these writeups are incomplete and will be updated over the course of many months or to this day as they act as my notes for certain types of challenges.
 
-<br/>
+<br/> -->
 
 <br/>
 
