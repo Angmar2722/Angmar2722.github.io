@@ -14,12 +14,13 @@ author: Angmar
 # --- List of links in the navigation bar --- #
 
 navbar-links:
+
   #Home: "https://Angmar2722.github.io/"
-  #Exploit Education:
-  #  - What is Exploit Education?: "exploitEd"
+
+  Elliptic Curve Cryptography Notes:
+      - Introduction To ECC: "/CryptoNotes/ECC/intro/eccIntro"
+
   CTF Writeups: "/CTFwriteups/mainPage"
-  #CTF Related Stuff:
-    #- Writeups: "/CTFwriteups/mainPage"
 
 # --- Logo --- #
 
