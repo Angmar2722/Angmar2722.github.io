@@ -33,7 +33,7 @@ Arguably the most important part of the CTF journey is learning from your mistak
 
 **Note :** The rating points are calculated by <a href="https://ctftime.org/rating-formula/" target="_blank">CTFtime</a>.
 
-**Note :** Since I mainly specialise in cryptography related challenges, a list of writeups for all crypto related challenges that I have solved during the duration of a CTF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/Crypto/cryptoWriteupsMainPage.md" target="_blank">here</a>.
+**Note :** Since I mainly specialise in cryptography related challenges, a list of writeups for all crypto related challenges that I have solved during the duration of a CTF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/CryptoWriteupsList/cryptoWriteupsMainPage.md" target="_blank">here</a>.
 
 <!-- **Note :** My writeups for when I play a CTF completely on my own can be found <a href="https://angmar2722.github.io/CTFwriteups/oneOffOrSoloWriteups" target="_blank">here</a>. -->
 
