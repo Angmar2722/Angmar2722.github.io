@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Google CTF 2021 
+title: H1 - Google CTF 2021 
 ---
 <hr/>
 
