@@ -25,7 +25,7 @@ Below are the writeups :
 |[Zh3r0 CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/) | 21.85 | Isengard | 48/509 | 2.893 |
 |[ångstrom 2021](https://angmar2722.github.io/CTFwriteups/2021/actf2021/) | 46.09 | Isengard | 278/1245 | 6.340 |
 |[UMassCTF 2021](https://angmar2722.github.io/CTFwriteups/2021/umass2021/) | 23.50 | Dog 1.2 | 46/660 | 8.474 |
-|[Whitehacks 2021](https://angmar2722.github.io/CTFwriteups/2021/wh2021/) | March | N/A | 35/130 | N/A |
+|[Whitehacks 2021](https://angmar2722.github.io/CTFwriteups/2021/wh2021/) | N/A | N/A | 35/130 | N/A |
 
 <br/>
 
@@ -43,5 +43,5 @@ As a result, I have created very detailed writeups for challenges which I was un
 
 <!-- **Note :** My writeups for when I play a CTF completely on my own can be found <a href="https://angmar2722.github.io/CTFwriteups/oneOffOrSoloWriteups" target="_blank">here</a>. -->
 
-<!-- **Note :** My older writeups and writeups which I am not particularly proud of can be found <a href="https://angmar2722.github.io/CTFwriteups/worseWriteups" target="_blank">here</a>. -->
+
 
