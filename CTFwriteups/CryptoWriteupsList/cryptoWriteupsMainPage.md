@@ -46,8 +46,8 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 |[Canis-Lupus-Familiaris-Bernardus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#canis-lupus-familiaris-bernardus) | HSCTF 2021 | AES-CBC Byte Flipping Attack | 112/1165 |
 |[Regulus-Regulus](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-regulus) | HSCTF 2021 | Deriving Carmichael Function | 93/1165 |
 |[Regulus-Calendula](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#regulus-calendula) | HSCTF 2021 | Algebraic Reconstruction Algorithm, Branch and Prune Attack | 28/1165 |
-|[1n-Jection](https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/#1n-jection) | Zh3r0 2021 | Custom Scheme, Recursion | 45/509 |
 |[Chaos](https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/#chaos) | Zh3r0 2021 | Chaotic Hashes | 50/509 |
+|[1n-Jection](https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/#1n-jection) | Zh3r0 2021 | Custom Scheme, Recursion | 45/509 |
 
 <br/>
 
