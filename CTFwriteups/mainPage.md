@@ -6,7 +6,7 @@ title: CTF Writeups
 
 ![CTF Writeups Main Page](/assets/img/ctfImages/misc/homePageImage.png)
 
-I started my cybersecurity journey in March 2021 in high school when I participated in my first CTF - Whitehacks by Singapore Management University (SMU). Since then, I have gone for many more and have written writeups for each CTF which explains how I solved some challenges (usually in collaboration with my team, specifically my close friend Diamondroxxx). I play as part of the team <a href="https://ctftime.org/team/151372" target="_blank">Social Engineering Experts</a> and sometimes as part of <a href="https://ctftime.org/team/78268" target="_blank">Isengard</a> when I am just playing with Diamondroxxx.
+I started my cybersecurity journey in March 2021 in high school when I participated in my first CTF - Whitehacks by Singapore Management University (SMU). Since then, I have gone for many more and have written writeups for each CTF which explains how I solved some challenges. I usually play as part of the team <a href="https://ctftime.org/team/151372" target="_blank">Social Engineering Experts</a> and sometimes as part of <a href="https://ctftime.org/team/78268" target="_blank">Isengard</a> when I am just playing with close friends.
 
 Below are the writeups :
 
