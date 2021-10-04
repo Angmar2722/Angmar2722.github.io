@@ -169,15 +169,15 @@ $$ B_i \quad = \quad 0011 \ n_i \quad = \quad 3 << 4 + n_i \quad = \quad 48 + n_
 
 Now rewriting \\(k\\) we have:
 
-$$ k= B_{25} \quad B_{24} \quad B_{23} \quad .... \quad B_{2} \quad B_1 \quad B_0  $$
+$$ k \ = \ B_{25} \quad B_{24} \quad B_{23} \quad .... \quad B_{2} \quad B_1 \quad B_0  $$
 
-$$ k = B_0 \quad + \quad B_1 << 2^{8*1} \quad + \quad B_2 << 2^{8*2} \quad + \quad .... \quad + \quad B_{24} << 2^{25*7} \quad + \quad B_{24} << 2^{25*8} $$
+$$ k \ = \ B_0 \quad + \quad B_1 << 2^{8*1} \quad + \quad B_2 << 2^{8*2} \quad + \quad .... \quad + \quad B_{24} << 2^{25*7} \quad + \quad B_{24} << 2^{25*8} $$
 
-$$ \therefore k = \sum_{i=0}^{25} \ B_i * 2^{8i} $$
+$$ \therefore k = \sum_{i=0}^{25} \ B_i \ \cdot 2^{8i} $$
 
-$$ k = \sum_{i=0}^{25} \ (48 + n_i) \ * \ 2^{8i} $$
+$$ k = \sum_{i=0}^{25} \ (48 + n_i) \ \codt 2^{8i} $$
 
-$$ \therefore k = \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
+$$ \therefore k = \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} $$
 
 Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know from the definition of ECDSA that:
 
@@ -187,9 +187,9 @@ $$ s_2 = k_2^{-1} \ \cdot (h_2 + r_2 \ \cdot d) $$
 
 Here we already obtained a mathematical expression for \\( k \\) hence:
 
-$$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_1 \equiv h_1 + r_1 d \pmod{n}$$
+$$ \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \cdot s_1 \equiv h_1 + r_1 d \pmod{n}$$
 
-$$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_2 \equiv h_1 + r_2 d \pmod{n}$$
+$$ \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \cdot s_2 \equiv h_1 + r_2 d \pmod{n}$$
 
 Here \\( n \\) represents the prime used in this elliptic curve. Then, we can remove \\( d \\) from this set of equations. Since:
 
@@ -209,7 +209,7 @@ $$ \quad \therefore (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cd
 
 Now substituting the mathematical expression that we derived for `k` in this challenge:
 
-$$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
+$$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \codt 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
 
 
 
