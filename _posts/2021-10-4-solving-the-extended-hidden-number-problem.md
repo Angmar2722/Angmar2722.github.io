@@ -134,7 +134,7 @@ Here is how to sign a message *m* using the private key IN ECDSA :
 1. Hash the message: \\( h = SHA256(m) \\)
 2. Sample a random nonce: \\( k = n \qquad \qquad (n \in \mathbb{Z}^+) \\)
 3. Exponentiate by the nonce: \\( r = x_1 \mod n \\)
-4. Reduce the x-coordinate mod the group order: $ r = x_1 \mod n $
+4. Reduce the x-coordinate mod the group order: \\( r = x_1 \mod n \\)
 5. Complete the signature: \\( s = k^{-1} (h + r d) \mod n \\)
 6. Signature is: \\( \sigma = (r, s) \\)
 
