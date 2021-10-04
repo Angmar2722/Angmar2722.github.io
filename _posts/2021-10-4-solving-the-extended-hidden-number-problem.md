@@ -173,10 +173,12 @@ $$ k= B_{25} \quad B_{24} \quad B_{23} \quad .... \quad B_{2} \quad B_1 \quad B_
 
 $$ k = B_0 \quad + \quad B_1 << 2^{8*1} \quad + \quad B_2 << 2^{8*2} \quad + \quad .... \quad + \quad B_{24} << 2^{25*7} \quad + \quad B_{24} << 2^{25*8} $$
 
-$$ \therefore k = \sum_{i=0}^{25} = B_i * 2^{8i} $$
+$$ \therefore k = \sum_{i=0}^{25} \ B_i * 2^{8i} $$
 
-$$ k = \sum_{i=0}^{25} = (48 + n_i) \ * \ 2^{8i} $$
+$$ k = \sum_{i=0}^{25} \ (48 + n_i) \ * \ 2^{8i} $$
 
-$$ \therefore k = \sum_{i=0}^{25} = 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
+$$ \therefore k = \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
 
 Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated.
+
+
