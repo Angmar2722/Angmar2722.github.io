@@ -4,7 +4,7 @@ title: Solving the Extended Hidden Number Problem
 subtitle: Cracking ECDSA biased nonces using lattices
 thumbnail-img: /assets/img/ctfImages/2021/tsg2021/lll-meme.jpeg
 share-img: /assets/img/path.jpg
-tags: [Cryptography, ECDSA, Biased Nonces, LLL, Lattices]
+tags: [Cryptography, ECDSA, Biased Nonces, LLL, Lattices, EHNP]
 ---
 
 ![TSG 2021 Writeup](/assets/img/ctfImages/2021/tsg2021/logo.png)
