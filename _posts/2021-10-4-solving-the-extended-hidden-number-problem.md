@@ -179,6 +179,8 @@ $$ k = \sum_{i=0}^{25} \ (48 + n_i) \ * \ 2^{8i} $$
 
 $$ \therefore k = \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
 
-Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated.
+Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know:
 
+$$ \left( \sum_{i=0}^{25} = 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_1 \equiv h_1 + r_1 d \pmod{n}$$
 
+$$ \left( \sum_{i=0}^{25} = 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_2 \equiv h_1 + r_2 d \pmod{n}$$
