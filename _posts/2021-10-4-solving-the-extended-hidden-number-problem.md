@@ -120,3 +120,34 @@ end
 puts 'You is defeat.'
 
 ```
+
+Looking at the source code, our task is pretty straightforward. When connecting to the server, we are given 5 tries. In each try, we can either sign the word 'Baba' using ECDSA, provide a signature for a given message or exit the session. A standard curve `secp256k1` is used. Obviously we would have to see what is going on with the signing mechanism used here.
+
+<br/>
+
+### ECDSA Recap
+
+Remember that in elliptic curve cryptography, first a random number `d` is used as the private key by multiplying the generator or base point `d` times to reach some final public point `Q`.
+
+Here is how to sign a message *m* using the private key IN ECDSA :
+
+1. Hash the message: \( h = \texttt{SHA256}(m) \in \mathbb{Z}_{n} \)
+2. Sample a random nonce: \( k = \mathbb{Z}_{n} \)
+3. Exponentiate by the nonce: \( (x_1, y_1) \gets k \times G \in \mathbb{E}[\mathbb{Z}_p] \)
+4. Reduce the x-coordinate mod the group order: \( r \gets x_1 \mod n \)
+5. Complete the signature: \( s \gets k^{-1} (h + r d) \mod n \)
+6. Signature is: \( \sigma = (r, s) \)
+
+### Signature Generation 
+
+Looking at the `sign` function, we can see that the secret nonce `k` is generated really weirdly. To quote rkm0959's writeup for the <a href="https://rkm0959.tistory.com/232?category=765103" target="_blank">H1 challenge</a> in Google CTF 2021, "The ECDSA nonce is yelling loudly at us to attack it which we obviously have to do." Lmao
+
+Usually the `k` should be a uniformally distributed random number however there is very low entropy over here. Note that while `OpenSSL::BN.rand(@curve.degree / 3)` does generate a large random 85 bit number, by appending `.to_s.unpack1('H*')`, a 3 is inserted to the left of every digit of this random number. The image below demonstrates this (the first value is the random number while the second is the number with the `.to_s.unpack1('H*')` added) :
+
+![TSG 2021 Writeup](/assets/img/ctfImages/2021/tsg2021/img2.png)
+
+After that this number is converted to hexadecimal. Wow! So effectively only half of the bits of the nonce have entropy. That is very bad to say the least......
+
+<br/>
+
+### Creating a Lattice
