@@ -13,7 +13,7 @@ I participated in the University of Tokyo's <a href="https://ctftime.org/event/1
 
 The reason why I am writing this as a blog post instead of a usual CTF writeup is because I could only solve the beginner's crypto challenge and most of my time was spent solving the ECDSA biased nonce challenge 'Flag Is Win'. However, due to an **incredibly** stupid mistake, me and Diamondroxxx only solved the challenge about 30 minutes after the CTF ended which **really, really sucks**. 
 
-The point of this blog post is to explain both to myself and other's, how to crack the nonce of an ECDSA signature scheme if it does not have uniform random distribution and has low entropy by solving the Extended Hidden Number Problem (EHNP) using lattices.
+The point of this blog post is to explain both to myself and othes, how to crack the nonce of an ECDSA signature scheme if it does not have uniform random distribution and has low entropy by solving the Extended Hidden Number Problem (EHNP) using lattice reduction techniques.
 
 Below is the writeup for the challenge Flag is Win :
 
