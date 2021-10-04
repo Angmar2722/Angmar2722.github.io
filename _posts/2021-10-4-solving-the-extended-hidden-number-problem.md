@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cracking ECDSA biased nonces using lattices
+title: Cracking Biased Nonces in ECDSA
 subtitle: TSG CTF 2021
 thumbnail-img: /assets/img/ctfImages/2021/tsg2021/lll-meme.jpeg
 share-img: /assets/img/path.jpg
@@ -121,7 +121,7 @@ puts 'You is defeat.'
 
 ```
 
-Looking at the source code, our task is pretty straightforward. When connecting to the server, we are given 5 tries. In each try, we can either sign the word 'Baba' using ECDSA, provide a signature for a given message or exit the session. A standard curve `secp256k1` is used. Obviously we would have to see what is going on with the signing mechanism used here.
+Looking at the source code, our task is pretty straightforward as our objective is to sign the SHA-256 hash of the word 'Flag'. When connecting to the server, we are given 5 tries. In each try, we can either sign the word 'Baba' using ECDSA, provide a signature for a given message or exit the session. A standard curve `secp256k1` is used. Obviously we would have to see what is going on with the signing mechanism used here.
 
 <br/>
 
@@ -218,7 +218,7 @@ $$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + 
 
 <br/>
 
-### Matrices, Lattices and the Extended Hidden Number Problem
+### Matrices, Lattices, rkm0959's CVP Inequality Solver and the Extended Hidden Number Problem
 
 This is the part where the level of mathematics was far beyond us. We managed to solve the challenge by carefully looking at and observing how people solved the <a href="https://github.com/google/google-ctf/blob/master/2021/quals/crypto-H1/src/chall.py" target="_blank">H1 challenge</a> in Google CTF 2021. After obtaining the mathematical expression shown above, we used <a href="https://github.com/rkm0959/Inequality_Solving_with_CVP" target="_blank">rkm0959's Inequality Solver with CVP</a>. We observed his writeup for the <a href="https://rkm0959.tistory.com/232?category=765103" target="_blank">H1 challenge</a> and created a similar matrix to the one he used for that challenge, only this time we would be using the mathematical expressions derived above. 
 
@@ -236,7 +236,220 @@ $$\begin{bmatrix}
 0 & 0 & 0 & 0 & \text{...} & 0 & 0 & 0 & n \\ 
 \end{bmatrix}$$
 
-After creating this matrix, we made sure that the lower bound and upper bounds for the CVP solver were 48 and 57 respectively as each 'byte' (as defined above where a byte consists of the 3 as well as the unknown digit nibble from 0 to 9) would range from 48 + 0 all the way to 48 + 9. 
+After creating this matrix, we made sure that the lower bound and upper bounds for the CVP solver were 48 and 57 respectively as each 'byte' (as defined above where a byte consists of the 3 as well as the unknown digit nibble from 0 to 9) would range from 48 + 0 all the way to 48 + 9. After taking some time to set up the matrix and fine tune it, we could then chuck it into the CVP solver and hopefully obtain all 'bytes' for each of the 2 nonces we are solving for. I hope to understand how the solver works in the future, all I am aware of is that it uses advanced lattice based reduction techniques like the <a href="https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm" target="_blank">Lenstra–Lenstra–Lovász lattice basis reduction algorithm </a>, popularly known as LLL and solves the <a href="https://crypto.hyperlink.cz/files/SAC06-rosa-hlavac.pdf" target="_blank">Extended Hidden Number Problem</a> in order to recover the nonce.
+
+Nearly always, the solver gave us the nonce 'bytes' (the 3 and unknown digit) from the LSB to the MSB. The incredibly egregious mistake that we made was that for some reason which we will never know, we were reading from the MSB to the LSB and never even detected this error. We knew something was going wrong obviously and we thought that somehow, somewhere the matrix that we setup was incorrect. Maybe because we were staying up late at around 4 am, we were just exhausted? Anyways, Diamondroxxx messages me 7 minutes after the CTF ended that he realized that we were reading from the MSB to the LSB. After that we really wanted to know if what we did was correct and indeed it was after fixing the error. Hence we could recover the nonce `k` and hence easily recover the private key `d`, after which signing any message was trivial.
+
+After looking at the writeups, it turns out that most people were using another lattice reduction algorithm known as BKZ (Block Korkine Zolotarev) including <a href="https://rkm0959.tistory.com/241?category=765103" target="_blank"> rkm himself</a> (he was also using his CVP Inequality solver). We also tried out the BKZ algorithm  and althought it worked, for us, LLL was much faster.
+
+The complete solve script can be found here :
+
+```python
+
+from Crypto.Util.number import *
+from pwn import *
+from hashlib import sha256
+
+from Crypto.Cipher import AES, PKCS1_OAEP, PKCS1_v1_5
+from Crypto.PublicKey import RSA
+from Crypto.Util.number import inverse, long_to_bytes, bytes_to_long, isPrime, getPrime, GCD
+from tqdm import tqdm
+from pwn import *
+from sage.all import *
+import itertools, sys, json, hashlib, os, math, time, base64, binascii, string, re, struct, datetime, subprocess
+import numpy as np
+import random as rand
+import multiprocessing as mp
+from base64 import b64encode, b64decode
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from sage.modules.free_module_integer import IntegerLattice
+
+
+debug = False
+
+r = remote("34.146.212.53", 35719, level = 'debug') if debug else remote("34.146.212.53", 35719)
+
+def getParams():
+
+	r.sendlineafter('choice? ', '1')
+
+	r.recvuntil('x = ')
+	x = int(r.recvline())
+
+	r.recvuntil('s = ')
+	s = int(r.recvline())
+
+	return x, s
+
+r1, s1 = getParams()
+r2, s2 = getParams()
+
+#r1, s1 = 25299575620856660513253162753471397988194505881018893682712853954194329703324, 36261785401375447770011298133226439363044520945863475872885710594694732329376
+#r2, s2 = 80458902368259072038288476935794243607137540668215255671792235512580948732649, 53633268262377198291420595525986382238055587878314801412161803580794335400339
+
+
+n = 115792089237316195423570985008687907852837564279074904382605163141518161494337
+F = GF(n)
+
+
+def shaa256(val):
+	h = hashlib.sha256()
+	h.update(val)
+	return bytes_to_long(h.digest())
+
+h1 = shaa256(b'Baba')
+
+
+def Babai_CVP(mat, target):
+	M = IntegerLattice(mat, lll_reduce=True).reduced_basis
+	G = M.gram_schmidt()[0]
+	diff = target
+	for i in reversed(range(G.nrows())):
+		diff -=  M[i] * ((diff * G[i]) / (G[i] * G[i])).round()
+	return target - diff
+
+def solve(mat, lb, ub, weight = None):
+	num_var  = mat.nrows()
+	num_ineq = mat.ncols()
+
+	max_element = 0 
+	for i in range(num_var):
+		for j in range(num_ineq):
+			max_element = max(max_element, abs(mat[i, j]))
+
+	if weight == None:
+		weight = num_ineq * max_element
+
+	# sanity checker
+	if len(lb) != num_ineq:
+		print("Fail: len(lb) != num_ineq")
+		return
+
+	if len(ub) != num_ineq:
+		print("Fail: len(ub) != num_ineq")
+		return
+
+	for i in range(num_ineq):
+		if lb[i] > ub[i]:
+			print("Fail: lb[i] > ub[i] at index", i)
+			return
+
+		# heuristic for number of solutions
+	DET = 0
+
+	if num_var == num_ineq:
+		DET = abs(mat.det())
+		num_sol = 1
+		for i in range(num_ineq):
+			num_sol *= (ub[i] - lb[i])
+		if DET == 0:
+			print("Zero Determinant")
+		else:
+			num_sol //= DET
+			# + 1 added in for the sake of not making it zero...
+			print("Expected Number of Solutions : ", num_sol + 1)
+
+	# scaling process begins
+	max_diff = max([ub[i] - lb[i] for i in range(num_ineq)])
+	applied_weights = []
+
+	for i in range(num_ineq):
+		ineq_weight = weight if lb[i] == ub[i] else max_diff // (ub[i] - lb[i])
+		applied_weights.append(ineq_weight)
+		for j in range(num_var):
+			mat[j, i] *= ineq_weight
+		lb[i] *= ineq_weight
+		ub[i] *= ineq_weight
+
+	# Solve CVP
+	target = vector([(lb[i] + ub[i]) // 2 for i in range(num_ineq)])
+	result = Babai_CVP(mat, target)
+
+	for i in range(num_ineq):
+		if (lb[i] <= result[i] <= ub[i]) == False:
+			print("Fail : inequality does not hold after solving")
+			break
+	
+		# recover x
+	fin = None
+
+	if DET != 0:
+		mat = mat.transpose()
+		fin = mat.solve_right(result)
+	
+	## recover your result
+	return result, applied_weights, fin
+
+	
+M = Matrix(ZZ, 53, 53)
+lb = [0] * 53
+ub = [0] * 53
+
+for i in range(0, 26):
+	M[i, 52] = ( r2*s1*(1 << (8*i) ) ) % n
+	M[i+26, 52] = n - (r1*s2*(1 << (8*i) ) ) % n
+
+M[52, 52] = n
+
+lb[52] = (r2 * h1 - r1 * h1) % n
+ub[52] = (r2 * h1 - r1 * h1) % n
+
+for i in range(0, 52):
+	M[i, i] = 1
+	lb[i] = 48
+	ub[i] = 48+9
+
+result, applied_weights, fin = solve(M, lb, ub, weight = 1)
+
+fin = tuple(fin)
+print(f"fin is {fin}")
+
+try: 
+	k1 = int(''.join(['3' + chr(i) for i in fin[:26][::-1]]), 16)
+	k2 = int(''.join(['3' + chr(i) for i in fin[51:25:-1]]), 16)
+	print(f"k1 is {hex(k1)}")
+	print(f"k2 is {hex(k2)}")
+	d1 = (s1 * k1 - h1) * inverse_mod(r1, n) % n
+	d2 = (s2 * k2 - h1) * inverse_mod(r2, n) % n
+	assert d1 == d2
+except Exception as e:
+	print(e)
+	exit() 
+	
+
+p = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+a = 0
+b = 7
+G = (0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798, 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8)
+n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
+E = EllipticCurve(GF(p), [a, b])
+G = E(G)
+
+toSendH = shaa256(b'Flag')
+k = 420
+x, _ = (k*G).xy()
+s = inverse_mod(k, n) * (toSendH + int(x) * d1) % n
+
+r.sendlineafter('choice? ', '2')
+r.sendlineafter('Which rule do you want to know? ', 'Flag')
+r.sendlineafter('x? ', str(x))
+r.sendlineafter('s? ', str(s))
+
+print(r.recvline())
+#b'Flag is TSGCTF{CRYPTO_IS_LOCK._KEY_IS_OPEN._CTF_IS_FUN!}\n'
+
+```
+
+<br/>
+
+### Closing Thoughts
+
+- Although I don't understand enough about lattice reduction techniques, I am still glad that we were able to solve this challenge. This is something I want to spend time on and understand in the immediate future.
+- The writeups for the H1 challenge in Google CTF 2021 is a gift that keeps on giving.
+- rkm's solver is one of humanity's greatest treasures
+- Technically, we only solved this challenge slightly after the CTF ended. Since we also failed to solve H1, hopefully we can solve the third biased nonce ECDSA challenge as I dont want it to be another loss or LLL, pun intended ;D
 
  
 
