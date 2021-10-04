@@ -17,9 +17,9 @@ The point of this blog post is to explain both to myself and other's, how to cra
 
 Below is the writeup for the challenge Flag is Win :
 
-</br>
+<br/>
 
-</br>
+<br/>
 
 ## Flag is Win
 
