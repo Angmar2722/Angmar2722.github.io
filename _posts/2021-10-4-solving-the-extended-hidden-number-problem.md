@@ -449,7 +449,7 @@ print(r.recvline())
 - Although I don't understand enough about lattice reduction techniques, I am still glad that we were able to solve this challenge. This is something I want to spend time on and understand in the immediate future.
 - The writeups for the H1 challenge in Google CTF 2021 is a gift that keeps on giving.
 - rkm's solver is one of humanity's greatest treasures
-- Technically, we only solved this challenge slightly after the CTF ended. Since we also failed to solve H1, hopefully we can solve the third biased nonce ECDSA challenge as I dont want it to be another loss or LLL, pun intended ;D
+- Technically, we only solved this challenge slightly after the CTF ended. Since we also failed to solve H1, hopefully we can solve the third biased nonce ECDSA challenge (third times the charm) as I dont want it to be L-L-L, pun intended ;D
 
 <br/>
 
