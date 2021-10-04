@@ -216,6 +216,11 @@ Now substituting the mathematical expression that we derived for `k` in this cha
 
 $$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
 
+<br/>
+
+### Matrices and Lattices
+
+
 
 
 
