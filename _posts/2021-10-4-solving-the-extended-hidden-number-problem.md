@@ -140,7 +140,7 @@ Here is how to sign a message *m* using the private key IN ECDSA :
 
 <br/>
 
-### Signature Generation 
+### Biased Nonces
 
 Looking at the `sign` function, we can see that the secret nonce `k` is generated really weirdly. To quote rkm0959's writeup for the <a href="https://rkm0959.tistory.com/232?category=765103" target="_blank">H1 challenge</a> in Google CTF 2021, "The ECDSA nonce is yelling loudly at us to attack it which we obviously have to do." Lmao
 
