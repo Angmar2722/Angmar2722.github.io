@@ -179,10 +179,44 @@ $$ k = \sum_{i=0}^{25} \ (48 + n_i) \ * \ 2^{8i} $$
 
 $$ \therefore k = \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
 
-Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know:
+Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know from the definition of ECDSA that:
 
-Consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know:
+$$ s_1 = k_1^{-1} \ \cdot (h_1 + r_1 \ \cdot d) $$
+
+$$ s_2 = k_2^{-1} \ \cdot (h_2 + r_2 \ \cdot d) $$
+
+Here we already obtained a mathematical expression for \\( k \\) hence:
 
 $$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_1 \equiv h_1 + r_1 d \pmod{n}$$
 
 $$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_2 \equiv h_1 + r_2 d \pmod{n}$$
+
+Here \\( n \\) represents the prime used in this elliptic curve. Then, we can remove \\( d \\) from this set of equations. Since \\(\quad \frac{k1 \ \cdot s_1 \ \ - \ h_1}{r_1} \quad \equiv d \pmod{n} \quad\\) and \\( \quad \frac{k2 \ \cdot s_2 \ \ - \ h_1}{r_2} \quad \equiv d \pmod{n} \\)
+
+$$ \therefore \quad \quad \frac{k1 \ \cdot s_1 \ \ - \ h_1}{r_1} \quad \equiv \quad \frac{k2 \ \cdot s_2 \ \ - \ h_1}{r_2} \pmod{n} $$
+
+$$ r_2 \ ( k_1 \ \cdot s_1 \ - \ h_1) \ \quad \equiv \quad r_1 \ ( k_2 \ \cdot s_2 \ - \ h_1) \pmod{n} $$
+
+$$ r_2 \ \cdot k_1 \ \cdot s_1 \ - \ h_1 \ \cdot r_2 \quad \equiv \quad r_1 \ \cdot k_2 \ \cdot s_2 \ - \ h_1 \ \cdot r_1 \pmod{n} $$
+
+$$ (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cdot s_2) \quad \equiv \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 \pmod{n} $$
+
+This means that for some \\( a\\) where (a \in \mathbb{Z}^+) \\) :
+
+$$ \quad \therefore (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
+
+Now substituting the mathematical expression that we derived for `k` in this challenge:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
