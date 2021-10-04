@@ -152,8 +152,7 @@ After that this number is converted to hexadecimal. Wow! So effectively only hal
 
 <br/>
 
-
-### Creating a Lattice
+### Deriving a Mathematical Expression For \\( k \\)
 
 Firstly, we would have to come up with a precise mathematical expression for the nonce. Suppose that we consider the digits of `k` where \\((0 \leq n \leq 9 )\\).    
 
@@ -175,11 +174,17 @@ $$ k \ = \ B_0 \quad + \quad B_1 << 2^{8*1} \quad + \quad B_2 << 2^{8*2} \quad +
 
 $$ \therefore k = \sum_{i=0}^{25} \ B_i \ \cdot 2^{8i} $$
 
-$$ k = \sum_{i=0}^{25} \ (48 + n_i) \ \codt 2^{8i} $$
+$$ k = \sum_{i=0}^{25} \ (48 + n_i) \ \cdot 2^{8i} $$
 
 $$ \therefore k = \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} $$
 
-Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know from the definition of ECDSA that:
+Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated. 
+
+<br/>
+
+### Cancelling Out the Private Key \\( d \\)
+
+Now, consider the message, signature pair \\( (r_1, s_1, h_1) \\) and \\( (r_2, s_2, h_1) \\) where \\( h_1 \\) represents the SHA-256 hash of the word 'Baba'. We know from the definition of ECDSA that:
 
 $$ s_1 = k_1^{-1} \ \cdot (h_1 + r_1 \ \cdot d) $$
 
@@ -209,7 +214,7 @@ $$ \quad \therefore (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cd
 
 Now substituting the mathematical expression that we derived for `k` in this challenge:
 
-$$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \codt 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
+$$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 \ \cdot 2^{8i} \ + \ \sum_{i=0}^{25} \ n_i \ \cdot 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
 
 
 
