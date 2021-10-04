@@ -138,7 +138,7 @@ Here is how to sign a message *m* using the private key IN ECDSA :
 5. Complete the signature: \\( s = k^{-1} (h + r d) \mod n \\)
 6. Signature is: \\( \sigma = (r, s) \\)
 
-<BR/>
+<br/>
 
 ### Signature Generation 
 
