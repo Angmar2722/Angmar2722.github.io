@@ -209,6 +209,8 @@ $$ \quad \therefore (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cd
 
 Now substituting the mathematical expression that we derived for `k` in this challenge:
 
+$$ \quad \therefore (r_2 \ \cdot \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \ \cdot s_1) \ \ - \ (r_1 \ \cdot \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
+
 
 
 
