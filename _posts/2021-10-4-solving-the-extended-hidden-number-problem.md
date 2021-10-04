@@ -179,4 +179,4 @@ $$ k = \sum_{i=0}^{25} = (48 + n_i) \ * \ 2^{8i} $$
 
 $$ \therefore k = \sum_{i=0}^{25} = 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} $$
 
-Great, now we have an expression for the nonce `k`.
+Great, now we have an expression for the nonce `k` where a constant term and the unknown digit \\( n_i \\) are separated.
