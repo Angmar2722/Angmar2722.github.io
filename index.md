@@ -1,5 +1,11 @@
 ---
 layout: home
+title: 
+subtitle: 
+---
+
+<!-- ---
+layout: home
 title: Hola!
 subtitle: "This website is still a work in progress. So far I only have a few CTF writeups."
 ---
