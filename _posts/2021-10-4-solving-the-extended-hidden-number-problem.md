@@ -9,7 +9,7 @@ tags: [Cryptography, ECDSA, Biased Nonces, LLL, Lattices, EHNP]
 
 ![TSG 2021 Writeup](/assets/img/ctfImages/2021/tsg2021/logo.png)
 
-I participated in the University of Tokyo's <a href="https://ctftime.org/event/1431" target="_blank">TSG 2021 CTF</a> event (Sat, 02 Oct. 2021, 15:00 SGT — Sun, 03 Oct. 2021, 15:00 SGT) during the weekend. Even though I am currently still in high school, I was invited to join the National University of Singapore's CTF team, <a href="https://ctftime.org/team/16740" target="_blank">NUSGreyhats</a> by Diamondroxxx and we ranked 31<sup>st</sup> out of 775 scoring teams.
+I participated in the University of Tokyo's <a href="https://ctftime.org/event/1431" target="_blank">TSG 2021 CTF</a> event (Sat, 02 Oct. 2021, 15:00 SGT — Sun, 03 Oct. 2021, 15:00 SGT) during the weekend. Even though I am currently still in high school, I was invited to join the National University of Singapore's CTF team, <a href="https://ctftime.org/team/16740" target="_blank">NUSGreyhats</a>, by Diamondroxxx and we ranked 31<sup>st</sup> out of 775 scoring teams.
 
 The reason why I am writing this as a blog post instead of a usual CTF writeup is because I could only solve the beginner's crypto challenge and most of my time was spent solving the ECDSA biased nonce challenge 'Flag Is Win'. However, due to an **incredibly** stupid mistake, me and Diamondroxxx only solved the challenge about 30 minutes after the CTF ended which **really, really sucks**. 
 
