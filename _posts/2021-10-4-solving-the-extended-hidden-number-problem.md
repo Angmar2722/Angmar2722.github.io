@@ -131,11 +131,11 @@ Remember that in elliptic curve cryptography, first a random number `d` is used 
 
 Here is how to sign a message *m* using the private key IN ECDSA :
 
-1. Hash the message: \( h = \texttt{SHA256}(m) \in \mathbb{Z}_{n} \)
-2. Sample a random nonce: \( k = \mathbb{Z}_{n} \)
-3. Exponentiate by the nonce: \( (x_1, y_1) \gets k \times G \in \mathbb{E}[\mathbb{Z}_p] \)
-4. Reduce the x-coordinate mod the group order: \( r \gets x_1 \mod n \)
-5. Complete the signature: \( s \gets k^{-1} (h + r d) \mod n \)
+1. Hash the message: $h$ = SHA256(*m*)
+2. Sample a random nonce: $k = n \qquad \qquad (n \in \mathbb{Z}^+)$
+3. Exponentiate by the nonce: \( (x_1, y_1) = k \times G \in \mathbb{E}[\mathbb{Z}_p] \)
+4. Reduce the x-coordinate mod the group order: \( r = x_1 \mod n \)
+5. Complete the signature: \( s = k^{-1} (h + r d) \mod n \)
 6. Signature is: \( \sigma = (r, s) \)
 
 <BR/>
