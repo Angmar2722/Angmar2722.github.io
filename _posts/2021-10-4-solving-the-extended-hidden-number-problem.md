@@ -153,3 +153,25 @@ After that this number is converted to hexadecimal. Wow! So effectively only hal
 <br/>
 
 ### Creating a Lattice
+
+Firstly, we would have to come up with a precise mathematical expression for the nonce. Suppose that we consider the digits of `k` $(0 \leq n \leq 9)$ where such that:
+
+$$ k = \quad 3 \ n_{25} \quad 3 \ n_{24} \quad 3 \ n_{23} \quad .... \quad 3 \ n_2 \quad 3 \ n_1 \quad 3 \ n_0 $$
+
+We can rewrite this as a mix of binary and the unknown digits $n$ where: 
+
+$$ k = \quad 0011 \ n_{25} \quad 0011 \ x_{24} \quad 0011 \ x_{23} \quad .... \quad 0011 \ x_2 \quad 0011 \ x_1 \quad 3 \ x_0 $$
+
+Now we can consider each byte of $ \quad 0011 \ n_{i} \quad$ where $i$ represents some t^{th} bit from the LSB side:
+
+$$ B_i = 0011 \ n_i \quad = \quad 3 << 4 + n_i \quad = \quad 48 + n_i $$
+
+Now rewriting $k$ we have:
+
+$$ k= B_{25} \quad B_{24} \quad B_{23} \quad .... \quad B_{2} \quad B_1 \quad B_0  $$
+
+$$ k = B_0 \quad + \quad B_1 << 2^{8*1} \quad + \quad B_2 << 2^{8*2} \quad + \quad .... \quad + \quad B_{24} << 2^{25*7} \quad + \quad B_{24} << 2^{25*8} $$
+
+$$ \therefore k = \sum_{i=0}^25 i^2 = B_i * 2^{8i} $$
+
+
