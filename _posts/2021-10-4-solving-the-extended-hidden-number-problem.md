@@ -191,7 +191,9 @@ $$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \
 
 $$ \left( \sum_{i=0}^{25} \ 48 * 2^{8i} \ + \ \sum_{i=0}^{25} n_i \ * \ 2^{8i} \right) \cdot s_2 \equiv h_1 + r_2 d \pmod{n}$$
 
-Here \\( n \\) represents the prime used in this elliptic curve. Then, we can remove \\( d \\) from this set of equations. Since \\(\quad \frac{k1 \ \cdot s_1 \ \ - \ h_1}{r_1} \quad \equiv d \pmod{n} \quad\\) and \\( \quad \frac{k2 \ \cdot s_2 \ \ - \ h_1}{r_2} \quad \equiv d \pmod{n} \\)
+Here \\( n \\) represents the prime used in this elliptic curve. Then, we can remove \\( d \\) from this set of equations. Since:
+
+\\(\quad \frac{k1 \ \cdot s_1 \ \ - \ h_1}{r_1} \quad \equiv d \pmod{n} \quad\\) and \\( \quad \frac{k2 \ \cdot s_2 \ \ - \ h_1}{r_2} \quad \equiv d \pmod{n} \\)
 
 $$ \therefore \quad \quad \frac{k1 \ \cdot s_1 \ \ - \ h_1}{r_1} \quad \equiv \quad \frac{k2 \ \cdot s_2 \ \ - \ h_1}{r_2} \pmod{n} $$
 
@@ -201,7 +203,7 @@ $$ r_2 \ \cdot k_1 \ \cdot s_1 \ - \ h_1 \ \cdot r_2 \quad \equiv \quad r_1 \ \c
 
 $$ (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cdot s_2) \quad \equiv \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 \pmod{n} $$
 
-This means that for some \\( a\\) where (a \in \mathbb{Z}^+) \\) :
+This means that for some \\( a \\) where \\( (a \in \mathbb{Z}^+) \\) :
 
 $$ \quad \therefore (r_2 \ \cdot k_1 \ \cdot s_1) \ \ - \ (r_1 \ \cdot k_2 \ \cdot s_2) \quad + \quad a \ \cdot n \quad = \quad \quad h_1 \ \cdot r_2 \ - \ h_1 \ \cdot r_1 $$ 
 
