@@ -5,7 +5,7 @@ title: Lattice Notes
 <hr/>
 
 
-## Section 3
+## Section 3 - Equations
 
 Solution to challenge 1 (Hidden message; root polynomials) :
 
