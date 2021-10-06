@@ -154,6 +154,8 @@ system of the linear equations.
 - Adding one randomly chosen equation to another randomly chosen equation doesn’t
 affect the solution of the system of the linear equations
 
+Using row operations to convert a matrix into reduced row echelon form is sometimes called **Gauss–Jordan elimination**.
+
 <br/>
 
 ### Challenge 3 (System of equations puzzle)
