@@ -194,12 +194,56 @@ $$
 \right. 
 $$
 
-I am going to solve the first set manually and then solve all using Sage (and also check whether the first one was correctly solved). Let us first transform the first set containing a system of linear equations into an augmented matrix :
+Using Sage to convert the systems of linear equations into augmented matrices and further into reduced row echelon form we obtain :
 
-$$ \left[
-\begin{array}{ccc|c}
-  115 & 111 & 108 & 2209 \\
-  118 & 101 & 115 & 2214 \\
-  111 & 114 & 116 & 2286
-\end{array}
-\right] $$
+```python
+
+'''
+115*b + 111*h + 108*f = 2209
+118*b + 101*h + 115*f = 2214
+111*b + 114*h + 116*f = 2286
+97*q + 100*m + 100*a = 1582
+111*q + 110*m + 101*a = 1748
+116*q + 111*m + 101*a = 1786
+97*r + 99*n + 104*t = 910
+108*r + 101*n + 116*t = 1005
+116*r + 101*n + 114*t = 1019
+'''
+
+A = matrix([[115,111,108],[118,101,115],[111,114,116]])
+b = vector([2209,2214,2286])
+B = A.augment(b)
+print(B.rref())
+
+'''
+[1 0 0 4]
+[0 1 0 7]
+[0 0 1 9]
+'''
+
+A = matrix([[97,100,100],[111,110,101],[116,111,101]])
+b = vector([1582,1748,1786])
+B = A.augment(b)
+print(B.rref())
+
+'''
+[1 0 0 6]
+[0 1 0 8]
+[0 0 1 2]
+'''
+A = matrix([[97,99,104],[108,101,116],[116,101,114]])
+b = vector([910,1005,1019])
+B = A.augment(b)
+print(B.rref())
+
+'''
+[1 0 0 3]
+[0 1 0 1]
+[0 0 1 5]
+'''
+
+'''
+Hence b = 4, h = 7, f = 9, q = 6, m = 8, a = 2, r = 3, n = 1, t = 5
+'''
+
+```
