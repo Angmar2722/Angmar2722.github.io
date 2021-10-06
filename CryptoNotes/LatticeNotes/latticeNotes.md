@@ -113,7 +113,7 @@ print(msg)
 
 <br/>
 
-If the process of **Gaussian elimination** is operated on a matrix's row, the matrix is said to be in **row echelon form**. This occurs when :
+If the process of **Gaussian elimination** is operated on an augmented matrix's row, the matrix is said to be in **row echelon form**. This occurs when :
 
 - All rows consisting of only zeroes are at the bottom
 - The leading coefficient of a nonzero row (the first nonzero entry in the row) is always strictly to the right of the leading coefficient above it.
@@ -121,11 +121,13 @@ If the process of **Gaussian elimination** is operated on a matrix's row, the ma
 
 The matrix below is in row echelon form but not reduced row echelon form (Note that the third column contains 2 which is a leading coefficient but is not 1. This still fits some definitions of a matrix in row echelon form) :
 
-$$\begin{bmatrix} 
+$$ \left[
+\begin{array}{cccc|c}
 1 & a_0 & a_1 & a_2 & a_3 \\ 
 0 & 0 & 2 & a_2 & a_5 \\
 0 & 0 & 0 & 1 & a_6
-\end{bmatrix}$$
+\end{array}
+\right] $$
 
 A **matrix is in reduced row echelon form** if the following conditions are satisfied :
 
@@ -135,8 +137,10 @@ A **matrix is in reduced row echelon form** if the following conditions are sati
 
 The matrix below is in reduced row echelon form :
 
-$$\begin{bmatrix} 
-1 & a_0 & a_1 & a_2 & a_3 \\ 
-0 & 0 & 2 & a_2 & a_5 \\
-0 & 0 & 0 & 1 & a_6
-\end{bmatrix}$$
+$$ \left[
+\begin{array}{cccc|c}
+1 & 0 & a_1 & 0 & b_1 \\ 
+0 & 1 & a_2 & 0 & b_2 \\
+0 & 0 & 0 & 1 & b_3
+\end{array}
+\right] $$
