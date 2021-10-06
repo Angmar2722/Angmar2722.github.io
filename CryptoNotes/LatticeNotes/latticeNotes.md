@@ -4,6 +4,10 @@ title: Lattice Notes
 ---
 <hr/>
 
+<br/>
+
+<br/>
+
 
 ## Section 3 - Equations
 
