@@ -144,3 +144,12 @@ $$ \left[
 0 & 0 & 0 & 1 & b_3
 \end{array}
 \right] $$
+
+We can transform an augmented matrix into a matrix in reduced row echelon form because we can make the following observations:
+
+- Swapping the positions of two equations doesn’t affect the solution of the system
+of the linear equations.
+- Multiplying the equation by a nonzero number doesn’t affect the solution of the
+system of the linear equations.
+- Adding one randomly chosen equation to another randomly chosen equation doesn’t
+affect the solution of the system of the linear equations
