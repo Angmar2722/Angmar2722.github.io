@@ -247,3 +247,5 @@ Hence b = 4, h = 7, f = 9, q = 6, m = 8, a = 2, r = 3, n = 1, t = 5
 '''
 
 ```
+
+In mathematics, a binary operation is commutative if changing the order of the operands does not change the result. The associative property of an expression containing two or more occurrences of the same operator states that the order operations are performed in does not affect the final result, as long as the order of terms does not change.
