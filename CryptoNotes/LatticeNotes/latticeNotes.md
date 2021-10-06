@@ -191,3 +191,13 @@ $$
 \end{array}
 \right. 
 $$
+
+I am going to solve the first set manually and then solve all using Sage (and also check whether the first one was correctly solved). Let us first transform the first set containing a system of linear equations into an augmented matrix :
+
+$$ \left[
+\begin{array}{ccc|c}
+  115 & 111 & 108 & 2209 \\
+  118 & 101 & 115 & 2214 \\
+  111 & 114 & 116 & 2286
+\end{array}
+\right] $$
