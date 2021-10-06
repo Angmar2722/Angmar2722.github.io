@@ -153,3 +153,41 @@ of the linear equations.
 system of the linear equations.
 - Adding one randomly chosen equation to another randomly chosen equation doesn’t
 affect the solution of the system of the linear equations
+
+<br/>
+
+### Challenge 3 (System of equations puzzle)
+
+We are given the following sets of systems of linear equations :
+
+$$
+\left\{ 
+\begin{array}{c}
+115b + 111h + 108f = 2209 \\ 
+118b + 101h + 115f = 2214 \\
+111b + 114h + 116f = 2286
+\end{array}
+\right. 
+$$
+
+
+$$
+\left\{ 
+\begin{array}{c}
+97q + 100m + 100a = 1582 \\ 
+111q + 110m + 101a = 1748 \\
+116q + 111m + 101a = 1786
+\end{array}
+\right. 
+$$
+
+
+$$
+\left\{ 
+\begin{array}{c}
+97r + 99n + 104t = 910 \\ 
+108r + 101n + 116t = 1005 \\
+116r + 101n + 114t = 1019
+\end{array}
+\right. 
+$$
