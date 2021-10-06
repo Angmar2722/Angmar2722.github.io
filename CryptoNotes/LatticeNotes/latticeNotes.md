@@ -11,6 +11,8 @@ title: Lattice Notes
 
 ## Section 3 - Equations
 
+<br/>
+
 Solution to challenge 1 (Hidden message; root polynomials) :
 
 ```python
@@ -102,3 +104,39 @@ print(msg)
 
 
 ```
+
+<br/>
+
+<br/>
+
+## Section 5 - Matrices
+
+<br/>
+
+If the process of **Gaussian elimination** is operated on a matrix's row, the matrix is said to be in **row echelon form**. This occurs when :
+
+- All rows consisting of only zeroes are at the bottom
+- The leading coefficient of a nonzero row (the first nonzero entry in the row) is always strictly to the right of the leading coefficient above it.
+- Leading coefficient must be 1 (according to some texts)
+
+The matrix below is in row echelon form but not reduced row echelon form (Note that the third column contains 2 which is a leading coefficient but is not 1. This still fits some definitions of a matrix in row echelon form) :
+
+$$\begin{bmatrix} 
+1 & a_0 & a_1 & a_2 & a_3 \\ 
+0 & 0 & 2 & a_2 & a_5 \\
+0 & 0 & 0 & 1 & a_6
+\end{bmatrix}$$
+
+A **matrix is in reduced row echelon form** if the following conditions are satisfied :
+
+- It is in row echelon form
+- The leading entry in each nonzero row is a 1 (known as a leading 1)
+- Each column containing a leading 1 has zeroes in all its other entries. 
+
+The matrix below is in reduced row echelon form :
+
+$$\begin{bmatrix} 
+1 & a_0 & a_1 & a_2 & a_3 \\ 
+0 & 0 & 2 & a_2 & a_5 \\
+0 & 0 & 0 & 1 & a_6
+\end{bmatrix}$$
