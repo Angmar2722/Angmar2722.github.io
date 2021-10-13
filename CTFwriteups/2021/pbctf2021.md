@@ -119,4 +119,38 @@ $$ \therefore \ GHASH_H \quad = \quad X_1 \cdot H^i \ \oplus \ X_2 \cdot H^{i - 
 
 Note that in GCM, our arithmetic operations are conducted in the field \\( GF(2^128) \\) where it is defined by the polynomial \\( x^{128} \ + \ x^7 \ + \ x^2 \ + \ x \ +1 \\) hence the addition operation is equivalent to XOR.
 
+Given that definiton of \\( GHASH_H \\), we can hence produce collisions between two different IVs:
+
+$$ Let \quad IV \ = B_1 \ \Vert \ B_2 \ \Vert \ ... \ \Vert \ B_{i-1} \ \Vert B_i $$
+
+Here \\( B_i \\) corresponds to the blocks (16 bytes each) which constitute the IV as defined above. This is after performing the required padding as per the definition for the input into \\( GHASH_H \\) as shown above. For example, suppose we have these 61 bytes for the IV:
+
+```python
+
+nonce = b'{"token": "013a87331ab2f704f9badf297f61b85f", "admin": false}'
+
+```
+
+Looking at the source code for <a href="https://github.com/Legrandin/pycryptodome/blob/master/lib/Crypto/Cipher/_mode_gcm.py" target="_blank">pycryptodome's GCM</a> implementation and fixing a slight error, we managed to implement and test out the generation of \\( J_0 \\) and the \\( GHASH_H \\) with different values. This test file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/pbctf2021/goodHash/test.py" target="_blank">here</a>. This allowed us to create the appropriately padded nonce using the code below:
+
+```py
+
+fill = (16 - (len(nonce) % 16)) % 16 + 8
+ghash_in = (nonce + b'\x00' * fill + long_to_bytes(8 * len(nonce), 8))
+
+```
+
+Note that you can only run the GHASH function if you have an Intel based processor as <a href="https://en.wikipedia.org/wiki/CLMUL_instruction_set" target="_blank">CLMUL</a> is an extension to the x86 instruction set which implements the multiplication of polynomials over the finite field \\( GF(2) \\) which speeds up the process of block cipher encryption using GCM (Galois Counter Mode).
+
+As a result our nonce becomes:
+
+```py
+
+ghash_in = b'{"token": "013a87331ab2f704f9badf297f61b85f", "admin": false}\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\xe8'
+
+```
+
+Hence since we have 5 blocks of 16 bytes (as the length is 80 bytes), we have:
+
+$$ J_0 \quad = \quad GHASH_H(IV) \quad = \quad B_1 \cdot H^5 \ + \ B_2 \cdot H^4 \ + \ B_3 \cdot H^3 \ + \ B_4 \cdot H^2 \ + \ B_5 \cdot H $$
 
