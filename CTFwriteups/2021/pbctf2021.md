@@ -111,3 +111,6 @@ Here \\( H \\) is known as the hash subkey and it will always be constant as it 
 
 Obviously we are most interested in how the \\(GHASH_H \\) function works (hence the challenge name 'GoodHash') as if we can feed in two different IVs which can produce the same \\( GHASH_H \\), we would have produced two same ciphertexts and hence a collision (assuming the encryption key is constant as it is in our case) as long as the length of our different IV is the same as the original. This is due to the fact that the rest of the algorithm for GCM is the same for the two different IVs (as key, \\( GHASH_H \\), plaintext is constant).
 
+Reading page 12 of the NIST documentation, the algorithm which defines \\(GHASH_H \\) is clearly outlined. Given the hash subkey \\( H \\), it is defined as follows:
+
+$$ Let \quad \ X \ = \ X_1 \ \Vert X_2 \ \Vert X_3 \ \Vert ... \ \Vert X_{i - 1} \ \Vert X_i \quad \text{where \ } X_i \text{ \ corresponds to a unique block in a block sequence} $$
