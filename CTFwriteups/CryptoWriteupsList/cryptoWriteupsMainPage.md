@@ -15,7 +15,6 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 |[Alkaloid Stream](https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/#alkaloid-stream) | Perfect Blue 2021 | Custom Scheme | 132/210 |
 |[Steroid Stream](https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/#steroid-stream) | Perfect Blue 2021 | Custom Scheme, Linear Dependence & Independence | 38/210 |
 |[GoodHash](https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/#goodhash) | Perfect Blue 2021 | AES-GCM, GHASH, IV Collisions | 30/210 |
-|[Alkaloid Stream](https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/#alkaloid-stream) | Perfect Blue 2021 | Custom Scheme | 132/210 |
 |[RSA Pop Quiz](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#rsa-pop-quiz) | CSAW Quals 2021 | Wiener's Attack, RSA LSB Oracle, Coppersmith | 137/1216 |
 |[Forgery](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#forgery) | CSAW Quals 2021 | ElGamal Signature, Existential Forgery | 127/1216 |
 |[ECC Pop Quiz](https://angmar2722.github.io/CTFwriteups/2021/csaw2021/#ecc-pop-quiz) | CSAW Quals 2021 | Smart's Attack, MOV Attack, Singular Curve Attack | 63/1216 |
