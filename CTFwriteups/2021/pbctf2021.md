@@ -115,9 +115,11 @@ Reading page 12 of the NIST documentation, the algorithm which defines \\(GHASH_
 
 $$ Let \quad \ X \ = \ X_1 \ \Vert X_2 \ \Vert X_3 \ \Vert \ ... \ \Vert X_{i - 1} \ \Vert X_i \quad \text{where} \  X_i \ \text{corresponds to some block in a sequence} $$
 
-$$ \therefore \ GHASH_H \quad = \quad X_1 \cdot H^i \ \oplus \ X_2 \cdot H^{i - 1} \ \oplus \ ... \ \oplus \ X_{i - 1} \cdot H^2 \ \oplus \ X_i \cdot H $$
+$$ GHASH_H \quad = \quad (X_1 \cdot H^i) \ \oplus \ (X_2 \cdot H^{i - 1}) \ \oplus \ ... \ \oplus \ (X_{i - 1} \cdot H^2) \ \oplus \ (X_i \cdot H) $$
 
-Note that in GCM, our arithmetic operations are conducted in the field \\( GF(2^{128}) \\) where it is defined by the polynomial \\( \ x^{128} \ + \ x^7 \ + \ x^2 \ + \ x \ + 1 \ \\). Here the addition operation is equivalent to XOR as any finite field of characteristic 2 turns out to be the unique finite field of order 2<sup>n</sup> for some <i>n</i>.
+$$ \therefore GHASH_H \quad = \quad \sum_{i=1}^n \ = \ X_i \ \cdot \ H^{n + 1 - i} $$
+
+Note that in GCM, our arithmetic operations are conducted in the field \\( GF(2^{128}) \\) where it is defined by the polynomial \\( \ x^{128} \ + \ x^7 \ + \ x^2 \ + \ x \ + 1 \ \\). Here the addition operation is equivalent to XOR as any finite field of characteristic 2 turns out to be the unique finite field of order 2<sup>n</sup> for some <i>n</i> (property of indempotence).
 
 Given that definiton of \\( GHASH_H \\), we can hence produce collisions between two different IVs:
 
