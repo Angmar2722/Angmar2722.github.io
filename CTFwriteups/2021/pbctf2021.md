@@ -287,5 +287,5 @@ $$ B_2^I \cdot H \ + \ B_3^I \ = \ \frac{ B_2 \cdot H^2 \ + \ B_3 \cdot H \ + \ 
 
 $$ Let \quad k \ = \ \frac{ B_2 \cdot H^2 \ + \ B_3 \cdot H \ + \ B_4 \ - \ B_4^I}{H} $$
 
-$$ \therefore B_2^I \ = \ \frac{k \ - \ A_3^I}{H} $$
+$$ \therefore B_2^I \ = \ \frac{k \ - \ B_3^I}{H} $$
 
