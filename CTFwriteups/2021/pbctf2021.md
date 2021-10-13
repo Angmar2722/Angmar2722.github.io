@@ -94,3 +94,18 @@ if __name__ == "__main__":
         print("Invalid input :(")
         
 ```
+
+The objective of this challenge is pretty straightforward. A known 61 byte IV (the random 16 bytes plus other formatting) is generated and used for encrypting 32 bytes of zeroes using AES-GCM with a known constant key. Our objective is to provide another IV which consists of only printable ASCII characters (from 32 to 126) such that when encrypting the 32 bytes of zeroes with the same key, the same ciphertext is generated.
+
+Hence we have to find a collision between the two IVs. The ciphertext generated is referred to as a hash in this challenge. This <a href="https://www.youtube.com/watch?v=g_eY7JXOc8U&t=2s" target="_blank">video</a> by David Wong provides a very good introduction to how the GCM mode of operation works. More importantly, the document <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf" target="_blank">NIST SP 800-38D</a> is especially useful because it fully explains all mechanisms underlying the GCM standard.
+
+Reading the GCM specifications of the document (page 15), we can clearly see that if the length of the IV is not equal to 96 bytes as it is in our case (it is most commonly 96 bytes), a different mechanism for creating the IV is used. In that case:
+
+$$ \text{Let} \quad  H \ = \ E_k(\text{16 bytes of zeroes})$$
+
+$$ \text{Let} \quad s \ = \ (len(IV) \ mod \ 128)) \ mod \ 128 $$
+
+$$ J_0 \ = \ GHASH_H(IV \ \Vert \ 0^{s \ + \ 64} \ \Vert \ len(IV)_{64} \ ) $$
+
+The block \\( J_0 \\) is the pre-counter block and is constructed such that the IV is padded with the minimum number of 0 bits until the result is a multiple of 16 bytes (the block size). 
+
