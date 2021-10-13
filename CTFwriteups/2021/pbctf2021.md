@@ -167,3 +167,13 @@ As a result, we can define our second target IV such that the \\( J_0s \\) are e
 $$ Let \ IV^I \ = \ B_1 \ \Vert \ B_2^I \ \Vert \ B_3 \ \Vert \ B_4^I \ \Vert \ B_5 $$
 
 $$ \therefore J_0 \ = \ GHASH_H^I(IV) \ = \ B_1 \cdot H^5 \ + \ B_2^I \cdot H^4 \ + \ B_3 \cdot H^3 \ + \ B_4^I \cdot H^2 \ + \ B_5 \cdot H $$
+
+By cancelling the common terms from the equations for \\( GHASH_H(IV) \\) and \\( GHASH_H(IV^I) \\) constructed above, we have:
+
+$$ B_2^I \cdot H^4 \ + \ + B_4^I \cdot H^2 \ = \ B_2 \cdot H_4 \ + \ B_4 \cdot H^2 $$ 
+
+$$ B_2^I \cdot H^2 \ + \ B_4^I \ = \ B_2 \cdot H^2 \ + \ B_4 $$
+
+$$ \therefore B_2^I \ = \ \frac{B_2 \cdot \ H^2 \ - \ B_4^I}{H^2} $$
+
+Here since all terms on the right hand side are constant, by solving for \\( B_2^I \\), we would be able to find the correct configuration of bytes to change in block 2 in order to make the \\( J_0s \\) equal (note that the changed block 4 will always be constant as we know the true has to be changed to false).
