@@ -513,3 +513,196 @@ print(public)
 
 ```
 
+The attached `output.txt` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/pbctf2021/steroidStream/output.txt" target="_blank">here</a>.
+
+By testing the encryption scheme, one can observe that every non-zero term in a pair of a public key where one term is zero is part of the flag. Using this process, one can recover approximately a third of the numbers in the key. After that, by looping through the remaining pair of the public key, due to how the fake values are generated based on the given key in `gen_keystream`, there must exist some pair in the remaning pairs of the public key where one value in the pair is linearly dependent on the current key and the other is linearly independent. The value which provides this dependence is added to the current key and the selected pair is removed from the list of remaining pairs. The iteration continues until all remaining pairs are exhausted.
+
+After that we can reconstruct the keystream from the current key as the bit would be 1 if it exists in the current key else it would be 0 and from there we can XOR the keystream and encrypted text to get the flag.
+
+The Sage solve script :
+
+```python
+
+import ast 
+from tqdm import tqdm 
+
+with open("output.txt", "r") as f:
+    temp = f.readlines()
+
+def xor(a, b):
+    return [x ^^ y for x, y in zip(a, b)]
+
+def bytes_to_bits(inp):
+    res = []
+    for v in inp:
+        res.extend(list(map(int, format(v, '08b'))))
+    return res
+
+def bits_to_bytes(inp):
+    res = []
+    for i in range(0, len(inp), 8):
+        res.append(int(''.join(map(str, inp[i:i+8])), 2))
+    return bytes(res)
+
+enc = bytes_to_bits(bytes.fromhex("792137ecd08d478208e850a60680ccb7e937778222b1ceb8a1ac89046f421706930d240300cdf3ed07691c14a5ed60b226841238fee420feda73174021a557f552b5181dfb717aee329c44b90a"))
+public = ast.literal_eval(temp[1])
+
+
+#enc = bytes_to_bits(bytes.fromhex("f1558b8a3b"))
+#public = [[0, 1071488838234], [65204354650, 1021669646129], [57666690108, 711988189457], [552902666172, 573828359780], [0, 213492007909], [961253271207, 727103715548], [385906222855, 943229752996], [16610212448, 48587962307], [499126049781, 0], [139307930864, 0], [29296352379, 377265293573], [683961828786, 814349401820], [536270470756, 0], [422540082809, 591630079875], [707791955581, 894791470441], [753162308727, 300617045692], [325979509102, 213740380088], [196990823610, 1011199229148], [1088167842249, 1074057466982], [85729246474, 751316447276], [1071251091857, 0], [961701127210, 732048561777], [927365395478, 614368622730], [716610958274, 0], [433179696788, 293615215737], [925315086770, 317181845965], [0, 928242444496], [722653918199, 717251183911], [0, 446349369016], [39814622639, 0], [908503739383, 0], [41753962425, 996494081092], [1067021348692, 597325539631], [749045473382, 344345566050], [820380477164, 19121820088], [293108235585, 35969873245], [337685520602, 0], [0, 169031717508], [294197399814, 205188886661], [305394740869, 769041635555]]
+
+for i in range (len(public)):
+    public[i][0] = Integer(public[i][0])
+    public[i][1] = Integer(public[i][1])
+
+BITLENGTH = len(public)
+B = Integers(2)^BITLENGTH
+
+def are_dependent(vecs):
+    veclist = [B(v.bits() + [0]*(BITLENGTH - len(v.bits()))) for v in vecs]
+    return B.are_linearly_dependent(veclist)
+
+with_zeros = list(filter(lambda p: 0 in p, public))
+the_rest = list(filter(lambda p: 0 not in p, public))
+print(len(with_zeros), len(the_rest))
+key = [p[0] if p[1] == 0 else p[1] for p in with_zeros]
+
+for i in range(len(the_rest)):
+    print(i)
+    for p in tqdm(the_rest):
+        print(".", end="")
+        if are_dependent(key + [p[0]]):
+            key += [p[1]]
+            the_rest.remove(p)
+            break
+        elif are_dependent(key + [p[1]]):
+            key += [p[0]]
+            the_rest.remove(p)
+            break
+    print()
+
+keystream = [1 if pair[1] in key else 0 for pair in public]
+print(bits_to_bytes(xor(enc, keystream)))
+
+#pbctf{I_hope_you_enjoyed_this_challenge_now_how_about_playing_Metroid_Dread?}
+
+```
+
+The solve script took approximately 15 hours to run and was made bearable because of the awesomeness of <a href="https://github.com/tqdm/tqdm" target="_blank">tqdm</a> which we wished we discovered sooner :
+
+![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/img4.png)
+
+<p> <b>Flag :</b> pbctf{I_hope_you_enjoyed_this_challenge_now_how_about_playing_Metroid_Dread?} </p>
+
+<br/>
+
+## Ghost Writer
+
+![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/img5.png)
+
+The attached zip can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/pbctf2021/ghostWriter/dist.zip" target="_blank">here</a>. The challenge description is pretty much self-explanatory. We used the audio data analyzer <a href="https://github.com/ggerganov/kbd-audio" target="_blank">keytap 1</a> which is extremely well suited for this job. We first provided known keyboard noises and the corresponding text input using the Cherry MX Vlue PBT keycaps official pack in <a href="https://mechvibes.com/sound-packs/" target="_blank">mechvibes</a> which sounds really similar to the given file and then used keytap on the actual given file to find the words.
+
+<p> <b>Flag :</b> pbctf{mechanical_keyboards_are_loud} </p>
+
+<br/>
+
+## Alkaloid Stream
+
+![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/img6.png)
+
+The source code provided :
+
+```py
+
+#!/usr/bin/env python3
+
+import random
+from flag import flag
+
+def keygen(ln):
+    # Generate a linearly independent key
+    arr = [ 1 << i for i in range(ln) ]
+
+    for i in range(ln):
+        for j in range(i):
+            if random.getrandbits(1):
+                arr[j] ^= arr[i]
+    for i in range(ln):
+        for j in range(i):
+            if random.getrandbits(1):
+                arr[ln - 1 - j] ^= arr[ln - 1 - i]
+
+    return arr
+
+def gen_keystream(key):
+    ln = len(key)
+    
+    # Generate some fake values based on the given key...
+    fake = [0] * ln
+    for i in range(ln):
+        for j in range(ln // 3):
+            if i + j + 1 >= ln:
+                break
+            fake[i] ^= key[i + j + 1]
+
+    # Generate the keystream
+    res = []
+    for i in range(ln):
+        t = random.getrandbits(1)
+        if t:
+            res.append((t, [fake[i], key[i]]))
+        else:
+            res.append((t, [key[i], fake[i]]))
+
+    # Shuffle!
+    random.shuffle(res)
+
+    keystream = [v[0] for v in res]
+    public = [v[1] for v in res]
+    return keystream, public
+
+def xor(a, b):
+    return [x ^ y for x, y in zip(a, b)]
+
+def recover_keystream(key, public):
+    st = set(key)
+    keystream = []
+    for v0, v1 in public:
+        if v0 in st:
+            keystream.append(0)
+        elif v1 in st:
+            keystream.append(1)
+        else:
+            assert False, "Failed to recover the keystream"
+    return keystream
+
+def bytes_to_bits(inp):
+    res = []
+    for v in inp:
+        res.extend(list(map(int, format(v, '08b'))))
+    return res
+
+def bits_to_bytes(inp):
+    res = []
+    for i in range(0, len(inp), 8):
+        res.append(int(''.join(map(str, inp[i:i+8])), 2))
+    return bytes(res)
+
+flag = bytes_to_bits(flag)
+
+key = keygen(len(flag))
+keystream, public = gen_keystream(key)
+assert keystream == recover_keystream(key, public)
+enc = bits_to_bytes(xor(flag, keystream))
+
+print(enc.hex())
+print(public)
+
+```
+
+The attached `output.txt` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/pbctf2021/alkaloidStream/output.txt" target="_blank">here</a>
+
+Very similar to Steroid Stream except the solution is much easier. By observation, one can notice that the non-zero term in the public key pair with a 0 in it would correspond to the last term in the key. From there, within the first third of the public key, one can find the value same non-zero value but with a different non-zero number in its pair. By XORing those two numbers, the resultant number can be also found in another pair in the first third of the key. Hence by iteratively XORing the previous two numbers in the pair and searching for the resulting value, one can recover the keystream and hence the flag in the same manner as Steroid Stream. 
+
+<p> <b>Flag :</b> pbctf{super_duper_easy_brute_forcing_actually_this_one_was_made_by_mistake} </p>
+
