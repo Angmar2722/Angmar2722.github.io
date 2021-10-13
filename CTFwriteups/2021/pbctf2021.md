@@ -159,3 +159,11 @@ $$ \therefore J_0 \quad = \quad GHASH_H(IV) \quad = \quad B_1 \cdot H^5 \ + \ B_
 Using the token example above, let us divide it into blocks of 16 bytes:
 
 ![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/img8.png)
+
+We can see from the 5 blocks above that we would want to change the second block (the one which is fully composed of some of the random 16 bytes in hex) as well as the fourth block as we would want to set the false to true. The rest of the blocks could remain the same, including the padding as the length of the different target IV should equal the original. 
+
+As a result, we can define our second target IV such that:
+
+$$ Let \ IV^I \ = \ B_1 \ \Vert \ B_2^I \ \Vert \ B_3 \ \Vert \ B_4^I \ \Vert \ B_5 $$
+
+$$ GHASH_H^I(IV) \ = \ B_1 \cdot H^5 \ + \ B_2^I \cdot H^4 \ + \ B_3 \cdot H^3 \ + \ B_4^I \cdot H^2 \ + \ B_5 \cdot H $$
