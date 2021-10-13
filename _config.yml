@@ -20,7 +20,7 @@ navbar-links:
   #Elliptic Curve Cryptography Notes:
       #- Introduction To ECC: "/CryptoNotes/ECC/intro/eccIntro"
       
-  Lattice Notes: "/CryptoNotes/LatticeNotes/latticeNotes/"
+  #Lattice Notes: "/CryptoNotes/LatticeNotes/CTBlatticeNotes/"
 
   CTF Writeups: "/CTFwriteups/mainPage"
 
