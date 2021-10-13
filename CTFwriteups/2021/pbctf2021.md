@@ -114,3 +114,7 @@ Obviously we are most interested in how the \\(GHASH_H \\) function works (hence
 Reading page 12 of the NIST documentation, the algorithm which defines \\(GHASH_H \\) is clearly outlined. Given the hash subkey \\( H \\), it is defined as follows:
 
 $$ Let \quad \ X \ = \ X_1 \ \Vert X_2 \ \Vert X_3 \ \Vert \ ... \ \Vert X_{i - 1} \ \Vert X_i \quad \text{where} \  X_i \ \text{corresponds to some block in a sequence} $$
+
+$$ \therefore \ GHASH_H \quad = \quad X_1 \cdot H^i \ \oplus \ X_2 \cdot H^{i - 1} \ \oplus \ ... \ \oplus \ X_{i - 1} \cdot H^2 \ \oplus \ X_i \cdot H $$
+
+
