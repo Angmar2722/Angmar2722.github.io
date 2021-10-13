@@ -117,4 +117,6 @@ $$ Let \quad \ X \ = \ X_1 \ \Vert X_2 \ \Vert X_3 \ \Vert \ ... \ \Vert X_{i - 
 
 $$ \therefore \ GHASH_H \quad = \quad X_1 \cdot H^i \ \oplus \ X_2 \cdot H^{i - 1} \ \oplus \ ... \ \oplus \ X_{i - 1} \cdot H^2 \ \oplus \ X_i \cdot H $$
 
+Note that in GCM, our arithmetic operations are conducted in the field \\( GF(2^128) \\) where it is defined by the polynomial \\( x^{128} \ + \ x^7 \ + \ x^2 \ + \ x \ +1 \\) hence the addition operation is equivalent to XOR.
+
 
