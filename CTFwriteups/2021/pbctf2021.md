@@ -176,4 +176,81 @@ $$ B_2^I \cdot H^2 \ + \ B_4^I \ = \ B_2 \cdot H^2 \ + \ B_4 $$
 
 $$ \therefore B_2^I \ = \ \frac{B_2 \cdot \ H^2 \ - \ B_4^I}{H^2} $$
 
-Here since all terms on the right hand side are constant, by solving for \\( B_2^I \\), we would be able to find the correct configuration of bytes to change in block 2 in order to make the \\( J_0s \\) equal (note that the changed block 4 will always be constant as we know the true has to be changed to false).
+Here since all terms on the right hand side are constant, by solving for \\( B_2^I \\), we would be able to find the correct configuration of bytes to change in block 2 in order to make the \\( J_0s \\) equal (note that the changed block 4 will always be constant as we know the true has to be changed to false). We can prove that this works by running the following test script in Sage (note that the file `test.py` referenced to earlier is used as the import) :
+
+```py
+
+import os
+from bitstring import BitArray, Bits
+from Crypto.Cipher import AES 
+from Crypto.Util.number import *
+from test import *
+
+def bytes_to_element(val, field, a): 
+    bits = BitArray(val) 
+    result = field.fetch_int(0) 
+    for i in range(len(bits)): 
+        if bits[i]: 
+            result += a^i 
+    return result
+
+P.<x> = PolynomialRing(GF(2))
+p = x^128 + x^7 + x^2 + x + 1
+GFghash.<a> = GF(2^128,'x',modulus=p)
+
+key = b"goodhashGOODHASH"
+
+hash_subkey = AES.new(key, AES.MODE_ECB).encrypt(b'\x00'*16)
+H_bf = bytes_to_element(hash_subkey, GFghash, a)
+nonce = b'{"token": "d3271b732403d742fa1e617d24c741c8", "admin": false}'
+
+fill = (16 - (len(nonce) % 16)) % 16 + 8
+ghash_in = (nonce +
+                b'\x00' * fill +
+                long_to_bytes(8 * len(nonce), 8))
+
+a1, a2, a3, a4, a5 = [ghash_in[i:i+16] for i in range(0, len(ghash_in), 16)]
+assert all(len(b) == 16 for b in [a1, a2, a3, a4, a5])
+a1_bf, a2_bf, a3_bf, a4_bf, a5_bf = [bytes_to_element(x, GFghash, a) for x in [a1, a2, a3, a4, a5]]
+
+a4_prime_bf = bytes_to_element(b'dmin": true }', GFghash, a)
+a2_prime_bf = (a2_bf*H_bf^2 + a4_bf - a4_prime_bf) / H_bf^2
+a2_prime = long_to_bytes(BitArray(a2_prime_bf.polynomial().list()).uint)
+a4_prime = long_to_bytes(BitArray(a4_prime_bf.polynomial().list()).uint)
+
+print("-"*25 + "nonces" + "-"*25)
+print(a1 + a2 + a3 + a4 + a5)
+print(a1 + a2_prime + a3 + a4_prime + a5)
+
+print("-"*25 + "computed hashes" + "-"*25)
+print(long_to_bytes(BitArray((a1_bf*H_bf^5 + a2_bf*H_bf^4 + a3_bf*H_bf^3 + a4_bf*H_bf^2 + a5_bf*H_bf).polynomial().list()).uint))
+print(long_to_bytes(BitArray((a1_bf*H_bf^5 + a2_prime_bf*H_bf^4 + a3_bf*H_bf^3 + a4_prime_bf*H_bf^2 + a5_bf*H_bf).polynomial().list()).uint))
+
+assert a1_bf*H_bf^5 + a2_bf*H_bf^4 + a3_bf*H_bf^3 + a4_bf*H_bf^2 + a5_bf*H_bf == a1_bf*H_bf^5 + a2_prime_bf*H_bf^4 + a3_bf*H_bf^3 + a4_prime_bf*H_bf^2 + a5_bf*H_bf
+
+print("-"*25 + "J0s" + "-"*25)
+
+J0 = getJ0((a1 + a2 + a3 + a4)[:-3])
+J0_PRIME = getJ0(a1 + a2_prime + a3 + a4_prime)
+print(f"J0       is {J0}")
+print(f"J0_PRIME is {J0_PRIME}")
+
+assert J0 == J0_PRIME
+
+print("-"*25 + "ciphertexts" + "-"*25)
+
+CT1 = digest((a1 + a2 + a3 + a4)[:-3])
+CT2 = digest(a1 + a2_prime + a3 + a4_prime)
+print(f"CT1 is {CT1}")
+print(f"CT2 is {CT2}")
+
+assert CT1 == CT2
+
+print("-"*25 + "New Nonce" + "-"*25)
+print(f"New diff nonce is {a1 + a2_prime + a3 + a4_prime + a5}")
+
+```
+
+Running this script yields us this new nonce:
+
+![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/img9.png)
