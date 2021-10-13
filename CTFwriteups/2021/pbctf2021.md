@@ -170,7 +170,7 @@ $$ \therefore J_0 \ = \ GHASH_H^I(IV) \ = \ B_1 \cdot H^5 \ + \ B_2^I \cdot H^4 
 
 By cancelling the common terms from the equations for \\( GHASH_H(IV) \\) and \\( GHASH_H(IV^I) \\) constructed above, we have:
 
-$$ B_2^I \cdot H^4 \ + \ + B_4^I \cdot H^2 \ = \ B_2 \cdot H_4 \ + \ B_4 \cdot H^2 $$ 
+$$ B_2^I \cdot H^4 \ + \ B_4^I \cdot H^2 \ = \ B_2 \cdot H_4 \ + \ B_4 \cdot H^2 $$ 
 
 $$ B_2^I \cdot H^2 \ + \ B_4^I \ = \ B_2 \cdot H^2 \ + \ B_4 $$
 
