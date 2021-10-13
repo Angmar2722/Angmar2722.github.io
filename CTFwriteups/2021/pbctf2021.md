@@ -154,7 +154,7 @@ Hence since we have 5 blocks of 16 bytes (as the length is 80 bytes), we have:
 
 $$ Let \ IV \ = \ B_1 \ \Vert \ B_2 \ \Vert \ B_3 \ \Vert \ B_4 \ \Vert \ B_5 $$
 
-$$ \therefore J_0 \quad = \quad GHASH_H(IV) \quad = \quad B_1 \cdot H^5 \ + \ B_2 \cdot H^4 \ + \ B_3 \cdot H^3 \ + \ B_4 \cdot H^2 \ + \ B_5 \cdot H $$
+$$ \therefore J_0 \ = \ GHASH_H(IV) \ = \ B_1 \cdot H^5 \ + \ B_2 \cdot H^4 \ + \ B_3 \cdot H^3 \ + \ B_4 \cdot H^2 \ + \ B_5 \cdot H $$
 
 Using the token example above, let us divide it into blocks of 16 bytes:
 
