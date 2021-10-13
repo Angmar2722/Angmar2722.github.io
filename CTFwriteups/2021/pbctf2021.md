@@ -107,7 +107,7 @@ $$ \text{Let} \quad s \ = \ (len(IV) \ mod \ 128)) \ mod \ 128 $$
 
 $$ J_0 \ = \ GHASH_H(IV \ \Vert \ 0^{s \ + \ 64} \ \Vert \ len(IV)_{64} \ ) $$
 
-Here \\( H \\) is known as the hash subkey as will always be constant as it is simply the block cipher encryption (in our case AES) of 16 bytes or 128 bits of zeroes. The block \\( J_0 \\) is the pre-counter block and is constructed such that the IV is padded with the minimum number of 0 bits until the result is a multiple of 16 bytes (the block size). 
+Here \\( H \\) is known as the hash subkey and it will always be constant as it is simply the block cipher encryption (in our case AES) of 16 bytes or 128 bits of zeroes. The block \\( J_0 \\) is the pre-counter block and is constructed such that the IV is padded with the minimum number of 0 bits until the result is a multiple of 16 bytes (the block size). 
 
 Obviously we are most interested in how the \\(GHASH_H \\) function works as if we can feed in two different IVs which can produce the same \\( GHAS_H \\), we would have produced two same ciphertexts and hence a collision (assuming the encryption key is constant as it is in our case). 
 
