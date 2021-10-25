@@ -350,7 +350,7 @@ $$ a^{\phi(n)} \ \equiv \ 1 \ (mod  \ n) \quad (a \in \mathbb{Z}^+, \quad \text{
 
 As a result, one can state that :
 
-$$ a^{b^c} \ (mod \ n) \equiv \ a^{b^c \ \text{mod} \ \phi(n)} \ mod \ (n) \quad (a, b, c \in \mathbb{Z}^+, \quad \text{gcd(a and b and c, \ n}) \ = \ 1)$$
+$$ a^{b^c} \ (mod \ n) \equiv \ a^{b^c \ \text{mod} \ \phi(n)} \ mod \ (n) \quad (a, b, c \in \mathbb{Z}^+, \quad \text{gcd(a and b and c, n}) \ = \ 1)$$
 
 Since we have even more exponents in our case, we would be forming a chain of totitents in a similar manner to the expression shown above where in the case for the next exponent, the totient of the totient would be used. We used this logic to make our solve script :
 
