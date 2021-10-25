@@ -299,7 +299,7 @@ print(r.recvall())
 
 ## Super VDF
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img2.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img2.png)
 
 The source code provided :
 
@@ -414,7 +414,7 @@ print(r.recvall())
 
 ## Elliptigo
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img3.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img3.png)
 
 The source code provided :
 
