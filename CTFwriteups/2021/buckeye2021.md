@@ -784,7 +784,7 @@ for possibleFlag in pts:
 
 ![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img7.png)
 
-The source code provided :
+The server source code provided :
 
 ```python
 
@@ -835,4 +835,100 @@ diffie_hellman(FLAG)
 
 ```
 
-Cool challenge which again involved exploiting points of low order. We aren't given the public key of the other person so we can't compute the shared secret.
+Cool challenge which again involved exploiting the concept of a low order. We aren't given the public key of the other person so we can't compute the shared secret. However by taking a consecutive set of modular square roots of 1 with respect to the prime `p`, one can generate a public key `B` which only has an order of 4 hence having only 4 possible values of the key which is used to encrypt the flag.
+
+The solve script :
+
+```python
+
+from pwn import *
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+
+
+while True:
+    debug = False
+    r = remote("crypto.chall.pwnoh.io", 13386, level = 'debug' if debug else None)
+
+    r.recvuntil('p = ')
+    p = int(r.recvline())
+    assert isPrime(p)
+
+    if ((p-1) % 4 != 0):
+        continue
+
+    g = 5
+    B = Mod(Mod(1, p).sqrt(all=True)[1], p).sqrt(all=True)[1]
+    print(f"B is {B}")
+
+    try:
+        r.sendlineafter('Give me your public key B: ', str(B))
+        r.recvuntil('ciphertext = ')
+        ct = r.recvline(keepends=False).decode()
+    except EOFError:
+        continue
+    
+    for a in range(4):
+
+        key = hashlib.sha1(long_to_bytes(pow(B, a, p))).digest()[:16]
+        cipher = AES.new(key, AES.MODE_ECB)
+
+        try:
+            possibleFlag = cipher.decrypt(bytes.fromhex(ct))
+            if b'buckeye{' in possibleFlag:
+                print(possibleFlag)
+                exit()
+        except Exception:
+            print("Error encountered :(")
+            pass
+
+#b'buckeye{sup3r_dup3r_t1ny_m1cr0sc0p1c_subgr0up5!}'
+
+```
+
+<p> <b>Flag :</b> buckeye{r0ots_0f_uN1Ty_w0rk_f0r_th1s???} </p>
+
+<br/>
+
+## Ret4win
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img8.png)
+
+The source code provided :
+
+```c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+__attribute__((constructor)) void ignore_me() {
+    setbuf(stdin, NULL);
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
+}
+
+void win(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+    char* cmd = "cat flag.txt";
+    if (arg0 == 0xdeadbeef && arg1 == 0xcafebabe && arg2 == 0xbeeeeeef &&
+        arg3 == 0x13333337 && arg4 == 0x12345678 && arg5 == 0xabcdefed) {
+        system(cmd);
+    }
+}
+
+void vuln() {
+    char buf[32];
+    puts("Please leave a message at the tone: **beep**");
+    read(0, buf, 32 + 8 + 16);
+    close(0);
+}
+
+int main() {
+    vuln();
+    return 0;
+}
+
+```
+
+The accompanying challenge files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/buckeye2021/pwn/ret4win" target="_blank">here</a>.
+
