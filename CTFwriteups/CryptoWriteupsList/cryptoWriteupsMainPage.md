@@ -13,7 +13,7 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 | Challenge | CTF | Category | Solves |  
 | ------------- |  --- | --- | ------: |
 |[Key Exchange](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange-2) | Buckeye 2021 | Diffie-Hellman | 141/505 |
-|[Key Exchange 2](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange) | Buckeye 2021 | Diffie-Hellman, Lagrange's Theorem, Small Subgroup | 141/505 |
+|[Key Exchange 2](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange) | Buckeye 2021 | Diffie-Hellman, Lagrange's Theorem, Small Subgroup | 34/505 |
 |[Defective RSA](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#defective-rsa) | Buckeye 2021 | RSA, Flawed Exponent, Roots of Unity modulo n | 33/505 |
 |[Elliptigo](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#elliptigo) | Buckeye 2021 | ECC, Points of low order | 21/505 |
 |[Super VDF](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#super-vdf) | Buckeye 2021 | Pollard's p-1 factorization, Euler's Theorem | 15/505 |
