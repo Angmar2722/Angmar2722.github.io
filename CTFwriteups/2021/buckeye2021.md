@@ -27,7 +27,7 @@ Below are the writeups :
 |[Ret4win](#ret4win) | Pwn | 90 | 58 | 
 |[Buttons](#buttons) | Rev | 85 | 166 | 
 |[Key Exchange](#key-exchange) | Crypto | 40 | 141 | 
-|[Survey](#survey) | Crypto | 1 | 52 | 
+|[Survey](#survey) | Misc | 1 | 52 | 
 |[Sanity Check](#sanity-check) | Misc | 1 | 426 | 
 
 <br/>
