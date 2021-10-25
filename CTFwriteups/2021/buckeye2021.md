@@ -36,7 +36,7 @@ Below are the writeups :
 
 ## Pseudo
 
-![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img1.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img1.png)
 
 The server source Code provided :
 
