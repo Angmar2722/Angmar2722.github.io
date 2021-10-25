@@ -542,3 +542,95 @@ if __name__ == "__main__":
 
 ```
 
+We have to provide a point which lies on this Elliptic curve after which a secret scalar multiple is calculated and multiplied with that point. The result is then hashed and used as a key to encrypt the flag using AES. We found <a href="https://crypto.stackexchange.com/questions/82078/curve25519-montgomery-curves-points-with-order-8" target="_blank">this thread</a> which explains how to compute points of low order for a given Elliptic curve and coincidentally, the example used was for a point which has an order of 8 and can hence generate only a really finite set of possible values when any integer is multiplied with that point. 
+
+Using the given values in that thread directly using (the same curve25519 was used) as well as the curve in our challenge, we found that only 2 values were nearly always occuring after multiplying the point with some random integer `a` hence we have two possible keys which can be used to decrypt the flag.
+
+The solve script :
+
+```python
+
+from pwn import *
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from Crypto.Util.number import size, long_to_bytes
+import hashlib
+
+#https://crypto.stackexchange.com/questions/82078/curve25519-montgomery-curves-points-with-order-8
+
+debug = True
+r = remote("crypto.chall.pwnoh.io", 13373, level = 'debug' if debug else None)
+
+x = 57896044618658097711785492504343953926634992332820282019728792003956564819948
+
+r.sendlineafter('x: ', str(x))
+
+ct = bytes.fromhex(r.recvline(keepends=False).decode())
+
+a1 = 57896044618658097711785492504343953926634992332820282019728792003956564819948
+a2 = 0
+
+k1 = hashlib.sha1(long_to_bytes(a1)).digest()[:16]
+k2 = hashlib.sha1(long_to_bytes(a2)).digest()[:16]
+cipher1 = AES.new(k1, AES.MODE_ECB)
+cipher2 = AES.new(k2, AES.MODE_ECB)
+pt1 = cipher1.decrypt(pad(ct, 16))
+pt2 = cipher2.decrypt(pad(ct, 16))
+print(pt1)
+print(pt2)
+
+#b'buckeye{p01nt5_0f_l0w_0rd3r}\x04\x04\x04\x04\xb9+\xc6I\xfd\x89\x7f\xcb\x92\xaeQC\x9fw,\x1f'
+#b'\xd3&R\xddu~\xa1IL\xee \xf4\x9fE>A&I\xb5\x88P<LW\xcc\xee\x8d\xed\x9e\n\xaf!n\x9d\x9d\xbe\xdd\xe2\xd5\xb6TU\x85\xd0\x9er%\xc9'
+
+```
+
+I managed to solve this challenge really fast and hence got first blood!
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img4.png)
+
+<p> <b>Flag :</b> buckeye{p01nt5_0f_l0w_0rd3r} </p>
+
+<br/>
+
+## Neurotic
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img5.png)
+
+The source code provided :
+
+```python
+
+import torch
+from torch import nn
+import numpy as np
+from functools import reduce
+import base64
+
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super(NeuralNetwork, self).__init__()
+        self.stack = nn.Sequential(*([nn.Linear(8, 8, bias=False)] * 7))
+
+    def forward(self, x):
+        x = self.stack(x)
+        return x
+
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model = NeuralNetwork().to(device)
+torch.save(model.state_dict(), "model.pth")
+
+flag = b"buckeye{???????????????????????????????????????????????????????}"
+assert len(flag) == 64
+X = np.reshape(list(flag), (8, 8)).astype(np.float32)
+
+Xt = torch.from_numpy(X).to(device)
+Y = model(Xt).detach().numpy()
+
+print(base64.b64encode(Y).decode())
+# Output: 1VfgPsBNALxwfdW9yUmwPpnI075HhKg9bD5gPDLvjL026ho/xEpQvU5D4L3mOso+KGS7vvpT5T0FeN284inWPXyjaj7oZgI8I7q5vTWhOj7yFEq+TtmsPaYN7jxytdC9cIGwPti6ALw28Pm9eFZ/PkVBV75iV/U9NoP4PDoFn72+rI8+HHZivMwJvr2s5IQ+nASFvhoW2j1+uHE98MbuvdSNsT4kzrK82BGLvRrikz6oU66+oCGCPajDmzyg7Q69OjiDPvQtnjxwWw2+IB9ZPmaCLb4Mwhc+LimEPXXBQL75OQ8/ulQUvZZMsr3iO88+ZHz3viUgLT2U/d68C2xYPQ==
+
+```
