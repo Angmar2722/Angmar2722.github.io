@@ -936,7 +936,9 @@ We can obviously overflow the buffer in `vuln` as the program reads more than 32
 
 The solve script :
 
-```pyfrom pwn import *
+```py
+
+from pwn import *
 
 winAddr = 0x4011e0
 raxSysCall = 0x401245
