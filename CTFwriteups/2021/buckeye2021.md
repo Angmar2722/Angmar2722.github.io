@@ -975,7 +975,7 @@ Hence going by that route, one can obtain the flag.
 
 ## Key Exchange
 
-![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img8.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img11.png)
 
 The server source code provided :
 
@@ -1071,7 +1071,7 @@ print(cipher.decrypt(bytes.fromhex(ct)))
 
 ## Survey
 
-![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img11.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img12.png)
 
 Fill out the survey to get the flag.
 
@@ -1081,7 +1081,7 @@ Fill out the survey to get the flag.
 
 ## Sanity Check
 
-![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img12.png)
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img13.png)
 
 Find the flag in the Discord server.
 
