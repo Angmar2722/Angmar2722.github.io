@@ -6,7 +6,9 @@ title: Buckeye 2021 CTF Writeup
 
 ![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/logo.png)
 
-I participated in <a href="https://ctftime.org/event/1434" target="_blank">Ohio State University's Buckeye CTF 2021</a> event, playing as part of Social Engineering Experts over the weekend (Sat, 23 Oct. 2021, 08:00 SGT — Mon, 25 Oct. 2021, 08:00 SGT). The CTF went really well for us and this is my best performance in terms of ranking in any CTF that I have gone for yet. In the end we ranked 7<sup>th</sup> out of 505 scoring teams.
+I participated in <a href="https://ctftime.org/event/1434" target="_blank">Ohio State University's Buckeye CTF 2021</a> event, playing as part of Social Engineering Experts over the weekend (Sat, 23 Oct. 2021, 08:00 SGT — Mon, 25 Oct. 2021, 08:00 SGT). The CTF went really well for us and this is my best performance in terms of ranking in any CTF that I have gone for yet. I think that we would have done even better if our teammates had more time since we only had 4 team members actively participating in the CTF of which some were busy most of the time anyways.
+
+In the end we ranked 7<sup>th</sup> out of 505 scoring teams :
 
 ![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/scoreboard.png)
 
