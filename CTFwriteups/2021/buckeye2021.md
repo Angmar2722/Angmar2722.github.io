@@ -295,4 +295,250 @@ print(r.recvall())
 
 <p> <b>Flag :</b> buckeye{f3rm4t_l13d_t0_m3_0mg} </p>
 
+<br/>
+
+## Super VDF
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img2.png)
+
+The source code provided :
+
+```python
+
+from gmpy2 import is_prime, mpz
+from random import SystemRandom
+
+rand = SystemRandom()
+PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]
+
+
+def get_prime(bit_length):
+    while True:
+        x = mpz(1)
+        while x.bit_length() < bit_length:
+            x *= rand.choice(PRIMES)
+        if is_prime(x + 1):
+            return x + 1
+
+
+def get_correct_answer():
+    # Implementation redacted
+    return -1
+
+
+p = get_prime(1024)
+q = get_prime(1024)
+n = p * q
+
+print(f"n = {n}")
+print("Please calculate (59 ** 59 ** 59 ** 59 ** 1333337) % n")
+ans = int(input(">>> "))
+
+if ans == get_correct_answer():
+    print("WTF do you own a supercomputer? Here's your flag:")
+    print("buckeye{????????????????????????????????????}")
+else:
+    print("WRONG")
+
+```
+
+The objective of this challenge is to calculate `(59 ** 59 ** 59 ** 59 ** 1333337) % n` where `n` is a semiprime as it is a product of two 1024 bit primes `p` and `q`. Due to how the primes are generated where `p - 1` is a product of some of the primes in the list of `PRIMES` shown in the code above, it means that at most, `p` would be 53-smooth hence Pollard's p-1 factorisation algorithm could be used to factor `n` instantly. As a result, we could obtain `p` and `q` and hence calculate the totient \\( \phi(n) \\).
+
+After that, a clever use of Euler's theorem could be used to compute the desired result. The theorem states that :
+
+$$ a^{\phi(n)} \ \equiv \ 1 \ (mod  \ n) \quad (a \in \mathbb{Z}^+, \quad \text{gcd(a, n}) \ = \ 1)$$
+
+As a result, one can state that :
+
+$$ a^{b^c} \ (mod \ n) \equiv \ a^{b^c \ \text{mod} \ \phi(n)} \ mod \ (n) \quad (a, b, c \in \mathbb{Z}^+, \quad \text{gcd(a and b and c, \ n}) \ = \ 1)$$
+
+Since we have even more exponents in our case, we would be forming a chain of totitents in a similar manner to the expression shown above where in the case for the next exponent, the totient of the totient would be used. We used this logic to make our solve script :
+
+```python
+
+from pwn import *
+from Crypto.Util.number import *
+
+debug = False
+r = remote("crypto.chall.pwnoh.io", 13376, level = 'debug' if debug else None)
+
+payload = 1
+
+r.recvuntil('n = ')
+n = int(r.recvline().decode())
+
+#Pollard's p-1 factorisation algorithm
+def factor(n):
+    a = 2
+    b = 2
+    while True:
+        if b % 10000 == 0:
+            pass
+            
+        a = pow(a, b, n)
+            
+        p = GCD(a - 1, n)
+        if 1 < p < n:
+            print("FOUND prime factor")
+            return p
+            
+        b += 1
+
+p = factor(n)
+q = n // p
+assert n == p * q
+
+#Please calculate (59 ** 59 ** 59 ** 59 ** 1333337) % n)
+
+#https://math.stackexchange.com/questions/3558102/how-to-compute-333-phantom-bmod-46-for-pow/3559055
+from sympy.ntheory import totient
+
+assert GCD(59, n) == 1
+
+phi = (p - 1) * (q - 1)
+secondPhi = totient(phi)
+thirdPhi = totient(secondPhi)
+fourthPhi = totient(thirdPhi)
+
+answer = pow(59, (pow(59, (pow(59, (pow(59, 1333337 % fourthPhi, thirdPhi)), secondPhi)), phi)), n)
+r.sendlineafter('>>> ', str(answer))
+
+print(r.recvall())
+#b"WTF do you own a supercomputer? Here's your flag:\nbuckeye{phee_phi_pho_phum_v3ry_stup1d_puzzle}\n"
+
+```
+
+<p> <b>Flag :</b> buckeye{phee_phi_pho_phum_v3ry_stup1d_puzzle} </p>
+
+<br/>
+
+## Elliptigo
+
+![Redpwn 2021 Writeup](/assets/img/ctfImages/2021/redpwn2021/img3.png)
+
+The source code provided :
+
+```python
+
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from Crypto.Util.number import size, long_to_bytes
+import os
+import hashlib
+from collections import namedtuple
+
+FLAG = b"buckeye{???????????????????}"
+
+Point = namedtuple("Point", ("x", "z"))
+Curve = namedtuple("Curve", ("a", "b"))
+
+p = 2 ** 255 - 19
+C = Curve(486662, 1)
+
+"""
+Implements the Montgomery Ladder from https://eprint.iacr.org/2017/212.pdf
+"""
+
+
+def point_add(P: Point, Q: Point, D: Point) -> Point:
+    """
+    Algorithm 1 (xADD)
+    """
+    V0 = (P.x + P.z) % p
+    V1 = (Q.x - Q.z) % p
+    V1 = (V1 * V0) % p
+    V0 = (P.x - P.z) % p
+    V2 = (Q.x + Q.z) % p
+    V2 = (V2 * V0) % p
+    V3 = (V1 + V2) % p
+    V3 = (V3 * V3) % p
+    V4 = (V1 - V2) % p
+    V4 = (V4 * V4) % p
+    x = (D.z * V3) % p
+    z = (D.x * V4) % p
+    return Point(x, z)
+
+
+def point_double(P: Point) -> Point:
+    """
+    Algorithm 2 (xDBL)
+    """
+    V1 = (P.x + P.z) % p
+    V1 = (V1 * V1) % p
+    V2 = (P.x - P.z) % p
+    V2 = (V2 * V2) % p
+    x = (V1 * V2) % p
+    V1 = (V1 - V2) % p
+    V3 = (((C.a + 2) // 4) * V1) % p
+    V3 = (V3 + V2) % p
+    z = (V1 * V3) % p
+    return Point(x, z)
+
+
+def scalar_multiplication(P: Point, k: int) -> Point:
+    """
+    Algorithm 4 (LADDER)
+    """
+
+    if k == 0:
+        return Point(0, 0)
+
+    R0, R1 = P, point_double(P)
+    for i in range(size(k) - 2, -1, -1):
+        if k & (1 << i) == 0:
+            R0, R1 = point_double(R0), point_add(R0, R1, P)
+        else:
+            R0, R1 = point_add(R0, R1, P), point_double(R1)
+    return R0
+
+
+def normalize(P: Point) -> Point:
+    if P.z == 0:
+        return Point(0, 0)
+
+    return Point((P.x * pow(P.z, -1, p)) % p, 1)
+
+
+def legendre_symbol(x: int, p: int) -> int:
+    return pow(x, (p - 1) // 2, p)
+
+
+def is_on_curve(x: int) -> bool:
+    y2 = x ** 3 + C.a * x ** 2 + C.b * x
+    return legendre_symbol(y2, p) != (-1 % p)
+
+
+def main():
+    print("Pick a base point")
+    x = int(input("x: "))
+
+    if size(x) < 245:
+        print("Too small!")
+        return
+
+    if x >= p:
+        print("Too big!")
+        return
+
+    if not is_on_curve(x):
+        print("That x coordinate is not on the curve!")
+        return
+
+    P = Point(x, 1)
+
+    a = int.from_bytes(os.urandom(32), "big")
+    A = scalar_multiplication(P, a)
+    A = normalize(A)
+
+    key = hashlib.sha1(long_to_bytes(A.x)).digest()[:16]
+
+    cipher = AES.new(key, AES.MODE_ECB)
+    ciphertext = cipher.encrypt(pad(FLAG, 16))
+    print(ciphertext.hex())
+
+
+if __name__ == "__main__":
+    main()
+
+```
 
