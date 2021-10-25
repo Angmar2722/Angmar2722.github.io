@@ -634,3 +634,91 @@ print(base64.b64encode(Y).decode())
 # Output: 1VfgPsBNALxwfdW9yUmwPpnI075HhKg9bD5gPDLvjL026ho/xEpQvU5D4L3mOso+KGS7vvpT5T0FeN284inWPXyjaj7oZgI8I7q5vTWhOj7yFEq+TtmsPaYN7jxytdC9cIGwPti6ALw28Pm9eFZ/PkVBV75iV/U9NoP4PDoFn72+rI8+HHZivMwJvr2s5IQ+nASFvhoW2j1+uHE98MbuvdSNsT4kzrK82BGLvRrikz6oU66+oCGCPajDmzyg7Q69OjiDPvQtnjxwWw2+IB9ZPmaCLb4Mwhc+LimEPXXBQL75OQ8/ulQUvZZMsr3iO88+ZHz3viUgLT2U/d68C2xYPQ==
 
 ```
+
+The accompanying `model.pth` file cna be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/buckeye2021/rev/neurotic/model.pth" target="_blank">here</a>.
+
+If you are like me and have no idea how neural networks work, I would suggest watching <a href="" target="_blank">this video</a> which provides a high level overview of how they work. In this challenge, an 8x8 array of the ASCII values of the flag is multiplied with the transposed matrix of some random weights from the model 7 times and used as 'ciphertext'. We are provided with this model. Note that no bias is added and the matrices are also not chucked into the sigmoid function as that is not part of the class definition of `nn.Linear`.
+
+Since `nn.linear(a, b)` <a href="https://stackoverflow.com/questions/54916135/what-is-the-class-definition-of-nn-linear-in-pytorch" target="_blank">is just a series of matrix multiplications</a> between the weights and inputs, we could perform the reverse in order to reach the original state (the numpy array of ASCII characters of the flag). This is confirmed by reading the <a href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html" target="_blank">PyTorch documentation</a> and was also mentioned in the video linked above.
+
+We generated a neat neural network graph which shows the steps needed (a series of matrix inverses and transpositions of the weight) to reverse this process using <a href="https://github.com/waleedka/hiddenlayer
+" target="_blank">hiddenlayer</a> :
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/model.png)
+
+Applying the inverse and transposition of the weights and multiplying it with the end state (the ciphertext) 7 times as that is how many modules there are, we managed to retrieve the original ASCII characters and hence obtain the flag : 
+
+```python
+
+import torch
+from torch import nn
+import numpy as np
+from functools import reduce
+import base64
+import numpy as np
+
+model = torch.load(open("model.pth", "rb"))
+w = list(model.values())[0]
+w = np.matrix(w.numpy())
+print(w)
+
+given = "1VfgPsBNALxwfdW9yUmwPpnI075HhKg9bD5gPDLvjL026ho/xEpQvU5D4L3mOso+KGS7vvpT5T0FeN284inWPXyjaj7oZgI8I7q5vTWhOj7yFEq+TtmsPaYN7jxytdC9cIGwPti6ALw28Pm9eFZ/PkVBV75iV/U9NoP4PDoFn72+rI8+HHZivMwJvr2s5IQ+nASFvhoW2j1+uHE98MbuvdSNsT4kzrK82BGLvRrikz6oU66+oCGCPajDmzyg7Q69OjiDPvQtnjxwWw2+IB9ZPmaCLb4Mwhc+LimEPXXBQL75OQ8/ulQUvZZMsr3iO88+ZHz3viUgLT2U/d68C2xYPQ=="
+
+print("Trying to decode to Y :")
+r = base64.decodebytes(given.encode())
+q = np.frombuffer(r, dtype=np.float32)
+O = np.matrix(np.reshape(q, (8, 8)).astype(np.float32))
+print(O)
+
+""" Basically what's happening in nn.linear which we need to invert
+ans = X
+for i in range(7):
+    ans = ans*w.T
+print(ans)
+"""
+ans = O
+winv = np.linalg.inv(w.T)
+for i in range(7):
+    ans = ans*winv
+
+flagList = [i for i in np.array(ans.reshape((1, 64)))][0]
+
+print(bytes([int(round(i)) for i in flagList]))
+#b'buckeye{w41t_1ts_4ll_m4tr1x_mult1pl1cat10n????_4lwy4y5_h4s_b33n}'
+
+```
+
+<p> <b>Flag :</b> buckeye{w41t_1ts_4ll_m4tr1x_mult1pl1cat10n????_4lwy4y5_h4s_b33n} </p>
+
+<br/>
+
+## Defective RSA
+
+![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img6.png)
+
+The source code provided :
+
+```python
+
+from Crypto.Util.number import getPrime, inverse, bytes_to_long
+
+e = 1440
+
+p = getPrime(1024)
+q = getPrime(1024)
+n = p * q
+
+flag = b"buckeye{???????????????????????????????}"
+c = pow(bytes_to_long(flag), e, n)
+
+print(f"e = {e}")
+print(f"p = {p}")
+print(f"q = {q}")
+print(f"c = {c}")
+
+# e = 1440
+# p = 108625855303776649594296217762606721187040584561417095690198042179830062402629658962879350820293908057921799564638749647771368411506723288839177992685299661714871016652680397728777113391224594324895682408827010145323030026082761062500181476560183634668138131801648343275565223565977246710777427583719180083291
+# q = 124798714298572197477112002336936373035171283115049515725599555617056486296944840825233421484520319540831045007911288562132502591989600480131168074514155585416785836380683166987568696042676261271645077182221098718286132972014887153999243085898461063988679608552066508889401992413931814407841256822078696283307
+# c = 4293606144359418817736495518573956045055950439046955515371898146152322502185230451389572608386931924257325505819171116011649046442643872945953560994241654388422410626170474919026755694736722826526735721078136605822710062385234124626978157043892554030381907741335072033672799019807449664770833149118405216955508166023135740085638364296590030244412603570120626455502803633568769117033633691251863952272305904666711949672819104143350385792786745943339525077987002410804383449669449479498326161988207955152893663022347871373738691699497135077946326510254675142300512375907387958624047470418647049735737979399600182827754
+
+```
