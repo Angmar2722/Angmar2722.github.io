@@ -116,7 +116,7 @@ To generate a valid pseudoprime (a composite which passes the primality test), o
 
 $$ a^{n-1} \ \equiv \ 1 \ (mod  \ n) \quad (a \in \mathbb{Z}^+, \quad \text{gcd(a, n}) \ = \ 1)$$
 
-Here since the base \\( a \\) is a random number between 2 and \\( n \\), we have no way of veifying whether \\( \text{gcd(a, n) \ = \ 1 \\). As a result, we need to generate strong pseudoprimes which could be done by using a script which generates Miller-Rabin pseudoprimes which we found online. Using the process outlined above, we managed to get the flag.
+Here since the base \\( a \\) is a random number between 2 and \\( n \\), we have no way of veifying whether \\( \text{gcd(a, n)} \ = \ 1 \\). As a result, we need to generate strong pseudoprimes which could be done by using a script which generates Miller-Rabin pseudoprimes which we found online. Using the process outlined above, we managed to get the flag.
 
 Our solve script :
 
