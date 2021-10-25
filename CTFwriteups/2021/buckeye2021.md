@@ -40,7 +40,7 @@ Below are the writeups :
 
 ![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img1.png)
 
-The server source Code provided :
+The server source code provided :
 
 ```python
 
