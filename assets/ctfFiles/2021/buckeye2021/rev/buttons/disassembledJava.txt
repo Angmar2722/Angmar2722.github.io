@@ -1,0 +1,230 @@
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public final class Buttons extends JFrame implements ActionListener {
+  private static final int[][] grid = new int[][] { 
+      { 
+        1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1 }, { 
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 
+        0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
+        1 }, { 
+        1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 
+        1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 
+        1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+        1 }, { 
+        1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 
+        1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+        1 }, { 
+        1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 
+        1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 
+        1 }, { 
+        1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 
+        1 }, { 
+        1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 
+        1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+        1 }, 
+      { 
+        1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 
+        1 }, { 
+        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
+        1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
+        1 }, { 
+        1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 
+        1 }, { 
+        1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 
+        1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 
+        0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 
+        1 }, { 
+        1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 
+        1 }, { 
+        1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
+        1 }, { 
+        1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 
+        1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 
+        1 }, { 
+        1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+        1 }, 
+      { 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 
+        1 } };
+  
+  private final int rows;
+  
+  private final int cols;
+  
+  private final JLabel movesLabel;
+  
+  private final JButton resetButton;
+  
+  private final JButton[][] buttons;
+  
+  private int posRow;
+  
+  private int posCol;
+  
+  private final int endRow;
+  
+  private final int endCol;
+  
+  private static final int MAX_MOVES = 139;
+  
+  private ArrayList<Integer> moveHistory;
+  
+  public static void main(String[] paramArrayOfString) throws Exception {
+    new Buttons();
+  }
+  
+  public Buttons() {
+    super("Buttons!");
+    resetValues();
+    this.rows = grid.length;
+    this.cols = (grid[0]).length;
+    this.endRow = this.rows - 1;
+    this.endCol = this.cols - 2;
+    JPanel jPanel1 = new JPanel();
+    jPanel1.setLayout(new BoxLayout(jPanel1, 3));
+    JPanel jPanel2 = new JPanel(new GridLayout(this.rows, this.cols));
+    JPanel jPanel3 = new JPanel();
+    this.buttons = new JButton[this.rows][this.cols];
+    for (byte b = 0; b < this.rows; b++) {
+      for (byte b1 = 0; b1 < this.cols; b1++) {
+        this.buttons[b][b1] = new JButton("?");
+        this.buttons[b][b1].addActionListener(this);
+        this.buttons[b][b1].setActionCommand(
+            Integer.toString(b1 + b * this.cols));
+        jPanel2.add(this.buttons[b][b1]);
+      } 
+    } 
+    this.buttons[this.endRow][this.endCol].setText(");
+    jPanel2.setPreferredSize(new Dimension(45 * this.rows, 45 * this.cols));
+    this.movesLabel = new JLabel("Moves left: 20");
+    jPanel3.add(this.movesLabel);
+    this.resetButton = new JButton("Reset");
+    this.resetButton.addActionListener(this);
+    this.resetButton.setActionCommand("reset");
+    jPanel3.add(this.resetButton);
+    jPanel1.add(jPanel2);
+    jPanel1.add(jPanel3);
+    resetGUI();
+    getContentPane().add(jPanel1);
+    pack();
+    setDefaultCloseOperation(3);
+    setVisible(true);
+  }
+  
+  private void resetValues() {
+    this.posRow = 0;
+    this.posCol = 1;
+    this.moveHistory = new ArrayList<>();
+    this.moveHistory.add(Integer.valueOf(this.posCol + this.posRow * this.cols));
+  }
+  
+  private void updateMovesLeft() {
+    this.movesLabel.setText("Moves left: " + 
+        Integer.toString(139 - this.moveHistory.size()));
+  }
+  
+  private void resetGUI() {
+    for (byte b = 0; b < this.rows; b++) {
+      for (byte b1 = 0; b1 < this.cols; b1++)
+        this.buttons[b][b1].setEnabled(true); 
+    } 
+    for (Iterator<Integer> iterator = this.moveHistory.iterator(); iterator.hasNext(); ) {
+      int i = ((Integer)iterator.next()).intValue();
+      int j = i / this.cols;
+      int k = i % this.cols;
+      this.buttons[j][k].setEnabled(false);
+    } 
+    updateMovesLeft();
+  }
+  
+  private void reset() {
+    resetValues();
+    resetGUI();
+  }
+  
+  private boolean isLegalMove(int paramInt1, int paramInt2) {
+    if (139 - this.moveHistory.size() <= 0)
+      return false; 
+    return (grid[paramInt1][paramInt2] == 0 && 
+      
+      Math.abs(paramInt1 - this.posRow) + Math.abs(paramInt2 - this.posCol) == 1);
+  }
+  
+  private void printFlag() {
+    BigInteger[] arrayOfBigInteger = new BigInteger[this.moveHistory.size()];
+    arrayOfBigInteger[0] = BigInteger.valueOf(2L);
+    for (byte b1 = 1; b1 < arrayOfBigInteger.length; b1++)
+      arrayOfBigInteger[b1] = arrayOfBigInteger[b1 - 1].nextProbablePrime(); 
+    BigInteger bigInteger1 = BigInteger.valueOf(1L);
+    BigInteger bigInteger2 = new BigInteger("1430313837704837266267655033918654049072573502772041995300810633148485540425442305963378206448908414865491202671058946396326575688430628383447817933039379");
+    for (byte b2 = 0; b2 < this.moveHistory.size(); b2++) {
+      BigInteger bigInteger = BigInteger.valueOf(((Integer)this.moveHistory.get(b2)).intValue());
+      bigInteger1 = bigInteger1.multiply(arrayOfBigInteger[b2].modPow(bigInteger, bigInteger2)).mod(bigInteger2);
+    } 
+    BigInteger bigInteger3 = new BigInteger("1181624346478884506978387685027501257422054115549381320819711748725513305918055802813085700551988448885328987653245675378090761255233757606571908411691314");
+    BigInteger bigInteger4 = bigInteger3.multiply(bigInteger1).mod(bigInteger2);
+    byte[] arrayOfByte = bigInteger4.toByteArray();
+    String str = new String(arrayOfByte, StandardCharsets.UTF_8);
+    JOptionPane.showMessageDialog(this, "Congrats! The flag is: " + str, "Flag", 1);
+    System.out.println(str);
+  }
+  
+  public void actionPerformed(ActionEvent paramActionEvent) {
+    String str = paramActionEvent.getActionCommand();
+    if (str.equals("reset")) {
+      reset();
+    } else {
+      int i = Integer.parseInt(str);
+      int j = i / this.cols;
+      int k = i % this.cols;
+      if (isLegalMove(j, k)) {
+        this.buttons[j][k].setEnabled(false);
+        this.posRow = j;
+        this.posCol = k;
+        this.moveHistory.add(Integer.valueOf(i));
+        System.out.println(this.moveHistory);
+        updateMovesLeft();
+        if (this.posRow == this.endRow && this.posCol == this.endCol)
+          printFlag(); 
+      } else {
+        JOptionPane.showMessageDialog(this, "Illegal move, you lose , "Illegal move", 0);
+        reset();
+      } 
+    } 
+  }
+}
