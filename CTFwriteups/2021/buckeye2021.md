@@ -585,7 +585,7 @@ print(pt2)
 
 ```
 
-I managed to solve this challenge really fast and hence got first blood!
+I solved this challenge really fast (in around 15 minutes) and hence managed to get first blood!
 
 ![Buckeye 2021 CTF Writeup](/assets/img/ctfImages/2021/buckeye2021/img4.png)
 
