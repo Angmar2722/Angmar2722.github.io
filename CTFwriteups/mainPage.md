@@ -33,7 +33,9 @@ Below are the writeups :
 
 <br/>
 
-Sometimes I have very little time but still try to play a bit for some CTFs. Below is some writeups for those (many times I make random team names) :
+Sometimes I have very little time but still try to play for a bit for some CTFs. Below is my writeups for those (many times I make random team names). Note that the writeup quality varies wildly :
+
+<br/>
 
 | CTF Writeup | Weight | 
 | ------------- |  ---: | 
