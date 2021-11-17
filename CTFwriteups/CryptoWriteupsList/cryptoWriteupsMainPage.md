@@ -65,7 +65,7 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 
 <!-- **Note :** T -->
 
-**Note: ** The "🩸" denotes first blood on that challenge.
+**Note :** The "🩸" denotes first blood on that challenge.
 
 
 
