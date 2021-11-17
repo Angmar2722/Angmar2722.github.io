@@ -14,11 +14,11 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 | ------------- |  --- | --- | ------: |
 |[Pryby](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#pryby) | K3RN3L CTF 2021 | Custom | 96/501 |
 |[Pascal RSA](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#pascal-rsa) | K3RN3L CTF 2021 | Lucas's Theorem, RSA | 75/501 |
-|[Tick Tock](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#tick-tock) | K3RN3L CTF 2021 | Discrete Log Of Genus 0 Curves | 6/501 |
+|[Tick Tock 🩸](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#tick-tock) | K3RN3L CTF 2021 | Discrete Log Of Genus 0 Curves | 6/501 |
 |[Key Exchange](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange-2) | Buckeye 2021 | Diffie-Hellman | 141/505 |
 |[Key Exchange 2](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange) | Buckeye 2021 | Diffie-Hellman, Lagrange's Theorem, Small Subgroup | 34/505 |
 |[Defective RSA](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#defective-rsa) | Buckeye 2021 | RSA, Flawed Exponent, Roots of Unity modulo n | 33/505 |
-|[Elliptigo](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#elliptigo) | Buckeye 2021 | ECC, Points of low order | 21/505 |
+|[Elliptigo 🩸](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#elliptigo) | Buckeye 2021 | ECC, Points of low order | 21/505 |
 |[Super VDF](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#super-vdf) | Buckeye 2021 | Pollard's p-1 factorization, Euler's Theorem | 15/505 |
 |[Pseudo](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#pseudo) | Buckeye 2021 | Miller-Rabin Pseudoprimes, Legendre Symbol | 15/505 |
 |[Alkaloid Stream](https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/#alkaloid-stream) | Perfect Blue 2021 | Custom Scheme | 132/210 |
@@ -64,6 +64,8 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 <br/>
 
 <!-- **Note :** T -->
+
+Note: The "🩸" denotes first blood on that challenge.
 
 
 
