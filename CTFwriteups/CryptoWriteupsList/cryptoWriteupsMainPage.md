@@ -13,7 +13,7 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 | Challenge | CTF | Category | Solves |  
 | ------------- |  --- | --- | ------: |
 |[Pryby](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#pryby) | K3RN3L CTF 2021 | Custom | 96/501 |
-|[Pascal RSA](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#pascal-rsa) | K3RN3L CTF 2021 | Lucas's Theorem, RSA | 75/501 |
+|[Pascal RSA](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#pascal-rsa) | K3RN3L CTF 2021 | Lucas's Theorem, RSA | 75/501 &#1FA78 |
 |[Tick Tock](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/#tick-tock) | K3RN3L CTF 2021 | Discrete Log Of Genus 0 Curves | 6/501 |
 |[Key Exchange](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange-2) | Buckeye 2021 | Diffie-Hellman | 141/505 |
 |[Key Exchange 2](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange) | Buckeye 2021 | Diffie-Hellman, Lagrange's Theorem, Small Subgroup | 34/505 |
