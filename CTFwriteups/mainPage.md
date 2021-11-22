@@ -37,7 +37,7 @@ Sometimes I have very little time but still try to play for a bit for some CTFs.
 
 | CTF Writeup | Weight | 
 | ------------- |  ---: | 
-|[K3RN3L CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/) | TBD |
+|[K3RN3L CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/) | 24.50 |
 
 <br/>
 
