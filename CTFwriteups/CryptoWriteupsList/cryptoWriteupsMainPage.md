@@ -50,7 +50,7 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 |[Blecc](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#blecc) | Redpwn CTF 2021 | ECC, Discrete Log | 146/1418 |
 |[Yahtzee](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#blecc) | Redpwn CTF 2021 | AES-CTR Weak Nonce, Chosen Plaintext Attack | 103/1418 |
 |[Scrambled-Elgs](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#scrambled-elgs) | Redpwn CTF 2021 | Custom Encryption, Sage | 70/1418 |
-|[Keeper-of-the-Flag](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#keeper-of-the-flag) | Redpwn CTF 2021 | DSA, Flawed Implementation, SHA-1 Collisions | 42/1418 |
+|[Keeper-of-the-Flag](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#keeper-of-the-flag) | Redpwn CTF 2021 | DSA, Biased Nonce, SHA-1 Collisions | 42/1418 |
 |[Retrosign](https://angmar2722.github.io/CTFwriteups/2021/redpwn2021/#retrosign) | Redpwn CTF 2021 | Ong-Schnorr-Shamir Signature System | 26/1418 |
 |[Queen-Of-The-Hill](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#queen-of-the-hill) | HSCTF 2021 | Hill Cipher | 514/1165 |
 |[Opisthocomus-Hoazin](https://angmar2722.github.io/CTFwriteups/2021/hsctf2021/#opisthocomus-hoazin) | HSCTF 2021 | Char Brute-force, RSA | 376/1165 |
