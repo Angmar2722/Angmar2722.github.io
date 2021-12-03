@@ -33,16 +33,6 @@ Below are the writeups :
 
 <br/>
 
-Sometimes I have very little time but still try to play for a bit for some CTFs. Below is my writeups for those (many times I make random team names). Note that the writeup quality varies wildly :
-
-| CTF Writeup | Weight | 
-| ------------- |  ---: | 
-|[K3RN3L CTF 2021](https://angmar2722.github.io/CTFwriteups/2021/k3rn3l2021/) | 24.50 |
-
-<br/>
-
-<br/>
-
 **Note :** The rating points are calculated by <a href="https://ctftime.org/rating-formula/" target="_blank">CTFtime</a>.
 
 **Note :** Since I mainly specialise in cryptography related challenges, a list of writeups for all crypto related challenges that I have solved during the duration of a CTF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/CTFwriteups/CryptoWriteupsList/cryptoWriteupsMainPage.md" target="_blank">here</a>.
