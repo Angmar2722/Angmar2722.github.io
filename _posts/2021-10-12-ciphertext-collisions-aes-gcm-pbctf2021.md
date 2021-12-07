@@ -9,7 +9,7 @@ tags: [Cryptography, AES-GCM, Ciphertext Collisions]
 
 ![Perfect Blue 2021 Writeup](/assets/img/ctfImages/2021/pbctf2021/logo.png)
 
-This is my writeup for the challenge 'Good Hash' from Perfect Blue CTF 2021. The complete writeup which indlucdes my writeups for some other challenges can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/" target="_blank">here</a>.
+This is my writeup for the challenge 'Good Hash' from Perfect Blue CTF 2021. The complete writeup which includes my writeups for some other challenges in the CTF can be found <a href="https://angmar2722.github.io/CTFwriteups/2021/pbctf2021/" target="_blank">here</a>.
 
 <br/>
 
