@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Crypto Writeups
+title: 2021 Crypto Writeups
 ---
 <hr/>
 
 <!-- ![Crypto Writeups Main Page](/assets/img/cryptoWriteupImages/ecdsa.png) -->
 
-My first ever cryptography related challenge solve in a CTF was <a href="https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/#1n-jection" target="_blank">1n-Jection</a> in Zh3r0 CTF 2021. Since then I have solved many more. Below is a list of writeups for all the cryptography related challenges that I have solved in CTFs :
+My first ever cryptography related challenge solve in a CTF was <a href="https://angmar2722.github.io/CTFwriteups/2021/zh3r02021/#1n-jection" target="_blank">1n-Jection</a> in Zh3r0 CTF 2021. Since then I have solved many more. Below is a list of writeups for all the cryptography related challenges that I have solved in CTFs in 2021 :
 
 <br/>
 
