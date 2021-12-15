@@ -12,6 +12,13 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 
 | Challenge | CTF | Category | Solves |  
 | ------------- |  --- | --- | ------: |
+|[Rotting Fruits](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#rotting-fruits) | idek 2021 | Caesar Cipher | 178/235 |
+|[Nameless](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#nameless) | idek 2021 | RSA, Quadratic Polynomials | 64/235 |
+|[Hashbrown](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#hashbrown) | idek 2021 | Hashes, Bruteforce | 45/235 |
+|[Seed of Life](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#seed-of-life) | idek 2021 | Random Seeds, Bruteforce | 31/235 |
+|[Polyphenol](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#polyphenol) | idek 2021 | LLL | 21/235 |
+|[Destroyed RSA 🩸](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#destroyed-rsa) | idek 2021 | RSA, Complex Multiplication Factorization, Flawed Exponent | 16/235 |
+|[EccRoll](https://angmar2722.github.io/CTFwriteups/2021/idek2021/#eccroll) | idek 2021 | ECC, Quadratic Residues | 14/235 |
 |[Key Exchange](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange-2) | Buckeye 2021 | Diffie-Hellman | 141/505 |
 |[Key Exchange 2](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#key-exchange) | Buckeye 2021 | Diffie-Hellman, Lagrange's Theorem, Small Subgroup | 34/505 |
 |[Defective RSA](https://angmar2722.github.io/CTFwriteups/2021/buckeye2021/#defective-rsa) | Buckeye 2021 | RSA, Flawed Exponent, Roots of Unity modulo n | 33/505 |
