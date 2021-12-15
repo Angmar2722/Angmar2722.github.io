@@ -14,7 +14,7 @@ Below are the writeups (only displayed for the current year) :
 
 | CTF Writeup | Weight | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-| Taking A Break From CTFs Till Mid May 2021 |  --- | --- | ------ | ----- |
+| Taking A Break From CTFs Till Mid May 2022 |  --- | --- | ------ | ----- |
 
 <br/>
 
