@@ -22,9 +22,7 @@ Below are the writeups (only displayed for the current year) :
 
 Directory for CTF writeups for previous years :
 
-| Year | Main Teams |
-| ------------- |  ---: |
-|[2021](https://angmar2722.github.io/CTFwriteups/YearList/2021/) | Social Engineering Experts, Isengard |
+- <a href="https://ctftime.org/team/151372"<2021</a>
 
 <br/>
 
