@@ -1,30 +1,498 @@
 ---
 layout: page
-title: K3RN3L 2021 CTF Writeup
+title: Random CTF Solves (2021) 
 ---
 <hr/>
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/logo.png)
-
-Me and Diamondroxxx played in <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L4RMY's 2021 CTF</a> over the weekend (Sat, 13 Nov. 2021, 01:00 SGT — Sun, 14 Nov. 2021, 12:59 SGT). We started playing with the team name 'ecc' and switched it to Isengard later on. Since we both had a lot of work to do, we didn't spend as much time on this CTF as we usually do. There were a whopping 19 crypto challenges of which we solved only 3. The DSA challenge 'Objection' sucked up a lot of our time hence we didn't spend as much time on some other challenges as we would have liked.
-
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/img1.png)
+Due to a lack of time or due to playing another CTF which was occuring at the same time, I couldn't really spend much time at all for some CTFs. Below is the directory for some solve scripts for random cryptography challenges that I solved during the duration of such CTFs :
 
 Below are the writeups :
 
-| Challenge | Category | Points | Solves | 
+| Challenge | CTF | Weight | Category | Solves | 
 | ------------- |  ------- | --- | ---: |
-|[Tick Tock](#tick-tock) | Crypto | 497 | 6 | 
-|[Pascal RSA](#pascal-rsa) | Crypto | 100 | 75 |
-|[Pryby](#pryby) | Crypto | 100 | 96 |
+|[oOoOoO](#oooooo) | <a href="https://ctftime.org/event/1458" target="_blank">SECCON 2021</a> | 92.67 | Crypto | 26/506 | 
+|[So Easy RSA](#so-easy-rsa) | <a href="https://ctftime.org/event/1460" target="_blank">HITCON 2021</a> | 88.98 | Crypto | 56/288 | 
+|[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | Crypto | 60/741 | 
+|[Crypto Warm Up](#crypto-warm-up) | ASIS Quals 2021 | 89.22 | Crypto | 147/741 | 
+|[Tick Tock 🩸](#tick-tock) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L CTF 2021</a> | 24.37 | Crypto | 6/501 | 
+|[Pascal RSA](#pascal-rsa) | K3RN3L CTF 2021 |  | Crypto | 75/501 |
+|[Pryby](#pryby) | K3RN3L CTF 2021 |  | Crypto | 96/501 |
+
+Note : The "🩸" denotes first blood on that challenge.
 
 <br/>
+
+<br/>
+
+## SECCON 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img1.png)
+
+Proof of solves during duration of CTF :
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img1.png)
+
+Joined 4 hours into CTF starting but was still 6<sup>th</sup> solve.
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img2.png)
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img16.png)
+
+<br/>
+
+## oOoOoO
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img3.png)
+
+Source Code provided :
+
+```py
+
+import signal
+from Crypto.Util.number import long_to_bytes, bytes_to_long, getPrime
+import random
+from flag import flag
+
+message = b""
+for _ in range(128):
+    message += b"o" if random.getrandbits(1) == 1 else b"O"
+
+M = getPrime(len(message) * 5)
+S = bytes_to_long(message) % M
+
+print("M =", M)
+print('S =', S)
+print('MESSAGE =', message.upper().decode("utf-8"))
+
+signal.alarm(600)
+ans = input('message =').strip().encode()
+
+if ans == message:
+    print(flag)
+else:
+    print("🧙")
+    
+```
+
+Solve script :
+
+```py
+
+from sage.modules.free_module_integer import IntegerLattice
+from Crypto.Util.number import bytes_to_long, long_to_bytes
+
+# Directly taken from rbtree's LLL repository
+# From https://oddcoder.com/LOL-34c3/, https://hackmd.io/@hakatashi/B1OM7HFVI
+def Babai_CVP(mat, target):
+	M = IntegerLattice(mat, lll_reduce=True).reduced_basis
+	G = M.gram_schmidt()[0]
+	diff = target
+	for i in reversed(range(G.nrows())):
+		diff -=  M[i] * ((diff * G[i]) / (G[i] * G[i])).round()
+	return target - diff
+
+def solve(mat, lb, ub, weight = None):
+	num_var  = mat.nrows()
+	num_ineq = mat.ncols()
+
+	max_element = 0 
+	for i in range(num_var):
+		for j in range(num_ineq):
+			max_element = max(max_element, abs(mat[i, j]))
+
+	if weight == None:
+		weight = num_ineq * max_element
+
+    # sanity checker
+	if len(lb) != num_ineq:
+		print("Fail: len(lb) != num_ineq")
+		return
+
+	if len(ub) != num_ineq:
+		print("Fail: len(ub) != num_ineq")
+		return
+
+	for i in range(num_ineq):
+		if lb[i] > ub[i]:
+			print("Fail: lb[i] > ub[i] at index", i)
+			return
+
+    	# heuristic for number of solutions
+	DET = 0
+
+	if num_var == num_ineq:
+		DET = abs(mat.det())
+		num_sol = 1
+		for i in range(num_ineq):
+			num_sol *= (ub[i] - lb[i])
+		if DET == 0:
+			print("Zero Determinant")
+		else:
+			num_sol //= DET
+			# + 1 added in for the sake of not making it zero...
+			print("Expected Number of Solutions : ", num_sol + 1)
+
+	# scaling process begins
+	max_diff = max([ub[i] - lb[i] for i in range(num_ineq)])
+	applied_weights = []
+
+	for i in range(num_ineq):
+		ineq_weight = weight if lb[i] == ub[i] else max_diff // (ub[i] - lb[i])
+		applied_weights.append(ineq_weight)
+		for j in range(num_var):
+			mat[j, i] *= ineq_weight
+		lb[i] *= ineq_weight
+		ub[i] *= ineq_weight
+
+	# Solve CVP
+	target = vector([(lb[i] + ub[i]) // 2 for i in range(num_ineq)])
+	result = Babai_CVP(mat, target)
+
+	for i in range(num_ineq):
+		if (lb[i] <= result[i] <= ub[i]) == False:
+			print("Fail : inequality does not hold after solving")
+			break
+    
+    	# recover x
+	fin = None
+
+	if DET != 0:
+		mat = mat.transpose()
+		fin = mat.solve_right(result)
+	
+	## recover your result
+	return result, applied_weights, fin
+
+
+from pwn import *
+
+debug = False
+r = remote("oooooo.quals.seccon.jp", 8000, level = 'debug' if debug else None)
+
+r.recvuntil('M = ')
+M = int(r.recvline().decode())
+
+assert is_prime(M)
+
+r.recvuntil('S = ')
+S = int(r.recvline().decode())
+
+k = (S - 79*sum(256^i for i in range(128))) * inverse_mod(32, M)
+k = k % M
+
+n = 129
+
+MAT = [[0 for _ in range(n)] for _ in range(n)]
+for i in range(n-1):
+	MAT[i][i] = 1
+
+for j in range(n-1):
+	MAT[j][n-1] = 256^j
+
+MAT[n-1][n-1] = M
+
+MAT = Matrix(MAT)
+
+lb = [0 for _ in range(n-1)] + [k]
+ub = [1 for _ in range(n-1)] + [k]
+
+res, weights, _ = solve(MAT, lb, ub)
+
+msg = ''.join(["o" if x else "O" for x in res[:-1]])[::-1]
+
+assert (bytes_to_long(msg.encode()) % M) == S
+
+r.sendlineafter("message =", msg)
+
+print(r.recvline())
+
+#b'SECCON{Here_is_Huge-Huge_Island_yahhoOoOoOoOoOoO}\n'
+
+```
+
+<p> <b>Flag :</b> SECCON{Here_is_Huge-Huge_Island_yahhoOoOoOoOoOoO} </p>
+
+<br/>
+
+<br/>
+
+## HITCON 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img4.png)
+
+Proof of solves during duration of CTF :
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img5.png)
+
+<br/>
+
+## So Easy RSA
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img17.png)
+
+Source Code provided :
+
+```py
+
+from gmpy2 import next_prime, is_prime
+from random import randint
+from Crypto.Util.number import bytes_to_long
+
+class Rand:
+    def __init__(self):
+        self.seed = randint(2, 2**512)
+        self.A = next_prime(randint(2, 2**512))
+        self.B = next_prime(randint(2, 2**512))
+        self.M = next_prime(randint(2, 2**512))
+        for _ in range(10000):
+            self.next()
+    
+    def next(self):
+        self.seed = self.seed * self.A + self.B
+        self.seed = self.seed % self.M
+        return self.seed
+
+    def __str__(self):
+        return f"{self.A}, {self.B}, {self.M}"
+        
+
+def gen_prime(r):
+    while True:
+        v = r.next()
+        if is_prime(v):
+            return v
+
+r = Rand()
+p,q = gen_prime(r), gen_prime(r)
+n = p*q
+e = 65537
+flag = bytes_to_long(open('flag','rb').read())
+val = pow(flag, e, n)
+
+print(n)
+print(r)
+print(val)
+
+```
+
+The accompanying output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hitcon2021/soEasyRSA/data" target="_blank">here</a>.
+
+Used <a href="https://www.nayuki.io/page/fast-skipping-in-a-linear-congruential-generator" target="_blank">this link</a> to solve. Solve script :
+
+```py
+
+from Crypto.Util.number import *
+from tqdm import tqdm
+import cysignals
+
+N = 198148795890507031730221728469492521085435050254010422245429012501864312776356522213014006175424179860455397661479243825590470750385249479224738397071326661046694312629376866307803789411244554424360122317688081850938387121934893846964467922503328604784935624075688440234885261073350247892064806120096887751
+a, b, m = 1677936292368545917814039483235622978551357499172411081065325777729488793550136568309923513362117687939170753313352485633354858207097035878077942534451467, 5687468800624594128838903842767411040727750916115472185196475570099217560998907467291416768835644005325105434981167565207313702286530912332233402467314947, 1244793456976456877170839265783035368354692819005211513409129011314633866460250237897970818451591728769403864292158494516440464466254909969383897236264921
+ct = 48071438195829770851852911364054237976158406255022684617769223046035836237425012457131162001786019505606941050117178190535720928339364199078329207393922570246678871062386142183424414041935978305046280399687623437942986302690599232729065536417757505209285175593543234585659130582659013242346666628394528555
+e = 65537
+
+def getFlag(p):
+    q = N // p
+    d = inverse(e, (q- 1) * (p - 1))
+    print(long_to_bytes(pow(ct, d, N)))
+    exit()
+
+for k in tqdm(range(1, 10000)):
+
+    M = Integers(m)
+
+    A = M(a ^ k)
+    B = M(((a^k - 1) // (a - 1))*b) 
+
+    try:
+        deltaSqrt1, deltaSqrt2 = Mod((B^2) + 4*A*N, m).sqrt(all=True)
+        p1 = int((-B + deltaSqrt1) * inverse_mod(int(2*A), m)) 
+        p2 = int((-B + deltaSqrt2) * inverse_mod(int(2*A), m)) 
+    except TypeError:
+        #print("Type error")
+        continue
+    except NotImplementedError:
+        #print("Not implemented hello")
+        continue
+    except cysignals.signals.SignalError:
+        continue
+
+    if N % p1 == 0:
+        getFlag(p1)
+    elif N % p2 == 0:
+        getFlag(p2)
+
+else:
+    print("k not found :( ")
+
+#b'hitcon{so_weak_randomnessssss}\n'
+
+```
+
+<p> <b>Flag :</b> hitcon{so_weak_randomnessssss} </p>
+
+<br/>
+
+<br/>
+
+## ASIS Quals 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img7.png)
+
+Proof of solves during duration of CTF :
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img8.png)
+
+<br/>
+
+## Spiritual
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img12.png)
+
+The solve script :
+
+```py
+
+from pwn import *
+from Crypto.Util.number import *
+
+
+debug = True
+r = remote("168.119.108.148", 13010, level = 'debug' if debug else None)
+
+#https://crypto.stackexchange.com/questions/27904/how-to-determine-the-order-of-an-elliptic-curve-group-from-its-parameters
+def V_n(n, t, q):
+    a = 2
+    b = t
+    for i in range(2, n+1):
+        a, b = b, t*b-q*a
+    return b
+
+
+while True:
+    r.recvuntil('p = ')
+    p = int(r.recvline())
+    assert isPrime(p)
+
+    r.recvuntil('k = ')
+    k = int(r.recvline())
+
+    r.recvuntil("What's the number of elements of E over finite field GF(p**n) where n = ")
+    n = int(r.recvline(keepends=False)[:-1])
+    print(n)
+
+    t = p + 1 - k
+
+    payload = p^n + 1 - V_n(n, t, p)
+
+    r.sendline(str(payload))
+
+    print(r.recvline())
+
+#b'Congrats, you got the flag: .:: ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} ::.\n'
+
+```
+
+<p> <b>Flag :</b> ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} </p>
+
+<br/>
+
+## Spiritual
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img12.png)
+
+The source code provided :
+
+```py
+
+#!/usr/bin/env python3
+
+from Crypto.Util.number import *
+import string
+from secret import is_valid, flag
+
+def random_str(l):
+	rstr = ''
+	for _ in range(l):
+		rstr += string.printable[:94][getRandomRange(0, 93)]
+	return rstr
+
+def encrypt(msg, nbit):
+	l, p = len(msg), getPrime(nbit)
+	rstr = random_str(p - l)
+	msg += rstr
+	while True:
+		s = getRandomNBitInteger(1024)
+		if is_valid(s, p):
+			break
+	enc = msg[0]
+	for i in range(p-1):
+		enc += msg[pow(s, i, p)]
+	return enc
+
+nbit = 15
+enc = encrypt(flag, nbit)
+print(f'enc = {enc}')
+
+```
+
+The accompanying output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/asis2021/cryptoWarmup/output.txt" target="_blank">here</a>.
+
+The solve script :
+
+```py
+
+from Crypto.Util.number import *
+import string
+import ast
+
+with open("output.txt", "r") as f:
+    temp = f.read()
+
+enc = temp[6:]
+p = len(enc)
+assert isPrime(p)
+
+def getAllPrimiteRoots(n):
+    f = Integers(n)
+    firstGenerator = f(primitive_root(n))
+    totient = euler_phi(n)
+    return [firstGenerator ^ i for i in range(1, totient) if gcd(i, totient) == 1]
+    
+primitiveRoots = getAllPrimiteRoots(p)
+
+for s in primitiveRoots:
+    possibleFlag = 'AS'
+    for i in range(2, 5):
+        possibleFlag += enc[Integers(p)(i).log(s) + 1]
+    if possibleFlag != "ASIS{":
+        continue
+    for i in range(5, p-1):
+        possibleFlag += enc[Integers(p)(i).log(s) + 1]
+    print(possibleFlag[:64])
+
+#ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!}
+
+```
+
+<p> <b>Flag :</b> ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!} </p>
+
+<br/>
+
+<br/>
+
+## K3RN3L CTF 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/k3rn3Llogo.png)
+
+Proof of solves during duration of CTF :
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img11.png)
 
 <br/>
 
 ## Tick Tock
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/img2.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img12.png)
 
 Source Code provided :
 
@@ -336,9 +804,9 @@ print(flag)
 
 We managed to first blood this challenge (at the time our time name was 'ecc') :
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/img3.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img13.png)
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/firstBlood.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/firstBlood.png)
 
 <p> <b>Flag :</b> flag{c0m1ng_up_w1th_4_g00d_fl4g_1s_qu1t3_d1ff1cult_und3r_4ll_th1s_t1m3_pr3ssur3} </p>
 
@@ -346,7 +814,7 @@ We managed to first blood this challenge (at the time our time name was 'ecc') :
 
 ## Pascal RSA
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/img4.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img14.png)
 
 Source Code provided :
 
@@ -434,7 +902,7 @@ print(long_to_bytes(pow(enc, d, N)))
 
 ## Pryby
 
-![K3RN3L CTF 2021 Writeup](/assets/img/ctfImages/2021/k3rn3l2021/img5.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img15.png)
 
 The provided source code :
 
