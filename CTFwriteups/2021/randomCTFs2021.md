@@ -394,9 +394,9 @@ while True:
 
 <br/>
 
-## Spiritual
+## Crypto Warm Up
 
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img12.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img10.png)
 
 The source code provided :
 
