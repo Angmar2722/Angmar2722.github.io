@@ -15,8 +15,8 @@ Below are the writeups :
 |[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | Crypto | 60/741 | 
 |[Crypto Warm Up](#crypto-warm-up) | ASIS Quals 2021 | 89.22 | Crypto | 147/741 | 
 |[Tick Tock 🩸](#tick-tock) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L CTF 2021</a> | 24.37 | Crypto | 6/501 | 
-|[Pascal RSA](#pascal-rsa) | K3RN3L CTF 2021 |  | Crypto | 75/501 |
-|[Pryby](#pryby) | K3RN3L CTF 2021 |  | Crypto | 96/501 |
+|[Pascal RSA](#pascal-rsa) | K3RN3L CTF 2021 | 24.37 | Crypto | 75/501 |
+|[Pryby](#pryby) | K3RN3L CTF 2021 | 24.37 | Crypto | 96/501 |
 
 Note : The "🩸" denotes first blood on that challenge.
 
