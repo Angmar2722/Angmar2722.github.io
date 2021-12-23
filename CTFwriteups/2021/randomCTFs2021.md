@@ -30,11 +30,9 @@ Note : The "🩸" denotes first blood on that challenge.
 
 Proof of solves during duration of CTF :
 
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img1.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img2.png)
 
 Joined 4 hours into CTF starting but was still 6<sup>th</sup> solve.
-
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img2.png)
 
 ![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img16.png)
 
