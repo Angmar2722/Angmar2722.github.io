@@ -72,7 +72,7 @@ My first ever cryptography related challenge solve in a CTF was <a href="https:/
 | Challenge | CTF | Category | Solves |  
 | ------------- |  --- | --- | ------: |
 |[oOoOoO](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#oooooo) | SECCON 2021 | LLL | 26/506 |
-|[So Easy RSA](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#so-easy-rsa) | SECCON 2021 | RSA, LCG | 56/288 |
+|[So Easy RSA](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#so-easy-rsa) | HITCON 2021 | RSA, LCG | 56/288 |
 |[Crypto Warmup](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#crypto-warmup) | ASIS Quals 2021 | Custom, Primitive Roots, Discrete Logarithms | 147/741 |
 |[Spiritual](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#spiritual) | ASIS Quals 2021 | ECC | 60/741 |
 |[Tick Tock 🩸](https://angmar2722.github.io/CTFwriteups/2021/randomCTFs2021/#tick-tock) | K3RN3L CTF 2021 | Discrete Logarithm for Genus 0 Curves | 6/501 |
