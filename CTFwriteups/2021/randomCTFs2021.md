@@ -15,10 +15,10 @@ Below are the writeups :
 |[oOoOoO](#oooooo) | <a href="https://ctftime.org/event/1458" target="_blank">SECCON 2021</a> | 92.67 | LLL | 26/506 | 
 |[So Easy RSA](#so-easy-rsa) | <a href="https://ctftime.org/event/1460" target="_blank">HITCON 2021</a> | 88.98 | RSA, LCG | 56/288 | 
 |[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | ECC | 60/741 | 
-|[Crypto Warm Up](#crypto-warm-up) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | Primitive Roots, Dlog | 147/741 | 
-|[Tick Tock 🩸](#tick-tock) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L CTF 2021</a> | 24.37 | Dlog for Genus 0 Curves | 6/501 | 
-|[Pascal RSA](#pascal-rsa) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L CTF 2021</a> | 24.37 | RSA, Lucas' Theorem | 75/501 |
-|[Pryby](#pryby) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L CTF 2021</a> | 24.37 | Custom | 96/501 |
+|[Crypto Warmup](#crypto-warmup) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | Primitive Roots, Dlog | 147/741 | 
+|[Tick Tock 🩸](#tick-tock) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | Dlog for Genus 0 Curves | 6/501 | 
+|[Pascal RSA](#pascal-rsa) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | RSA, Lucas' Theorem | 75/501 |
+|[Pryby](#pryby) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | Custom | 96/501 |
 
 Note : The "🩸" denotes first blood on that challenge.
 
@@ -396,7 +396,7 @@ while True:
 
 <br/>
 
-## Crypto Warm Up
+## Crypto Warmup
 
 ![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img10.png)
 
