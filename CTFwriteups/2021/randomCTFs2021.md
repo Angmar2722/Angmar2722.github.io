@@ -346,7 +346,7 @@ Proof of solves during duration of CTF :
 
 ## Spiritual
 
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img12.png)
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img9.png)
 
 The solve script :
 
