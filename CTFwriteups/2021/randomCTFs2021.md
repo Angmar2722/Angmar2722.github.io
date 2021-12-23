@@ -4,6 +4,8 @@ title: Random CTF Solves (2021)
 ---
 <hr/>
 
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img18.png)
+
 Due to a lack of time or due to playing another CTF which was occuring at the same time, I couldn't really spend much time at all for some CTFs. Below is the directory for some solve scripts for random cryptography challenges that I solved during the duration of such CTFs :
 
 Below are the writeups :
