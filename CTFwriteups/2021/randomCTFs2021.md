@@ -11,7 +11,7 @@ Due to a lack of time or due to playing another CTF which was occuring at the sa
 Below are the writeups :
 
 | Challenge | CTF | Weight | Solves | 
-| ------------- |  ------- | ------- | --- | ---: |
+| ------------- |  ------- | --- | ---: |
 |[oOoOoO](#oooooo) | <a href="https://ctftime.org/event/1458" target="_blank">SECCON 2021</a> | 92.67 | 26/506 | 
 |[So Easy RSA](#so-easy-rsa) | <a href="https://ctftime.org/event/1460" target="_blank">HITCON 2021</a> | 88.98 | 56/288 | 
 |[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | 60/741 | 
