@@ -4,7 +4,7 @@ title: Cracking Biased Nonces in ECDSA
 subtitle: TSG CTF 2021
 thumbnail-img: /assets/img/ctfImages/2021/tsg2021/lll-meme.jpeg
 share-img: /assets/img/path.jpg
-tags: [Cryptography, ECDSA, Biased Nonces, LLL, Lattices, EHNP]
+tags: [Cryptography, ECDSA, Biased Nonces, Black Magic]
 ---
 
 ![TSG 2021 Writeup](/assets/img/ctfImages/2021/tsg2021/logo.png)
