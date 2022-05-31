@@ -14,7 +14,7 @@ Below are the writeups (only displayed for the current year) :
 
 | CTF Writeup | Weight | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-| Taking A Break From CTFs Till Mid May 2022 |  --- | --- | ------ | ----- |
+|[Hero CTF 2022](https://angmar2722.github.io/CTFwriteups/2022/hero2022/) | 24.23 | Isengard | 82/632 | TBD |
 
 <br/>
 
