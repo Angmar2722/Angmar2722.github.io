@@ -112,7 +112,7 @@ while 1:
 
 ```
 
-When you first connect to the server, you had to provide a proof of work by running the command that they provide. This <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/hsctf2021/proofOfWork.py" target="_blank">file</a>
+When you first connect to the server, you had to provide a proof of work by running the command that they provide. This <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/hsctf2021/proofOfWork.py" target="_blank">file</a>
  is the code for the proof of work incase anyone was interested.
  
 So when we connect to the server, two 4096 bit primes are generated, a random integer (between 0 and the modulus n) message `m` is created and the corresponding ciphertext and private key `d` is generated as shown by the source code above. We have 4 options. Choosing the first option simply displays the source code shown above. The second option provides us with the public key - the modulus and public exponent (65537 in this case). The third option is the win state for obtaining the flag, we have to provide the exact private key that they used and if it matches, we get the flag. But how would we go about doing so since it is almost impossible to factor a 2048 bit RSA key, much less a 8192 bit one!!!! Well thats where the fourth option provides us with some interesting results.
