@@ -6,7 +6,7 @@ title: HSCTF CTF 2022 Writeup
 
 ![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/logo.png)
 
-I participated in the <a href="https://ctftime.org/event/1627" target="_blank">HSCTF 9 CTF</a> event, playing as part of Isengard. It was held over the weekend (Mon, 06 June 2022, 03:00 SGT — Sat, 11 June 2022, 03:00 SGT). In the end, we ranked 49<sup>th</sup> out of 804 scoring teams. I felt really bad about not being able to solve the cryptography challenge "The Vault" as I was really close to solving it.
+I participated in the <a href="https://ctftime.org/event/1627" target="_blank">HSCTF 9 CTF</a> event, playing as part of Isengard. It occurred during the week (Mon, 06 June 2022, 03:00 SGT — Sat, 11 June 2022, 03:00 SGT). In the end, we ranked 49<sup>th</sup> out of 804 scoring teams. I felt really bad about not being able to solve the cryptography challenge "The Vault" as I was really close to solving it.
 
 Below are the writeups :
 
