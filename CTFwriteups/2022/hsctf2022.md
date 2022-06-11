@@ -754,7 +754,7 @@ print("flag{"+flag+"}")
 
 ## The-Great-Directory-Egg-Hunt
 
-![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img11.png)
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img12.png)
 
 The attached zip can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/GreatDirectoryEggHunt/dir.zip" target="_blank">here</a>. I used the command `grep -rnw '.' -e 'flag{'` in Terminal in order to search for the flag.
 
@@ -764,6 +764,6 @@ The attached zip can be found <a href="https://github.com/Angmar2722/Angmar2722.
 
 ## Discord-Flag
 
-![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img12.png)
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img13.png)
 
 <p> <b>Flag :</b> flag{wait, it's all math? always has been} </p>
