@@ -4,7 +4,7 @@ title: HSCTF CTF 2022 Writeup
 ---
 <hr/>
 
-![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/logo.png)
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2021/hsctf2021/logo.png)
 
 I participated in the <a href="https://ctftime.org/event/1627" target="_blank">HSCTF 9 CTF</a> event, playing as part of Isengard. It occurred during the week (Mon, 06 June 2022, 03:00 SGT — Sat, 11 June 2022, 03:00 SGT). In the end, we ranked 49<sup>th</sup> out of 804 scoring teams. I felt really bad about not being able to solve the cryptography challenge "The Vault" as I was really close to solving it.
 
@@ -253,3 +253,517 @@ for i in range(20):
 ## Otp
 
 ![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img3.png)
+
+The attached output file can be found<a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/otp/output.txt" target="_blank">here</a>. 
+
+The source code :
+
+```py
+
+import random
+from Crypto.Util.number import bytes_to_long
+
+def secure_seed():
+	x = 0
+	# x is a random integer between 0 and 100000000000
+	for i in range(10000000000):
+		x += random.randint(0, random.randint(0, 10))
+	return x
+
+flag = open('flag.txt','rb').read()
+flag = bytes_to_long(flag)
+
+random.seed(secure_seed())
+
+l = len(bin(flag)) - 1
+print(l)
+
+k = random.getrandbits(l)
+flag = flag ^ k # super secure encryption
+print(flag)
+
+```
+
+Solve script :
+
+```py
+
+import random
+from Crypto.Util.number import long_to_bytes
+from tqdm import tqdm
+from multiprocessing import Pool
+import time
+
+l = 328
+ct = 444466166004822947723119817789495250410386698442581656332222628158680136313528100177866881816893557
+
+def check(s):
+    random.seed(s)
+    k = random.getrandbits(l)
+    if b'flag{' in long_to_bytes(k ^ ct):
+        print(f"{s=}")
+        print(f"{k=}")
+        print(long_to_bytes(k ^ ct))
+        exit()
+
+if __name__ == '__main__':
+    end = 24900000000 #Will cluster around 24.9 billion - 25.1 billion
+    for j in range(10):
+        start = end
+        end = start + 100000000
+        print(f'Trying from {start // 1000000} million to {end // 1000000} million')
+        time.sleep(1)
+        with Pool(16) as p:
+            p.map(check, tqdm([i for i in range(start, end)]))
+
+#s=25000212790
+#k=389765888090576570955475182141325089472464786538658752612177661365036722783693807156706073599907199
+#b'flag{c3ntr4l_l1m1t_th30r3m_15431008597}\r\n'
+
+```
+
+<p> <b>Flag :</b> flag{c3ntr4l_l1m1t_th30r3m_15431008597} </p>
+
+<br/>
+
+## Vending-Machine
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img4.png)
+
+The attached challenge PDF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/VendingMachine/Vending_Machine.pdf" target="_blank">here</a>.
+
+The solve script :
+
+```py
+
+from pwn import *
+import re
+from itertools import combinations, chain
+
+debug = False
+r = remote("vending-machine.hsctf.com", 1337, level = 'debug' if debug else None)
+
+r.sendlineafter(b'== proof-of-work: disabled ==\n', "Display".encode())
+
+r.recvuntil(b'Items: \n')
+itemString = r.recvuntil(b'Coins: \n')[3:-10].decode()
+items = list(map(int, (re.sub('\n.*?:', '', itemString).split())))
+coinString = r.recvuntil(b'Balance: 0\n')[3:-13].decode()
+coins = list(map(int, (re.sub('\n.*?:', '', coinString).split())))
+coinMap = dict(map(reversed, enumerate(coins)))
+itemMap = dict(map(reversed, enumerate(items)))
+#print(f"{coinMap=}")
+
+print(f"{coins=}")
+print(f"{items=}")
+print(f"Sum diff : {sum(coins)-sum(items)}")
+print("-"*105)
+
+instructionList = []
+balanceList = []
+dl = []
+
+for i in range(len(items)):
+    
+    #Around 20k is max per coin, around 60k+ is max per item
+    coinCombs = list(chain(*[list(combinations(coins, i)) for i in range(1, len(coins)+1)]))
+    dl = [1<<20]*len(items)
+    tdl = [0]*len(items)
+    sols = []
+
+    delta = dl[i]
+    for possibleComb in coinCombs:
+        if sum(possibleComb) - items[i] < delta and (sum(possibleComb) - items[i] > 0):
+            dl[i] = possibleComb
+            delta = abs(sum(possibleComb) - items[i])
+            sols = possibleComb
+
+    print("-"*105)
+    print(f"{items[i]=}")
+    print(f"Real delta : {sum(sols)-items[i]}")
+    print(f"{sols=}")
+    [coins.remove(coin) for coin in sols]
+    print(f"{coins=}")
+    print(f"sums : {sum(coins), sum(items[i+1:])}")
+    print("-"*105)
+
+    ts = 0
+
+    for coin in sols:
+        ts += coin
+        #print(f"{ts=}")
+        instructionList.append(b"Insert " + str(coinMap.get(coin) + 1).encode())
+        balanceList.append(b"Balance: " + str((ts)).encode() + b"\n")
+
+    instructionList.append(b"Buy " + str(itemMap.get(items[i]) + 1).encode())
+    balanceList.append(b'Balance: 0\n')
+
+#print(f"{instructionList=}")
+#print(f"{balanceList=}")
+
+for instruction, balance in zip(instructionList, balanceList):
+    #print(f"{instruction=}, {balance=}")
+    r.sendline(instruction)
+    r.recvuntil(balance)
+
+print(r.recvall())
+
+#b'flag{b40m1k3_15_4_f4rm3r_663471478}\n\n'
+
+```
+
+<p> <b>Flag :</b> flag{b40m1k3_15_4_f4rm3r_663471478} </p>
+
+<br/>
+
+## Atcs-Nightmare
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img5.png)
+
+The source code :
+
+```java
+
+import java.util.*;
+
+public class ATCSNightmare {
+
+	public static String stackAttack(String in) {
+		Stack<Character> s = new Stack<>();
+		for (char c: in.toCharArray())
+			s.push(c);
+		String res = "";
+		int i = 0;
+		while (!s.isEmpty()) {
+			res += (char)(s.pop() - i);
+			i = (i + 1) % 4;
+		}
+		return res;
+	}
+
+	public static String recurses(String in, String out, int i) {
+		if (in.isEmpty())
+			return out;
+		String res = out;
+		if (i == 0)
+			res += in.charAt(i);
+		else
+			res = in.charAt(i) + res;
+		if (i == 0)
+			return recurses(in.substring(1), res, 1);
+		return recurses(in.charAt(0) + in.substring(2), res, 0);
+	}
+
+	public static String linkDemLists(String in) {
+		LinkedList<Character> lin = new LinkedList<>();
+		for (char x: in.toCharArray())
+			lin.add(x);
+		String res = "";
+		ListIterator<Character> iter = lin.listIterator(in.length()/2);
+		while (iter.hasNext())
+			res += iter.next();
+		iter = lin.listIterator(in.length()/2);
+		while (iter.hasPrevious())
+			res += iter.previous();
+		return res;
+	}
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		System.out.print("Enter the flag: ");
+		String f = in.next();
+		if (f.length() == 34 && f.substring(0, 4).equals("flag") && f.charAt(33) == '}') {
+			f = f.substring(5, 33);
+			if (linkDemLists(recurses(stackAttack(f), "", 1)).equals("20_a1qti0]n/5f642kb\\2`qq4\\0q"))
+				System.out.println("Congrats! That is your flag!");
+			else
+				System.out.println("Sorry, that is incorrect.");
+		} else
+			System.out.println("Sorry, that is incorrect.");
+		in.close();
+	}
+}
+
+```
+
+Solve script :
+
+```py
+
+import textwrap
+
+fs = "20_a1qti0]n/5f642kb\\2`qq4\\0q"
+assert len(fs) == (33-5) == 28
+ro = fs[28//2:][::-1] + fs[:28//2]
+
+tl = textwrap.wrap(ro, len(ro)//2)
+h1, h2 = tl[1][::-1], tl[0]
+
+stackOut = ""
+for i in range(len(h1)):
+    stackOut = h1[i] + h2[i] + stackOut
+
+flag = ""
+wrap = 0
+for c in list(map(ord, list(stackOut))):
+    flag = chr(c+wrap) + flag
+    wrap += 1
+    if wrap == 4: wrap = 0
+
+print("flag{" + flag + "}")
+#flag{th15_15nt_r0ck3t_sc1nc3_7272}
+
+```
+
+<p> <b>Flag :</b> flag{th15_15nt_r0ck3t_sc1nc3_7272} </p>
+
+<br/>
+
+## Baby-Baby-RSA
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img6.png)
+
+The attached output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/BabyBabyRSA/output.txt" target="_blank">here</a>.
+
+Source Code :
+
+```py
+
+from Crypto.Util.number import *
+import random
+flag = open('flag.txt','rb').read()
+pt = bytes_to_long(flag)
+bits = 768
+p,q = getPrime(bits),getPrime(bits)
+n = p*q
+e = 0x10001
+print(pow(pt,e,n))
+bit_p = bin(p)[2:]
+bit_q = bin(q)[2:]
+parts = [bit_p[0:bits//3],bit_p[bits//3:2*bits//3],bit_p[2*bits//3:bits],bit_q[0:bits//3],bit_q[bits//3:2*bits//3],bit_q[2*bits//3:bits]]
+random.shuffle(parts)
+print(parts)
+
+```
+
+Solve script :
+
+```py
+
+from Crypto.Util.number import *
+from itertools import permutations
+from tqdm import tqdm
+
+ct = 54794426723900547461854843163768660308115034417111329528183606035659639395104723918632912086419836023341428265596988959206660015436864401403237748771765948022232575597127381504670391300908215025163138869313954305720403722718214862988965792884236612959443476803344992121865817757791519151566895512058656532409472494022672998848036223706004788146906885182892250477746430460414866512005225936680732094537985671236900243908114730784290372829952741399684135984046796
+rb = ['0100101100001100010110110001000001001110010110110011101111100001101100000101000011111000101110011010010100101100011111000000101010011101100101010000101101110100100010101011100110001010001000000001000110000111011110011001101111110000100010000110000001110011', '1100001100001100111110011110110101001100100000000100000100011110110010010101000011111111000100001000111001100110010010010011110110110010010110110100010110100011011100101001100001010111000100000110101010101011011110110110101010110100011110010000101010000111', '1000100010110110010100111010100100111000100111100101100001011111100011000111110011101011011011100000101011000111010110010010011110100100110000001101110111001000000111100111011011000101010001111101000111100111110010011101011111100100111111011011110110101111', '1111001101111101111111111111001010001111100010100000010110011011100000000110010110000011011110101110001000001111110101101101111000000111101111111000011101011010000110111100000110000001001101101010100000010011000100010111100001011000101101111000101101110100', '1100100000100001010111110010000011000010100110101111100100011010111111110100011011111100001011101001010000100111100011100111000101110001001011110000000000000000000110111100000111100000111111010110010011000010011000110111001010000110011011111101011110000101', '0001101000011011010011100100000011010101110110111001111011000001010101101111110100011011010011111010001111011011100011111110101110101101111100100011111110011111010100001100011000111011010111110101000011110101011110110001011110001111011001101100110100000101']
+
+possibleCombs = [i for i in permutations(rb, 3)]
+possibleCombs = [int(''.join(i), 2) for i in possibleCombs]
+
+for i in tqdm(range(len(possibleCombs))):
+    for j in range(i+1, len(possibleCombs)):
+        p, q = possibleCombs[i], possibleCombs[j]
+        n = p * q
+        φ = (p-1) * (q-1)
+        e = 0x10001
+        d = pow(e, -1, φ)
+        pt = pow(ct, d, n)
+        if pow(pt, e, n) == ct:
+            print(long_to_bytes(pt))
+            exit()
+
+#b'flag{flbg{flcg{fldg{fleg}}}}'
+
+```
+
+<p> <b>Flag :</b> flag{flbg{flcg{fldg{fleg}}}} </p>
+
+<br/>
+
+## Travelling-Salesman
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img7.png)
+
+The attached challenge PDF can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/TravellingSalesman/Traveling_Salesman.pdf" target="_blank">here</a>.
+
+Solve script :
+
+```py
+
+import ast
+from ortools.constraint_solver import routing_enums_pb2
+from ortools.constraint_solver import pywrapcp
+from pwn import *
+
+debug = False
+r = remote("travelling-salesman.hsctf.com", 1337, level = 'debug' if debug else None)
+
+def getDM(dl):
+    dm = [[0] * len(dl) for i in range(len(dl))]
+    for i in range(len(dm)):
+        for j in range(len(dm)):
+            dm[i][j] = abs(dl[i]-dl[j])
+    #print(f"{dm=}")
+    return dm
+
+#https://developers.google.com/optimization/routing/tsp
+
+def create_data_model(dl):
+    """Stores the data for the problem."""
+    data = {}
+    data['distance_matrix'] = getDM(dl)
+    data['num_vehicles'] = 1
+    data['depot'] = 0
+    return data
+
+def distance_callback(from_index, to_index):
+    """Returns the distance between the two nodes."""
+    # Convert from routing variable Index to distance matrix NodeIndex.
+    from_node = manager.IndexToNode(from_index)
+    to_node = manager.IndexToNode(to_index)
+    return data['distance_matrix'][from_node][to_node]
+
+def get_routes(solution, routing, manager):
+  """Get vehicle routes from a solution and store them in an array."""
+  # Get vehicle routes and store them in a two dimensional array whose
+  # i,j entry is the jth location visited by vehicle i along its route.
+  routes = []
+  for route_nbr in range(routing.vehicles()):
+    index = routing.Start(route_nbr)
+    route = [manager.IndexToNode(index)]
+    while not routing.IsEnd(index):
+      index = solution.Value(routing.NextVar(index))
+      route.append(manager.IndexToNode(index))
+    routes.append(route)
+  return routes
+
+r.recvuntil('\n')
+
+for i in range(5):
+
+    dl = [0] + ast.literal_eval(r.recvline().decode())
+    #print(dl, type(dl))
+
+
+    data = create_data_model(dl)
+    manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
+                                        data['num_vehicles'], data['depot'])
+    routing = pywrapcp.RoutingModel(manager)
+
+
+
+    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
+    search_parameters.first_solution_strategy = (
+        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+
+
+
+    solution = routing.SolveWithParameters(search_parameters)
+    routes = get_routes(solution, routing, manager)
+
+    # Display the routes.
+    solChosen = []
+    for i, route in enumerate(routes):
+    #print('Route', i, route)
+        solChosen = route
+
+    toSend = ""
+    for i in solChosen[1:-1]:
+        toSend += str(dl[i]) + " "
+
+    #print(f"{toSend=}")
+    r.sendlineafter('order: ', toSend[:-1].encode())
+
+print(r.recvline())
+#b'flag{the_fitness_gram_pacer_test_is_a_multistage_aerobic_capacity_test_8182295882010254837}\n'
+
+```
+
+<p> <b>Flag :</b> flag{the_fitness_gram_pacer_test_is_a_multistage_aerobic_capacity_test_8182295882010254837} </p>
+
+<br/>
+
+## Quagmire-I
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img8.png)
+
+This is a <a href="https://sites.google.com/site/cryptocrackprogram/user-guide/cipher-types/substitution/quagmire" target="_blank">Quagmire cipher</a>.
+
+Working :
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img9.png)
+
+<p> <b>Flag :</b> flag{FILLTHISBOWLWITHYOURFAVEFRUITS} </p>
+
+<br/>
+
+## Onchain-Baller
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img10.png)
+
+Flag found <a href="https://ropsten.etherscan.io/tx/0xca8190cf4c01a5ba4e60b6c9ae7e8b94a804b6b829f3e1404cc636dea5d6e792" target="_blank">here</a> (0x68736374667b315f623431315f306e5f346e645f3066665f7468335f636834316e7d).
+
+<p> <b>Flag :</b> hsctf{1_b411_0n_4nd_0ff_th3_ch41n} </p>
+
+<br/>
+
+## Lcvc
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img11.png)
+
+Source code :
+
+```py
+
+state = 1
+flag = "[REDACTED]"
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+assert(flag[0:5]+flag[-1]=="flag{}")
+ciphertext = ""
+for character in flag[5:-1]:
+    state = (15*state+18)%29
+    ciphertext+=alphabet[(alphabet.index(character)+state)%26]
+print(ciphertext)
+
+```
+
+Solve script :
+
+```py
+
+ct = 'mawhxyovhiiupukqnzdekudetmjmefkqjgmqndgtnrxqxludegwovdcdmjjhw'
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+flag = ''
+state = 1
+
+for character in ct:
+    state = (15*state+18)%29
+    for i in range(26): 
+        if alphabet[(i+state)%26] == character: flag += alphabet[i]
+
+print("flag{"+flag+"}")
+#flag{iguessthisiswhatyouwouldcallalinearcongruentialvigenerecipher}
+
+```
+
+<p> <b>Flag :</b> flag{iguessthisiswhatyouwouldcallalinearcongruentialvigenerecipher} </p>
+
+<br/>
+
+## The-Great-Directory-Egg-Hunt
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img11.png)
+
+The attached zip can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/hsctf2022/GreatDirectoryEggHunt/dir.zip" target="_blank">here</a>. I used the command `grep -rnw '.' -e 'flag{'` in Terminal in order to search for the flag.
+
+<p> <b>Flag :</b> flag{iguessthisiswhatyouwouldcallalinearcongruentialvigenerecipher} </p>
+
+<br/>
+
+## Discord-Flag
+
+![HSCTF 2022 Writeup](/assets/img/ctfImages/2022/hsctf2022/img12.png)
+
+<p> <b>Flag :</b> flag{wait, it's all math? always has been} </p>
