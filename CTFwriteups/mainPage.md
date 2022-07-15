@@ -14,6 +14,7 @@ Below are the writeups (only displayed for the current year) :
 
 | CTF Writeup | Weight | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
+|[vsCTF 2022](https://angmar2722.github.io/CTFwriteups/2022/vsctf2022/) | 31.86 | finishingEatingLah	 | 34/635 | TBD |
 |[HSCTF 9 2022](https://angmar2722.github.io/CTFwriteups/2022/hsctf2022/) | 31.86 | Isengard | 49/804 | 12.725 |
 |[Hero CTF 2022](https://angmar2722.github.io/CTFwriteups/2022/hero2022/) | 24.23 | Isengard | 82/632 | 2.774 |
 
