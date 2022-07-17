@@ -6,7 +6,7 @@ title: Crypto CTF 2022 Writeup
 
 ![Crypto CTF 2022 Writeup](/assets/img/ctfImages/2022/cryptoctf2022/logo.png)
 
-I participated in the <a href="https://ctftime.org/event/1627" target="_blank">Crypto CTF 2022</a> event (a CTF which contains only cryptography related challenges), playing as part of Social Engineering Experts. It occurred over the course of 1 day (Fri, 15 July 2022, 22:00 SGT — Sat, 16 July 2022, 22:00 SGT). In the end, we ranked 15<sup>th</sup> out of 421 scoring teams :
+I participated in the <a href="https://ctftime.org/event/1573" target="_blank">Crypto CTF 2022</a> event (a CTF which contains only cryptography related challenges), playing as part of Social Engineering Experts. It occurred over the course of 1 day (Fri, 15 July 2022, 22:00 SGT — Sat, 16 July 2022, 22:00 SGT). In the end, we ranked 15<sup>th</sup> out of 421 scoring teams :
 
 ![Crypto CTF 2022 Writeup](/assets/img/ctfImages/2022/cryptoctf2022/img1.png)
 
