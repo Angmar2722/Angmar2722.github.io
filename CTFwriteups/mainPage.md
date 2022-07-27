@@ -21,6 +21,12 @@ Below are the writeups (only displayed for the current year) :
 
 <br/>
 
+Due to a lack of time or due to playing another CTF which was occuring at the same time, I couldn't really spend much time at all for some CTFs. Below is the link for some solve scripts for random cryptography challenges that I solved during the duration of such CTFs :
+
+- <a href="https://angmar2722.github.io/CTFwriteups/2022/randomCTFs2022/">2022 Random Crypto Solves in CTFs</a>
+
+<br/>
+
 <br/>
 
 Directory for CTF writeups for previous years :
