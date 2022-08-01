@@ -12,8 +12,8 @@ Below are the writeups :
 
 | Challenge | CTF | Weight | Solves | 
 | ------------- |  ------- | --- | ---: |
-|[Elliptic Clock Crypto](#elliptic-clock-crypto) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 27/ | 
-|[Asr](#asr) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 56/ | 
+|[Elliptic Clock Crypto](#elliptic-clock-crypto) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 27/395 | 
+|[Asr](#asr) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 56/395 | 
 |[Reverse RSA](#reverse-rsa) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 39/410 | 
 |[Replacement](#replacement) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 55/410 | 
 |[DESpicable You](#despicable-you) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 61/410 | 
