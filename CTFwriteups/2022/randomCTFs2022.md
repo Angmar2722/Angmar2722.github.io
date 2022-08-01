@@ -12,12 +12,32 @@ Below are the writeups :
 
 | Challenge | CTF | Weight | Solves | 
 | ------------- |  ------- | --- | ---: |
+|[Elliptic Clock Crypto](#elliptic-clock-crypto) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 27/ | 
+|[Asr](#asr) | <a href="https://ctftime.org/event/1600" target="_blank">UIUCTF 2022</a> | 34.64 | 56/ | 
 |[Reverse RSA](#reverse-rsa) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 39/410 | 
 |[Replacement](#replacement) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 55/410 | 
 |[DESpicable You](#despicable-you) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 61/410 | 
 |[Kfb](#kfb) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 95/410 | 
 |[Pem](#pem) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 150/410 | 
 |[Obp](#obp) | <a href="https://ctftime.org/event/1706" target="_blank">DiceCTF @HOPE 2022</a> | 47.77 | 207/410 | 
+
+<br/>
+
+<br/>
+
+## UIUCTF 2022
+
+![Random 2022 Writeup](/assets/img/ctfImages/2022/uiuctf2022/uiuctflogo.png)
+
+Spent a bit of time on the challenge `That-crete log` but was unable to solve it. Neobeo solved it in the end.
+
+## Elliptic Clock Crypto
+
+![Random 2022 Writeup](/assets/img/ctfImages/2022/uiuctf2022/uiuctfimg1.png)
+
+The attached output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2022/uiuctf2022/ellipticClockCrypto/output.txt" target="_blank">here</a>.
+
+Source code :
 
 <br/>
 
