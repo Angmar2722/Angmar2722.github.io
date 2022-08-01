@@ -31,6 +31,8 @@ Below are the writeups :
 
 Spent a bit of time on the challenge `That-crete log` but was unable to solve it. Neobeo solved it in the end.
 
+<br/>
+
 ## Elliptic Clock Crypto
 
 ![Random 2022 Writeup](/assets/img/ctfImages/2022/uiuctf2022/uiuctfimg1.png)
