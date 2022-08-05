@@ -14,11 +14,12 @@ Below are the writeups :
 | ------------- |  ------- | --- | ---: |
 |[oOoOoO](#oooooo) | <a href="https://ctftime.org/event/1458" target="_blank">SECCON 2021</a> | 92.67 | 26/506 | 
 |[So Easy RSA](#so-easy-rsa) | <a href="https://ctftime.org/event/1460" target="_blank">HITCON 2021</a> | 88.98 | 56/288 | 
-|[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | 60/741 | 
-|[Crypto Warmup](#crypto-warmup) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | 147/741 | 
 |[Tick Tock 🩸](#tick-tock) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | 6/501 | 
 |[Pascal RSA](#pascal-rsa) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | 75/501 |
 |[Pryby](#pryby) | <a href="https://ctftime.org/event/1438" target="_blank">K3RN3L 2021</a> | 24.37 | 96/501 |
+|[Spiritual](#spiritual) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | 60/741 | 
+|[Crypto Warmup](#crypto-warmup) | <a href="https://ctftime.org/event/1415" target="_blank">ASIS Quals 2021</a> | 89.22 | 147/741 | 
+|[Uncommon Factors II](#uncommon-factors-ii) | <a href="https://ctftime.org/event/1413" target="_blank">RCTF 2021</a> | 69.20 | 29/483 | 
 
 Note : The "🩸" denotes first blood on that challenge.
 
@@ -329,152 +330,6 @@ else:
 ```
 
 <p> <b>Flag :</b> hitcon{so_weak_randomnessssss} </p>
-
-<br/>
-
-<br/>
-
-## ASIS Quals 2021
-
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img7.png)
-
-Proof of solves during duration of CTF :
-
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img8.png)
-
-<br/>
-
-## Spiritual
-
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img9.png)
-
-The solve script :
-
-```py
-
-from pwn import *
-from Crypto.Util.number import *
-
-
-debug = True
-r = remote("168.119.108.148", 13010, level = 'debug' if debug else None)
-
-#https://crypto.stackexchange.com/questions/27904/how-to-determine-the-order-of-an-elliptic-curve-group-from-its-parameters
-def V_n(n, t, q):
-    a = 2
-    b = t
-    for i in range(2, n+1):
-        a, b = b, t*b-q*a
-    return b
-
-
-while True:
-    r.recvuntil('p = ')
-    p = int(r.recvline())
-    assert isPrime(p)
-
-    r.recvuntil('k = ')
-    k = int(r.recvline())
-
-    r.recvuntil("What's the number of elements of E over finite field GF(p**n) where n = ")
-    n = int(r.recvline(keepends=False)[:-1])
-    print(n)
-
-    t = p + 1 - k
-
-    payload = p^n + 1 - V_n(n, t, p)
-
-    r.sendline(str(payload))
-
-    print(r.recvline())
-
-#b'Congrats, you got the flag: .:: ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} ::.\n'
-
-```
-
-<p> <b>Flag :</b> ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} </p>
-
-<br/>
-
-## Crypto Warmup
-
-![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img10.png)
-
-The source code provided :
-
-```py
-
-#!/usr/bin/env python3
-
-from Crypto.Util.number import *
-import string
-from secret import is_valid, flag
-
-def random_str(l):
-	rstr = ''
-	for _ in range(l):
-		rstr += string.printable[:94][getRandomRange(0, 93)]
-	return rstr
-
-def encrypt(msg, nbit):
-	l, p = len(msg), getPrime(nbit)
-	rstr = random_str(p - l)
-	msg += rstr
-	while True:
-		s = getRandomNBitInteger(1024)
-		if is_valid(s, p):
-			break
-	enc = msg[0]
-	for i in range(p-1):
-		enc += msg[pow(s, i, p)]
-	return enc
-
-nbit = 15
-enc = encrypt(flag, nbit)
-print(f'enc = {enc}')
-
-```
-
-The accompanying output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/asis2021/cryptoWarmup/output.txt" target="_blank">here</a>.
-
-The solve script :
-
-```py
-
-from Crypto.Util.number import *
-import string
-import ast
-
-with open("output.txt", "r") as f:
-    temp = f.read()
-
-enc = temp[6:]
-p = len(enc)
-assert isPrime(p)
-
-def getAllPrimiteRoots(n):
-    f = Integers(n)
-    firstGenerator = f(primitive_root(n))
-    totient = euler_phi(n)
-    return [firstGenerator ^ i for i in range(1, totient) if gcd(i, totient) == 1]
-    
-primitiveRoots = getAllPrimiteRoots(p)
-
-for s in primitiveRoots:
-    possibleFlag = 'AS'
-    for i in range(2, 5):
-        possibleFlag += enc[Integers(p)(i).log(s) + 1]
-    if possibleFlag != "ASIS{":
-        continue
-    for i in range(5, p-1):
-        possibleFlag += enc[Integers(p)(i).log(s) + 1]
-    print(possibleFlag[:64])
-
-#ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!}
-
-```
-
-<p> <b>Flag :</b> ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!} </p>
 
 <br/>
 
@@ -971,7 +826,270 @@ print(long_to_bytes(flag))
 
 <p> <b>Flag :</b> flag{functi0n_h4cking_ftw!} </p>
 
+<br/>
+
+<br/>
+
+## ASIS Quals 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img7.png)
+
+Proof of solves during duration of CTF :
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img8.png)
+
+<br/>
+
+## Spiritual
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img9.png)
+
+The solve script :
+
+```py
+
+from pwn import *
+from Crypto.Util.number import *
 
 
+debug = True
+r = remote("168.119.108.148", 13010, level = 'debug' if debug else None)
+
+#https://crypto.stackexchange.com/questions/27904/how-to-determine-the-order-of-an-elliptic-curve-group-from-its-parameters
+def V_n(n, t, q):
+    a = 2
+    b = t
+    for i in range(2, n+1):
+        a, b = b, t*b-q*a
+    return b
+
+
+while True:
+    r.recvuntil('p = ')
+    p = int(r.recvline())
+    assert isPrime(p)
+
+    r.recvuntil('k = ')
+    k = int(r.recvline())
+
+    r.recvuntil("What's the number of elements of E over finite field GF(p**n) where n = ")
+    n = int(r.recvline(keepends=False)[:-1])
+    print(n)
+
+    t = p + 1 - k
+
+    payload = p^n + 1 - V_n(n, t, p)
+
+    r.sendline(str(payload))
+
+    print(r.recvline())
+
+#b'Congrats, you got the flag: .:: ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} ::.\n'
+
+```
+
+<p> <b>Flag :</b> ASIS{wH47_iZ_mY_5P1R!TuAL_4NiMal!???} </p>
+
+<br/>
+
+## Crypto Warmup
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img10.png)
+
+The source code provided :
+
+```py
+
+#!/usr/bin/env python3
+
+from Crypto.Util.number import *
+import string
+from secret import is_valid, flag
+
+def random_str(l):
+	rstr = ''
+	for _ in range(l):
+		rstr += string.printable[:94][getRandomRange(0, 93)]
+	return rstr
+
+def encrypt(msg, nbit):
+	l, p = len(msg), getPrime(nbit)
+	rstr = random_str(p - l)
+	msg += rstr
+	while True:
+		s = getRandomNBitInteger(1024)
+		if is_valid(s, p):
+			break
+	enc = msg[0]
+	for i in range(p-1):
+		enc += msg[pow(s, i, p)]
+	return enc
+
+nbit = 15
+enc = encrypt(flag, nbit)
+print(f'enc = {enc}')
+
+```
+
+The accompanying output file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/asis2021/cryptoWarmup/output.txt" target="_blank">here</a>.
+
+The solve script :
+
+```py
+
+from Crypto.Util.number import *
+import string
+import ast
+
+with open("output.txt", "r") as f:
+    temp = f.read()
+
+enc = temp[6:]
+p = len(enc)
+assert isPrime(p)
+
+def getAllPrimiteRoots(n):
+    f = Integers(n)
+    firstGenerator = f(primitive_root(n))
+    totient = euler_phi(n)
+    return [firstGenerator ^ i for i in range(1, totient) if gcd(i, totient) == 1]
+    
+primitiveRoots = getAllPrimiteRoots(p)
+
+for s in primitiveRoots:
+    possibleFlag = 'AS'
+    for i in range(2, 5):
+        possibleFlag += enc[Integers(p)(i).log(s) + 1]
+    if possibleFlag != "ASIS{":
+        continue
+    for i in range(5, p-1):
+        possibleFlag += enc[Integers(p)(i).log(s) + 1]
+    print(possibleFlag[:64])
+
+#ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!}
+
+```
+
+<p> <b>Flag :</b> ASIS{_how_d3CrYpt_Th1S_h0m3_m4dE_anD_wEird_CrYp70_5yST3M?!!!!!!} </p>
+
+<br/>
+
+<br/>
+
+## RCTF 2021
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img19.png)
+
+## Uncommon Factors II
+
+![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img20.png)
+
+The attached `lN.bn` file can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/blob/master/assets/ctfFiles/2021/rctf2021/uncommonFactor2/lN.bin" target="_blank">here</a>.
+
+Source Code provided :
+
+```py
+
+from multiprocessing import Pool
+
+size = 2^7
+
+flag = open("flag.txt", "rb").read()
+assert len(flag) == 22
+assert flag[:5] == b"flag{"
+assert flag[-1:] == b"}"
+seed = flag[5:-1] # 128 bit
+seed = (int.from_bytes(seed,'big')<<104) + (randint(0,2^80)<<(128+104)) # 312 bit
+ub = seed + 2^104
+lb = seed
+
+threads = 64
+
+def f(i):
+    p = random_prime(ub, lbound=lb, proof=False)
+    q = random_prime(2**200, proof=False)
+    N = p*q
+    return N
+
+def reseed(i):
+    set_random_seed()
+
+pool = Pool(processes=threads)
+pool.map(reseed,range(size))
+lN = pool.map(f,range(size))
+pool.close()
+pool.join()
+
+lN.sort()
+with open("lN.bin","wb") as f:
+    for n in lN:
+        f.write(int(n).to_bytes(512//8,"big"))
+
+```
+
+Solve script :
+
+```py
+
+from math import gcd
+from os import SCHED_BATCH
+
+from sage.all import ZZ
+from sage.all import matrix
+
+from Crypto.Util.number import long_to_bytes
+
+SHARED_BITSIZE = 208
+
+with open("lN.bin", "rb") as f:
+    combined = f.read()
+    Nlist = [int.from_bytes(combined[i:i+64], "big") for i in range(0, len(combined), 64)]
+
+def factorize_msb(moduli, bitsize, shared_bitsize):
+    """
+    Factorizes the moduli when some most significant bits are equal among multiples of a prime factor.
+    More information: Nitaj A., Ariffin MRK., "Implicit factorization of unbalanced RSA moduli" (Section 4)
+    :param moduli: the moduli
+    :param bitsize: the amount of bits of the moduli
+    :param shared_bitsize: the amount of shared most significant bits
+    :return: a list containing a tuple of the factors of each modulus, or None if the factors were not found
+    """
+    L = matrix(ZZ, len(moduli), len(moduli))
+    L[0, 0] = 2 ** (bitsize - shared_bitsize)
+    for i in range(1, len(moduli)):
+        L[0, i] = moduli[i]
+
+    for i in range(1, len(moduli)):
+        L[i, i] = -moduli[0]
+
+    L = L.LLL()
+
+    for row in range(L.nrows()):
+        factors = []
+        for col in range(L.ncols()):
+            modulus = moduli[col]
+            q = gcd(L[row, col], modulus)
+            if 1 < q < modulus and modulus % q == 0:
+                factors.append((modulus // q, q))
+
+        if len(factors) == len(moduli):
+            return factors
+
+factor_list = factorize_msb(Nlist, 512, SHARED_BITSIZE)
+
+chosenp, _ = factor_list[-1]
+
+flag = b"flag{" + long_to_bytes((chosenp >> 104) % 2^128) + b"}"
+print(flag)
+
+#b'flag{Simpl3_LLL_TrIck}'
+
+```
+
+<p> <b>Flag :</b> flag{Simpl3_LLL_TrIck} </p>
+
+<br/>
+
+<br/>
 
 
