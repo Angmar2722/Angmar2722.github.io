@@ -980,6 +980,8 @@ for s in primitiveRoots:
 
 ![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img19.png)
 
+<br/>
+
 ## Uncommon Factors II
 
 ![Random 2021 Writeup](/assets/img/ctfImages/2021/randomCTFs2021/img20.png)
