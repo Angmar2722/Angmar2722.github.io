@@ -14,25 +14,22 @@ Below are the writeups (only displayed for the current year) :
 
 | CTF Writeup | Weight | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-|[Crypto CTF 2022](https://angmar2722.github.io/CTFwriteups/2022/cryptoctf2022/) | 48.20 | Social Engineering Experts	 | 15/421 | 36.692 |
-|[vsCTF 2022](https://angmar2722.github.io/CTFwriteups/2022/vsctf2022/) | 23.17 | finishingEatingLah	 | 34/635 | 7.483 |
-|[HSCTF 9 2022](https://angmar2722.github.io/CTFwriteups/2022/hsctf2022/) | 31.86 | Isengard | 49/804 | 12.725 |
-|[Hero CTF 2022](https://angmar2722.github.io/CTFwriteups/2022/hero2022/) | 24.23 | Isengard | 82/632 | 2.774 |
+| | | | | |
 
 <br/>
 
-Due to a lack of time or due to playing another CTF which was occuring at the same time, I couldn't really spend much time at all for some CTFs. Below is the link for some solve scripts for random cryptography challenges that I solved during the duration of such CTFs :
+<!-- Due to a lack of time or due to playing another CTF which was occuring at the same time, I couldn't really spend much time at all for some CTFs. Below is the link for some solve scripts for random cryptography challenges that I solved during the duration of such CTFs :
 
 - <a href="https://angmar2722.github.io/CTFwriteups/2022/randomCTFs2022/">2022 Random Crypto Solves in CTFs</a>
 
-<br/>
+<br/>  -->
 
 <br/>
 
 Directory for CTF writeups for previous years :
 
+- <a href="https://angmar2722.github.io/CTFwriteups/YearList/2022/">2022</a>
 - <a href="https://angmar2722.github.io/CTFwriteups/YearList/2021/">2021</a>
-- <a href="https://angmar2722.github.io/CTFwriteups/YearList/2021/">2022</a>
 
 <br/>
 
