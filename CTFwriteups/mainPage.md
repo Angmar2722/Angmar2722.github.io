@@ -32,6 +32,7 @@ Due to a lack of time or due to playing another CTF which was occuring at the sa
 Directory for CTF writeups for previous years :
 
 - <a href="https://angmar2722.github.io/CTFwriteups/YearList/2021/">2021</a>
+- <a href="https://angmar2722.github.io/CTFwriteups/YearList/2021/">2022</a>
 
 <br/>
 
