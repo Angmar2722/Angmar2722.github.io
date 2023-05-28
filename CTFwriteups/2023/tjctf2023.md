@@ -27,7 +27,7 @@ Below are the writeups :
 |[Ezdlp](#ezdlp) | Crypto | 18 | 188 | 
 |[Beep Boop Robot](#beep-boop-robot) | Forensics | 6 | 558 | 
 |[Baby RSA](#baby-rsa) | Crypto | 6 | 576 | 
-|[hi](#hi) | Web | 4 | 840 | 
+|[Hi](#hi) | Web | 4 | 840 | 
 |[Survey](#survey) | Misc | 1 | 298 | 
 |[Discord](#discord) | Misc | 1 | 704 | 
 
@@ -1273,4 +1273,201 @@ r.recvall()
 ![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img11.png)
 
 Source code :  
+
+```py
+		    
+#first 3 lines are given
+import random
+seed = 1000
+random.seed(seed)
+
+#unscramble the rest
+def recur(lst):
+l2[i] = (l[i]*5+(l2[i]+n)*l[i])%l[i]
+l2[i] += inp[i]
+flag = ""
+flag+=chr((l4[i]^l3[i]))
+return flag
+l.append(random.randint(6, 420))
+l3[0] = l2[0]%mod
+for i in range(1, n):
+def decrypt(inp):
+for i in range(n):
+assert(len(l)==n)
+return lst[0]
+l = []
+main()
+def main():
+l4 = [70, 123, 100, 53, 123, 58, 105, 109, 2, 108, 116, 21, 67, 69, 238, 47, 102, 110, 114, 84, 83, 68, 113, 72, 112, 54, 121, 104, 103, 41, 124]
+l3[i] = (l2[i]^((l[i]&l3[i-1]+(l3[i-1]*l[i])%mod)//2))%mod
+if(len(lst)==1):
+assert(lst[0]>0)
+for i in range(1, n):
+for i in range(n):
+return recur(lst[::2])/recur(lst[1::2])
+print("flag is:", decrypt(inp))
+l2[0] +=int(recur(l2[1:])*50)
+l2 = [0]*n
+flag_length = 31
+mod = 256
+print(l2)
+n = len(inp)
+inp = [1]*flag_length
+l3 =[0]*n
+
+```
+		    
+Solve script :
+		    
+```py
+		    
+#first 3 lines are given
+import random
+seed = 1000
+random.seed(seed)
+
+#unscramble the rest
+
+def recur(lst):
+    if(len(lst)==1):
+        assert(lst[0]>0)
+        return lst[0]
+    return recur(lst[::2])/recur(lst[1::2])
+
+def decrypt(inp):
+
+    l = []
+    n = len(inp)
+    for i in range(n):
+        l.append(random.randint(6, 420))
+    assert(len(l)==n)
+
+    mod = 256
+    l2 = [0]*n
+    l3 =[0]*n
+
+    for i in range(1, n):
+        l2[i] = (l[i]*5+(l2[i]+n)*l[i])%l[i]
+    for i in range(1, n):
+        l2[i] += inp[i]
+    l2[0] +=int(recur(l2[1:])*50)
+    l3[0] = l2[0]%mod
+    #print(l2)
+    l4 = [70, 123, 100, 53, 123, 58, 105, 109, 2, 108, 116, 21, 67, 69, 238, 47, 102, 110, 114, 84, 83, 68, 113, 72, 112, 54, 121, 104, 103, 41, 124]
+    for i in range(1, n):
+        l3[i] = (l2[i]^((l[i]&l3[i-1]+(l3[i-1]*l[i])%mod)//2))%mod
+
+    flag = ""
+    for i in range(n):
+        flag+=chr((l4[i]^l3[i]))
+    return flag
+
+def main():
+    flag_length = 31
+    inp = [1]*flag_length
+    print("flag is:", decrypt(inp))
+
+main()
+
+#flag is: tjctf{unshuffling_scripts_xdfj}
+		    
+```
+		    
+<p> <b>Flag :</b> tjctf{iloversaasmuchasilovemymom0xae701ebb} </p>
+
+<br/>
+
+## Ezdlp
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img12.png)
+
+Source code :  
+
+```py
+		    
+g = 8999 
+s = 11721478752747238947534577901795278971298347908127389421908790123 
+p = 12297383901740584470151577318651150337988716807049317851420298478128932232846789427512414204247770572072680737351875225891650166807323215624748551744377958007176198392481481171792078565005580006750936049744616851983231170824931892761202881982041842121034608612146861881334101500003915726821683000760611763097
+
+g^x = s mod p
+flag = tjctf{x}
+
+```
+		    
+Solve script : 
+		    
+```py
+		    
+g = 8999
+s = 11721478752747238947534577901795278971298347908127389421908790123
+p = 12297383901740584470151577318651150337988716807049317851420298478128932232846789427512414204247770572072680737351875225891650166807323215624748551744377958007176198392481481171792078565005580006750936049744616851983231170824931892761202881982041842121034608612146861881334101500003915726821683000760611763097
+
+dlog = mod(int(s), p).log(g)
+flag = 'tjctf{' + str(dlog) + "}"
+print(flag)
+		    
+```
+
+<p> <b>Flag :</b> tjctf{26104478854569770948763268629079094351020764258425704346666185171631094713742516526074910325202612575130356252792856014835908436517926646322189289728462011794148513926930343382081388714077889318297349665740061482743137948635476088264751212120906948450722431680198753238856720828205708702161666784517} </p>
+
+<br/>
+
+## Beep Boop Robot
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img13.png)
+		    
+Morse code. Use <a href="https://morsecode.world/international/decoder/audio-decoder-adaptive.html" target="_blank">this site</a>.
+		    
+<p> <b>Flag :</b> tjctf{thisisallonewordlmao} </p>
+
+<br/>
+
+## Baby RSA
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img14.png)
+
+Solve script :  
+
+```py
+		    
+from Crypto.Util.number import *
+
+n = 10888751337932558679268839254528888070769213269691871364279830513893837690735136476085167796992556016532860022833558342573454036339582519895539110327482234861870963870144864609120375793020750736090740376786289878349313047032806974605398302398698622431086259032473375162446051603492310000290666366063094482985737032132318650015539702912720882013509099961316767073167848437729826084449943115059234376990825162006299979071912964494228966947974497569783878833130690399504361180345909411669130822346252539746722020515514544334793717997364522192699435604525968953070151642912274210943050922313389271251805397541777241902027
+e = 3
+c = 2449457955338174702664398437699732241330055959255401949300755756893329242892325068765174475595370736008843435168081093064803408113260941928784442707977000585466461075146434876354981528996602615111767938231799146073229307631775810351487333
+
+print(long_to_bytes(c**(1/3)))
+#b'tjctf{thr33s_4r3_s0_fun_fb23d5ed}'
+		    
+```
+		    
+<p> <b>Flag :</b> tjctf{thr33s_4r3_s0_fun_fb23d5ed} </p>
+
+<br/>
+
+## Hi
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img15.png)
+
+Inspect element :
+		    
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img15.png)
+		    
+<p> <b>Flag :</b> tjctf{pretty_canvas_577f7045} </p>
+
+<br/>
+
+## Survey	    
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img16.png)
+		    
+<p> <b>Flag :</b> tjctf{thanks_for_playing} </p>
+
+<br/>
+
+## Discord	
+
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img17.png)
+		    
+<p> <b>Flag :</b> tjctf{b4ck_4t_1t_4ga1n} </p>
 		    
