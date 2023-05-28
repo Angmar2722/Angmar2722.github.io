@@ -1451,7 +1451,7 @@ print(long_to_bytes(c**(1/3)))
 
 Inspect element :
 		    
-![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img15.png)
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img16.png)
 		    
 <p> <b>Flag :</b> tjctf{pretty_canvas_577f7045} </p>
 
@@ -1459,7 +1459,7 @@ Inspect element :
 
 ## Survey	    
 
-![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img16.png)
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img17.png)
 		    
 <p> <b>Flag :</b> tjctf{thanks_for_playing} </p>
 
@@ -1467,7 +1467,7 @@ Inspect element :
 
 ## Discord	
 
-![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img17.png)
+![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img18.png)
 		    
 <p> <b>Flag :</b> tjctf{b4ck_4t_1t_4ga1n} </p>
 		    
