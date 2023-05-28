@@ -6,7 +6,7 @@ title: TJCTF 2023 Writeup
 
 ![TJCTF 2023 Writeup](/assets/img/ctfImages/2023/tjctf2023/img1.png)
 
-I participated in Thomas Jefferson High School for Science and Technology's <a href="[https://ctftime.org/event/1656](https://ctftime.org/event/1865)" target="_blank">TJCTF 2023</a> event (Fri, 26 May 2023, 08:00 SGT — Sun, 28 May 2023, 08:00 SGT), playing solo. In the end, I ranked 19<sup>th</sup> out of 1047 scoring teams. All the attached files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2023/tjctf2023" target="_blank">here</a>.
+I participated in Thomas Jefferson High School for Science and Technology's <a href="[https://ctftime.org/event/1656](https://ctftime.org/event/1865)" target="_blank">TJCTF 2023</a> event (Fri, 26 May 2023, 08:00 SGT — Sun, 28 May 2023, 08:00 SGT), playing solo. In the end, I ranked 19<sup>th</sup> out of 1047 scoring teams. All the attached files can be found <a href="https://github.com/Angmar2722/Angmar2722.github.io/tree/master/assets/ctfFiles/2023/tjctf2023" target="_blank">here</a>. Managed to sweep all crypto challenges.
 
 Below are the writeups :
 
