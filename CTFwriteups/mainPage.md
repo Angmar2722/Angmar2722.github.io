@@ -14,9 +14,7 @@ Below are the writeups (only displayed for the current year) :
 
 | CTF Writeup | Weight | Team | Rank | Points | 
 | ------------- |  --- | --- | ------ | -----: |
-|  |   |  |  |  |
-
-<!-- |[TJCTF 2023](https://angmar2722.github.io/CTFwriteups/2023/tjctf2023/) | 24.76 | Minas Tirith	 | 19/1047 | 8.889 | -->
+|[TJCTF 2023](https://angmar2722.github.io/CTFwriteups/2023/tjctf2023/) | 24.76 | Minas Tirith	 | 19/1047 | 8.889 |
 
 <br/>
 
